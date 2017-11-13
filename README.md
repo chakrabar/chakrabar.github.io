@@ -1,9 +1,3 @@
----
-layout: default
-title: "Home"
-image: /assets/images/github_profile.png
----
-
 ## Welcome Arghya C's tech shots
 
 Here I talk about some daily tips & trick of programming. 
