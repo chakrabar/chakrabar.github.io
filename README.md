@@ -1,6 +1,3 @@
----
-title: "Home"
----
 
 ## Welcome Arghya C's tech shots
 
