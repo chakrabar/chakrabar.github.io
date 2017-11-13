@@ -1,5 +1,5 @@
 ---
-layout: post
+layout: default
 title: "Comparison of serialization in .Net"
 date: 2017-11-06
 tags: tech tips notes
