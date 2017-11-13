@@ -33,11 +33,14 @@
 
     <div id="content-wrapper">
       <div class="inner clearfix">
-        <section id="main-content"> <!--MAIN CONTENT-->
+
+        <!--MAIN CONTENT-->
+        <section id="main-content"> 
           {{ content }}
         </section>
 
-        <aside id="sidebar"> <!--RIGHT SIDE BAR-->
+        <!--RIGHT SIDE BAR-->
+        <aside id="sidebar">
           {% if site.show_downloads %}
             <a href="{{ site.github.zip_url }}" class="button">
               <small>Download</small>
@@ -50,7 +53,7 @@
           {% endif %}
 
           {% if site.github.is_user_page %}
-            <a href="{{ site.github.repository_url }}" class="button"><small>Follow me on</small> GitHub</a>
+            <a href="{{ site.github.repository_url }}" class="button git-bg"><small>Follow me on</small> GitHub</a>
           {% endif %}
 
           {% if site.github.is_project_page %}

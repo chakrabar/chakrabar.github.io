@@ -2,3 +2,6 @@
 ---
 
 @import "{{ site.theme }}";
+.git-bg {
+    background: transparent url(../images/github-button.png) 0 0 no-repeat !important;
+}
