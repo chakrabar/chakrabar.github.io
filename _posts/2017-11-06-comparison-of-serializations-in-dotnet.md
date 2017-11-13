@@ -2,7 +2,6 @@
 layout: post
 title: "Comparison of serialization in .Net"
 date: 2017-11-06
-categories: notes
 tags: tech tips notes
 ---
 
