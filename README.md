@@ -1,3 +1,8 @@
+---
+layout: default
+title: "Home"
+---
+
 ## Welcome Arghya C's tech shots
 
 Here I talk about some daily tips & trick of programming. 
