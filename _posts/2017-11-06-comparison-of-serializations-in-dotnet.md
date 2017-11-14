@@ -19,7 +19,7 @@ Here we'll see a comparative study of **file size** and **processing time** to s
 3. [Binary Formatter](https://msdn.microsoft.com/en-us/library/system.runtime.serialization.formatters.binary.binaryformatter(v=vs.110).aspx)
 4. [Protocol Buffers](https://developers.google.com/protocol-buffers/)
 
-Please note this is the default compression ratio used in **.Net [SharpZipLib](https://icsharpcode.github.io/SharpZipLib/)**. The compression factor can be changed and the size/performance will based vary on that.
+Please note this is the default compression ratio used in **.Net [SharpZipLib](https://icsharpcode.github.io/SharpZipLib/)**. The compression factor can be changed and the size/performance will based vary on that. Here, I have not included the real data, but for understanding - it was a big fat C# object with thousands of properties/collections with more nested data in multiple levels.
 
 
 | |Size of data(KB)|Serialization time(ms)|Zipped file size(KB)|Compression time(ms)|
