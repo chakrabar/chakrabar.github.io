@@ -24,10 +24,10 @@ Please note this is the default compression ratio used in **.Net [SharpZipLib](h
 
 | |Size of data(KB)|Serialization time(ms)|Zipped file size(KB)|Compression time(ms)|
 |---|---:|---:|---:|---:|
-JSON|12460|1100|205|1200
-XML|19755|600|259|2000
-BinFor|8209|770	|1064|3800
-ProtBuf|5347|155|205|620
+**JSON**|12460|1100|205|1200
+**XML**|19755|600|259|2000
+**BinFor**|8209|770	|1064|3800
+**ProtBuf**|5347|155|205|620
 
 ### Now, before making any judgement, here are few important points to consider:
 
