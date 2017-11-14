@@ -44,8 +44,10 @@ NOTE #2: Consider how **_platform agnostic_** they are how easily usable across 
 - ProtoBuf also has pretty good platform support, though I didn't test it cross-platform myself.
 - Binary Formatting works only with .Net. Though now .Net is making its way through all major platforms (Windows, Linux, MacOS) with .NetCore, I'm not sure how much Binary Formatter is supported.
 
-NOTE #3: Readability    
+NOTE #3: **Readability**   
 `JSON > XML > Binary Format, Protobuf (not human readable)`
+
+Conclusion (IMHO)
 
 > So, we can see **ProtoBuf** wins easily on performance. But a big overhead is attribute annotation needed for each property of each class that needs to be serialized.
 
