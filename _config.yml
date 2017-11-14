@@ -1,3 +1,5 @@
+#  _config.yml has all the global configuration
+
 theme: jekyll-theme-architect
 
 title: AC's Techshots
@@ -5,4 +7,12 @@ description: Technical notes and titbits of everyday programmer's life.
 url: https://chakrabar.github.io
 author: Arghya C
 
-tumbnail_src: https://chakrabar.github.io/assets/images/github_profile.png
+thumbnail_src: https://chakrabar.github.io/assets/images/github_profile.png
+
+defaults:
+  -
+    scope:
+      path: "" # an empty string here means all files in the project. Can use "folder_name" OR "section/*/special-page.html"
+      type: "posts" # previously `post` in Jekyll 2.2.
+    values:
+      layout: "default"
