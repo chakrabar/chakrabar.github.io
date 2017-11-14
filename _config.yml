@@ -1,6 +1,6 @@
 #  _config.yml has all the global configuration
 
-theme: jekyll-theme-leap-day
+theme: jekyll-theme-architect
 
 title: AC's Techshots
 description: Technical notes and titbits of everyday programmer's life.
