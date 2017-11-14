@@ -53,6 +53,6 @@ Conclusion (IMHO)
 
 > On the other hand **JSON**, though not the most performant, wins on ease of use, readability & wide platform acceptance.
 
-I'll be posting sample code that I used for all the serialization and file compression soon.
+I'll be posting sample code that I used for all the serialization and file compression. Comeback for the code snippets soon. 
 
 	
