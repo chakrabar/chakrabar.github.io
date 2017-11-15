@@ -1,6 +1,6 @@
 #  _config.yml has all the global configuration
 
-theme: jekyll-theme-slate
+theme: jekyll-theme-minimal
 
 title: AC's Techshots
 description: Technical notes and titbits of everyday programmer's life.
