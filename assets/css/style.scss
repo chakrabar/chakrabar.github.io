@@ -2,17 +2,17 @@
 ---
 
 @import "{{ site.theme }}";
-html, body {
+/*html, body {
     margin: 0;
     padding: 0;
     border: 0;
     font-family: 'Myriad Pro', Calibri, Helvetica, Arial, sans-serif;
     vertical-align: baseline;
-}
+}*/
 .matt-red {
     color: crimson;
 }
-.header_wrap {
+/*.header_wrap {
     background: #212121;
     background: -moz-linear-gradient(top, #373737, #212121);
     background: -webkit-linear-gradient(top, #373737, #212121);
@@ -50,4 +50,4 @@ html, body {
     max-width: 860px;
     padding: 40px 10px 20px;
     margin: 0 auto;
-}
+}*/
