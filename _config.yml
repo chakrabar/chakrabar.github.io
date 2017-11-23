@@ -1,11 +1,19 @@
 #  _config.yml has all the global configuration
-
+# if theme is changed, corresponding default.html also has to be copied
 theme: jekyll-theme-minimal
 
 title: AC's Techshots
 description: Technical notes and titbits of everyday programmer's life.
 url: https://chakrabar.github.io
 author: Arghya C
+# all these predefined ones do not work in YAML Front Matter. These applies to  posts, pages, and collections.
+# for pages & colletions, date & categories are ignored. pages always show subfolders, unless permalink defined in YFM
+permalink: /:categories/:year/:month/:day/:title.html # this is default, date
+# date /:categories/:year/:month/:day/:title.html 
+# pretty /:categories/:year/:month/:day/:title/ # creates folder with this name & places index.html inside
+# ordinal /:categories/:year/:y_day/:title.html 
+# none /:categories/:title.html 
+# sample custom /blogs/:title # will create file title.html, not all web servers can handle it
 
 thumbnail_src: https://chakrabar.github.io/assets/images/github_profile.png
 
