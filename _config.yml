@@ -1,6 +1,6 @@
 #  _config.yml has all the global configuration
 # if theme is changed, corresponding default.html also has to be copied
-theme: jekyll-theme-minimal
+theme: jekyll-theme-architect
 
 title: AC's Techshots
 description: Technical notes and titbits of everyday programmer's life.
