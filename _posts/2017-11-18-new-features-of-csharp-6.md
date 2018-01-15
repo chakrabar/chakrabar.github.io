@@ -188,3 +188,5 @@ namespace CSharpLearning
 
 
 ```
+
+It'll be good idea to copy-paste the whole code, call the methods and debug.
