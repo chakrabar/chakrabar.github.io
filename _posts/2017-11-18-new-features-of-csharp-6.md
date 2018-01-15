@@ -158,8 +158,7 @@ namespace CSharpLearning
             }
             catch (Exception exception)
             {
-                // Catch operation also can be aync now!!
-                await LogAsync(exception);
+                await LogAsync(exception); //Catch operation also can be async now!!
             }
         }
 
