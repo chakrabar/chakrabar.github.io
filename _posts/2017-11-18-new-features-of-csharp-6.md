@@ -15,7 +15,9 @@ If you are like me who got little late in catching up with the latests and great
 
 There are no theoretical or academic details. If you are interested in them, there are tons of resources in MSDN and all over internet, just do your reserach. This article will directly introduce you to some of the most useful features of C# 6 in a code & code-only manner. 
 
-## These are covered in code below
+C# 6 does not add new framework features, rather gives a bunch of cool new language constructs. All the enhancements we'll see, will help developers write cleaner & more precise code.
+
+## These new stuffs are covered in code below
 
 1. Auto read-only property
 2. Auto property initializer
@@ -25,13 +27,17 @@ There are no theoretical or academic details. If you are interested in them, the
 6. String interpolation
 7. Exception filters
 8. nameof() Expressions
+9. Await in Catch & Finally blocks
+10. Index initializers
 
-So, here you go
+### So, here you go
 
 ```cs
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using static CSharpLearning.DemoType; //see [4] using static
 
 namespace CSharpLearning
@@ -122,7 +128,8 @@ namespace CSharpLearning
             //NOTE: Interesting, if obj.Name is null, stack will show original ex thrown in original point, as execution never reached the catch block.
         }
 
-        void Log(string msg) { } //dummy log method
+        void Log(string msg) { } //dummy log methods
+        public async Task LogAsync(Exception ex) { await Task.Delay(2000); }
 
         //8. nameof() Expressions
         //Gets you the simple (unqualified) string name of a variable, type, or member.
@@ -138,9 +145,46 @@ namespace CSharpLearning
             //var n5 = nameof(typeof(DemoType)); //Compile error: Expression does not have  a name
             //sample use case
             Log($"Value of {obj.Name} was null"); //Upgrade from hard coded "Name" in log message "Value of Name was null"
-            //Note: The great benefit here - if name of Name property is changed, the log message will automatically be updated!
+            //Note the huge benefit here - if name of Name property is changed, the log message will automatically be updated!
         }
+
+        //9. Await in Catch & Finally blocks
+        //Now await can be used in finally as well as catch blocks
+        public async void AwaitDemo()
+        {
+            try
+            {
+                await System.IO.File.ReadAllLinesAsync("path to file");
+            }
+            catch (Exception exception)
+            {
+                // Catch operation also can be aync now!!
+                await LogAsync(exception);
+            }
+        }
+
+        //10. Index initializers
+        //C#6 introduces initializing indexed collections and dictionaries like lists
+        public void IndexInitializerDemo()
+        {
+            Dictionary<int, string> students = new Dictionary<int, string>
+            {
+                [101] = "Sumit",
+                [102] = "Deepmala",
+                [110] = "Priyanka"
+            };
+        }
+        //Note: If you have a custom collections that does not have an Add() method, you can create an extension method and use collection initializers.
+
+        //REMOVED feature - Primary constructor
+        //Idea was to define constructor parameters with class declaration. It was never released.
+        //public class CoolNew (string name, int code)
+        //{
+        //    public string AreaName { get; set; } = name;
+        //    public int AreaCode { get; } = code;
+        //}
     }
 }
+
 
 ```
