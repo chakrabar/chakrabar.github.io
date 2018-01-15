@@ -17,19 +17,13 @@ It's just a quick-and-dirty code demo, to show the basic usage of dynamic keywor
 
 2. But `C#` still is a statically typed language in most senses. Use dynamic only if static typing is not serving your use-case.
 
-3. From Scott Henselman's [blog](https://www.hanselman.com/blog/C4AndTheDynamicKeywordWhirlwindTourAroundNET4AndVisualStudio2010Beta1.aspx) 
-> Dynamically typed objects are still statically typed, as dynamic.
-
-Yes, the type of those objects are `dynamic`, and internally `object` to the CLR. But do break your head with that, read on.
+3. From Scott Henselman's [blog](https://www.hanselman.com/blog/C4AndTheDynamicKeywordWhirlwindTourAroundNET4AndVisualStudio2010Beta1.aspx) ***Dynamically typed objects are still statically typed, as dynamic.*** Yes, the type of those objects are `dynamic`, and internally `object` to the CLR. But do break your head with that, read on.
 
 4. Declaring something as dynamic does this one important thing - defers all the type-checks and invocation till the run-time. Basically, all the statements with dynamic stuffs are ignored at compile-time.
 
 5. Use of `dynamic` gives this one benefit - you can use the same variable to store different types of data (can also be done with `object`) and can seamlessly invoke members on them (NOT possible with `object`), without having to type cast or using reflection!
 
-6. As wel all have heard so many times
-> With great power comes great responsibility
-
-Using of dynamic gives you the responsibility of writing the correct-and-safe code, as compiler will not do that for you. If you screw up something, your application will break at run-time.
+6. As wel all have heard so many times ***With great power comes great responsibility.*** Using of dynamic gives you the responsibility of writing the correct-and-safe code, as compiler will not do that for you. If you screw up something, your application will break at run-time.
 
 7. This was introduced mostly to work with systems and codes that does not follow `.NET` style strong typing and using `dynamic` will reduce lot of boilerplate code. It is particularly useful when working with `COM` and languages like `Python`, `Ruby` etc. So, again **use `dynamic` only if you really need to**.
 
