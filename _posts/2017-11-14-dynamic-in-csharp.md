@@ -17,7 +17,7 @@ It's just a quick-and-dirty code demo, to show the basic usage of dynamic keywor
 
 2. But `C#` still is a statically typed language in most senses. Use dynamic only if static typing is not serving your use-case.
 
-3. From Scott Henselman's [blog](https://www.hanselman.com/blog/C4AndTheDynamicKeywordWhirlwindTourAroundNET4AndVisualStudio2010Beta1.aspx) - ***Dynamically typed objects are still statically typed, as dynamic.*** Yes, the type of those objects are `dynamic`, and internally `object` to the CLR. But do break your head with that, read on.
+3. From Scott Henselman's [blog](https://www.hanselman.com/blog/C4AndTheDynamicKeywordWhirlwindTourAroundNET4AndVisualStudio2010Beta1.aspx) - ***Dynamically typed objects are still statically typed, as dynamic.*** Yes, the type of those objects are `dynamic`, and internally `object` to the `CLR`. But do not break your head with that, read on.
 
 4. Declaring something as dynamic does this one important thing - defers all the type-checks and invocation till the run-time. Basically, all the statements with dynamic stuffs are ignored at compile-time.
 
