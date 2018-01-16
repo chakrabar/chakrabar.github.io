@@ -7,7 +7,7 @@ tags: tech tips notes code-demo
 
 
 
-# A quick glance at the new capabilities of C# 6 
+# A quick glance at the new capabilities of C# 7 
 
 ***This is a code demo, not elaborate theories.***
 
