@@ -9,11 +9,11 @@ tags: tech tips notes code-demo
 
 # A quick glance at the new capabilities of C# 6 
 
-***This is a code demo, not theories behind it.***
+***This is a code demo, not elaborate theories.***
 
 If you are like me who got little late in catching up with the latests and greatests of the `C#` language, this will help you catch up quickly.
 
-There are no theoretical or academic details. If you are interested in them, there are tons of resources in MSDN and all over internet, just do your reserach. This article will directly introduce you to some of the most useful features of C# 6 in a code & code-only manner. 
+There are no theoretical or academic details here. If you are interested in them, there are tons of resources in MSDN and all over internet, just do your reserach. This article will directly introduce you to some of the most useful features of C# 6 in a code & code-only manner. 
 
 C# 6 does not add new framework features, rather gives a bunch of cool new language constructs. All the enhancements we'll see, will help developers write cleaner & more precise code.
 
@@ -189,3 +189,5 @@ namespace CSharpLearning
 ```
 
 It'll be good idea to copy-paste the whole code, call the methods and debug.
+
+Once done, continue to **[new features of C# 7](/2017/12/17/new-features-of-csharp-7.html)**.
