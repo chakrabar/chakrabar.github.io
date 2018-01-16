@@ -2,7 +2,7 @@
 title: "Home"
 ---
 
-## Welcome Arghya C's tech shots
+## Welcome to Arghya C's tech shots
 
 Here I talk about some daily tips & trick of programming. 
 Mostly I maintain some random developer notes.
@@ -17,4 +17,4 @@ Check my tech-shots, or short technical articles on the side panel.
 
 ----
 
-Apart from coding, I take great interest in travel, food, art & photography. In future I might add separate sections here, for these areas of my interest.
+**Apart from coding**, I take great interest in `travel`, `food`, `art` & `photography`. In future I might add separate sections as well, for these areas of my interest.
