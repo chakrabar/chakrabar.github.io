@@ -1,7 +1,7 @@
 ---
 layout: default
 title: "New features of C# 7.0"
-date: 2017-11-18
+date: 2017-12-17
 tags: tech tips notes code-demo
 ---
 
