@@ -13,7 +13,7 @@ If you want to see my profile visit my [Github profile](https://github.com/chakr
 
 I'm a lead/senior developer, working mostly as Fullstack developer, but I deal with more of the backend stuffs on a day to day basis. I write `tools, web apps, REST services` etc. using `.Net, JavaScript` and other related tools & technologies. I have keen interest in `Software Architecture` and I'm pretty serious about *`good design, great user experience & simple, clutter free, maintainable code`*.
 
-Check my tech-shots, or short technical articles on the side panel.
+Check my tech-shots, or short technical articles on the posts panel.
 
 ----
 
