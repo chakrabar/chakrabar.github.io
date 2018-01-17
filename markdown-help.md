@@ -18,8 +18,16 @@ Syntax highlighted code block
 - Bulleted
 - List
 
+OR
+
+* Bulleted
+* List
+
 1. Numbered
 2. List
+    1. Sub
+    2. List
+3. Continue
 
 **Bold** and _Italic_ and `Code` text
 
