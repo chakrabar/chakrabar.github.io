@@ -35,6 +35,8 @@ OR
 
 ```
 
+//comment >> [comment]: # (This is one of the most common syntax for comments)
+
 Code block within `` ```<code>``` ``. For more specific syntax highlighting, e.g. for C# use `` ```cs <code> ``` ``. See sample below
 
 ```cs

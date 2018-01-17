@@ -4,6 +4,7 @@
 ----
 
 ## For the blog
+[comment]: # (This is a GitHub specific syntax for todo or task lists)
 
 - [ ] Showing build time in web
 - [x] var object & dynamic
