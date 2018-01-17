@@ -1,6 +1,5 @@
 ### TODO:
-(Self notes for the author)
-If you are a visitor, kindly walk yourself out.
+(Self notes for the author. If you are a visitor, kindly walk yourself out.)
 
 ----
 
@@ -19,11 +18,21 @@ If you are a visitor, kindly walk yourself out.
 
 ## To learn better
 
-1. expression trees
-2. code contracts
-3. threading, tasks, async-await
-4. functional programming basics
+1. Expression trees
+2. Closure
+3. Code contracts
+4. Threading, tasks, async-await
+5. Functional programming basics
 
 
 ## Learnign spontaniously
-(Anything? Anything at all?)
+*(Anything? Anything at all?) - to be updated....err..ehm*
+
+## Links to be explored in detail
+
+* http://csharpindepth.com/Articles/Chapter5/Closures.aspx
+* https://blogs.msdn.microsoft.com/charlie/2008/01/31/expression-tree-basics/
+
+* http://learnyouahaskell.com/chapters
+* https://courses.knowthen.com/p/elm-for-beginners
+* https://guide.elm-lang.org/

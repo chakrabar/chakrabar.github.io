@@ -24,6 +24,19 @@ Syntax highlighted code block
 **Bold** and _Italic_ and `Code` text
 
 [Link](url) and ![Image](src)
+
+```
+
+Code block within `` ```<code>``` ``. For more specific syntax highlighting, e.g. for C# use `` ```cs <code> ``` ``. See sample below
+
+```cs
+public class CoolClass
+{
+    public string Name { get; set; }
+    public int Id => 101;
+
+    public CoolClass(string name, int id) => (Name, Id) = (name, id);
+}
 ```
 
 For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
