@@ -57,7 +57,7 @@ namespace CSharpLearning
         //1. Auto read-only property
         //Makes a read-only property, that can be set ONLY in constructor or initializer
         //Earlier, declaring only get accessor was not allowed, private set; was allowed though
-        public string ReadOnlyProperty { get; }
+        public string ReadOnlyProperty { get; } //See [3] for an alternative syntax
         //constructor can Set ReadOnlyProperty
         public CSharp6()
         {
@@ -74,7 +74,7 @@ namespace CSharpLearning
         //Shorten code for simple functions (or properties) with lambda expressions
         public int DoubleOf(int num) => 2 * num;
         //Another representation of read-only property
-        public string AnotherReadonlyProp => "Hello there";
+        public string AnotherReadonlyProp => "Hello there"; //[1] Alternative syntax
 
         //4. Using static
         //Import static methods of a class by declaring - using static Namespace.Class;

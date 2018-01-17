@@ -7,7 +7,7 @@ tags: tech tips notes code-demo
 
 
 
-# A quick glance at the new capabilities of C# 7 
+# A quick glance at the new capabilities of C# 7.0 
 
 ***This is a code demo, not elaborate theories.***
 
@@ -148,7 +148,7 @@ namespace CSharpLearning
         //3. Discards :D
         //Discards are a variable (denoted with _) to receive all the throw-away-ble values that you do not care about.
         //Discards are write-only variable, they cannot be read from or used in any other way. They're basically a bin for collecting all unimportant values.
-        //The _ variable does not need a definition and one variable can take many values, all at once. Mostly used in deconstruction, out variables etc.
+        //The _ variable does not need a declaration and one variable can take many values, all at once. Mostly used in deconstruction, out variables etc.
         public (char fisrt, char last, int length, bool hasNumeric) GetDetails(string input)
         {
             if (string.IsNullOrEmpty(input))
@@ -158,7 +158,9 @@ namespace CSharpLearning
         public void DiscardDemo()
         {
             var (_, _, length, _) = GetDetails("My string"); //Here I'm only interested in length, so I DISCARD other values
-            var isTooLong = length > 100; //this works, obviously. BUT _ cannot be used anymore to retrieve values            
+            var isTooLong = length > 100; //this works, obviously. BUT _ cannot be used anymore to retrieve values
+            //string something = _.ToString(); //DOES NOT work. _ is write-only & non-usable otherwise
+            _ = isTooLong.ToString(); //This works fine. This is again reuse of discard
         }
         //If you have your own _ variable for real use, be careful not to confuse the two!
         public void DiscardAndLocalVariableDemo()
