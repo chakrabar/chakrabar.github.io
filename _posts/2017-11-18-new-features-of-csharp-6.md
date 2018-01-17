@@ -13,7 +13,7 @@ tags: tech tips notes code-demo
 
 If you are like me who got little late in catching up with the latests and greatests of the `C#` language, this will help you catch up quickly.
 
-There are no theoretical or academic details here. If you are interested in them, there are tons of resources in MSDN and all over internet, just do your reserach. This article will directly introduce you to some of the most useful features of C# 6 in a code & code-only manner. 
+There are no theoretical or academic details here. If you are interested in them, there are tons of resources in MSDN and all over internet, just do your reserach. This article will directly introduce you to some of the most useful features of C# 6 in a code & code-only manner (with a bit of explanation in the comments). 
 
 C# 6 does not add new framework features, rather gives a bunch of cool new language constructs. All the enhancements we'll see, will help developers write cleaner & more precise code.
 

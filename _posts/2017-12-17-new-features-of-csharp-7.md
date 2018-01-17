@@ -13,9 +13,9 @@ tags: tech tips notes code-demo
 
 If you are familiar with `C# 6` but not `C# 7`, this will help you catch up quickly. **If you are not not comfortable with `C# 6` yet, go and read the [New features of C# 6](/2017/11/18/new-features-of-csharp-6.html) article first.**
 
-There are no theoretical or academic details here. If you are interested in them, there are tons of resources in MSDN and all over internet, just do your reserach. This article will directly introduce you to some of the most useful features of C# 7 in a code & code-only manner. 
+There are no theoretical or academic details here. If you are interested in them, there are tons of resources in MSDN and all over internet, just do your reserach. This article will directly introduce you to some of the most useful features of C# 7 in a code & code-only manner (with a bit of explanation in the comments). 
 
-C# 7 does not add a lot of new framework features, but builds on top of C# 6 to give more language constructs. Apatrt from making the laguage easier to read and write, it also takes C# little more closer to functional languages. Some of the new concepts and constructs might take a while to wrap your head around them, so it's suggested that you do more research and write some code to get familiar with them.
+C# 7 does not add a lot of new framework features (like LINQ or Async-Await), but builds on top of C# 6 to give a set of new, impressive language constructs. Apatrt from making the laguage easier to read and write, it also makes C# little more closer to functional languages. Some of the new concepts and constructs might take a while to wrap your head around them (new Tuples, Pattern Matching etc.), so it's recommended that you do more research and write some code on your own to get familiar with them.
 
 ## These new stuffs are covered in code below
 
@@ -25,15 +25,17 @@ C# 7 does not add a lot of new framework features, but builds on top of C# 6 to 
     2. Tuple Deconstruction
     3. Deconstruction of user defined types
 3. Discards
-4. ...
-5. ...
+4. Pattern matching
+5. Ref locals & returns
 6. ...
+7. ...
 
 ### So, here you go
 
 ```cs
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -47,7 +49,7 @@ namespace CSharpLearning
 
         //quick recap - usage of ref & out
         public void MethodWithRef(ref string str) { } //ref parameter may not be assigned inside, that argument must be initialized before call
-        public void MethodWithOut(out string str) { str = "whatever"; } //out parameter must get assigned inside, that argument may not be initialized
+        public void MethodWithOut(out string str) { str = "whatever"; } //out parameter must get assigned inside, that argument may not be initialized before
 
         public void OutRefBasic()
         {
@@ -129,26 +131,22 @@ namespace CSharpLearning
             public string Name { get; set; }
             public int Id { get; set; }
 
-            public CoolClass(string name, int id) => (Name, Id) = (name, id); //Constructor
+            public CoolClass(string name, int id) => (Name, Id) = (name, id); //Constructor //see expression bodied fucntions enhancements
 
-            public void Deconstruct(out string name, out int id) //Deconstructor
-            {
-                name = Name;
-                id = Id;
-            }
+            public void Deconstruct(out string name, out int id) => (name, id) = (Name, Id); //Deconstructor
         }
         //With the Deconstructor() method present in a Type, it can be directly deconstructed (assigned to set of variables)
         public void UserDefinedTypeDeconstructorDemo()
         {
             var cool = new CoolClass("cool", 5);
-            (string name, int id) = cool; //well, isn't it really cool?
+            (string name, int id) = cool; //well, isn't it really cool? Basically it's being assigned to two variables
             var (coolName, coolId) = cool; //another approach for the same!
         }
 
-        //3. Discards :D
+        //3. Discards 
         //Discards are a variable (denoted with _) to receive all the throw-away-ble values that you do not care about.
         //Discards are write-only variable, they cannot be read from or used in any other way. They're basically a bin for collecting all unimportant values.
-        //The _ variable does not need a declaration and one variable can take many values, all at once. Mostly used in deconstruction, out variables etc.
+        //The _ variable does not need a definition and one variable can take many values, all at once. Mostly used in deconstruction, out variables etc.
         public (char fisrt, char last, int length, bool hasNumeric) GetDetails(string input)
         {
             if (string.IsNullOrEmpty(input))
@@ -158,7 +156,7 @@ namespace CSharpLearning
         public void DiscardDemo()
         {
             var (_, _, length, _) = GetDetails("My string"); //Here I'm only interested in length, so I DISCARD other values
-            var isTooLong = length > 100; //this works, obviously. BUT _ cannot be used anymore to retrieve values
+            var isTooLong = length > 100; //this works, obviously. BUT _ cannot be used anymore to retrieve values   
             //string something = _.ToString(); //DOES NOT work. _ is write-only & non-usable otherwise
             _ = isTooLong.ToString(); //This works fine. This is again reuse of discard
         }
@@ -168,6 +166,58 @@ namespace CSharpLearning
             string _ = "my value"; //a local variable with name _ , this is not a discard
             var (_, _, length, _) = GetDetails("My string"); //these are discards
             var message = $"Value of local _ is : {_}"; //This works. Here _ is the local variable
+        }
+
+        //4. Pattern matching (or conditional algorithms, in my words :)
+        //Pattern matching lets you write powerful, compact code that can work on different Type & values of data
+        //Basically you write (enhanced) IF & SWITCH statements that controls program flow based on "pattern" of data
+        //In if-statement, pattern is checked with 'is', which works with both reference & value types
+        //If the pattern matches, variables is cast and assigned to a new variable. Scope of the variable is only the associated code block.
+        //pattern maching with if
+        public static int PatternMatchingWithIf_Sum(IEnumerable<object> values)
+        {
+            var sum = 0;
+            foreach (var item in values)
+            {
+                if (item is int val) //THIS IS BEING CAST AND REASSIGNED TO NEW VARIABLE, IF MATCH FOUND
+                    sum += val;
+                else if (item is IEnumerable<object> subList)
+                    sum += PatternMatchingWithIf_Sum(subList);
+            }
+            return sum;
+        }
+        //pattern matching with switch ('is' is implicit)
+        //cases CANNOT fall through. return/break (or goto) must be present in each case.
+        //ORDER of cases IS IMPORTANT. It has to be MORE SPECIFIC TO MORE GENERIC cases. Compiler checks this.
+        //Switch case can have addition checks with WHEN clause.
+        //if no default: case is present and none of the cases match, program will simply continue after switch
+        public static int PatternMatchingWithSwitch_Sum(IEnumerable<object> values)
+        {
+            var sum = 0;
+            foreach (var item in values)
+            {
+                switch (item)
+                {
+                    case 0: //specific integer value
+                        break;
+                    case int val: //more general integer case //notice the variable re-assignment
+                        sum += val;
+                        break;
+                    case CoolClass cool: //case of some other type //summation is hypothetical
+                        sum += cool.Id;
+                        break;
+                    case IEnumerable<object> subList when subList.Any(): //specific enumrable WITH WHEN
+                        sum += PatternMatchingWithSwitch_Sum(subList);
+                        break;
+                    case IEnumerable<object> subList: //more generic enumerable, we know it has no elements
+                        break;
+                    case null: //we handle null because we do not want to break on null
+                        break;
+                    default: //if none of the above matches, something's unexpected
+                        throw new InvalidOperationException($"Unexpected type was passed to {nameof(PatternMatchingWithSwitch_Sum)} function");
+                }
+            }
+            return sum;
         }
     }
 }

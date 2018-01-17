@@ -14,6 +14,9 @@
 - [x] Most used C# 6 features
 - [ ] Most used C# 7 features
   - [ ] 7.1 & 7.2 features
+- [ ] CHange the site theme from 'Architect', it does suck
+  - [ ] Code formatting is pure bad, very hard to read
+  - [ ] I don't like the headers and general font color as well!
 - [ ] Use disqus comments
 - [ ] Create travel section
   - [ ] Create new category and sub section in site
@@ -39,3 +42,7 @@
 * http://learnyouahaskell.com/chapters
 * https://courses.knowthen.com/p/elm-for-beginners
 * https://guide.elm-lang.org/
+
+* https://github.com/topics/jekyll-theme
+* https://github.com/mmistakes/minimal-mistakes
+* https://github.com/mmistakes/skinny-bones-jekyll
