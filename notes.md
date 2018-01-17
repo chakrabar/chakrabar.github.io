@@ -5,16 +5,18 @@
 
 ## For the blog
 
-1. Showing build time in web
-2. var object & dynamic [done]
-3. .NET Core
-    1. Basics of .NET Core
-    2. Porting net461 to netstandard2/netcoreapp2
-4. Most used C# 6 features [done]
-5. Most used C# 7 features
-    1. 7.1 & 7.2 features
-6. Use disqus comments
-7. Create travel section
+- [ ] Showing build time in web
+- [x] var object & dynamic
+- [ ] .NET Core
+  - [ ] Basics of .NET Core
+  - [ ] Porting net461 to netstandard2/netcoreapp2
+- [x] Most used C# 6 features
+- [ ] Most used C# 7 features
+  - [ ] 7.1 & 7.2 features
+- [ ] Use disqus comments
+- [ ] Create travel section
+  - [ ] Create new category and sub section in site
+  - [ ] Use different theme/styling
 
 ## To learn better
 
