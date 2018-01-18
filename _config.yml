@@ -1,7 +1,7 @@
 #  _config.yml has all the global configuration
 # if theme is changed, corresponding default.html also has to be copied
-# theme: jekyll-theme-architect
-remote_theme: mmistakes/so-simple-theme
+theme: jekyll-theme-architect
+# remote_theme: mmistakes/so-simple-theme
 
 title: AC's Techshots
 description: Technical notes and titbits of everyday programmer's life.
