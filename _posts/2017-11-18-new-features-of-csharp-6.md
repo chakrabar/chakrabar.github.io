@@ -1,6 +1,6 @@
 ---
 layout: default
-title: "Code demo of C# 6"
+title: "Features demo of C# 6"
 date: 2017-11-18
 tags: tech tips notes code-demo
 ---
@@ -71,7 +71,7 @@ namespace CSharpLearning
         public Func<string, string> WelcomeMessageGeneratorProp { get; set; } = (name) => $"Welcome {name}."; //See Expression-bodied function & String Interpolation        
 
         //3. Expression-bodied functions
-        //Shorten code for simple functions (or properties) with lambda expressions
+        //Shorten code for simple Methods or Read-Only Properties with lambda expressions
         public int DoubleOf(int num) => 2 * num;
         //Another representation of read-only property
         public string AnotherReadonlyProp => "Hello there"; //[1] Alternative syntax
@@ -157,7 +157,7 @@ namespace CSharpLearning
                 await System.IO.File.ReadAllLinesAsync("path to file");
             }
             catch (Exception exception)
-            {
+            {                
                 await LogAsync(exception); //Catch operation also can be async now!!
             }
         }
@@ -172,6 +172,14 @@ namespace CSharpLearning
                 [102] = "Deepmala",
                 [110] = "Priyanka"
             };
+            //This may look very similar to the OLD syntax as below
+            Dictionary<int, string> oldStudents = new Dictionary<int, string>
+            {
+                {5, "Neha" },
+                {8, "Vikas" }
+            };
+            //Well, functionally they are very similar. There is a inherent difference though
+            //The old syntax uses the 'Add' method on the Type whereas the new syntax actually uses the indexer
         }
         //Note: If you have a custom collections that does not have an Add() method, you can create an extension method and use collection initializers.
 
@@ -190,6 +198,6 @@ namespace CSharpLearning
 
 It'll be good idea to copy-paste the whole code, call the methods and debug.
 
-Once done, continue to **[new features of C# 7](/2017/12/17/new-features-of-csharp-7.html)**.
+Once done, continue to **[features demo of C# 7](/2017/12/17/new-features-of-csharp-7.html)**.
 
 **Note: Source of knowledge for this article are MSDN, StackOverflow and other forums.

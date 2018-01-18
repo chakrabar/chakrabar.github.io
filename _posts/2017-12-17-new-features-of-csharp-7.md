@@ -1,6 +1,6 @@
 ---
 layout: default
-title: "Code demo of C# 7.0"
+title: "Features demo of C# 7.0"
 date: 2017-12-17
 tags: tech tips notes code-demo
 ---
@@ -11,7 +11,7 @@ tags: tech tips notes code-demo
 
 ***This is a code demo, not elaborate theories.***
 
-If you are familiar with `C# 6` but not `C# 7`, this will help you catch up quickly. **If you are not not comfortable with `C# 6` yet, go and read the [New features of C# 6](/2017/11/18/new-features-of-csharp-6.html) article first.**
+If you are familiar with `C# 6` but not `C# 7`, this will help you catch up quickly. **If you are not not comfortable with `C# 6` yet, go and read the [features demo of C# 6](/2017/11/18/new-features-of-csharp-6.html) article first.**
 
 There are no theoretical or academic details here. If you are interested in them, there are tons of resources in MSDN and all over internet, just do your reserach. This article will directly introduce you to some of the most useful features of C# 7 in a code & code-only manner (with a bit of explanation in the comments). 
 
@@ -27,8 +27,11 @@ C# 7 does not add a lot of new framework features (like LINQ or Async-Await), bu
 3. Discards
 4. Pattern matching
 5. Ref locals & returns
-6. ...
-7. ...
+6. Local functions
+7. More use of expression-bodied functions
+8. Throw expression
+9. Generic async return
+10. Syntax improvements for numeric literals
 
 ### So, here you go
 
@@ -45,7 +48,6 @@ namespace CSharpLearning
     {
         //dummy log methods
         void Log(string msg) { }
-        public async Task LogAsync(Exception ex) { await Task.Delay(2000); }
 
         //quick recap - usage of ref & out
         public void MethodWithRef(ref string str) { } //ref parameter may not be assigned inside, that argument must be initialized before call
@@ -74,6 +76,7 @@ namespace CSharpLearning
         //Tuples are light-weight data structures that can be declared/created inline and used to return multiple values
         //C# 7 makes tuples more of a first-class citizen with cleaner syntax, named-elements
         //This needs System.ValueTuple NuGet, which comes by default in .NET Framework 4.7, .NET Core 2.0, .NET Standard 2.0
+        //Even though public methods can return tuple, it's recommended to be used with private/internal only
         public void TupleDemo()
         {
             //OLD syntax, still valid
@@ -99,7 +102,7 @@ namespace CSharpLearning
 
             //Something even less expeted!
             //DECONSTRUCTION of the tuple - see below [2.2]
-            (string Name, int Id) = ("name", 1);
+            (string Name, int Id) = ("name", 1); //This is deconstruction, not really a tuple
             string copyOfName = Name; //DECONSTRUCTED variable declaration!
         }
 
@@ -131,9 +134,11 @@ namespace CSharpLearning
             public string Name { get; set; }
             public int Id { get; set; }
 
-            public CoolClass(string name, int id) => (Name, Id) = (name, id); //Constructor //see expression bodied fucntions enhancements
+            public CoolClass(string name, int id) => (Name, Id) = (name, id); //Constructor //see [7] expression bodied fucntions enhancements
 
             public void Deconstruct(out string name, out int id) => (name, id) = (Name, Id); //Deconstructor
+
+            ~CoolClass() { } //Destructor - For visual comparison only (Use in real code only to clean managed resources)
         }
         //With the Deconstructor() method present in a Type, it can be directly deconstructed (assigned to set of variables)
         public void UserDefinedTypeDeconstructorDemo()
@@ -170,6 +175,7 @@ namespace CSharpLearning
 
         //4. Pattern matching (or conditional algorithms, in my words :)
         //Pattern matching lets you write powerful, compact code that can work on different Type & values of data
+        //At some level this is like overloading functions, but more Non-OO way. It's [1]Only one function [2]Does not need a class hierarchy
         //Basically you write (enhanced) IF & SWITCH statements that controls program flow based on "pattern" of data
         //In if-statement, pattern is checked with 'is', which works with both reference & value types
         //If the pattern matches, variables is cast and assigned to a new variable. Scope of the variable is only the associated code block.
@@ -186,9 +192,9 @@ namespace CSharpLearning
             }
             return sum;
         }
-        //pattern matching with switch ('is' is implicit)
+        //pattern matching with switch-statement ('is' is implicit)
         //cases CANNOT fall through. return/break (or goto) must be present in each case.
-        //ORDER of cases IS IMPORTANT. It has to be MORE SPECIFIC TO MORE GENERIC cases. Compiler checks this.
+        //ORDER of cases IS IMPORTANT. It has to be MORE SPECIFIC TO MORE GENERIC cases. Compiler checks this. Case default is always evaluated last.
         //Switch case can have addition checks with WHEN clause.
         //if no default: case is present and none of the cases match, program will simply continue after switch
         public static int PatternMatchingWithSwitch_Sum(IEnumerable<object> values)
@@ -218,6 +224,143 @@ namespace CSharpLearning
                 }
             }
             return sum;
+        }
+
+        //5. Ref locals and returns
+        //This gives C# the ability to return reference to internal storage from a method, and store them in a variable and use in somewhat pass-by-reference way.
+        //This does not involve [unsafe] code with bare pointers. The design and syntax saves developers from possible misuses.
+        //The aim is to give a way to update values remotely (outside method) without the overhead of de-referencing, copying and obtaining a place holder.
+        //Another way to think of 'ref locals' is as 'aliases', as if the variable and original items are one thing with two different names! (- Eric Lippert)
+        //To use, simply use 'ref returnType' in declaration & 'ref return' from a method. Get the refernce outside with a ref local (e.g. ref int) variable.
+        //Type of ref local (or by-reference variable) is REF <TYPE> e.g. ref int, VS inttelisense shows the vriable value, not memory address :\
+        //Note: If the return is taken in a non-ref variable, simply the value will be copied to the variable. To work BOTH REF LOCAL & RETURN ARE REQUIRED.
+        //First we'll see old/existing way of doing something, then we'll see the new way using ref return & local
+        public (int x, int y) GetMaxValuePosition_Old(int[,] matrix)
+        {
+            var max = int.MinValue;
+            var (cx, cy) = (0, 0);
+            for (int i = 0; i < matrix.GetLength(0); i++)
+                for (int j = 0; j < matrix.GetLength(1); j++)
+                    if (matrix[i, j] > max)
+                    {
+                        (cx, cy) = (i, j);
+                        max = matrix[i, j];
+                    }
+            return (cx, cy);
+        }
+        //using the old way
+        public void UseMethod_Old()
+        {
+            int[,] array = new int[,] { { 1, 2, 3 }, { 3, 4, 5 }, { 5, 6, 7 }, { 7, 8, 9 } }; //a 3x4 matrix
+            var (x, y) = GetMaxValuePosition_Old(array);
+            //update value
+            array[x, y] = int.MaxValue;
+        }
+        //NEW way using REF RETURN
+        public ref int GetMaxValuePosition_New(int[,] matrix) //signature has changed
+        {
+            var max = int.MinValue;
+            var (cx, cy) = (0, 0);
+            for (int i = 0; i < matrix.GetLength(0); i++)
+                for (int j = 0; j < matrix.GetLength(1); j++)
+                    if (matrix[i, j] > max)
+                    {
+                        (cx, cy) = (i, j);
+                        max = matrix[i, j];
+                    }
+            return ref matrix[cx, cy]; //return statement has changed
+        }
+        //NEW way of using this with REF LOCAL
+        //The local ref variable is also called by-reference variable
+        //NOTE: Ref local MUST be declared and initialized together - because ref local (memory address in a way) cannot be null
+        //Note: Ref local & return does not work with async methods
+        public void UseMethod_New()
+        {
+            int[,] array = new int[,] { { 1, 2, 3 }, { 3, 4, 5 }, { 5, 6, 7 }, { 7, 8, 9 } };
+            //ref int element0; This doesn't work as ref locals must have initialization when declared
+            ref var element = ref GetMaxValuePosition_New(array); //NOTICE the double ref - variable declaration & method call
+            //update value
+            element = int.MaxValue; //TYPE of element is REF INT //VS intellisense show value 9 (before update)
+            //var element = GetMaxValuePosition_New(array); Wouldn't work this way, it'd simply copy the value
+        }
+        //NOTE: If reference type is returned by ref, then setting refLocal = new Stuff(); will actually update the original item!!
+
+        //6. Local functions
+        //This enables you to write functions inside functions. The inner function is available only to the enclosing function.
+        //They might seem to be pretty similar to local lambda expressions, but there are bunch of differences - which makes it pretty powerful.
+        //Generally a simpler syntax, better performance (no delegate, better memory handling), generics, simpler recursion, can use yield etc.
+        public int SumJaggedArray(int[][] data)
+        {
+            var total = 0;
+
+            //Obviously we could do using LINQ
+            total = data.Sum(arr => arr.Sum());
+            total = data.SelectMany(arr => arr).Sum();
+            //or could have used lambda in place of local function
+            Func<int[], int> summation = (arr) => arr.Sum();
+
+            //BUT here we are learning LOCAL FUNCTION anyway, so
+            for (int i = 0; i < data.Length; i++)
+                total += sum(data[i]);
+            return total; //Note: the function can actually be defined after return statement
+
+            int sum(int[] arr) //this is a LOCAL FUNCTION //Note: there cannot be a access modifier
+            {
+                int _sum = 0;
+                for (int i = 0; i < arr.Length; i++)
+                    _sum += arr[i];
+                return _sum;
+            }
+        }
+
+        //7. More use of expression-bodied functions
+        //In C# 6 it was allowed only in functions & read-only properties, now they are allowed in constructor, finalizers, get-set, indexer
+        //See the constructor of CoolClass in section [2.3] for an example
+
+        //8. Throw expression
+        //throw is now an expression rather than a statement what it used to be - so they can go with other expressions!
+        public void SumJaggedArray_with_ThrowAsExpression(int[][] data) 
+        {
+            Func<int[], int> summation = 
+                (arr) => arr == null ?
+                    throw new ArgumentException("null not allowed") : //throw in lambda
+                    arr.Sum();
+
+            var total = 0;
+            for (int i = 0; i < data.Length; i++)
+                total += 
+                    data[i] == null ? 
+                    throw new ArgumentException("null not allowed") : //throw in conditional expressions
+                    summation(data[i]);
+        }
+
+        //9. Generic async return
+        //Before C# 7, async methods could return only void, Task or Task<T>. C# 7 allowes return of other types which follow the asynchronous pattern
+        //One that is provided by Framework is ValueTask<T> which is a struct (value type), and can improve performance in some cases.
+        public async ValueTask<T> GenericAsyncReturn<T>() //You may need to install NuGet System.Threading.Tasks.Extensions 
+        {
+            await Task.Delay(1000);
+            return default(T);
+        }
+
+        //10. Syntax improvements for numeric literals
+        //All for readability - binary representation of numbers & digit separators
+        //10.1 Binary numbers - numbers can be written as pure binary wherever it makes sense, with a 0b prefix
+        //10.2 Digit separation with _ (underscore). Applies to binary, integer, float, double, decimal - can be placed between any digits
+        public void NumericLiteralDemo()
+        {
+            int asBinary = 0b0001;
+            var eight = 0b1000; //its still just 8, intellisense also shows simply 8
+            var x = 10 - eight; //produces 2
+
+            var sixteen = 0b001_0000;
+            //var seventeen = 0b_0001_0001; //Not supported YET
+
+            int million = 1_000_000;
+            var thousand = 1___0_0__0; //is still valid :O
+
+            var _double = 1_9.00_20_00_90_5;
+            var _decimal = 12.000_05m;
         }
     }
 }
