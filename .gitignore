@@ -9,6 +9,16 @@ packages/
 *.user
 # === for GitHub pages ===
 _site/
+# === jekyll SS theme ===
+*.sublime-project
+*.sublime-workspace
+.DS_Store
+.jekyll-metadata
+.sass-cache
+_site
+codekit-config.json
+Gemfile.lock
+node_modules
 # =========================
 # Git AutoCreated ignores v
 # =========================
