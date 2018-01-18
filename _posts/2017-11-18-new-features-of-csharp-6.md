@@ -1,6 +1,6 @@
 ---
 layout: default
-title: "New features of C# 6"
+title: "Code demo of C# 6"
 date: 2017-11-18
 tags: tech tips notes code-demo
 ---
@@ -191,3 +191,5 @@ namespace CSharpLearning
 It'll be good idea to copy-paste the whole code, call the methods and debug.
 
 Once done, continue to **[new features of C# 7](/2017/12/17/new-features-of-csharp-7.html)**.
+
+**Note: Source of knowledge for this article are MSDN, StackOverflow and other forums.

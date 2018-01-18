@@ -39,6 +39,18 @@ OR
 
 Code block within `` ```<code>``` ``. For more specific syntax highlighting, e.g. for C# use `` ```cs <code> ``` ``. See sample below
 
+1. Simple code block highlight
+```
+public class CoolClass
+{
+    public string Name { get; set; }
+    public int Id => 101;
+
+    public CoolClass(string name, int id) => (Name, Id) = (name, id);
+}
+```
+
+2. Code block with syntax highlighting
 ```cs
 public class CoolClass
 {

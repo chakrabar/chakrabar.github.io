@@ -1,6 +1,6 @@
 ---
 layout: default
-title: "New features of C# 7.0"
+title: "Code demo of C# 7.0"
 date: 2017-12-17
 tags: tech tips notes code-demo
 ---
@@ -15,7 +15,7 @@ If you are familiar with `C# 6` but not `C# 7`, this will help you catch up quic
 
 There are no theoretical or academic details here. If you are interested in them, there are tons of resources in MSDN and all over internet, just do your reserach. This article will directly introduce you to some of the most useful features of C# 7 in a code & code-only manner (with a bit of explanation in the comments). 
 
-C# 7 does not add a lot of new framework features (like LINQ or Async-Await), but builds on top of C# 6 to give a set of new, impressive language constructs. Apatrt from making the laguage easier to read and write, it also makes C# little more closer to functional languages. Some of the new concepts and constructs might take a while to wrap your head around them (new Tuples, Pattern Matching etc.), so it's recommended that you do more research and write some code on your own to get familiar with them.
+C# 7 does not add a lot of new framework features (like LINQ or Async-Await), but builds on top of C# 6 to give a set of new, impressive language constructs. Apatrt from making the laguage easier to read and write, it also makes C# little more closer to functional languages. Some of the new concepts and constructs might take a while to wrap your head around them (new Tuples, Pattern Matching, ref return etc.), so it's recommended that you do more research and write some code on your own to get familiar with them.
 
 ## These new stuffs are covered in code below
 
@@ -225,3 +225,5 @@ namespace CSharpLearning
 ```
 
 It'll be good idea to copy-paste the whole code, call the methods and debug.
+
+**Note: Source of knowledge for this article are MSDN, StackOverflow and other forums.
