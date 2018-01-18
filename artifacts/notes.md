@@ -45,5 +45,6 @@
 
 * [Adding theme to Github pages](https://help.github.com/articles/adding-a-jekyll-theme-to-your-github-pages-site/)
 * [Jekyll theme choices](https://github.com/topics/jekyll-theme)
+* [SO SIMPLE THEME](https://mmistakes.github.io/so-simple-theme/theme-setup/)
 * [minimal-mistakes](https://github.com/mmistakes/minimal-mistakes)
 * [skinny-bones-jekyll](https://github.com/mmistakes/skinny-bones-jekyll)

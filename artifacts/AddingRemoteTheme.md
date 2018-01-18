@@ -28,6 +28,11 @@ Configuration file: C:/Arghya/Repos/chakrabar.github.io/_config.yml
 jekyll 3.6.2 | Error:  Peer certificate cannot be authenticated with given CA certificates
 
 ```
+Actually it worked partially
+1. After adding the theme-name in _config, GitHub could update the site styles
+2. It took a lot of time to publish though
+3. It just updated the theme - literally, Without following steps, the theme is not setup
+
 
 ## Now trying https://mmistakes.github.io/so-simple-theme/theme-setup/
 
