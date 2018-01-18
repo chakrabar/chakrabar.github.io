@@ -3,6 +3,9 @@
 theme: jekyll-theme-architect
 # remote_theme: mmistakes/so-simple-theme
 
+# this is required by bundler to run jekyll >> remove if starts appearing in public site
+repository: chakrabar/chakrabar.github.io
+
 title: AC's Techshots
 description: Technical notes and titbits of everyday programmer's life.
 url: https://chakrabar.github.io
