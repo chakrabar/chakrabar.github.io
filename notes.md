@@ -36,13 +36,14 @@
 
 ## Links to be explored in detail
 
-* http://csharpindepth.com/Articles/Chapter5/Closures.aspx
-* https://blogs.msdn.microsoft.com/charlie/2008/01/31/expression-tree-basics/
+* [C# Closures](http://csharpindepth.com/Articles/Chapter5/Closures.aspx)
+* [Expression tree](https://blogs.msdn.microsoft.com/charlie/2008/01/31/expression-tree-basics/)
 
-* http://learnyouahaskell.com/chapters
-* https://courses.knowthen.com/p/elm-for-beginners
-* https://guide.elm-lang.org/
+* [Learn Haskell]( http://learnyouahaskell.com/chapters)
+* [Elm for beginners](https://courses.knowthen.com/p/elm-for-beginners)
+* [Elm Language guide](https://guide.elm-lang.org/)
 
-* https://github.com/topics/jekyll-theme
-* https://github.com/mmistakes/minimal-mistakes
-* https://github.com/mmistakes/skinny-bones-jekyll
+* [Adding theme to Github pages](https://help.github.com/articles/adding-a-jekyll-theme-to-your-github-pages-site/)
+* [Jekyll theme choices](https://github.com/topics/jekyll-theme)
+* [minimal-mistakes](https://github.com/mmistakes/minimal-mistakes)
+* [skinny-bones-jekyll](https://github.com/mmistakes/skinny-bones-jekyll)
