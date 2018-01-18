@@ -12,7 +12,7 @@
   - [ ] Basics of .NET Core
   - [ ] Porting net461 to netstandard2/netcoreapp2
 - [x] Most used C# 6 features
-- [ ] Most used C# 7 features
+- [x] Most used C# 7 features
   - [ ] 7.1 & 7.2 features
 - [ ] CHange the site theme from 'Architect', it does suck
   - [ ] Code formatting is pure bad, very hard to read
