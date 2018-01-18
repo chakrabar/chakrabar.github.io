@@ -1,34 +1,59 @@
-#  _config.yml has all the global configuration
-# if theme is changed, corresponding default.html also has to be copied
-theme: jekyll-theme-architect
-# remote_theme: mmistakes/so-simple-theme
-
-# this is required by bundler to run jekyll >> remove if starts appearing in public site
-# repository: chakrabar/chakrabar.github.io
-
-# supposedly required to enable remote theme https://github.com/benbalter/jekyll-remote-theme
-# plugins:
-#   - jekyll-remote-theme
+# Site wide configuration
 
 title: AC's Techshots
+locale: en_US
 description: Technical notes and titbits of everyday programmer's life.
+logo: ac/desk.jpg
+search: true
 url: https://chakrabar.github.io
-author: Arghya C
-# all these predefined ones do not work in YAML Front Matter. These applies to  posts, pages, and collections.
-# for pages & colletions, date & categories are ignored. pages always show subfolders, unless permalink defined in YFM
-permalink: /:categories/:year/:month/:day/:title.html # this is default, date
-# date /:categories/:year/:month/:day/:title.html 
-# pretty /:categories/:year/:month/:day/:title/ # creates folder with this name & places index.html inside
-# ordinal /:categories/:year/:y_day/:title.html 
-# none /:categories/:title.html 
-# sample custom /blogs/:title # will create file title.html, not all web servers can handle it
 
-thumbnail_src: https://chakrabar.github.io/assets/images/github_profile.png
+# Jekyll configuration
 
-defaults:
-  -
-    scope:
-      path: "" # an empty string here means all files in the project. Can use "folder_name" OR "section/*/special-page.html"
-      type: "posts" # previously `post` in Jekyll 2.2.
-    values:
-      layout: "default"
+permalink:   /:categories/:title/
+markdown:    kramdown
+highlighter: rouge
+sass:
+  sass_dir: _sass
+  style: compressed
+plugins: #changed from gems
+  - jekyll-sitemap
+  - jekyll-gist
+  - jekyll-feed
+
+kramdown:
+  input: GFM
+  auto_ids: true
+  footnote_nr: 1
+  entity_output: as_char
+  toc_levels: 1..2
+  enable_coderay: false
+
+mathjax: true
+
+include: [".htaccess"]
+exclude: ["lib", "config.rb", "Capfile", "config", "log", "Rakefile", "Rakefile.rb", "tmp", ".less", "*.sublime-project", "*.sublime-workspace", "test", "spec", "Gruntfile.js", "package.json", "node_modules", "Gemfile", "Gemfile.lock", "LICENSE", "README.md", "vendor"]
+
+
+# Site owner
+owner:
+  name: Arghya C
+  avatar: ac_toon.png
+  email: chakrabar@live.com
+  disqus-shortname:
+  twitter: arghyaece
+  facebook: #username
+  github: chakrabar
+  stackexchange: https://stackoverflow.com/users/2563833/arghya-c?tab=profile
+  linkedin: charghya
+  instagram: charghya
+  flickr: #username
+  tumblr: #username
+  pinterest: #username
+  weibo: #userid
+  google:
+    plus: #username
+    analytics:
+    verify:
+    ad-client:
+    ad-slot:
+  bing-verify:
