@@ -392,7 +392,7 @@ public void NumericLiteralDemo()
 ```
 
 
-You can run all the snippets above by wrapping them inside a code like below
+It'll be good idea to copy-paste the whole code, call the methods and debug. You can run all the snippets above by wrapping them inside a code like below
 ```cs
 using System;
 using System.Collections.Generic;
@@ -408,6 +408,5 @@ namespace CSharpLearning
 }
 ```
 
-It'll be good idea to copy-paste the whole code, call the methods and debug.
 
 > Note: Source of knowledge for this article are MSDN, StackOverflow and other forums.
