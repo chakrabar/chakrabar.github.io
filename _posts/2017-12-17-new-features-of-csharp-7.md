@@ -21,9 +21,9 @@ C# 7 does not add a lot of new framework features (like LINQ or Async-Await), bu
 
 1. Inline initialization of out parameter
 2. Tuple enhancements
-    1. Example of new syntax - method returning tuple
-    2. Tuple Deconstruction
-    3. Deconstruction of user defined types
+  1. Example of new syntax - method returning tuple
+  2. Tuple Deconstruction
+  3. Deconstruction of user defined types
 3. Discards
 4. Pattern matching
 5. Ref locals & returns
@@ -54,6 +54,7 @@ public void OutRefBasic()
 
 1. Inline initialization of out parameter
 * out variables can be declared inline in the method call statement, with specific type or var. 
+
 ```cs
 public void OutInitializationDemo()
 {
@@ -70,6 +71,7 @@ public void OutInitializationDemo()
 * C# 7 makes tuples more of a first-class citizen with cleaner syntax, named-elements
 * This needs System.ValueTuple NuGet, which comes by default in .NET Framework 4.7, .NET Core 2.0, .NET Standard 2.0
 * Even though public methods can return tuple, it's recommended to be used with private/internal only
+
 ```cs
 public void TupleDemo()
 {
@@ -101,7 +103,8 @@ public void TupleDemo()
 }
 ```
 
-2.1 Example of new syntax - method returning tuple
+  1. Example of new syntax - method returning tuple
+
 ```cs
 public (char first, char last) GetEndCharacters(string input) //names of the return fields does not matter, they are just variable names
 {
@@ -111,8 +114,9 @@ public (char first, char last) GetEndCharacters(string input) //names of the ret
 }
 ```
 
-2.2 Tuple Deconstruction - directly assign tuple fileds to a set of variables
+  2. Tuple Deconstruction - directly assign tuple fileds to a set of variables
 * You can directly stores values of Tuple fields in separate variables by putting them inside parenthesis 
+
 ```cs
 public void TupleDeconstructionDemo()
 {
@@ -373,6 +377,7 @@ public async ValueTask<T> GenericAsyncReturn<T>() //You may need to install NuGe
 * All for readability - binary representation of numbers & digit separators
   1. Binary numbers - numbers can be written as pure binary wherever it makes sense, with a 0b prefix
   2. Digit separation with _ (underscore). Applies to binary, integer, float, double, decimal - can be placed between any digits
+
 ```cs
 public void NumericLiteralDemo()
 {
