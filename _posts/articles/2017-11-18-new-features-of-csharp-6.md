@@ -3,6 +3,7 @@ layout: post
 title: "Features demo of C# 6"
 date: 2017-11-18
 tags: [tech, tips, notes, code-demo]
+categories: articles
 ---
 
 
@@ -198,6 +199,6 @@ namespace CSharpLearning
 
 It'll be good idea to copy-paste the whole code, call the methods and debug.
 
-Once done, continue to **[features demo of C# 7](/new-features-of-csharp-7)**.
+Once done, continue to [features demo of C# 7](/articles/new-features-of-csharp-7).
 
-**Note: Source of knowledge for this article are MSDN, StackOverflow and other forums.
+> Note: Source of knowledge for this article are MSDN, StackOverflow and other forums.

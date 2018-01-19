@@ -3,6 +3,7 @@ layout: post
 title: "Features demo of C# 7.0"
 date: 2017-12-17
 tags: [tech, tips, notes, code-demo]
+categories: articles
 ---
 
 
@@ -11,7 +12,7 @@ tags: [tech, tips, notes, code-demo]
 
 ***This is a code demo, not elaborate theories.***
 
-If you are familiar with `C# 6` but not `C# 7`, this will help you catch up quickly. **If you are not not comfortable with `C# 6` yet, go and read the [features demo of C# 6](/new-features-of-csharp-6) article first.**
+If you are familiar with `C# 6` but not `C# 7`, this will help you catch up quickly. **If you are not not comfortable with `C# 6` yet, go and read the** [features demo of C# 6](/articles/new-features-of-csharp-6) **article first.**
 
 There are no theoretical or academic details here. If you are interested in them, there are tons of resources in MSDN and all over internet, just do your reserach. This article will directly introduce you to some of the most useful features of C# 7 in a code & code-only manner (with a bit of explanation in the comments). 
 
@@ -405,13 +406,13 @@ public void NumericLiteralDemo()
     var eight = 0b1000; //its still just 8, intellisense also shows simply 8
     var x = 10 - eight; //produces 2
 
-    var sixteen = 0b001_0000;
+    var sixteen = 0b001_0000; //with digit separator
     //var seventeen = 0b_0001_0001; //Not supported YET
 
-    int million = 1_000_000;
+    int million = 1_000_000; //convention, not rule, for separator in int
     var thousand = 1___0_0__0; //is still valid :O
 
-    var _double = 1_9.00_20_00_90_5;
+    var _double = 1_9.00_20_00_90_5; //Separators can be placed anywhere
     var _decimal = 12.000_05m;
 }
 ```

@@ -1,6 +1,6 @@
 ---
 layout: page
-title: "Home"
+title: "Hello there!"
 ---
 
 ## Welcome to Arghya C's tech shots
@@ -14,13 +14,15 @@ If you want to see my profile visit my [Github profile](https://github.com/chakr
 
 I'm a lead/senior developer, working mostly as Fullstack developer, but I deal with more of the backend stuffs on a day to day basis. I write `tools, web apps, REST services` etc. using `.Net, JavaScript` and other related tools & technologies. I have keen interest in `Software Architecture` and I'm pretty serious about *`good design, great user experience & simple, clutter free, maintainable code`*.
 
-Check my tech-shots, or short technical articles on the posts panel.
+Check my tech-shots, or short technical articles on the articles menu.
 
 ----
 
 **Apart from coding**, I take great interest in `travel`, `food`, `art` & `photography`. In future I might add separate sections as well, for these areas of my interest.
 
 ----
+
+### Some of the recent posts. See more in Articles menu.
 
 <ul class="post-list">
 {% for post in site.posts limit:10 %}

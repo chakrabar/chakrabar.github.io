@@ -3,6 +3,8 @@ layout: post
 title: "Dynamic in C#"
 date: 2017-11-14
 tags: [tech, tips, notes code-demo]
+excerpt: "A quick introduction to dynamic in C# and comparison with var and object keywords."
+categories: articles
 ---
 
 
@@ -10,6 +12,8 @@ tags: [tech, tips, notes code-demo]
 # A quick glance at the dynamic keyword 
 
 It's just a quick-and-dirty code demo, to show the basic usage of dynamic keyword and difference with other similar constructs. This does not cover any theories at all. Go to MSDN or other good resources that can give better explanations.
+
+We'll also look at `var` and `object` to see the contrast.
 
 ## Few very basic things to note:
 
@@ -33,7 +37,7 @@ Now the code demo:
 ----
 
 ```cs
-class Temp //demo class
+class Demo //demo class used in code
 {
     public string Name { get; }
     internal string GetId()
@@ -41,24 +45,62 @@ class Temp //demo class
         return "Cool_ID";
     }
 }
+```
 
-//In the actual class, method
-var z = 3; //z is statically typed as int at compile time. var is just syntactic sugar, comiler will infer the actual type
-z = "jassala"; //will not compile, as z IS int, not string
+##### A quick glance at `var` 
 
+This `var` is nothing but a shorthand for defining types, also called implicit typing. They are still statically and strongly typed at compile time, only thing is the type is inferred by compiler at declaration.
+
+```cs
+var x; //not allowed, it must be initialized
+var z = 3; //z is inferred to be int
+z = "woohoo"; //will not compile, as z IS int, not string
+var y = null; //doesn't compile as the type cannot be inferred
+```
+
+#### Now we'll see `dynamic` in action.
+
+```cs
 dynamic x = 3;
 x = "jassala"; //allowed, as different data types can be stored in dynamic
 x = 0.5; //same as above
-x += "ekigo"; //works fine and produces "0.5ekigo"
-x = new Temp(); //works, obviously
+x += "hello"; //works fine and produces "0.5hello"
+x = new Demo(); //works, obviously
 x = x.GetId(); //compiles fine, as no check is done at compile time. Runs fine as well, as the code is right
 x = x.GetWhatIsNotThere(); //still compiles, BUT throws RuntimeBinderException: ''string' does not contain a definition for 'GetWhatIsNotThere''
+```
 
+In the last line, the code still compiles - because compiler skips all the checks for variable declared to be dynamic!
+
+#### The same code with `object`
+
+```cs
 object y = 3; //to show difference with object
 y = "jassala"; //compiles and runs, as all types are still objects
 y = 0.5; //same
-y += "ekigo"; //same, produces "0.5ekigo"
-y = new Temp(); //same
+y += "hello"; //same, produces "0.5hello"
+y = new Demo(); //works, for same reason
 y = y.GetId(); //DIFFERENCE: This gives compile error, as object does not have a definition of GetId
-y = y.GetWhatIsNotThere(); //same
+y = y.GetWhatIsNotThere(); //DOESN'T compile for same reason
+```
+
+#### `dynamic` in method return
+This is for illustration only. Understand how unsafe and unpredictable the code can be. _Do NOT try this at home or work_ unless you unerstand exactly what you are doing.
+
+```cs
+public dynamic DynamicMethod(string s)
+{
+    dynamic result;
+    try
+    {
+        int num;
+        int.TryParse(s, out num);
+        result = num;
+    }
+    catch (Exception ex)
+    {
+        result = ex;
+    }
+    return result;
+}
 ```
