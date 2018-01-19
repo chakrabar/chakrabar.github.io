@@ -5,6 +5,8 @@ date: 2017-11-14
 tags: [tech, tips, notes code-demo]
 excerpt: "A quick introduction to dynamic in C# and comparison with var and object keywords."
 categories: articles
+share: true
+modified: 2018-01-19T08:11:53-04:00
 ---
 
 

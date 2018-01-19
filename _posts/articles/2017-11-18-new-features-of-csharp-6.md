@@ -4,6 +4,8 @@ title: "Features demo of C# 6"
 date: 2017-11-18
 tags: [tech, tips, notes, code-demo]
 categories: articles
+share: true
+modified: 2018-01-19T08:11:53-04:00
 ---
 
 
