@@ -14,11 +14,11 @@
 - [x] Most used C# 6 features
 - [x] Most used C# 7 features
   - [ ] 7.1 & 7.2 features
-- [ ] CHange the site theme from 'Architect', it does suck
+- [wip] CHange the site theme from 'Architect', it does suck - to so-simple-theme
   - [ ] Code formatting is pure bad, very hard to read
   - [ ] I don't like the headers and general font color as well!
 - [ ] Use disqus comments
-- [ ] Create travel section
+- [ ] Create TRAVEL/BLOG section
   - [ ] Create new category and sub section in site
   - [ ] Use different theme/styling
 
