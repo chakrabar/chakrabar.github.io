@@ -67,14 +67,14 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-watch');
-  grunt.loadNpmTasks('grunt-contrib-imagemin');
+  //grunt.loadNpmTasks('grunt-contrib-imagemin'); //arghya to skip imagemin errors
   grunt.loadNpmTasks('grunt-svgmin');
 
   // Register tasks
   grunt.registerTask('default', [
     'clean',
     'uglify',
-    'imagemin',
+    //'imagemin', //arghya to skip imagemin errors
     'svgmin'
   ]);
   grunt.registerTask('dev', [

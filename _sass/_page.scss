@@ -347,3 +347,20 @@ span + .entry-title {
 		vertical-align: middle;
 	}
 }
+
+
+//arghya - added styles
+.matt-red {
+	color: crimson;
+}
+.back-to-top { 
+	margin: 0;	 
+	position: fixed;	 
+	top: 10px;
+	right: 10px;
+	z-index: 100;	 
+	display: none;
+	padding: 6px 10px; //overriding btn padding
+	opacity: 0.5;
+    filter: alpha(opacity=50); /* For IE8 and earlier */
+}

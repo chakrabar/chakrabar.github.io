@@ -1,4 +1,4 @@
-## Trying to add a remote github theme
+## Adding a remote github theme
 
 https://help.github.com/articles/adding-a-jekyll-theme-to-your-github-pages-site/
 https://github.com/benbalter/jekyll-remote-theme
@@ -113,3 +113,38 @@ Configuration file: C:/Arghya/Repos/chakrabarso_with_ssTheme/_config.yml
     Server address: http://127.0.0.1:9999
   Server running... press ctrl-c to stop.
 ```
+
+## Customizing the theme
+
+#### Adding css
+
+* Add css under _sass/_page.scss or other file as necessary. They'll be available afetr build.
+
+#### Adding js
+
+Custom `js` can be added to `assets/js/_main.js`, which gets minifed and bundled with other `js` files into `assets/js/scripts.min.js`.
+
+Now, just adding to the `_main.js` will not update the site js. The `grunt` build needs to be run. For that, we need the following
+
+* `npm` needs to be installed - use Windows installer from [npm](https://nodejs.org/en/)
+* All npm dependencies needs to be installed
+  * The dependencies are listed in `package.json`
+  * To install them, run `$ npm install`
+  * can be checked through `$ npm list -g`
+* The [grunt](http://gruntjs.com/getting-started) cli needs to be installed
+  * Run `$ npm install -g grunt-cli`
+
+With these, we are ready to run the `grunt` tasks, which are listed in
+  * File `Gruntfile.js`
+
+If there are errors running the `grunt` task `imagemin` (see below), try fixing with Google help, or the links
+  * [Github link](https://github.com/imagemin/imagemin/issues/216)
+  * [SO link](https://stackoverflow.com/questions/19906510/npm-module-grunt-contrib-imagemin-not-found-is-it-installed)
+  * For me, nothing worked, so I commented out imagemin tasks from `Gruntfile.js`. So my images are not optimized
+
+Now, finally run the `grunt` tasks, which will update `assets/js/scripts.min.js`
+$ grunt
+
+Then do the usual 
+* `bundle exec jekyll build`
+* `bundle exec jekyll serve --port 1234`
