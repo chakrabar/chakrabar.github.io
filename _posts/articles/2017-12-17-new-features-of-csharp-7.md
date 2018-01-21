@@ -2,7 +2,7 @@
 layout: post
 title: "Features demo of C# 7.0"
 date: 2017-12-17
-tags: [tech, tips, notes, code-demo]
+tags: [tech, tips, C#, .net, code-demo]
 categories: articles
 share: true
 modified: 2018-01-19T08:11:53-04:00
@@ -420,7 +420,7 @@ public void NumericLiteralDemo()
 ```
 
 
-It'll be good idea to copy-paste the whole code, call the methods and debug. You can run all the snippets above by wrapping them inside a code like below
+It'll be good idea to copy-paste the whole code, call the methods and debug. You can run all the snippets above by wrapping them inside a code like this
 ```cs
 using System;
 using System.Collections.Generic;
