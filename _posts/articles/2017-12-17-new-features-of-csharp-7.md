@@ -2,7 +2,7 @@
 layout: post
 title: "Features demo of C# 7.0"
 date: 2017-12-17
-tags: [tech, tips, C#, .net, code-demo]
+tags: [tech, tips, .net, csharp, code-demo]
 categories: articles
 share: true
 modified: 2018-01-19T08:11:53-04:00
