@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "Features demo of C# 6"
+excerpt: "A quick glance at the new capabilities of C# 6 with code-demo"
 date: 2017-11-18
 tags: [tech, tips, dotnet, csharp, code]
 categories: articles

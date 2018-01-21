@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "Features demo of C# 7.0"
+excerpt: "A quick glance at the new capabilities of C# 7.0 with code-demo"
 date: 2017-12-17
 tags: [tech, tips, dotnet, csharp, code]
 categories: articles

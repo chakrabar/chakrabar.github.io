@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "Comparison of serialization in .Net"
+excerpt: "A quick statistical comparison of popular serialization techniques in .Net"
 date: 2017-11-06
 tags: [tech, tips, dotnet, csharp, code]
 categories: articles
@@ -39,7 +40,7 @@ NOTE #1: Not all serializations are equally **_code friendly_**. What I mean her
 - JSON: No customization needed as such
 - XML: Based on the nature of data and desired format of output XML, it may need some XML specific annotations. Also, there are constraints like, Dictionary<TKey, TData> doesn't work out of the box.
 - Protocol Buffer: It's mandatory to decorate the class and each property with annotation and ProtoMember unique integer.
-- Binary Formatter: All the classes involved, needs a Serializable attribute.
+- Binary Formatter: All the classes involved, needs a `Serializable` attribute.
 
 NOTE #2: Consider how **_platform agnostic_** they are how easily usable across all major technology stack.
 - XML is pretty much platform independent.
