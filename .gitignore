@@ -9,6 +9,7 @@ packages/
 *.user
 # === for GitHub pages ===
 _site/
+package-lock.json
 # === jekyll SS theme ===
 *.sublime-project
 *.sublime-workspace
