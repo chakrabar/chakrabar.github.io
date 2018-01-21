@@ -355,7 +355,9 @@ span + .entry-title {
 }
 .back-to-top { 
 	margin: 0;	 
-	position: fixed;	 
+	position: fixed;
+	-webkit-backface-visibility: hidden; //attempt to fix visibility issue on mobile browser
+	backface-visibility: hidden;
 	top: 10px;
 	right: 10px;
 	z-index: 100;	 
