@@ -2,7 +2,7 @@
 layout: post
 title: "Showing build details on .Net web page"
 date: 2017-11-10
-tags: [tech, tips, .net, csharp, code-demo]
+tags: [tech, tips, dotnet, csharp, code]
 categories: articles
 ---
 

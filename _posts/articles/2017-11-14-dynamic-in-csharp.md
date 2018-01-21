@@ -2,7 +2,7 @@
 layout: post
 title: "Dynamic in C#"
 date: 2017-11-14
-tags: [tech, tips, .net, csharp, code-demo]
+tags: [tech, tips, dotnet, csharp, code]
 excerpt: "A quick introduction to dynamic in C# and comparison with var and object keywords."
 categories: articles
 share: true

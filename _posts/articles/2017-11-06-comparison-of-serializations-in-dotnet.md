@@ -2,7 +2,7 @@
 layout: post
 title: "Comparison of serialization in .Net"
 date: 2017-11-06
-tags: [tech, tips, .net, csharp, code-demo]
+tags: [tech, tips, dotnet, csharp, code]
 categories: articles
 share: true
 modified: 2017-11-18T22:30:53-04:00

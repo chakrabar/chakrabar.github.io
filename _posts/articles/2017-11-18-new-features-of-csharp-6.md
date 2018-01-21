@@ -2,7 +2,7 @@
 layout: post
 title: "Features demo of C# 6"
 date: 2017-11-18
-tags: [tech, tips, .net, csharp, code-demo]
+tags: [tech, tips, dotnet, csharp, code]
 categories: articles
 share: true
 modified: 2018-01-19T08:11:53-04:00
@@ -36,7 +36,7 @@ There are no theoretical or academic details here. If you are interested in them
 ### So, here you go
 
 ```cs
-public class DemoType
+public class DemoType //A demo class that we'll be
 {
     public string Name { get; set; }
     public int Count { get; set; }
@@ -47,87 +47,130 @@ public class DemoType
 }
 ```
 
+#### [1] Auto read-only property
+* Makes a read-only property, that can be set ONLY in constructor or initializer
+* Earlier, declaring only get accessor was not allowed, `private set;` was allowed though
+
 ```cs
-//1. Auto read-only property
-//Makes a read-only property, that can be set ONLY in constructor or initializer
-//Earlier, declaring only get accessor was not allowed, private set; was allowed though
 public string ReadOnlyProperty { get; } //See [3] for an alternative syntax
 //constructor can Set ReadOnlyProperty
 public CSharp6()
 {
     ReadOnlyProperty = "Value";
 }
+```
 
-//2. Auto property initializer
-//Set initial value of properties in declaration with an assignment sign
+#### [2] Auto property initializer
+* Set initial value of properties in declaration with an assignment sign
+
+```cs
 public int AutoInitializedProperty { get; set; } = 10;
-public IList<decimal> AutoInitializedListProperty { get; } = new List<decimal>(); //Read-only properties can also be initialized
-public Func<string, string> WelcomeMessageGeneratorProp { get; set; } = (name) => $"Welcome {name}."; //See Expression-bodied function & String Interpolation        
+//Read-only properties can also be initialized
+public IList<decimal> AutoInitializedListProperty { get; } = new List<decimal>();
+//See Expression-bodied function & String Interpolation below
+public Func<string, string> WelcomeMessageGeneratorProp { get; set; } = (name) => $"Welcome {name}.";
+```     
 
-//3. Expression-bodied functions
-//Shorten code for simple Methods or Read-Only Properties with lambda expressions
+#### [3] Expression-bodied functions
+* Shorten code for simple Methods or Read-Only Properties with lambda expressions
+
+```cs
 public int DoubleOf(int num) => 2 * num;
 //Another representation of read-only property
-public string AnotherReadonlyProp => "Hello there"; //[1] Alternative syntax
+public string AnotherReadonlyProp => "Hello there";
+//[1] Alternative syntax
+```
 
-//4. Using static
-//Import static methods of a class by declaring - using static Namespace.Class;
-//After that use all the STATIC methods directly wothout mentioning class-name
+#### [4] Using static
+* Import static methods of a class by declaring - using static Namespace.Class;
+* After that use all the STATIC methods directly wothout mentioning class-name
+
+```cs
 void SomeMethod()
 {
-    var cuteMessage = AddSmiley("Hello devs"); //class-name not used, like - SomeUtility.AddSmiley("Hello devs");
+    //class-name not used, like - SomeUtility.AddSmiley("Hello devs");
+    var cuteMessage = AddSmiley("Hello devs");
 }
-//Note a: This way imported methods can only be used as static methods, not as extensions - even if they are
-//Note b: When a class is imported like this, nested classes are also imported
+```
 
-//5. Null-conditionals OR null-propagation operators
-//When this (.?) is used, compiler will always check for null before invoking the next member. If null is encountered, null is returned as result
+* **Note 1:** This way imported methods can only be used as static methods, not as extensions - even if they are
+* **Note 2:** When a class is imported like this, nested classes are also imported
+
+#### [5] Null-conditionals OR null-propagation operators
+* When this (.?) is used, compiler will always check for null before invoking the next member. If null is encountered, null is returned as result
+
+```cs
 void NullDemoMethod()
 {
     DemoType demoObject = null;
-    var name = demoObject.Name; //this will throw null reference exception as DemoProperty is null
-    var name2 = demoObject?.Name; //Now if left hand side of ?. is null, null will be set as final value
-    //var result = SomeObject?.Details?.Address?.City; //like this, null check is performed and propagated. Any null will result in null being returned.
-    var safeName = demoObject?.Name ?? "No name"; //setting default value with null coalescing operator
-    int count = demoObject?.Count ?? 0; //here, since left side is not-nullable, it MUST be given a default value TO COMPILE
-}
-//Note: With null conditional operator, the expression is EVALUATED JUST ONCE AND CACHED. So it wil not face a situation where the check has reached 
-//nth level and then some other code sets (n-1)th part to null. It will still work as it has been cached already. Really helpful for delegate invokation.
+    //this will throw null reference exception as DemoProperty is null
+    var name = demoObject.Name; 
+    //Now if left hand side of ?. is null, null will be set as final value
+    var name2 = demoObject?.Name;
+    //like this, null check is performed and propagated. Any null will result in null being returned.
+    //var result = SomeObject?.Details?.Address?.City; 
 
-//6. String interpolation
-//New syntax for string formatting. String expression is prefixed with $, then variables/expressions are placed within {braces}
-//Functionally replaces (still available though) String.Format. 
+    //setting default value with null coalescing operator
+    var safeName = demoObject?.Name ?? "No name"; 
+    //here, since left side is not-nullable, it MUST be given a default value TO COMPILE
+    int count = demoObject?.Count ?? 0; 
+}
+```
+
+* **Note:** With null conditional operator, the expression is EVALUATED JUST ONCE AND CACHED. So it wil not face a situation where the check has reached `nth` level and then some other code sets `(n-1)th` part to `null`. It will still work as it has been cached already. Really helpful for delegate invokation.
+
+#### [6] String interpolation
+* New syntax for string formatting. String expression is prefixed with `$`, then variables/expressions are placed within `{braces}`
+* Functionally a better alternative (still available though) for `String.Format`
+
+```cs 
 void StringFormattingDemo()
 {
     var obj = new DemoType { Name = "AC", Count = 10 };
-    var messageOld = string.Format("Name is {0}, count is {1}", obj.Name, obj.Count); //old style formatting with positional parameters - still works
-    var messageNew = $"Name is {obj.Name}, count is {obj.Count}"; //New cool syntax. Intellisense works fine within string expression
-    var itsCool = $"Name starts with {obj.Name.Take(1)}. Percentage: {(obj.Count / 100):F2}"; //takes any expression and string formatting too!
-}
+    //old style formatting with positional parameters - still works
+    var messageOld = string.Format("Name is {0}, count is {1}", obj.Name, obj.Count); 
 
-//7. Exception filters
-//You can now filter catch blocks with conditions. Only when the condition (and Exception type) matches, the block will execute. Else, skip.
-//Condition is checked before entering block. If none of the catch blocks match (Exception type + condition), program skips all and throws.
+    //New cool syntax. Intellisense works fine within string expression
+    var messageNew = $"Name is {obj.Name}, count is {obj.Count}"; 
+    //takes any expression and string formatting too!
+    var itsCool = $"Name starts with {obj.Name.Take(1)}. Percentage: {(obj.Count / 100):F2}"; 
+}
+```
+
+#### [7] Exception filters
+* You can now filter `catch` blocks with conditions. Only when the condition (and Exception type) matches, the block will execute. Else, skip.
+* Condition is checked before entering block. If none of the catch blocks match (Exception type + condition), program skips all and throws.
+
+```cs
 void ExceptionFilterDemo()
 {
-    var obj = new DemoType { Name = "AC", Count = 10 }; //assume it is done in some other code
+    //assume obj is set in some other code
+    var obj = new DemoType { Name = "AC", Count = 10 };
     try
     {
         var message = $"The initial is - {obj.Name.First()}";
     }
-    catch (NullReferenceException ex) when (obj == null) //will NOT execute if obj.Name is null
+    //this catch will NOT execute if obj.Name is null
+    catch (NullReferenceException ex) when (obj == null)
     {
         Log("Told you to populate the object first");
-    }
-    //NOTE: Interesting, if obj.Name is null, stack will show original ex thrown in original point, as execution never reached the catch block.
+    }    
 }
+```
 
-void Log(string msg) { } //dummy log methods
+* **NOTE:** Interesting, if `obj.Name` is `null`, stack will show original `Exception` thrown in original point, as execution never reached the catch block.
+
+Following dummy log methods are used in following code samples
+```cs
+void Log(string msg) { } 
 public async Task LogAsync(Exception ex) { await Task.Delay(2000); }
+```
 
-//8. nameof() Expressions
-//Gets you the simple (unqualified) string name of a variable, type, or member.
-//The basic idea is to use an expressions rather than a hard-coded string value, so that code survives through refactorin/rename
+#### [8] nameof() Expressions
+* Gets you the simple (unqualified) string name of a variable, type, or member.
+* The basic idea is to use an expressions rather than a hard-coded string value, so that code survives through refactorin/rename
+
+```cs
 public void NameofDemo()
 {
     var obj = new DemoType { Name = "AC", Count = 10 };
@@ -135,15 +178,23 @@ public void NameofDemo()
     var n1 = nameof(obj); //produces "obj"
     var n2 = nameof(obj.Name); //produces "Name"
     var n3 = nameof(DemoType); //produces "DemoType"
-    //var n4 = nameof(obj.GetType()); //Compile error: Expression does not have a name
-    //var n5 = nameof(typeof(DemoType)); //Compile error: Expression does not have  a name
+    //Compile error: Expression does not have a name
+    //var n4 = nameof(obj.GetType());
+    //Compile error: Expression does not have  a name
+    //var n5 = nameof(typeof(DemoType));
+    
     //sample use case
-    Log($"Value of {obj.Name} was null"); //Upgrade from hard coded "Name" in log message "Value of Name was null"
-    //Note the huge benefit here - if name of Name property is changed, the log message will automatically be updated!
+    //Upgrade from hard coded "Name" in log message "Value of Name was null"
+    Log($"Value of {obj.Name} was null");    
 }
+```
 
-//9. Await in Catch & Finally blocks
-//Now await can be used in finally as well as catch blocks
+* **Note** the huge benefit here - if name of `Name` property is changed, the log message will automatically be updated! Or throw error in compile time.
+
+#### [9] Await in Catch & Finally blocks
+* Now await can be used in `catch` & `finally` blocks as well
+
+```cs
 public async void AwaitDemo()
 {
     try
@@ -152,12 +203,16 @@ public async void AwaitDemo()
     }
     catch (Exception exception)
     {                
-        await LogAsync(exception); //Catch operation also can be async now!!
+        //Async catch //can be in finally too
+        await LogAsync(exception);
     }
 }
+```
 
-//10. Index initializers
-//C#6 introduces initializing indexed collections and dictionaries like lists
+#### [10] Index initializers
+* `C# 6` introduces initializing indexed collections and dictionaries like lists
+
+```cs
 public void IndexInitializerDemo()
 {
     Dictionary<int, string> students = new Dictionary<int, string>
@@ -172,21 +227,27 @@ public void IndexInitializerDemo()
         {5, "Neha" },
         {8, "Vikas" }
     };
-    //Well, functionally they are very similar. There is a inherent difference though
-    //The old syntax uses the 'Add' method on the Type whereas the new syntax actually uses the indexer
+    //Understand the differences below    
 }
-//Note: If you have a custom collections that does not have an Add() method, you can create an extension method and use collection initializers.
-
-//REMOVED feature - Primary constructor
-//Idea was to define constructor parameters with class declaration. It was never released.
-//public class CoolNew (string name, int code)
-//{
-//    public string AreaName { get; set; } = name;
-//    public int AreaCode { get; } = code;
-//}
 ```
 
-It'll be good idea to copy-paste the whole code, call the methods and debug. You can run all the snippets above by wrapping them inside a code like this
+* Well, functionally the old and new syntax above are similar. There is a inherent difference though
+* The old syntax uses the `Add` method on the Type whereas the new syntax actually uses the `indexer`
+* **Note:** If you have a custom collections that does not have an `Add()` method, you can now create an extension method and use collection initializers.
+
+#### One **REMOVED feature** - Primary constructor
+* Idea was to define constructor parameters with class declaration. It was never released.
+
+```cs
+public class CoolNew (string name, int code)
+{
+    public string AreaName { get; set; } = name;
+    public int AreaCode { get; } = code;
+}
+```
+
+
+It'll be good idea to copy-paste the whole code, call the methods and debug, to understand them better. You can run all the snippets above by wrapping them inside a code like this
 
 ```cs
 using System;
