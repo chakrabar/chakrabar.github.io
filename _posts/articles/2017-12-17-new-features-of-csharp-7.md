@@ -65,15 +65,18 @@ public void OutRefBasic()
 ```cs
 public void OutInitializationDemo()
 {
+    //the variable can be used normally as if it was declared before
     var isStringAnInteger = int.TryParse("0100", out int result); 
-    //Alternatively, out var result - also works
+    //The implicit type var will also work in above statement
     if (isStringAnInteger)
         Log($"The number is {result}"); 
-    //the variable can be used normally as if it was declared before calling
+    //Alternative 
+    if (int.TryParse("0100", out int result2))
+        Log($"The number is {result2}"); 
 }
 ```
 
-* **Note:** `if (int.TryParse("0100", out int result))` is a more cleaner way to write it. When used like this, the declaration "leaks" into outer scope of the `if-statement`.
+* **Note:** The alternative syntax for `int.TryParse` is a more cleaner way to write it. When used like this, the declaration "leaks" into outer scope of the `if-statement`, so it can still be used outside the `if` block.
 
 #### [2] Tuple enhancements
 * Tuples are light-weight data structures that can be declared/created inline and used to return multiple values
