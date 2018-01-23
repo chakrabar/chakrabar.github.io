@@ -186,7 +186,7 @@ public void NameofDemo()
     
     //sample use case
     //Upgrade from hard coded "Name" in log message "Value of Name was null"
-    Log($"Value of {obj.Name} was null");    
+    Log($"Value of {nameof(obj.Name)} was null");    
 }
 ```
 
@@ -248,7 +248,7 @@ public class CoolNew (string name, int code)
 ```
 
 
-It'll be good idea to copy-paste the whole code, call the methods and debug, to understand them better. You can run all the snippets above by wrapping them inside a code like this
+So that's all we had for today. It'll be good idea to copy-paste the whole code, call the methods and debug, to understand them better. You can run all the snippets above by wrapping them inside a code like this
 
 ```cs
 using System;

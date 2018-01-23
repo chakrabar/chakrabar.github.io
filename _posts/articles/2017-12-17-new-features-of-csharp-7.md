@@ -17,9 +17,9 @@ modified: 2018-01-19T08:11:53-04:00
 
 If you are familiar with `C# 6` but not `C# 7`, this will help you catch up quickly. **If you are not not comfortable with `C# 6` yet, go and read the** [features demo of C# 6](/articles/new-features-of-csharp-6) **article first.**
 
-There are no theoretical or academic details here. If you are interested in them, there are tons of resources in MSDN and all over internet, just do your reserach. This article will directly introduce you to some of the most useful features of C# 7 in a code & code-only manner (with a bit of explanation in the comments). 
+There are no theoretical or academic details here. If you are interested in them, there are tons of resources in MSDN and all over internet, just do your reserach. This article will directly introduce you to some of the most useful features of `C# 7` in a code & code-only manner (with a bit of explanation in the comments). 
 
-C# 7 does not add a lot of new framework features (like LINQ or Async-Await), but builds on top of C# 6 to give a set of new, impressive language constructs. Apatrt from making the laguage easier to read and write, it also makes C# little more closer to functional languages. Some of the new concepts and constructs might take a while to wrap your head around them (new Tuples, Pattern Matching, ref return etc.), so it's recommended that you do more research and write some code on your own to get familiar with them.
+`C# 7` does not add a lot of new framework features (like `LINQ` or `Async-Await`), but builds on top of `C# 6` to give a set of new, impressive language constructs. Apatrt from making the laguage easier to read and write, it also makes `C#` little more closer to functional languages. Some of the new concepts and constructs might take a while to wrap your head around them (new Tuples, Pattern Matching, ref return etc.), so it's recommended that you do more research and write some code on your own to get familiar with them.
 
 ## These new stuffs are covered in code below
 
@@ -39,13 +39,16 @@ C# 7 does not add a lot of new framework features (like LINQ or Async-Await), bu
 
 ### So, here we go
 
+A quick recap - usage of `ref` & `out`. And a dummy log method to be used later
+
 ```cs
 //dummy log methods for sample
 void Log(string msg) { }
 
-//quick recap - usage of ref & out
-public void MethodWithRef(ref string str) { } //ref parameter may not be assigned inside, that argument must be initialized before call
-public void MethodWithOut(out string str) { str = "whatever"; } //out parameter must get assigned inside, that argument may not be initialized before
+//ref parameter may not be assigned inside, that argument must be initialized before call
+public void MethodWithRef(ref string str) { } 
+//out parameter must get assigned inside, that argument may not be initialized before
+public void MethodWithOut(out string str) { str = "whatever"; } 
 
 public void OutRefBasic()
 {
@@ -57,23 +60,25 @@ public void OutRefBasic()
 ```
 
 #### [1] Inline initialization of out parameter
-* out variables can be declared inline in the method call statement, with specific type or var. 
+* `out` variables can be declared inline in the method call statement, with specific type or `var`. 
 
 ```cs
 public void OutInitializationDemo()
 {
-    var isStringAnInteger = int.TryParse("0100", out int result); //This. out var result - also works
+    var isStringAnInteger = int.TryParse("0100", out int result); 
+    //Alternatively, out var result - also works
     if (isStringAnInteger)
-        Log($"The number is {result}"); //the variable can be used normally as if it was declared before calling
-    //if (int.TryParse("0100", out int result)) is a more cleaner way to write it
-    //When used like this, the declaration "leaks" into outer scope of the if-statement
+        Log($"The number is {result}"); 
+    //the variable can be used normally as if it was declared before calling
 }
 ```
 
+* **Note:** `if (int.TryParse("0100", out int result))` is a more cleaner way to write it. When used like this, the declaration "leaks" into outer scope of the `if-statement`.
+
 #### [2] Tuple enhancements
 * Tuples are light-weight data structures that can be declared/created inline and used to return multiple values
-* C# 7 makes tuples more of a first-class citizen with cleaner syntax, named-elements
-* This needs System.ValueTuple NuGet, which comes by default in .NET Framework 4.7, .NET Core 2.0, .NET Standard 2.0
+* `C# 7` makes tuples more of a first-class citizen with cleaner syntax, named-elements & more
+* This needs `System.ValueTuple` NuGet, which comes by default in .NET Framework 4.7, .NET Core 2.0, .NET Standard 2.0
 * Even though public methods can return tuple, it's recommended to be used with private/internal only
 
 ```cs
@@ -82,22 +87,26 @@ public void TupleDemo()
     //OLD syntax, still valid
     var tuple1 = Tuple.Create("str", 1); //this is a Tuple<string, int>
     var tuple2 = new Tuple<string, int>("str", 1);
-    var str1 = tuple2.Item1; //elements are auto-named as Itemn, which cannot be changed
+    //elements are auto-named as Itemn, which cannot be changed
+    var str1 = tuple2.Item1; 
 
     //NEW syntax
     var tuple3 = ("str", 1); //Install System.ValueTuple NuGet, if required
     string item1 = tuple3.Item1; //Item1 since no name was given
 
     //Tuples with NAMED elements
-    //IMportant - these names exist in compile time only. They cannot be fetched e.g. through Reflection in runtime
+    //IMportant - these names exist in compile time only. 
+    //They cannot be fetched e.g. through Reflection in runtime
     (string Name, int Id) tuple4 = ("name", 1);
     var name = tuple4.Name;
     var tuple5 = (ObjeName: "yoyo", ObjId: 3);
     var id = tuple5.ObjId;
 
     //Something that might create confusion. This works, but shows warning.
-    (string FirstName, string LastName) tuple6 = (Ignored1: "fname", Ignored2: "lname"); //shows green squiggly lines for warning!
-    //here, the names "Ignored1" & "Ignored2" will be ignored as "FirstName" & "LastName" will get precedence as target type
+    (string FirstName, string LastName) tuple6 = (Ignored1: "fname", Ignored2: "lname"); 
+    //the above shows green squiggly lines for warning!
+    //here, the names "Ignored1" & "Ignored2" will be ignored as 
+    //"FirstName" & "LastName" will get precedence as target type
     var firstName = tuple6.FirstName; //tuple6.Ignored1 does NOT exist
 
     //Something even less expeted!
@@ -110,7 +119,8 @@ public void TupleDemo()
 ##### [2.1] Example of new syntax - method returning tuple
 
 ```cs
-public (char first, char last) GetEndCharacters(string input) //names of the return fields does not matter, they are just variable names
+//names of the return fields does not matter, they are just variable names
+public (char first, char last) GetEndCharacters(string input)
 {
     if (string.IsNullOrEmpty(input))
         throw new ArgumentException($"Parameter {nameof(input)} cannot be null or empty!");
@@ -135,7 +145,7 @@ public void TupleDeconstructionDemo()
 * Like CONSTRUCTOR assembles multiple pieces of data into one structure, DECONSTRUCTOR breaks a structure into multiple data elements :)
 
 ##### [2.3] Deconstruction of user defined types
-* Needs to declare Deconstruct() method(s) with out parameters, for as many elments it needs to be deconstructed to
+* Needs to declare `Deconstruct()` method(s) with out parameters, for as many elments it needs to be deconstructed to. There can be multiple versions of this in a class.
 
 ```cs
 public class CoolClass
@@ -143,29 +153,34 @@ public class CoolClass
     public string Name { get; set; }
     public int Id { get; set; }
 
-    public CoolClass(string name, int id) => (Name, Id) = (name, id); //Constructor //see [7] expression bodied fucntions enhancements
+    //Constructor //see [7] expression bodied fucntions enhancements
+    public CoolClass(string name, int id) => (Name, Id) = (name, id);
 
-    public void Deconstruct(out string name, out int id) => (name, id) = (Name, Id); //Deconstructor
+    //Deconstructor - new kid on the block
+    public void Deconstruct(out string name, out int id) => (name, id) = (Name, Id);
 
-    ~CoolClass() { } //Destructor - For visual comparison only (Use in real code only to clean managed resources)
+    //Destructor - For visual comparison (Use in real code only to clean managed resources)
+    ~CoolClass() { }
 }
 ```
 
-* With the Deconstructor() method present in a Type, it can be directly deconstructed (assigned to set of variables)
+* With the `Deconstruct()` method present in a Type, it can be directly deconstructed (assigned to set of variables)
 
 ```cs
 public void UserDefinedTypeDeconstructorDemo()
 {
     var cool = new CoolClass("cool", 5);
-    (string name, int id) = cool; //well, isn't it really cool? Basically it's being assigned to two variables
-    var (coolName, coolId) = cool; //another approach for the same!
+    //well, isn't it really cool? Basically it's being assigned to two variables
+    (string name, int id) = cool; 
+    //another approach for the same!
+    var (coolName, coolId) = cool; 
 }
 ```
 
 #### [3] Discards 
 * Discards are a variable (denoted with _) to receive all the throw-away-ble values that you do not care about.
 * Discards are write-only variable, they cannot be read from or used in any other way. They're basically a bin for collecting all unimportant values.
-* The _ variable does not need a definition and one variable can take many values, all at once. Mostly used in deconstruction, out variables etc.
+* The `_` variable does not need a definition and one variable can take many values, all at once. Mostly used in deconstruction, out variables etc.
 
 ```cs
 public (char fisrt, char last, int length, bool hasNumeric) GetDetails(string input)
@@ -176,27 +191,36 @@ public (char fisrt, char last, int length, bool hasNumeric) GetDetails(string in
 }
 public void DiscardDemo()
 {
-    var (_, _, length, _) = GetDetails("My string"); //Here I'm only interested in length, so I DISCARD other values
-    var isTooLong = length > 100; //this works, obviously. BUT _ cannot be used anymore to retrieve values   
-    //string something = _.ToString(); //DOES NOT work. _ is write-only & non-usable otherwise
-    _ = isTooLong.ToString(); //This works fine. This is again reuse of discard
+    //Here I'm only interested in length, so I DISCARD other values
+    var (_, _, length, _) = GetDetails("My string");
+    //the following works, obviously. BUT _ cannot be used anymore to retrieve values
+    var isTooLong = length > 100;
+    //this DOES NOT work. _ is write-only & non-usable otherwise
+    //string something = _.ToString();
+    //This works fine. This is again reuse of discard
+    _ = isTooLong.ToString(); 
 }
 ```
 
-* If you have your own _ variable for real use, be careful not to confuse the two!
+* If you have your own `_` variable for real use, be careful not to confuse the two!
 
 ```cs
 public void DiscardAndLocalVariableDemo()
 {
-    string _ = "my value"; //a local variable with name _ , this is not a discard
-    var (_, _, length, _) = GetDetails("My string"); //these are discards
-    var message = $"Value of local _ is : {_}"; //This works. Here _ is the local variable
+    //a local variable with name _ , this is not a discard
+    string _ = "my value";
+    //these are discards
+    var (_, _, length, _) = GetDetails("My string");
+    //This works. Here _ is the local variable
+    var message = $"Value of local _ is : {_}"; 
 }
 ```
 
 #### [4] Pattern matching (or conditional algorithms, in my words :)
 * Pattern matching lets you write powerful, compact code that can work on different Type & values of data
-* At some level this is like overloading functions, but more Non-OO way. It's [1]Only one function [2]Does not need a class hierarchy
+* At some level this is like overloading functions, but more Non-OO way. It's 
+  1. Only one function 
+  2. Does not need a class hierarchy
 * Basically you write (enhanced) IF & SWITCH statements that controls program flow based on "pattern" of data
 * In if-statement, pattern is checked with 'is', which works with both reference & value types
 * If the pattern matches, variables is cast and assigned to a new variable. Scope of the variable is only the associated code block.
@@ -209,7 +233,8 @@ public static int PatternMatchingWithIf_Sum(IEnumerable<object> values)
     var sum = 0;
     foreach (var item in values)
     {
-        if (item is int val) //THIS IS BEING CAST AND REASSIGNED TO NEW VARIABLE, IF MATCH FOUND
+        //THIS IS BEING CAST AND REASSIGNED TO NEW VARIABLE, IF MATCH FOUND
+        if (item is int val)
             sum += val;
         else if (item is IEnumerable<object> subList)
             sum += PatternMatchingWithIf_Sum(subList);
@@ -232,22 +257,29 @@ public static int PatternMatchingWithSwitch_Sum(IEnumerable<object> values)
     {
         switch (item)
         {
-            case 0: //specific integer value
+            //specific integer value
+            case 0:
                 break;
-            case int val: //more general integer case //notice the variable re-assignment
+            //more general integer case //notice the variable re-assignment
+            case int val:
                 sum += val;
                 break;
-            case CoolClass cool: //case of some other type //summation is hypothetical
+            //case of some other type //summation is hypothetical
+            case CoolClass cool:
                 sum += cool.Id;
                 break;
-            case IEnumerable<object> subList when subList.Any(): //specific enumrable WITH WHEN
+            //specific enumrable WITH WHEN
+            case IEnumerable<object> subList when subList.Any():
                 sum += PatternMatchingWithSwitch_Sum(subList);
                 break;
-            case IEnumerable<object> subList: //more generic enumerable, we know it has no elements
+            //more generic enumerable, we know it has no elements
+            case IEnumerable<object> subList:
                 break;
-            case null: //we handle null because we do not want to break on null
+            //we handle null because we do not want to break on null
+            case null:
                 break;
-            default: //if none of the above matches, something's unexpected
+            //if none of the above matches, something's unexpected
+            default:
                 throw new InvalidOperationException($"Unexpected type was passed to {nameof(PatternMatchingWithSwitch_Sum)} function");
         }
     }
@@ -257,7 +289,7 @@ public static int PatternMatchingWithSwitch_Sum(IEnumerable<object> values)
 
 #### [5] Ref locals and returns
 * This gives C# the ability to return reference to internal storage from a method, and store them in a variable and use in somewhat pass-by-reference way.
-* This does not involve [unsafe] code with bare pointers. The design and syntax saves developers from possible misuses.
+* This does not involve `unsafe` code with bare pointers. The design and syntax saves developers from possible misuses.
 * The aim is to give a way to update values remotely (outside method) without the overhead of de-referencing, copying and obtaining a place holder.
 * Another way to think of 'ref locals' is as 'aliases', as if the variable and original items are one thing with two different names! (- Eric Lippert)
 * To use, simply use 'ref returnType' in declaration & 'ref return' from a method. Get the refernce outside with a ref local (e.g. ref int) variable.
@@ -286,7 +318,9 @@ public (int x, int y) GetMaxValuePosition_Old(int[,] matrix)
 ```cs
 public void UseMethod_Old()
 {
-    int[,] array = new int[,] { { 1, 2, 3 }, { 3, 4, 5 }, { 5, 6, 7 }, { 7, 8, 9 } }; //a 3x4 matrix
+    int[,] array = new int[,] { 
+        { 1, 2, 3 }, { 3, 4, 5 }, { 5, 6, 7 }, { 7, 8, 9 } 
+    }; //a 3x4 matrix
     var (x, y) = GetMaxValuePosition_Old(array);
     //update value
     array[x, y] = int.MaxValue;
@@ -296,7 +330,8 @@ public void UseMethod_Old()
 * NEW way using REF RETURN
 
 ```cs
-public ref int GetMaxValuePosition_New(int[,] matrix) //signature has changed
+//Notice signature & return has changed
+public ref int GetMaxValuePosition_New(int[,] matrix)
 {
     var max = int.MinValue;
     var (cx, cy) = (0, 0);
@@ -313,22 +348,27 @@ public ref int GetMaxValuePosition_New(int[,] matrix) //signature has changed
 
 NEW way of using this with REF LOCAL
 * The local ref variable is also called by-reference variable
-* NOTE: Ref local MUST be declared and initialized together - because ref local (memory address in a way) cannot be null
+* NOTE: Ref local MUST be declared and initialized together - as ref local (memory address in a way) cannot be null
 * Note: Ref local & return does not work with async methods
 
 ```cs
 public void UseMethod_New()
 {
-    int[,] array = new int[,] { { 1, 2, 3 }, { 3, 4, 5 }, { 5, 6, 7 }, { 7, 8, 9 } };
+    int[,] array = new int[,] { 
+        { 1, 2, 3 }, { 3, 4, 5 }, { 5, 6, 7 }, { 7, 8, 9 } 
+    };
     //ref int element0; This doesn't work as ref locals must have initialization when declared
-    ref var element = ref GetMaxValuePosition_New(array); //NOTICE the double ref - variable declaration & method call
+    //NOTICE the double ref - variable declaration & method call
+    ref var element = ref GetMaxValuePosition_New(array); 
     //update value
-    element = int.MaxValue; //TYPE of element is REF INT //VS intellisense show value 9 (before update)
-    //var element = GetMaxValuePosition_New(array); Wouldn't work this way, it'd simply copy the value
+    element = int.MaxValue; 
+    //The following Wouldn't work this way, it'd simply copy the value
+    //var element = GetMaxValuePosition_New(array);
 }
 ```
 
-* NOTE: If reference type is returned by ref, then setting refLocal = new Stuff(); will actually update the original item!!
+* NOTE: If reference type is returned by ref, then setting `refLocal = new Stuff();` will actually update the original item!!
+* TYPE of `element` in above code is REF INT, VS intellisense show value 9 (before update)
 
 #### [6] Local functions
 * This enables you to write functions inside functions. The inner function is available only to the enclosing function.
@@ -349,9 +389,11 @@ public int SumJaggedArray(int[][] data)
     //BUT here we are learning LOCAL FUNCTION anyway, so
     for (int i = 0; i < data.Length; i++)
         total += sum(data[i]);
-    return total; //Note: the function can actually be defined after return statement
+    return total;
+    //The function can actually be defined after return statement
 
-    int sum(int[] arr) //this is a LOCAL FUNCTION //Note: there cannot be a access modifier
+    //this is a LOCAL FUNCTION - no access modifier
+    int sum(int[] arr)
     {
         int _sum = 0;
         for (int i = 0; i < arr.Length; i++)
@@ -371,26 +413,28 @@ public int SumJaggedArray(int[][] data)
 ```cs
 public void SumJaggedArray_with_ThrowAsExpression(int[][] data) 
 {
-    Func<int[], int> summation = 
-        (arr) => arr == null ?
-            throw new ArgumentException("null not allowed") : //throw in lambda
-            arr.Sum();
-
+    //throw in conditional expressions
     var total = 0;
     for (int i = 0; i < data.Length; i++)
         total += 
             data[i] == null ? 
-            throw new ArgumentException("null not allowed") : //throw in conditional expressions
+            throw new ArgumentException("null not allowed") :
             summation(data[i]);
+    //throw in lambda
+    Func<int[], int> summation = 
+        (arr) => arr == null ?
+            throw new ArgumentException("null not allowed") :
+            arr.Sum();
 }
 ```
 
 #### [9] Generic async return
 * Before C# 7, async methods could return only void, Task or Task<T>. C# 7 allowes return of other types which follow the asynchronous pattern
-* One that is provided by Framework is ValueTask<T> which is a struct (value type), and can improve performance in some cases.
+* One that is provided by Framework is `ValueTask<T>` which is a struct (value type), and can improve performance in some cases.
+* You may need to install NuGet `System.Threading.Tasks.Extensions` 
 
 ```cs
-public async ValueTask<T> GenericAsyncReturn<T>() //You may need to install NuGet System.Threading.Tasks.Extensions 
+public async ValueTask<T> GenericAsyncReturn<T>()
 {
     await Task.Delay(1000);
     return default(T);
@@ -421,7 +465,7 @@ public void NumericLiteralDemo()
 ```
 
 
-It'll be good idea to copy-paste the whole code, call the methods and debug. You can run all the snippets above by wrapping them inside a code like this
+This concludes our journey through `C# 7.0`. It'll be good idea to copy-paste the whole code, call the methods and debug. You can run all the snippets above by wrapping them inside a code like this
 ```cs
 using System;
 using System.Collections.Generic;
