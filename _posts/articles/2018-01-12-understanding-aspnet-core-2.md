@@ -212,7 +212,7 @@ dotnet run --launch-profile "Development"
 
 **Control Panel > System > Advanced system settings > Environment variables**
 
-* Local application settings can be set in `Properties`\`launchSettings.json`. This takes precedence over system values. See sample `launchSettings.json` below. Remember that
+* Local application settings can be set in `Properties`\\`launchSettings.json`. This takes precedence over system values. See sample `launchSettings.json` below. Remember that
   * commandName Can be : `IIS`, `IISExpress` or `Project` (Kestrel)
   * ASPNETCORE_ENVIRONMENT can be `Development`, `Staging`, `Production` or anything
   * When app is run with `dotnet run`, it takes first profile with `commandName`:`Project`
