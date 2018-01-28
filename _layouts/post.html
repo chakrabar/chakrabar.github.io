@@ -17,6 +17,7 @@
     <div class="entry-wrapper">
       <header class="entry-header">
         <ul class="entry-tags">
+          <i class="fa fa-tags"></i>&nbsp; <!--arghya: tags icon-->
           {% for tag in page.tags %}<li><a href="{{ site.url }}/tags/#{{ tag }}" title="Pages tagged {{ tag }}">{{ tag }}</a></li>{% endfor %}
         </ul>
         {% if page.link %}
