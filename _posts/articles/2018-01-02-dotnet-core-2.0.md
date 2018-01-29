@@ -1,7 +1,7 @@
 ---
 layout: post
-title: ".NET Core 2.0 series"
-excerpt: "A series of articles on .NET Core 2.0"
+title: "Working with .NET Core 2.0"
+excerpt: "A series of articles on understanding & working with .NET Core 2.0"
 date: 2018-01-02
 tags: [tech, dotnet, csharp, aspnet, dotnetcore]
 categories: articles
