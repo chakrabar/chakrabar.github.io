@@ -8,7 +8,7 @@ title: "Hello there!"
 Here I talk about some daily tips & trick of programming. 
 Mostly I maintain some random developer notes.
 
-If you want to see my profile visit my [Github profile](https://github.com/chakrabar). Or go to [About](/about) section for more details.
+If you want to see my profile or get in touch, go to the [About](/about) section.
 
 ----
 
