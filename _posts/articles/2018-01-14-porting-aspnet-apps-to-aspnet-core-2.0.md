@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Porting ASP.NET MVC apps to ASP.NET Core 2.0"
-excerpt: ".NET Core 2.0 series 4/5 - Porting existing ASP.NET MVC Web apps to ASP.NET Core 2.0"
+excerpt: ".NET Core 2.0 series - 4/5 - Porting existing ASP.NET MVC Web apps to ASP.NET Core 2.0"
 date: 2018-01-14
 tags: [tech, mvc, dotnet, csharp, aspnet, dotnetcore]
 categories: articles
@@ -9,7 +9,7 @@ share: true
 modified: 2018-01-28T22:11:53-04:00
 ---
 
-This article is part of the [.NET Core Series](/articles/dotnet-core-2.0/). Go have a look at the other articles of this series, and run through the previous topics if not done already!
+This article is part of the [.NET Core Series](/articles/dotnet-core-2.0/). Go have a look at the other articles of this series, and run through the previous topics if not done already! This has lot of overlap & dependency on the [previous](/articles/understanding-aspnet-core-2/) article.
 
 Here I'll talk about my experience of converting an existing ASP.NET MVC application (.NET Framework) to the new [ASP.NET Core 2.0](https://docs.microsoft.com/en-us/aspnet/core/) application. It is rather a port or [migration](https://docs.microsoft.com/en-us/aspnet/core/migration/proper-to-2x/index) than an upgrade, as it involved bunch of code changes and restructuring. Some of the concepts has changed dramatically, and some existing functionalities are not available anymore.
 

@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Porting .NET libraries to .NET Core (2.0)"
-excerpt: ".NET Core 2.0 series 2/5 - Porting existing libraries to .NET Core"
+excerpt: ".NET Core 2.0 series - 2/5 - Porting existing libraries to .NET Core"
 date: 2018-01-05
 tags: [tech, dotnet, csharp, aspnet, dotnetcore]
 categories: articles

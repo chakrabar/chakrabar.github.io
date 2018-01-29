@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "What is .NET Core (2.0)"
-excerpt: ".NET Core 2.0 series 1/5 - What is .NET Core"
+excerpt: ".NET Core 2.0 series - 1/5 - What is .NET Core"
 date: 2018-01-03
 tags: [tech, dotnet, csharp, aspnet, dotnetcore]
 categories: articles
@@ -47,7 +47,7 @@ A .NET Core application can be [deployed in 2 ways](https://docs.microsoft.com/e
 
 ```xml
 <PropertyGroup>
-    <TargetFrameworks>netcoreapp2.0,net462</TargetFrameworks>
+    <TargetFrameworks>netcoreapp2.0;net462</TargetFrameworks>
     <RuntimeIdentifiers>win81-x64;osx.10.11-x64;ubuntu.14.04-x64</RuntimeIdentifiers>
 </PropertyGroup>
 ```
@@ -95,7 +95,7 @@ So how to create reusable modules?
   - With higher version .Net Standard, you get more APIs but less platform (runtime) support. So, **try to target lowest .NET Standard version that works**. 
   - Latest (till now, January 2018) is `.NET Standard 2.0` which is supported by `.NET Framework 4.6.1` AND `.NET Core 2.0`
   - **First platform specific frameworks are created, later .Net Standard is created taking most common/available subset of the frameworks**
-  - Practically, ONLY when creating class libraries, .Net Standard can be targeted (which makes complete sense as that can be reused across applications, frameworks)
+  - Practically, **only for class libraries** .Net Standard can be targeted (which makes complete sense as that can be reused across applications, frameworks)
 
 
 #### [5] Configuration & Settings
@@ -117,28 +117,28 @@ So how to create reusable modules?
 
 #### [6] .NET Core Deployment options
 
-Deployment options for ASP.NET Core Apps:
-1. Copy whole solution, use .NET Core CLI to restore packages and run
-2. Build the project, move the assemblies and run - packages needs to be managed manually [build]
-3. Create NuGet package and share [pack]
-4. Publish - all packages will be published together, even the Core CLR if self-contained is used 
+1. Manual deployment options for .NET Core 
+    1. Copy whole solution, use .NET Core CLI to restore packages and run
+    2. Build the project, move the assemblies and run - packages needs to be managed manually [build]
+    3. Create NuGet package and share [pack]
+    4. Publish - all packages will be published together, even the Core CLR if self-contained is used 
 	
-Publish from Visual Studio
-- Can use multple profiles for publishing with multiple framework/runtimes
-- Full framework creates a `.exe` for executable projects. For `ASP.NET Core` this can be run to start the web through `KESTREL` web server
-- Core creates just a dll which can be run through Core CLI to start the web `dotnet MyApp.dll`
+2. Publish from Visual Studio
+  - Can use multple profiles for publishing with multiple framework/runtimes
+  - Full framework creates a `.exe` for executable projects. For `ASP.NET Core` this can be run to start the web through `KESTREL` web server
+  - Core creates just a dll which can be run through Core CLI to start the web `> dotnet MyApp.dll`
 		
-Publishing self-contained apps:
-- Runtimes (RID) must be specified, as part of the CoreCLR will run natively (whatever part of CLR is not managed) - so will need a runtime specific version
-- Has to be published for each runtime separately
-- If no RID is specified, it uses RID of current machine 
-- All core framework NuGet packages are added to publish folder
+3. Publishing self-contained apps:
+  - Runtimes (RID) must be specified, as part of the CoreCLR will run natively (whatever part of CLR is not managed) - so will need a runtime specific version
+  - Has to be published for each runtime separately
+  - If no RID is specified, it uses RID of current machine 
+  - All core framework NuGet packages are added to publish folder
 
-To run on a platform which is not natively supported (e.g. `linux-arm` or `raspbian`)
-- publish as `platform` with `.NET Framework` and copy over
-- install full framework OR mono (which is full equivalent) on target machine
-- For ASP.NET applications, install `libuv` on target machine 
-- Start with the specific CLI e.g. `> mono MyApp.dll`
+4. To run on a platform which is not natively supported (e.g. `linux-arm` or `raspbian`)
+  - publish as `platform` with `.NET Framework` and copy over
+  - install full framework OR mono (which is full equivalent) on target machine
+  - For ASP.NET applications, install `libuv` on target machine 
+  - Start with the specific CLI e.g. `> mono MyApp.dll`
 
 
 This article covered the high level basic of the `.NET Core` framework. Continue to [Porting existing .NET Framework libraries to .NET Core](/articles/porting-existing-libraries-to-dotnet-core/).

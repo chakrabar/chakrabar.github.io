@@ -17,16 +17,16 @@ In this series of articles, I'll share my experience from all the recent work I 
 
 Also note, _.NET Core is farely new and is till evolving. Some of the concepts, features, syntaxes might change in future_. 
 
-So, here is the list of articles in this series. All the articles together presents bunch of concepts, ideas etc. which can help grasp the complete state of things. I'd reccomend following it sequentially, but just reading them ad-hoc won't hurt much. 
+So, here is the list of articles in this series. All the articles together presents bunch of concepts, ideas etc. which can help grasp the complete state of things with .NET Core. Some of articles overlap and have shared concepts and explanations. I'd reccomend following it sequentially, but just reading them ad-hoc won't hurt much. 
 
-##### [1/5] [What is .NET Core](/articles/what-is-new-in-dotnet-core/)
+##### 1. [What is .NET Core](/articles/what-is-new-in-dotnet-core/)
 
-##### [2/5] [Porting existing .NET Framework libraries to .NET Core](/articles/porting-existing-libraries-to-dotnet-core/)
+##### 2. [Porting existing .NET Framework libraries to .NET Core](/articles/porting-existing-libraries-to-dotnet-core/)
 
-##### [3/5] [Understanding ASP.NET Core 2.0](/articles/understanding-aspnet-core-2/)
+##### 3. [Understanding ASP.NET Core 2.0](/articles/understanding-aspnet-core-2/)
 
-##### [4/5] [Porting ASP.NET MVC applications to ASP.NET Core 2.0](/articles/porting-aspnet-apps-to-aspnet-core-2.0/)
+##### 4. [Porting ASP.NET MVC applications to ASP.NET Core 2.0](/articles/porting-aspnet-apps-to-aspnet-core-2.0/)
 
-##### [5/5] [Porting Web API services to ASP.NET Core 2.0](/articles/porting-existing-webapi-to-aspnet-core-2.0/)
+##### 5. [Porting Web API services to ASP.NET Core 2.0](/articles/porting-existing-webapi-to-aspnet-core-2.0/)
 
 Like always, the source of knowledge has been MSDN, GitHub, Stack Overflow and other online forums.

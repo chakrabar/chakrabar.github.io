@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Porting ASP.NET Web API apps to ASP.NET Core 2.0"
-excerpt: ".NET Core 2.0 series 5/5 - Porting existing ASP.NET Web API apps to ASP.NET Core 2.0"
+excerpt: ".NET Core 2.0 series - 5/5 - Porting existing ASP.NET Web API apps to ASP.NET Core 2.0"
 date: 2018-01-22
 tags: [tech, mvc, webapi, dotnet, csharp, aspnet, dotnetcore]
 categories: articles
