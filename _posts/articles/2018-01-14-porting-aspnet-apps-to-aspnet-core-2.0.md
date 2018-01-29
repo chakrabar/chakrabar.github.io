@@ -154,10 +154,9 @@ Now the `csproj` files are pretty clean and simple. See one sample file below, i
   * Read more about [Environments](https://docs.microsoft.com/en-us/aspnet/core/fundamentals/environments)
   
 * Configuration is read through injected `IConfiguration` instance. Some common methods are (assume IConfiguration instance is Configuration)
-  * Configuration["Profile:MachineNames:0:Domain"] configuration indexer
-  * Configuration.GetSection("App:MainWindow") method
-  * Configuration.GetValue<int>("App:MainWindow:Left", 80) extension
-  * ??
+  * Configuration ["Profile:MachineNames:0:Domain"] configuration indexer
+  * Configuration.GetSection ("App:MainWindow") method
+  * Configuration.GetValue<int> ("App:MainWindow:Left", 80) extension
   
 * One can bind a whole settings to class hierarchy/structure as
 
@@ -191,7 +190,7 @@ var appConfig = config.GetSection("App").Get<AppSettings>();
 }
 ```
 
-* Understand that `Configuration.GetConnectionString("ConnStrName")` methods used to get connection string, is nothing but shorthand for `GetSection("ConnectionStrings")["ConnStrName"]` 
+* Understand that 'Configuration.GetConnectionString("ConnStrName")' methods used to get connection string, is nothing but shorthand for 'GetSection("ConnectionStrings")["ConnStrName"]' 
 
 
 #### [6] Environments

@@ -219,7 +219,7 @@ In ASP.NET 5/Core, there is no `ApiCOntroller`. Since it's unified
 A [reusable display module](https://docs.microsoft.com/en-us/aspnet/core/mvc/views/view-components)
 - A partial view with simple controller!!
 - Can be rendered with @TagHelper or
-    @await Component.InvokeAsync("ViewComponentName")
+    @await Component.InvokeAsync ("ViewComponentName")
 - The ViewComponent class has two specialties, apart from that it's pretty much like a controller 
   - Be derived from `ViewComponent`
   - have a `Invoke()` method that returns `IViewComponentResult` (the method returns a View) or the `async` version of the method

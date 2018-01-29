@@ -113,7 +113,7 @@ So how to create reusable modules?
   - Add AddOptions() middleware
   - This can be injected as IOptions<CustomClass>
 - Basically any json file can be used, and values can be read as json object properties e.g. 
-`var outPath = Configuration["output:directory"];`
+    var outPath = Configuration ["output:directory"];
 
 #### [6] .NET Core Deployment options
 
