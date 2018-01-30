@@ -18,10 +18,11 @@
 }
 
 /* feature image */
-
+/*Arghya - added margin-top: -3rem; to pull up on small devices */
 .entry-feature-image {
 	margin: 20px 0 0;
 	width: 100%;
+	margin-top: -3rem; /* overlap with (goe behind) site logo */
 
 	@include media($medium) {
 		margin-top: -75px; /* move up to be overlapped by site logo */
@@ -79,13 +80,20 @@ span + .entry-title {
 	margin-top: 0;
 }
 
+/*Arghya trying dumb tricks to improve title style
+Originals: @include font-size(36,yes,36); => ($size, $margin: yes, $line-height)
+@include font-size(52,yes,54); $medium
+@include font-size(68,yes,72); $large
+no word-spacing
+*/
 .entry-title {
 	font-family: $alt-font;
 	font-style: italic;
-	@include font-size(36,yes,36);
+	@include font-size(30,yes,36);
 	font-weight: 400;
 	line-height: 1;
 	letter-spacing: -3px;
+	word-spacing: 0.25rem;
 
 	a {
 		color: $black;
@@ -93,11 +101,11 @@ span + .entry-title {
 	}
 
 	@include media($medium) {
-		@include font-size(52,yes,54);
+		@include font-size(40,yes,54);
 	}
 
 	@include media($large) {
-		@include font-size(68,yes,72);
+		@include font-size(50,yes,72);
 	}
 }
 
