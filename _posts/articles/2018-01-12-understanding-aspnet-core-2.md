@@ -267,5 +267,6 @@ Deploying to **IIS** (for security, load balancing and other advanced features)
 - Can be run with the published data in very similar fashion
 - In general also, published data as type:platform can be run on any machine given it as DotNetCore installed 
 
+----
 
 This article covered the high level basic of the `ASP.NET Core` applications. Continue to [Porting ASP.NET MVC applications to ASP.NET Core 2.0](/articles/porting-aspnet-apps-to-aspnet-core-2.0/).

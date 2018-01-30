@@ -140,5 +140,6 @@ So how to create reusable modules?
   - For ASP.NET applications, install `libuv` on target machine 
   - Start with the specific CLI e.g. `> mono MyApp.dll`
 
+----
 
 This article covered the high level basic of the `.NET Core` framework. Continue to [Porting existing .NET Framework libraries to .NET Core](/articles/porting-existing-libraries-to-dotnet-core/).

@@ -9,11 +9,11 @@ share: true
 modified: 2018-01-28T22:11:53-04:00
 ---
 
-After developing many tiny to large enterprise scale applications (tools, web, services etc.) using the `.NET Framework` for many years, I'm currently looking into the `.NET Core` framework. I've made some small applications from scratch, using the `.NET Core 2.0` framework, and also porting some existing, moderately large `.NET` applications to the `.NET Core 2.0` framework.
+After developing many tiny to large enterprise scale applications (tools, web, services etc.) using the `.NET Framework` for many years, I've been looking into the `.NET Core` framework for some time now. I've made some small applications from scratch, using the `.NET Core 2.0` framework, and also porting some existing, moderately large `.NET` applications to the `.NET Core 2.0` framework.
 
 #### A series of articles on .NET Core 2.0
 
-In this series of articles, I'll share my experience from all the recent work I have been doing. Please note, _this is not meant to give you an in depth understanding and exhasutive knowledge of the .NET Core framework_, rather I'll try to cover the basic of the new framework and some of my learning which might help fellow developers taking on a similar challenge.
+In this series of articles, I'll share my experience from all the recent work I have been doing. Please note, _this is not meant to give you an in depth understanding and exhasutive knowledge of the .NET Core framework_, rather I'll try to cover the basic of the new framework and some of my learning which might help fellow developers taking on a similar challenge. Also, these are NOT step-by-step DIY tutorials.
 
 Also note, _.NET Core is farely new and is till evolving. Some of the concepts, features, syntaxes might change in future_. 
 

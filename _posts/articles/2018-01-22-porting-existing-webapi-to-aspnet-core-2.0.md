@@ -13,4 +13,6 @@ This article is part of the [.NET Core Series](/articles/dotnet-core-2.0/). Go h
 
 #### This article is WIP. Will be updated soon.
 
+----
+
 This article covered the process of porting existing `ASP.NET Web API` REST services `.NET Core 2.0` services. This concludes the [.NET Core Series](/articles/dotnet-core-2.0/).
