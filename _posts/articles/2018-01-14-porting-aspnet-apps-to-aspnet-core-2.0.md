@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Porting ASP.NET MVC apps to ASP.NET Core 2.0"
+title: "Porting ASP.NET MVC apps to ASP.NET Core 2.0 MVC"
 excerpt: ".NET Core 2.0 series - 4/5 - Porting existing ASP.NET MVC Web apps to ASP.NET Core 2.0"
 date: 2018-01-14
 tags: [tech, mvc, dotnet, csharp, aspnet, dotnetcore]
@@ -13,7 +13,7 @@ This article is part of the [.NET Core Series](/articles/dotnet-core-2.0/). Go h
 
 Here I'll talk about my experience of converting an existing ASP.NET MVC application (.NET Framework) to the new [ASP.NET Core 2.0](https://docs.microsoft.com/en-us/aspnet/core/) application. It is rather a port or [migration](https://docs.microsoft.com/en-us/aspnet/core/migration/proper-to-2x/index) than an upgrade, as it involved bunch of code changes and restructuring. Some of the concepts has changed dramatically, and some existing functionalities are not available anymore.
 
-Before going into the porting process, let us briefly discuss what changes we are going to make, and what to expect overall. Here, when we say ASP.NET Core or .NET Core, we refer to the **.NET Core 2.0** framework.
+Before going into the actual porting process, let us briefly discuss about the practical changes and the real changes we are going to make. Here, when we say ASP.NET Core or .NET Core, we refer to the **.NET Core 2.0** framework.
 
 #### [1] MVC Application with `ASP.NET Core` Web Application
 
@@ -190,7 +190,7 @@ var appConfig = config.GetSection("App").Get<AppSettings>();
 }
 ```
 
-* Understand that 'Configuration.GetConnectionString("ConnStrName")' methods used to get connection string, is nothing but shorthand for 'GetSection("ConnectionStrings")["ConnStrName"]' 
+* Understand that Configuration.GetConnectionString ("ConnStrName") methods used to get connection string, is nothing but shorthand for GetSection("ConnectionStrings") ["ConnStrName"] 
 
 
 #### [6] Environments
@@ -359,6 +359,37 @@ Also,
 * Learn about [authorization](https://docs.microsoft.com/en-us/aspnet/core/security/authorization/index) in ASP.NET Core
 * Use [logging](https://docs.microsoft.com/en-us/aspnet/core/fundamentals/logging/index?tabs=aspnetcore2x) for your ASP.NET Core application
 * Know about standard [error handling](https://docs.microsoft.com/en-us/aspnet/core/fundamentals/error-handling)
+
+
+#### [10] <u>Steps to port ASP.NET MVC app to ASP.NET Core 2.0 MVC</u>
+
+Before this, please read [Porting existing .NET Framework libraries to .NET Core](/articles/porting-existing-libraries-to-dotnet-core/) to understand the general porting process and other considerations.
+
+1. The `*.csproj` has changed a lot. So, better create a `.NET Core 2.0` web project and select the `MVC` template. Then add the code to it.
+2. Since the project file does not list the reference `C#` files, just copying them over to the new project folder automatically includes them in the project. Copy all controllers, views, view models, helpers, filters etc.
+3. Now try to build it. Obviously it'll fail as it does not have the other project & NuGet references. Add them.
+4. Add the required project references. Make sure they already are .NET Core projects, else the port will not work.
+5. Add the required NuGet packages. Make sure the NuGet package targets `.NET Core`/`.NET Standard`. Sometimes you might have to add multiple packages what used to be part of a single package.
+    1. Else look for alternative packages which can do the same job. 
+    2. Many 3rd party packages have unofficial .NET Core port, which works fine. 
+    3. Sometimes you need to select the "include pre-release" options in NuGet package manager to get latest version that works. Make sure the pre-release is stable.
+    4. If none of this works, _you might be stuck !_
+6. Because of the NuGet changes, some of the `namespace` would have changed. Find out the new namespace and do a "Replace All" in your project. Replace `System.Web.Mvc` with `Microsoft.AspNetCore.Mvc`.
+7. Some of the APIs (the interface, class, method, parameters etc.) might have changed as well. Make necessary changes in the code so that it complies with the new APIs.
+8. `web.config` does not work as they used to. Ideally move all the required settings to `appsettings.json` file or other configuration sources. Make necessary code changes to use settings from the new source.
+9. No `AssemblyInfo` class is created by default. If required, add it (e.g. for assembly level settings like "internals visible to")
+10. Remove all {AreaName}AreaRegistration.cs from all areas. Add area route as mentioned in section [8]. Remove `web.config` from views folders.
+11. Make all necessary changes in `ActionFilter`, if any, as mentioned in section [9].
+12. Put all static files like `js`, `css`, `html`, images etc. inside the `wwwroot` folder. they can be kept somewhere else and be moved there later with bundling or built task, but keeping them there will follow the conventions better. Fix all the hard coded paths accordingly.
+13. Update `bundleconfig.json` with all file details to be bundled and minified. Run the bundling task to generate the bundled files. Make sure the created files stay in `wwwroot` folder.
+14. Move any custom routes to `app.UseMvc()` in `Startup`, or use attribute route in specific controller classes.
+15. BUILD IT. Fix any compilation errors.
+16. Run it locally with Kestrel or IISExpress. Run all necessary tests.
+17. If all goes fine, configure it to run with a standard web server e.g.
+    1. [IIS](https://docs.microsoft.com/en-us/aspnet/core/host-and-deploy/iis/?tabs=aspnetcore2x)
+    2. [Nginx](https://docs.microsoft.com/en-us/aspnet/core/host-and-deploy/linux-nginx?tabs=aspnetcore2x)
+    3. [Apache](https://docs.microsoft.com/en-us/aspnet/core/host-and-deploy/linux-apache)
+    4. [Docker](https://docs.microsoft.com/en-us/aspnet/core/host-and-deploy/docker/)
 
 
 ----

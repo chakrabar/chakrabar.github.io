@@ -37,7 +37,30 @@ etc.
 
 etc.
 
-#### [3] General changes for porting any project
+#### [3] Should you port?
+
+Porting an application to `.NET Core` is great when it
+
+1. Should run cross-platform OR on non-Windows platforms
+2. Is portable and deployed to cloud
+3. Is light-weight and any performance improvement matters
+4. Follows `microservices` pattern
+5. Needs to run on containers like `Docker`
+
+<u>But there are few things to consider before you decide to port your happy healthy application</u>
+
+1. Porting _may_ need a huge amount of development effort
+2. Testing the same end-to-end may take even more effort and time
+3. Some of the existing functionalities may not work any more. Based on what the feature does, it can be a _complete show stopper_
+4. If the application will ever run on a Windows system only, porting to core might not give lot of benefits
+5. The development team needs to get up-to-date with this new and evolving technology
+6. Since it is still evolving, the code might need more changes in future. More tests again.
+7. The development setup works best with latest infrastructures, e.g. `VS 2017 v15.3+`. For some teams/individuals, the setup cost can become a bummer!
+8. If the application depends on other projects which are not ported to core, it will not help
+9. The full `.NET Framework` is not going anywhere, and it'll always be maintained and updated
+10. If the only compelling reason is _"It's new and cool, and everyone is talking about it"_, just drop the idea already
+
+#### [4] General changes for porting any project
 
 Though the `C#` code written for old `.NET Framework` works fine with `.NET Core`, the whole project does not work as is with Core. The main reasons are
 
@@ -52,13 +75,13 @@ If you want to access the portability of your application, you can use the [API 
 
 Looking at what NuGet packages are used - whether their latest version support `.NET Core` is one indicator. Also, while trying to actually port you'll get to know if that porting will work or not.
 
-#### [4] <u>General steps for porting a project to .NET Core</u>
+#### [5] <u>General steps for porting a project to .NET Core</u>
 
 1. The `*.csproj` has changed a lot. So, better create a new project with required framework and version. Then add the code to it.
 2. Since the project file does not list the reference `C#` files, just copying them over to the new project folder automatically includes them in the project.
 3. Now try to build it. Obviously it'll fail as it does not have the other project & NuGet references. Add them.
 4. Add the required project references. Make sure they already are .NET Core projects, else the port will not work.
-5. Add the required NuGet packages. Make sure the NuGet package targets `.NET Core`/`.NET Standard`. Sometimes you might have to add multiple packages what used to be part of a single package.
+5. Add the required NuGet packages. Make sure the NuGet package targets `.NET Core` or `.NET Standard`. Sometimes you might have to add multiple packages what used to be part of a single package.
     1. Else look for alternative packages which can do the same job. 
     2. Many 3rd party packages have unofficial .NET Core port, which works fine. 
     3. Sometimes you need to select the "include pre-release" options in NuGet package manager to get latest version that works. Make sure the pre-release is stable.
@@ -69,7 +92,7 @@ Looking at what NuGet packages are used - whether their latest version support `
 9. No `AssemblyInfo` class is created by default. If required, add it (e.g. for assembly level settings like "internals visible to")
 10. BUILD IT. If everything goes fine, _**you have done it!**_ Do not forget to test the new project with unit tests, manual tests, performance tests etc.
  
-#### [5] Tips & Gotchas
+#### [6] Tips & Gotchas
 
 1. For class libraries, though targeting `.NET Core` works just fine, it's better to target `.NET Standard` as that'll make the library more reusable across frameworks.
 2. Always start with the least dependant project (with no reference to other projects) and the work down the dependency graph as base projects get ported successfully.  
@@ -111,7 +134,7 @@ namespace MyProject.Web
 }
 ```
 
-#### [6] Some common packages
+#### [7] Some common packages
 
 My personal experience with some common packages. While some of them are purely `.NET Core` related, few of them are just generic changes in their latest releases.
 
