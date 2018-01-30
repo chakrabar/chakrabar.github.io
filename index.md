@@ -3,7 +3,7 @@ layout: page
 title: "Hello there!"
 ---
 
-## Welcome to Arghya C's tech shots
+### Welcome to Arghya C's tech shots
 
 Here I talk about some daily tips & trick of programming. 
 Mostly I maintain some random developer notes.

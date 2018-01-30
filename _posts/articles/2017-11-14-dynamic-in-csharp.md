@@ -54,22 +54,31 @@ class Demo //demo class used in code
 This `var` is nothing but a shorthand for defining types, also called implicit typing. They are still statically and strongly typed at compile time, only thing is the type is inferred by compiler at declaration.
 
 ```cs
-var x; //not allowed, it must be initialized
-var z = 3; //z is inferred to be int
-z = "woohoo"; //will not compile, as z IS int, not string
-var y = null; //doesn't compile as the type cannot be inferred
+//not allowed, it must be initialized
+var x;
+//z is inferred to be int
+var z = 3;
+//will not compile, as z IS int, not string
+z = "woohoo";
+//doesn't compile as the type cannot be inferred
+var y = null;
 ```
 
 #### Now we'll see `dynamic` in action.
 
 ```cs
 dynamic x = 3;
-x = "jassala"; //allowed, as different data types can be stored in dynamic
+//allowed, as different data types can be stored in dynamic
+x = "jassala";
 x = 0.5; //same as above
 x += "hello"; //works fine and produces "0.5hello"
 x = new Demo(); //works, obviously
-x = x.GetId(); //compiles fine, as no check is done at compile time. Runs fine as well, as the code is right
-x = x.GetWhatIsNotThere(); //still compiles, BUT throws RuntimeBinderException: ''string' does not contain a definition for 'GetWhatIsNotThere''
+//compiles fine, as no check is done at compile time.
+//Runs fine as well, as the code is right
+x = x.GetId();
+//still compiles, BUT throws RuntimeBinderException: 
+//''string' does not contain a definition for 'GetWhatIsNotThere''
+x = x.GetWhatIsNotThere();
 ```
 
 In the last line, the code still compiles - because compiler skips all the checks for variable declared to be dynamic!
@@ -77,13 +86,18 @@ In the last line, the code still compiles - because compiler skips all the check
 #### The same code with `object`
 
 ```cs
-object y = 3; //to show difference with object
-y = "jassala"; //compiles and runs, as all types are still objects
+//to show difference with object
+object y = 3;
+//compiles and runs, as all types are still objects
+y = "jassala";
 y = 0.5; //same
 y += "hello"; //same, produces "0.5hello"
 y = new Demo(); //works, for same reason
-y = y.GetId(); //DIFFERENCE: This gives compile error, as object does not have a definition of GetId
-y = y.GetWhatIsNotThere(); //DOESN'T compile for same reason
+//DIFFERENCE: This gives compile error
+//object does not have a definition of GetId
+y = y.GetId(); 
+//DOESN'T compile for same reason
+y = y.GetWhatIsNotThere();
 ```
 
 #### `dynamic` in method return

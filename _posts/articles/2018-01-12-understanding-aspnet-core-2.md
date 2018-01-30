@@ -23,6 +23,11 @@ An `ASP.NET Core` project is nothing but a ASP.NET Web application that targets 
   - Only files in this folder are served
   - Files outside this folder are not accessible
   - This folder can be renamed or changed though
+
+- While creating a new Web Application in VS 2017, you cen choose between the flavours
+  - [ASP.NET Core Razor Pages](https://docs.microsoft.com/en-us/aspnet/core/mvc/razor-pages/index?tabs=visual-studio)
+  - [ASP.NET Core MVC](https://docs.microsoft.com/en-us/aspnet/core/tutorials/first-mvc-app/start-mvc?tabs=aspnetcore2x)
+  - [ASP.NET Core Web API](https://docs.microsoft.com/en-us/aspnet/core/tutorials/first-web-api)
 	
 			
 #### [2] Program.cs & Main()

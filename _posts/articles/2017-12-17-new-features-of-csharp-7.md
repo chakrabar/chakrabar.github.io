@@ -366,7 +366,7 @@ public void UseMethod_New()
     //update value
     element = int.MaxValue; 
     //The following Wouldn't work this way, it'd simply copy the value
-    //var element = GetMaxValuePosition_New(array);
+    var element2 = GetMaxValuePosition_New(array);
 }
 ```
 

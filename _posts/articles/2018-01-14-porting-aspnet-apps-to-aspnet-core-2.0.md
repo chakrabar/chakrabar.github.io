@@ -258,8 +258,8 @@ dotnet run --launch-profile "Development"
 Now settings can be environment specific. In all cases, when app is running with <Dev_2> environment, it'll use `SettingsDev_2` class or `ConfigureDev_2()` etc. whenever they exist. Otherwise they'll fall back to default options.
 
 * Startup{EnvironmentName} e.g. StartupStaging class
-* public void ConfigureDevelopmentServices(IServiceCollection services)
-* public void ConfigurePreStaging(IApplicationBuilder app, IHostingEnvironment env)
+* public void ConfigureDevelopmentServices (IServiceCollection services)
+* public void ConfigurePreStaging (IApplicationBuilder app, IHostingEnvironment env)
 * appSetting.Production.json
 
 Also, code can be written to specific environment, both in `cs` and views
@@ -304,5 +304,64 @@ routes.MapRoute(
 	template: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
 ); //if 1st part of uri matches existing area, it'll find controller there
 ```
+
+
+#### [9] Filters
+
+Filters or `ActionFilter`s are pieces of code that can be wired into any controller actions so that they run automatically before/after the actual action code runs.
+
+Since `MVC` and `Web API` are unified now, there is no 2 flavours of filters like
+- `System.Web.Mvc`
+- `System.Web.Http.Filters`
+
+They are now replaced by a single type of [filter](https://docs.microsoft.com/en-us/aspnet/core/mvc/controllers/filters#filters-vs-middleware)
+- `Microsoft.AspNetCore.Mvc.Filters`
+
+There are different types of filters for different purposes, and they execute as an ordered pipeline
+<figure>
+	<img src="/images/posts/filter-pipeline-2.png" alt="Filter pipeline">
+	<figcaption>
+    <a href="https://docs.microsoft.com/en-us/aspnet/core/mvc/controllers/filters" title="Filter execution timeline - from MSDN" target="_blank">Filter execution timeline - from MSDN</a>.
+  </figcaption>
+</figure>
+
+All the filters have two `interface` for the `sync` and `async` variants. For, example, the `ActionFilterAttribute` class implements both `IActionFilter` and `IAsyncActionFilter`. But, while implementation, **implement only either of the sync or async type**. The runtime will check for the `async` versions first, if not found it'll execute the `sync` version.
+
+Filters can be added to
+- Action methods
+- Controller classes
+- Globally, in
+
+```cs
+public void ConfigureServices(IServiceCollection services)
+{
+    services.AddMvc(options =>
+    {
+        options.Filters.Add(typeof(SomeActionFilter)); // by type
+        options.Filters.Add(new AnotherActionFilter()); // an instance
+    });
+}
+```
+
+The order of execution is (unless overriden by implemention `IOrderedFilter`)
+```
+Global OnExecuting
+  Controller OnExecuting
+    Action OnExecuting
+    Action OnExecuted
+  Controller OnExecuted
+Global OnExecuted
+```
+
+Any Filter can short-circuit thr rest of filter-pipeline by setting a value to `context.Result`, or throwing `Exception`.
+
+Also,
+* Learn about [authorization](https://docs.microsoft.com/en-us/aspnet/core/security/authorization/index) in ASP.NET Core
+* Use [logging](https://docs.microsoft.com/en-us/aspnet/core/fundamentals/logging/index?tabs=aspnetcore2x) for your ASP.NET Core application
+* Know about standard [error handling](https://docs.microsoft.com/en-us/aspnet/core/fundamentals/error-handling)
+
+
+----
+
 
 This article covered the process of porting existing `ASP.NET MVC` web applications to `.NET Core 2.0` MVC application. Continue to [Porting Web API services to ASP.NET Core 2.0](/articles/porting-existing-webapi-to-aspnet-core-2.0/).
