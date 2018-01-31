@@ -65,7 +65,7 @@ Porting an application to `.NET Core` is great when it
 Though the `C#` code written for old `.NET Framework` works fine with `.NET Core`, the whole project does not work as is with Core. The main reasons are
 
 1. Some of the features are not available in `.NET Core`
-2. Some features are available with new APIs (changes in class, method, interface etc.)
+2. Some features are available with new APIs (the interface, class, method, parameters etc.)
 3. Some functionalities have moved to new `namespace` because of new granular NuGet distribution
 4. Some old NuGet packages are not compatible with `.NET Core`
 
@@ -128,7 +128,9 @@ namespace MyProject.Web
 
     public class MyPluralizer : IPluralizer
     {
+        //used for naming tables
         public string Pluralize(string name) => name?.Singularize(false) ?? name;
+        //used for naming entities
         public string Singularize(string name) => name?.Singularize(false) ?? name;
     }
 }
@@ -165,8 +167,11 @@ IMapper myMapper = new Mapper(mapperConfig);
 * NUnit 3 has [bunch of changes](https://github.com/nunit/docs/wiki/Breaking-Changes), for example
 
 ```cs
+//this attribute has been dropped from NUnit 3
 [ExpectedException] 
-//attribute has been dropped from NUnit 3, now use
+[Test]
+public void MyTest() { }
+//now use
 Assert.Throws<Exception>(() => --statement--);
 //one sample change in Assert
 Assert.IsNullOrEmpty(result); //is removed, use
@@ -175,7 +180,8 @@ Assert.That(result, Is.Null.Or.Empty);
 
 * In place of `Ionic.Zip` use the native [System.IO.Compression](https://docs.microsoft.com/en-us/dotnet/standard/io/how-to-compress-and-extract-files)
 * Use `EPPlus.Core 1.5.4` for working with Excel as original/official EPPlus doesn't support .NET Core yet
-* `System.Runtime.Caching` is not supported in .NET Core yet. Change to Microsoft.Extensions.Caching.Memory v2.0.0 NuGet package. Register memory cache `.AddMemoryCache()` in `Startup`, and get `IMemoryCache` injected in client classes.
+* `System.Runtime.Caching` is not supported in .NET Core yet. Change to `Microsoft.Extensions.Caching.Memory` v2.0.0 NuGet package. Register memory cache `.AddMemoryCache()` in `Startup`, and get `IMemoryCache` injected in client classes.
+* For many framework NuGets, you have to find the new (sometimes multiple) package(s)
 
 And many more small changes...
 
