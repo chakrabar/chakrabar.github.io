@@ -6,6 +6,7 @@ date: 2018-01-12
 tags: [tech, mvc, dotnet, csharp, aspnet, dotnetcore]
 categories: articles
 share: true
+comments: true
 modified: 2018-01-28T22:11:53-04:00
 ---
 

@@ -6,6 +6,7 @@ tags: [tech, tips, dotnet, csharp, code]
 excerpt: "A quick introduction to dynamic in C# and comparison with var and object keywords."
 categories: articles
 share: true
+comments: true
 modified: 2018-01-19T08:11:53-04:00
 ---
 
