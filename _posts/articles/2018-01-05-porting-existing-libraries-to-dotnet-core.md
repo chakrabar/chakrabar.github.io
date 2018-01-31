@@ -180,7 +180,7 @@ Assert.That(result, Is.Null.Or.Empty);
 
 * In place of `Ionic.Zip` use the native [System.IO.Compression](https://docs.microsoft.com/en-us/dotnet/standard/io/how-to-compress-and-extract-files)
 * Use `EPPlus.Core 1.5.4` for working with Excel as original/official EPPlus doesn't support .NET Core yet
-* `System.Runtime.Caching` is not supported in .NET Core yet. Change to `Microsoft.Extensions.Caching.Memory` v2.0.0 NuGet package. Register memory cache `.AddMemoryCache()` in `Startup`, and get `IMemoryCache` injected in client classes.
+* `System.Runtime.Caching` is not supported in .NET Core yet. Change to [Microsoft.Extensions.Caching.Memory](https://docs.microsoft.com/en-us/aspnet/core/performance/caching/memory) v2.0.0 NuGet package. Register memory cache `.AddMemoryCache()` in `Startup`, and get `IMemoryCache` injected in client classes.
 * For many framework NuGets, you have to find the new (sometimes multiple) package(s)
 
 And many more small changes...
