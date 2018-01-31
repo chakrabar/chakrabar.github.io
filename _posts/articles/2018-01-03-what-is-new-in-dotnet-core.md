@@ -32,16 +32,16 @@ Unlike traditional full `.NET Framework` which is very heavy, and supports all d
 
 To create a new .NET Core application
 * Use one of the `.NET Core` project templates in VS (make sure target framework is `.NET Core` or `.NET Standard`)
-* Use dotnet cli to scaffold a project e.g. `dotnet new console`
+* Use dotnet cli to scaffold a project e.g. `> dotnet new console`
 
 A .NET Core application can be [deployed in 2 ways](https://docs.microsoft.com/en-us/dotnet/core/deploying/index)
 
 * **Portable** - [FDD or framework dependent deployment] very small & light-weight, depends on .net framework installed on the machine (e.g. C:\program files\dotnet)
   * General publish from VS
-  * dotnet publish -f netcoreapp2.0 -c Release
+  * > dotnet publish -f netcoreapp2.0 -c release
 * **Self-contained** - [SCD or self-contained deployment] Stand-alone, includes the necessary parts of CoreCLR & CoreFx, and other NuGet packages.
   * VS publish with specific RID (runtime identifier)
-  * dotnet publish -f netcoreapp2.0 -c Release -r win81-x64
+  * > dotnet publish -f netcoreapp2.0 -c release -r win81-x64
 
 .NET Core applications can target multiple frameworks/versions and multiple runtimes (hosting environments). To enable, mention targets frameworks & RIDs in *.csproj or in dotnet cli commands.
 * `csproj`
@@ -56,7 +56,7 @@ A .NET Core application can be [deployed in 2 ways](https://docs.microsoft.com/e
 * `dotnet cli`
 
 ```bash
-dotnet publish -f netcoreapp1.6 -c Release -r win10-x64
+> dotnet publish -f netcoreapp1.6 -c release -r win10-x64
 ```
 
 #### [3] Framework choices

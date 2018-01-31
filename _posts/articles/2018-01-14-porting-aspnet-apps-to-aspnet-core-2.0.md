@@ -144,7 +144,7 @@ Now the `csproj` files are pretty clean and simple. See one sample file below, i
   * Files (JSON, XML, INI)
   * Environment variables etc.
   * In-memory local class object
-  * Command line arguments `dotnet run key1=value1`
+  * Command line arguments `> dotnet run key1=value1`
 * Read more about [Configuration](https://docs.microsoft.com/en-us/aspnet/core/fundamentals/configuration/index?tabs=basicconfiguration)
 * Also look at [Options pattern](https://docs.microsoft.com/en-us/aspnet/core/fundamentals/configuration/options) in ASP.NET Core
   
@@ -219,7 +219,7 @@ dotnet run --launch-profile "Development"
 * Local application settings can be set in `Properties`\\`launchSettings.json`. This takes precedence over system values. See sample `launchSettings.json` below. Remember that
   * commandName Can be : `IIS`, `IISExpress` or `Project` (Kestrel)
   * ASPNETCORE_ENVIRONMENT can be `Development`, `Staging`, `Production` or anything
-  * When app is run with `dotnet run`, it takes first profile with `commandName`:`Project`
+  * When app is run with `> dotnet run`, it takes first profile with `commandName`:`Project`
   * These different profiles are available as **VS debuf profile** under VS debug menu
   * Profile & environment can be updated from `Project` > `properties` > `Debug`
 

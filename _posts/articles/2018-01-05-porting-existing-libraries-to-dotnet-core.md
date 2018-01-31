@@ -25,7 +25,7 @@ These are the following type of projects that I've been able to port, with incre
 3. Unit test projects 
 4. Web API projects
 5. ASP.NET MVC projects
-6. EF (with EF Core 2.0, there are some concerns with the process)
+6. EF (with EF Core 2.0, there are some limitations though)
 
 etc.
 
@@ -35,6 +35,7 @@ etc.
 2. WPF
 3. Xamarin
 4. Windows store apps
+5. SingalR ([scheduled for 2.1](https://github.com/aspnet/Home/wiki/Roadmap))
 
 etc.
 
@@ -57,7 +58,7 @@ Porting an application to `.NET Core` is great when it
 5. The development team needs to get up-to-date with this new and evolving technology
 6. Since it is still evolving, the code might need more changes in future. More tests again.
 7. The development setup works best with latest infrastructures, e.g. `VS 2017 v15.3+`. For some teams/individuals, the setup cost can become a bummer!
-8. If the application depends on other projects which are not ported to core, it will not help
+8. If the application depends on other projects which are not ported to core, it will not help (and if they are from the not supported list [2] like WCF, they cannot be ported)
 9. The full `.NET Framework` is not going anywhere, and it'll always be maintained and updated
 10. If the only compelling reason is _"It's new and cool, and everyone is talking about it"_, just drop the idea already
 
@@ -105,9 +106,10 @@ Looking at what NuGet packages are used - whether their latest version support `
 5. There has been [lot of changes](https://msdn.microsoft.com/en-us/magazine/dn890367.aspx) in **Entity Framework Core**, which makes it pretty hard to port an EF project.
 - Firstly, it is not recommended to port an EF project to EF Core. Do it, only if really necessary.
 - `EntityFramework 6.2.0` works fine with `.NET Core` projects. But that'll not work cross-platform.
+- Some features of `EF 6.2` are not available in `EF Core 2.0`. For instance, _"lazy loading"_
 - `edmx` is not supported in `EF Core 2.0`. Do a fresh `code-first` migration to create you DB from your models. If you need a `database-first`, use following command to scaffold the entity classes
 ```bash
-$ Scaffold-DbContext "YourConnectionString" Microsoft.EntityFrameworkCore.SqlServer -OutputDir ModelsFolder
+$ Scaffold-DbContext "ConnectionString" Microsoft.EntityFrameworkCore.SqlServer -OutputDir ModelsFolder
 ```
 - There is an [existing issue](https://github.com/aspnet/EntityFrameworkCore/issues/10678) which creates problem in generating the names correctly. Until that is fixed in `EF Core 2.1`, there are some [alternative tools](https://stackoverflow.com/questions/48150867/how-to-customise-entity-name-casing-in-ef-core-with-database-first) available for the same purpose.
 - Also, by default it does not singularize entity names and pluralize table names at it used to. To fix that, add an instance of `IPluralize` interface to the entry point project, and inject it through `IDesignTimeServices`. A sample implementation below.
