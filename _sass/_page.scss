@@ -373,6 +373,6 @@ letter-spacing: -3px; /*-3 makes things clumsy in small devices
 	z-index: 100;	 
 	display: none;
 	padding: 6px 10px; //overriding btn padding
-	opacity: 0.5;
-    filter: alpha(opacity=50); /* For IE8 and earlier */
+	opacity: 0.4;
+    filter: alpha(opacity=40); /* For IE8 and earlier */
 }

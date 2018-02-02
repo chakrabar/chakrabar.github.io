@@ -55,7 +55,7 @@ $(document).ready(function() {
 
 //arghya back-to-top
 $(document).ready(function() { 
-  var offset = 250;   
+  var offset = 400;   
   var duration = 300;
   $('.back-to-top').css({'display': 'none'});
   $(window).scroll(function() {

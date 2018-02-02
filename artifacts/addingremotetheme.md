@@ -143,8 +143,9 @@ If there are errors running the `grunt` task `imagemin` (see below), try fixing 
   * For me, nothing worked, so I commented out imagemin tasks from `Gruntfile.js`. So my images are not optimized
 
 Now, finally run the `grunt` tasks, which will update `assets/js/scripts.min.js`
-$ grunt
 
-Then do the usual 
+* Run `$ grunt`
+
+#### Then do the usual (for everyday build & run)
 * `bundle exec jekyll build`
-* `bundle exec jekyll serve --port 1234`
+* `bundle exec jekyll serve`
