@@ -12,9 +12,13 @@ modified: 2018-01-28T22:11:53-04:00
 
 This article is part of the [.NET Core Series](/articles/dotnet-core-2.0/). Go have a look at the other articles of this series, and run through the previous topics if not done already!
 
-#### [1] ASP.NET Core project
+The **ASP.NET** is the _classic_ web application development framework based on `.NET` framework. An `ASP.NET Core` application is nothing but an ASP.NET Web application that targets `.NET Core`. While the class files and code structure (it's still good ol' C#), remains pretty much the same, the web infrastructure has changed a lot since the _classic ASP.NET_! Like the rest of .NET Core, ASP.NET Core is also written from scratch and has all the attributes of [.NET Core](/articles/what-is-new-in-dotnet-core/).
 
-An `ASP.NET Core` project is nothing but a ASP.NET Web application that targets .NET Core. A web application in `ASP.NET Core 2.0` can be `MVC` or `Razor Page` web application. Even a `Web API` application is actually a `MVC` web application.
+The new infrastructure is very light-weight and highly configurable. From the web host, request pipeline, environments, routing strategy, error-handling and logging to dependency injection, everyhting is built in and customizable. The web application can be hosted on all major platforms (Windows, Linux, Mac OS), with all major web servers (IIS, Nginx, Apache, Docker etc.) and the front end can be build with any front-end framework of choice (plain html-JavaScript, Angular, React or anything) with support for modern web tools like Node, Gulp, Grunt, Bower etc.
+
+A web application in `ASP.NET Core 2.0` can be `MVC` or `Razor Page` web application. Or, as many of the modern web based applications are, it can be simply a bunch of RESTful APIs, with an independent user interface. Even a `Web API` RESTful web service is actually a `MVC` web application. 
+
+#### [1] ASP.NET Core project
 
 - VS Solution shows whatever is there in the project folder
   - Proj file doesn not have included files
@@ -38,7 +42,7 @@ An `ASP.NET Core` project is nothing but a ASP.NET Web application that targets 
 - `Main()` uses `Startup` class to setup application configuration, and then
 
 - Main() builds a web host using `WebHostBuilder` class options 
-  - KESTREL is the internal web server (`Http.Sys` or something else can also be used)
+  - KESTREL is the default internal web server (`Http.Sys` or something else can also be used)
   - It can also integrate with IIS or other web servers (relay between internal/KESTREL & external web server)
 - Then `Run()` the host (to start the application)
   - **From this point the console becomes a ASP.NET CORE application, and starts listening to http requests**
@@ -52,13 +56,13 @@ A simple class with two methods that the runtime calls
 
 **Dependency injection**
 		
-One of the main purposes of `ConfigureServices()` method is to setup dependency injection (DI is "almost" enforced here)
+The main purposes of `ConfigureServices()` method is to setup dependency injection (DI is "almost" enforced here)
 - Transient, Scoped (single instance through a single request), Singleton lifetimes
 - Own IoC can be used, but ASP.NET Core comes with default IoC
 - Default IoC can be used through the `IServiceCollection`
 - To use
-  - constructor injection in Controller
-  - `@inject` in views (..!!)
+  - Do constructor injection in Controller
+  - Use `@inject` in views (..!!)
 
 	
 #### [4] Request processing & HTTP Pipeline & Middleware
@@ -83,7 +87,7 @@ Request comes from browser to IIS (external web server)
 
 
 Traditionally ASP.NET was heavily dependent on **System.Web** which was tightly coupled with `IIS`
-  - Now it does not use `System.Web` and no dependency on `IIS`
+  - Now it does not use the heavy `System.Web` and no dependency on `IIS`
   - BTW, `IIS` is actually pretty good a web server, the evil mostly comes with `System.Web`
 	
 **Note: Basically there are two web servers - External & internal**
@@ -245,7 +249,7 @@ NPM packages:
 See the [What is .NET Core](/articles/what-is-new-in-dotnet-core/) article for understanding general deployment options for .NET Core applications.
 
 With default `Publish` from Visual Studio
-- Core creates just a dll which can be run through Core CLI to start the web `> dotnet WebApp.dll`
+- Core creates just a dll which can be run through Core CLI to start the web `$ dotnet WebApp.dll`
 	
 Once again, **KESTREL** is a performant simple web server
 - It has a managed dll

@@ -12,10 +12,14 @@ modified: 2018-01-28T22:11:53-04:00
 
 This article is part of the [.NET Core Series](/articles/dotnet-core-2.0/). Go have a look at the other articles of this series.
 
+For those who are not familiar with the **.NET Framework**, it is an application development framework built by Microsoft for building almost any kind of application, ranging from Command line applications, Desktop applications, Web applications, Mobile application (Xamarin), Web services to automation and reporting tools etc. [.NET framework](https://www.microsoft.com/net/download/dotnet-framework-runtime) comes with multiple language support with `C#`, `VB`, `F#` and many more. It also comes with very powerful IDE [Visual Studio](https://www.visualstudio.com/), to develop, build, test & deploy applications. .NET Framework works fully on Windows systems, and with limited capabilities on some other systems with the `Mono` framework.
+
+`.NET Core` is the new (not a replacement) version of `.NET` for the modern world. Though it follows many concepts & patterns of _classic_ .NET, it should rather be treated as a new & independent framework.
+
 #### [1] What is .NET Core
 
 `.NET Core` is a **new**, **portable**, **cross-platform**, **optimized** version of `.NET Framework` written from scratch. It's
-- Open source all the source code is in [GitHub](https://github.com/dotnet)
+- Open source all the source code is on [GitHub](https://github.com/dotnet)
 - Cross platform (Works on `Windows`, `Linux` & `Mac OS`)
 - Portable & light-weight (CoreCLR & CoreFx are very lean, and all parts/components are available as separate `NuGet` packages)
 - Cloud optimized (along with above point, optimized in terms of resource usage)
@@ -32,16 +36,16 @@ Unlike traditional full `.NET Framework` which is very heavy, and supports all d
 
 To create a new .NET Core application
 * Use one of the `.NET Core` project templates in VS (make sure target framework is `.NET Core` or `.NET Standard`)
-* Use dotnet cli to scaffold a project e.g. `> dotnet new console`
+* Use dotnet cli to scaffold a project e.g. `$ dotnet new console`
 
 A .NET Core application can be [deployed in 2 ways](https://docs.microsoft.com/en-us/dotnet/core/deploying/index)
 
 * **Portable** - [FDD or framework dependent deployment] very small & light-weight, depends on .net framework installed on the machine (e.g. C:\program files\dotnet)
   * General publish from VS
-  * > dotnet publish -f netcoreapp2.0 -c release
+  * $ dotnet publish -f netcoreapp2.0 -c release
 * **Self-contained** - [SCD or self-contained deployment] Stand-alone, includes the necessary parts of CoreCLR & CoreFx, and other NuGet packages.
   * VS publish with specific RID (runtime identifier)
-  * > dotnet publish -f netcoreapp2.0 -c release -r win81-x64
+  * $ dotnet publish -f netcoreapp2.0 -c release -r win81-x64
 
 .NET Core applications can target multiple frameworks/versions and multiple runtimes (hosting environments). To enable, mention targets frameworks & RIDs in *.csproj or in dotnet cli commands.
 * `csproj`
@@ -56,7 +60,7 @@ A .NET Core application can be [deployed in 2 ways](https://docs.microsoft.com/e
 * `dotnet cli`
 
 ```bash
-> dotnet publish -f netcoreapp1.6 -c release -r win10-x64
+$ dotnet publish -f netcoreapp1.6 -c release -r win10-x64
 ```
 
 #### [3] Framework choices
@@ -87,6 +91,7 @@ So how to create reusable modules?
   - So, you can basically check checkboxes to select what all platforms you want to target
   - With more platforms selected, you get lesser supported API surface
 2. **.NET STANDARD** - (functionally replaces PCLs)
+
 > a (versioned) specification that standardizes which APIs a .NET platform has to implement in each version.
 
   - [.NET Standard FAQ](https://github.com/dotnet/standard/blob/master/docs/faq.md)
@@ -127,7 +132,7 @@ So how to create reusable modules?
 2. Publish from Visual Studio
   - Can use multple profiles for publishing with multiple framework/runtimes
   - Full framework creates a `.exe` for executable projects. For `ASP.NET Core` this can be run to start the web through `KESTREL` web server
-  - Core creates just a dll which can be run through Core CLI to start the web `> dotnet MyApp.dll`
+  - Core creates just a dll which can be run through Core CLI to start the web `$ dotnet MyApp.dll`
 		
 3. Publishing self-contained apps:
   - Runtimes (RID) must be specified, as part of the CoreCLR will run natively (whatever part of CLR is not managed) - so will need a runtime specific version
@@ -136,10 +141,10 @@ So how to create reusable modules?
   - All core framework NuGet packages are added to publish folder
 
 4. To run on a platform which is not natively supported (e.g. `linux-arm` or `raspbian`)
-  - publish as `platform` with `.NET Framework` and copy over
-  - install full framework OR mono (which is full equivalent) on target machine
+  - publish as `platform` with `.NET Framework` and copy over the files
+  - Install full framework OR mono (which is full equivalent) on target machine
   - For ASP.NET applications, install `libuv` on target machine 
-  - Start with the specific CLI e.g. `> mono MyApp.dll`
+  - Start with the specific CLI e.g. `$ mono MyApp.dll`
 
 ----
 

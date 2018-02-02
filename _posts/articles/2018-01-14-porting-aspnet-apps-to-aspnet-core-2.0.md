@@ -62,8 +62,8 @@ public IActionResult Index()
 * **There is no `ApiController`** for `Web API`. [Web API](https://docs.microsoft.com/en-us/aspnet/core/tutorials/first-web-api) is built using the same infrastructure like MVC
 * There is no `[FromUri]` attribute. Use `[FromQuery]` or attribute routing instead.
 * The `ActionFilter`s are still there, but has changed form. Following needs to be replaced
-	`System.Web.Http.Filters` with `Microsoft.AspNetCore.Mvc.Filters`
-	`HttpActionContext` with `ActionExecutingContext` for `OnActionExecuting()`
+  * `System.Web.Http.Filters` with `Microsoft.AspNetCore.Mvc.Filters`
+	* `HttpActionContext` with `ActionExecutingContext` for `OnActionExecuting()`
 * `Razor` views have `Tag Helper`, comparable to what used to be `HTML Helper`.
 * [Anti forgery](https://docs.microsoft.com/en-us/aspnet/core/security/anti-request-forgery) is automatic and more customizable
 * MVC routes are defined in `Configure()` method of `Startup.cs`
@@ -144,7 +144,7 @@ Now the `csproj` files are pretty clean and simple. See one sample file below, i
   * Files (JSON, XML, INI)
   * Environment variables etc.
   * In-memory local class object
-  * Command line arguments `> dotnet run key1=value1`
+  * Command line arguments `$ dotnet run key1=value1`
 * Read more about [Configuration](https://docs.microsoft.com/en-us/aspnet/core/fundamentals/configuration/index?tabs=basicconfiguration)
 * Also look at [Options pattern](https://docs.microsoft.com/en-us/aspnet/core/fundamentals/configuration/options) in ASP.NET Core
   
@@ -219,7 +219,7 @@ dotnet run --launch-profile "Development"
 * Local application settings can be set in `Properties`\\`launchSettings.json`. This takes precedence over system values. See sample `launchSettings.json` below. Remember that
   * commandName Can be : `IIS`, `IISExpress` or `Project` (Kestrel)
   * ASPNETCORE_ENVIRONMENT can be `Development`, `Staging`, `Production` or anything
-  * When app is run with `> dotnet run`, it takes first profile with `commandName`:`Project`
+  * When app is run with `$ dotnet run`, it takes first profile with `commandName`:`Project`
   * These different profiles are available as **VS debuf profile** under VS debug menu
   * Profile & environment can be updated from `Project` > `properties` > `Debug`
 
@@ -315,7 +315,7 @@ Since `MVC` and `Web API` are unified now, there is no 2 flavours of filters lik
 - `System.Web.Mvc`
 - `System.Web.Http.Filters`
 
-They are now replaced by a single type of [filter](https://docs.microsoft.com/en-us/aspnet/core/mvc/controllers/filters#filters-vs-middleware)
+They are now replaced by a single type of [filter](https://docs.microsoft.com/en-us/aspnet/core/mvc/controllers/filters)
 - `Microsoft.AspNetCore.Mvc.Filters`
 
 There are different types of filters for different purposes, and they execute as an ordered pipeline

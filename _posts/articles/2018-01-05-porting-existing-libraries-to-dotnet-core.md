@@ -35,7 +35,8 @@ etc.
 2. WPF
 3. Xamarin
 4. Windows store apps
-5. SingalR ([scheduled for 2.1](https://github.com/aspnet/Home/wiki/Roadmap))
+5. Web-form web applications
+6. SingalR ([scheduled for 2.1](https://github.com/aspnet/Home/wiki/Roadmap))
 
 etc.
 
