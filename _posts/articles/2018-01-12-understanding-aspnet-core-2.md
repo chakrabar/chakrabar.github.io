@@ -3,7 +3,7 @@ layout: post
 title: "Understanding ASP.NET Core 2.0"
 excerpt: ".NET Core 2.0 series - 3/5 - Understanding ASP.NET Core 2.0"
 date: 2018-01-12
-tags: [tech, mvc, dotnet, csharp, aspnet, dotnetcore]
+tags: [tech, mvc, dotnet, csharp, aspnet, dotnetcore, aspnetcore]
 categories: articles
 share: true
 comments: true

@@ -9,15 +9,15 @@
 - [ ] Showing build time in web
 - [x] var object & dynamic
 - [ ] .NET Core
-  - [ ] Basics of .NET Core
+  - [x] Basics of .NET Core
   - [ ] Porting net461 to netstandard2/netcoreapp2
 - [x] Most used C# 6 features
 - [x] Most used C# 7 features
   - [ ] 7.1 & 7.2 features
-- [wip] CHange the site theme from 'Architect', it does suck - to so-simple-theme
+- [x] CHange the site theme from 'Architect', it does suck - to so-simple-theme
   - [ ] Code formatting is pure bad, very hard to read
   - [ ] I don't like the headers and general font color as well!
-- [ ] Use disqus comments
+- [x] Use disqus comments
 - [ ] Create TRAVEL/BLOG section
   - [ ] Create new category and sub section in site
   - [ ] Use different theme/styling
@@ -33,6 +33,8 @@
 
 ## Learnign spontaniously
 *(Anything? Anything at all?) - to be updated....err..ehm*
+
+* More of .NET Core, actually
 
 ## Links to be explored in detail
 

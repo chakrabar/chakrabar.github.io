@@ -3,7 +3,7 @@ layout: post
 title: "Porting ASP.NET MVC apps to ASP.NET Core 2.0 MVC"
 excerpt: ".NET Core 2.0 series - 4/5 - Porting existing ASP.NET MVC Web apps to ASP.NET Core 2.0"
 date: 2018-01-14
-tags: [tech, mvc, dotnet, csharp, aspnet, dotnetcore]
+tags: [tech, mvc, dotnet, csharp, aspnet, dotnetcore, aspnetcore]
 categories: articles
 share: true
 comments: true

@@ -3,7 +3,7 @@ layout: post
 title: "Working with .NET Core 2.0"
 excerpt: "A series of articles on understanding & working with .NET Core 2.0"
 date: 2018-01-02
-tags: [tech, dotnet, csharp, aspnet, dotnetcore]
+tags: [tech, dotnet, csharp, aspnet, dotnetcore, aspnetcore]
 categories: articles
 share: true
 comments: true

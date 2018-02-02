@@ -3,7 +3,7 @@ layout: post
 title: "What is .NET Core (2.0)"
 excerpt: ".NET Core 2.0 series - 1/5 - What is .NET Core"
 date: 2018-01-03
-tags: [tech, dotnet, csharp, aspnet, dotnetcore]
+tags: [tech, dotnet, csharp, aspnet, dotnetcore, aspnetcore]
 categories: articles
 share: true
 comments: true

@@ -3,7 +3,7 @@ layout: post
 title: "Porting ASP.NET Web API apps to ASP.NET Core 2.0"
 excerpt: ".NET Core 2.0 series - 5/5 - Porting existing ASP.NET Web API apps to ASP.NET Core 2.0"
 date: 2018-01-22
-tags: [tech, mvc, webapi, dotnet, csharp, aspnet, dotnetcore]
+tags: [tech, mvc, webapi, dotnet, csharp, aspnet, dotnetcore, aspnetcore]
 categories: articles
 share: true
 modified: 2018-01-28T22:11:53-04:00
@@ -87,6 +87,7 @@ Web API supports many different result types to format and send data in differen
 4. `StatusCodeResult` for returning a plain status code.
 
 #### [3] There are lot of short-hand methods and types for http-code-specific result
+
 1. 200 - `OkResult` or `OkObjectResult` to include object data
 2. 404 - `NotFoundResult` or `NotFoundObjectResult`
 3. 201 - `CreatedAtRoute`, with route to newly created object in header
@@ -112,7 +113,7 @@ services.AddMvc(options =>
 
 #### [5] The Produces filter
 
-A `Produces` ResultFilter can be added action, controller or global level to force output to be specific format ignoring content negotiation. Following code forces a `XML` formatted result
+A `Produces` ResultFilter can be added at action, controller or global level to force output to be specific format, ignoring content negotiation. Following code forces a `XML` formatted result
 
 ```cs
 [Produces("application/xml")] //will force to send XML ignoring ConNeg
@@ -131,10 +132,10 @@ To enforce `JSON`, there is also the `JsonResult` return type and `Json(object)`
 
 #### [6] The cool uri format trick 
 
-In some environments (including development & testing), it's very helpful to be able to specify the expected mime type without modifying http headers. For that, ASP.Net Core provides a in-built `ResultFilter`, `Produces`. When this is used, the mime type can be specified in the request URI as an extension, like `.json` or `.xml`.
+In some environments (<u>especially development & testing</u>), it's very helpful to be able to specify the expected mime type without modifying http headers. For that, ASP.Net Core provides a in-built `ResultFilter`, `Produces`. When this is used, the mime type can be specified in the request URI as an extension, like `.json` or `.xml`.
 
 * OLD ASP.NET Web API :: type as query string
-  * GET [http://myapp.com/api/SomeEntity?format=xml](http://myapp.com/api/SomeEntity?format=xml)
+* [http://myapp.com/api/SomeEntity?format=xml](http://myapp.com/api/SomeEntity?format=xml)
 
 ```cs
 //public static class WebApiConfig
@@ -148,7 +149,7 @@ public static void Register(HttpConfiguration config)
 ```
 
 * New ASP.NET Core 2.0 :: type as extension
-  * GET [http://myapp.com/api/SomeEntity/5.xml](http://myapp.com/api/SomeEntity/5.xml)
+* [http://myapp.com/api/SomeEntity/5.xml](http://myapp.com/api/SomeEntity/5.xml)
 
 ```cs
 //Startup
@@ -172,6 +173,68 @@ public IActionResult GetByIdWithFormat(long id)
 }
 ```
 
+
+#### [7] Migrating Web API to ASP.NET Core, the good boy way
+
+The basic way to [migrating old Web API code](https://docs.microsoft.com/en-us/aspnet/core/migration/webapi) to `ASP.NET Core` is to convert the old project to new project, and make necssary adjustments to comply with the new conventions of ASP.NET Core `MVC`.
+
+So, the general process would be
+
+1. Create a new `ASP.NET Core 2.0` application and choose the `Web API` template (it's just a template)
+2. Copy over all your existing classes
+3. Enable MVC in `Startup`. Add `services.AddMvc()` in ConfigureServices(), and `app.UseMvc()` in Configure(). Adding `UseMvc()` by default enables attribute routing.
+4. Change all your `ApiController` to `Controller`
+5. Change using directive from `System.Web.Http` to `Microsoft.AspNetCore.Mvc`
+6. Change return type from `IHttpActionResult` to `IActionResult`, if any
+7. Add http verb e.g. `[HttpGet]` to all controller actions
+8. Add attribute routing at controller level `[Route("api/[controller]")]` or at action level
+9. Build. Fix any additional error, add missing NuGet if any. Change return type if required.
+10. Run your migrated Web API and do all the tests.
+
+
+#### [8] Migrating Web API to ASP.NET Core, the bad-ass way
+
+The <u>magical</u> **WebApiCompactShim** for migrating old Web API code.
+
+Microsoft has shipped a [WebApiCompactShim](https://docs.microsoft.com/en-us/aspnet/core/mvc/controllers/application-model#application-model-usage-in-webapicompatshim) to help **migrate existing `Web API` projects to `AP.NET Core`**. The [NuGet package](https://www.nuget.org/packages/Microsoft.AspNetCore.Mvc.WebApiCompatShim/) has all the necessary code to make your old Web API code work as if nothing has happened.
+
+Some of the benefits of using this shim - all the old conventions basically!
+
+1. UseWebApiActionConventions attribute - to use old cenventions of choosing action method by matching http verb and action name. Like, `Get()` method gets called for `http get` call.
+2. UseWebApiParameterConventions attribute - old convention of binding simple types from `query string` and complex types from `request body`.
+3. The _classic_ `ApiController` class!! Which comes with all the necessary attributes auto-applied! This class is under `System.Web.Http` namespace!
+4. The old style "api/{controller}/{id?}" default API route can be applied globally.
+5. Support for old style `HttpResponseMessage`.
+6. Still everything is 100% .NET Core!
+
+<u>Easily migrate old Web API to .NET Core with WebApiCompactShim</u>
+
+1. Create a new `ASP.NET Core 2.0` application and choose the `Web API` template (well, the template doesn't do much)
+2. Copy over all your existing classes
+3. Install the [WebApiCompatShim](https://www.nuget.org/packages/Microsoft.AspNetCore.Mvc.WebApiCompatShim/) NuGet package
+4. Enable the shim in `Startup` with `.AddWebApiConventions()` as shown below.
+5. Add default API route in `Startup` as shown below. The `UseMvc()` by default enables attribute routing.
+6. If the Web API controllers already inherit `ApiController`, then great. Else make them inherit that, or use the [Web API shim attributes](https://docs.microsoft.com/en-us/aspnet/core/mvc/controllers/application-model#application-model-usage-in-webapicompatshim) 
+7. Build. Fix any additional error, add missing NuGet if any. Change return type if required.
+8. Run your migrated Web API and do all the tests.
+
+```cs
+//Startup
+public void ConfigureServices(IServiceCollection services)
+{
+    services.AddMvc() //enables attribute routing too
+        .AddWebApiConventions(); //handle WebAPI with shim
+}
+
+public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+{
+    //no default route provided by default for Web API
+    //This MapWebApiRoute is part of the shim
+    app.UseMvc(routes =>
+        routes.MapWebApiRoute("DefaultApi", "api/{controller}/{id?}")
+    );    
+}
+```
 
 ----
 
