@@ -49,7 +49,7 @@
 	font-weight: 600;
 
   a {
-    color: $text-color;
+    color: lighten($link-color, 10); /*$text-color; arghya*/
     padding: 0 5px;
   }
 
@@ -98,7 +98,7 @@ letter-spacing: -3px; /*-3 makes things clumsy in small devices
 	word-spacing: 0.25rem;
 
 	a {
-		color: $black;
+		color: darken($link-color, 10); /*$black; Arghya*/
 		text-decoration: underline;
 	}
 

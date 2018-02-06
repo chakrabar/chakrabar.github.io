@@ -95,14 +95,14 @@ ins {
 
 a {
 	text-decoration: none;
-	color: $link-color;
+	color: lighten($link-color, 20); /*$link-color; Arghya*/
 
 	&:visited {
 		color: lighten($link-color, 20);
 	}
 
 	&:hover {
-		color: darken($link-color, 20);
+		color: darken($link-color, 10); /*darken($link-color, 20); Arghya*/
 	}
 
 	&:focus {
