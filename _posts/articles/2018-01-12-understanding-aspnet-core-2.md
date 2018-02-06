@@ -113,6 +113,15 @@ Request comes from browser to IIS (external web server)
 - Note: functionality of the web server (internal) is also accessible by the middleware through specific feature interfaces 
 
 
+Traditionally ASP.NET was heavily dependent on **System.Web** which was tightly coupled with `IIS`
+  - Now it does not use the heavy `System.Web` and no dependency on `IIS`
+  - But `IIS` is actually pretty good a web server, the issues mostly come with `System.Web`
+	
+**Note: Basically there are two web servers - External & internal**
+> * External can be IIS or Nginx or Apache or Docker or some standard web server
+> * Internal can be KESTREL (pronounced "kes-tral") or something else (well, mostly KESTREL)
+
+
 #### [5] Building the PIPELINE
 
 The pipeline can be built within `Configure()` method on the `app` object using `Run()`, `Use()` etc.
@@ -162,20 +171,10 @@ Note: An **`IApplicationBuilder`** instance is provided to `Startup.cs` by `Prog
 ----
 
 
-Traditionally ASP.NET was heavily dependent on **System.Web** which was tightly coupled with `IIS`
-  - Now it does not use the heavy `System.Web` and no dependency on `IIS`
-  - BTW, `IIS` is actually pretty good a web server, the evil mostly comes with `System.Web`
-	
-**Note: Basically there are two web servers - External & internal**
-> * External can be IIS or Nginx or Apache or Docker or some standard web server
-> * Internal can be KESTREL (pronounced "kes-tral") or something else (well, mostly KESTREL)
 
-
-----
 
 #### [6] Side note: The relationship between OWIN, KATANA & KESTREL (and ASP.NET vNext, ASP.NET Core et al.)
 
-----
 
 1. **OWIN** :: (Open Web Interface for .Net) is a set of standards (mostly borrowed from `Ruby` & `Node.js`), which defines the set of interfaces to be 
   - Implemented by web applications & servers so that they are not coupled to each other. Any framework & server, as long as they implement those standards can work with each other. (e.g. Server should provide a response body stream & application should write on that :)
