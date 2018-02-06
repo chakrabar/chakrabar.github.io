@@ -27,7 +27,7 @@
     float: left;
     list-style: none;
     text-align: center;
-    @include font-size(24,no);
+    @include font-size(16,no); /*font-size(24,no); Arghya reducing menu font on small device*/
     text-transform: uppercase;
     color: $white;
 
