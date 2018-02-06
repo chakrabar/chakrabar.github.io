@@ -6,12 +6,11 @@ date: 2018-01-22
 tags: [tech, mvc, webapi, dotnet, csharp, aspnet, dotnetcore, aspnetcore]
 categories: articles
 share: true
-modified: 2018-01-28T22:11:53-04:00
+comments: true
+modified: 2018-02-05T22:11:53-04:00
 ---
 
 This article is part of the [.NET Core Series](/articles/dotnet-core-2.0/). Go have a look at the other articles of this series, and run through the previous topics if not done already!
-
-#### _Note: This article is still WIP. It'll be updated with More content soon._
 
 What is **Web API** in .NET?
 
@@ -194,9 +193,9 @@ So, the general process would be
 
 #### [8] Migrating Web API to ASP.NET Core, the bad-ass way
 
-The <u>magical</u> **WebApiCompactShim** for migrating old Web API code.
+The <u>magical</u> **WebApiCompatShim** for migrating old Web API code.
 
-Microsoft has shipped a [WebApiCompactShim](https://docs.microsoft.com/en-us/aspnet/core/mvc/controllers/application-model#application-model-usage-in-webapicompatshim) to help **migrate existing `Web API` projects to `AP.NET Core`**. The [NuGet package](https://www.nuget.org/packages/Microsoft.AspNetCore.Mvc.WebApiCompatShim/) has all the necessary code to make your old Web API code work as if nothing has happened.
+Microsoft has shipped a [WebApiCompatShim](https://docs.microsoft.com/en-us/aspnet/core/mvc/controllers/application-model#application-model-usage-in-webapicompatshim) to help **migrate existing `Web API` projects to `AP.NET Core`**. The [NuGet package](https://www.nuget.org/packages/Microsoft.AspNetCore.Mvc.WebApiCompatShim/) has all the necessary code to make your old Web API code work as if nothing has happened.
 
 Some of the benefits of using this shim - all the old conventions basically!
 
@@ -207,7 +206,9 @@ Some of the benefits of using this shim - all the old conventions basically!
 5. Support for old style `HttpResponseMessage`.
 6. Still everything is 100% .NET Core!
 
-<u>Easily migrate old Web API to .NET Core with WebApiCompactShim</u>
+_Note: The (current) stable version of Microsoft.AspNet.WebApi.Client (which the shim depends on) v5.2.3 is not fully compatible with .NET Standard. But [v5.2.4-preview1](https://github.com/aspnet/Home/issues/1558) is available on NuGet which is fully compatible with .NET Standard 2.0_ .
+
+<u>Easily migrate old Web API to .NET Core with WebApiCompatShim</u>
 
 1. Create a new `ASP.NET Core 2.0` application and choose the `Web API` template (well, the template doesn't do much)
 2. Copy over all your existing classes

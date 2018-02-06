@@ -7,7 +7,7 @@ tags: [tech, mvc, dotnet, csharp, aspnet, dotnetcore, aspnetcore]
 categories: articles
 share: true
 comments: true
-modified: 2018-01-28T22:11:53-04:00
+modified: 2018-02-05T22:11:53-04:00
 ---
 
 This article is part of the [.NET Core Series](/articles/dotnet-core-2.0/). Go have a look at the other articles of this series, and run through the previous topics if not done already!
@@ -41,11 +41,25 @@ A web application in `ASP.NET Core 2.0` can be `MVC` or `Razor Page` web applica
 - Entry point to application is `Main()` method in `Program.cs`
 - `Main()` uses `Startup` class to setup application configuration, and then
 
-- Main() builds a web host using `WebHostBuilder` class options 
-  - KESTREL is the default internal web server (`Http.Sys` or something else can also be used)
+- Main() builds a web host `IWebHost` using `WebHostBuilder` class options 
+  - It defines the web server, KESTREL is the default internal web server (`Http.Sys` or something else can also be used)
+  - Calls the ConfigureServices() & Configure() methods in Startup
   - It can also integrate with IIS or other web servers (relay between internal/KESTREL & external web server)
 - Then `Run()` the host (to start the application)
   - **From this point the console becomes a ASP.NET CORE application, and starts listening to http requests**
+
+```cs
+//Program.cs
+public static void Main(string[] args)
+{
+    BuildWebHost(args).Run();
+}
+
+public static IWebHost BuildWebHost(string[] args) =>
+    WebHost.CreateDefaultBuilder(args)
+        .UseStartup<Startup>() //Invokes ConfigureServices & Configure
+        .Build();
+```
 
 
 #### [3] The Startup.cs class
@@ -57,13 +71,26 @@ A simple class with two methods that the runtime calls
 **Dependency injection**
 		
 The main purposes of `ConfigureServices()` method is to setup dependency injection (DI is "almost" enforced here)
-- Transient, Scoped (single instance through a single request), Singleton lifetimes
+- Choice of service lifetimes
+  - Transient: Creted each time they are requested
+  - Scoped: Once per client request
+  - Singleton: One per lifetime of application
 - Own IoC can be used, but ASP.NET Core comes with default IoC
 - Default IoC can be used through the `IServiceCollection`
 - To use
   - Do constructor injection in Controller
   - Use `@inject` in views (..!!)
 
+```cs
+public void ConfigureServices(IServiceCollection services)
+{
+    services.AddDbContext<MyDbContext>(opt => opt.UseInMemoryDatabase("MyDbName"));
+    services.AddMvc(); //inject all services related to MVC
+    services.AddScoped<IRepository, Repository>();
+    services.AddTransient<ISomeService, SomeService>();
+    services.AddSingleton<IConfigBuilder, FileConfigBuilder>();
+}
+```
 	
 #### [4] Request processing & HTTP Pipeline & Middleware
 
@@ -72,7 +99,7 @@ The main purposes of `ConfigureServices()` method is to setup dependency injecti
 - A **middleware** XYZ is added to pipeline with method `UseXYZ()`
 - By default it's empty, and it needs to be built up with stuffs/blocks (e.g. MIDDLEWARE)
   - e.g. MVC framework, Authentication block, static file serving strategy, routing, response compression, uri rewritting etc.
-- Custom OWIN based middleware can be made
+- Custom (OWIN like) middleware can be created
 		
 **Request processing**
 
@@ -86,6 +113,55 @@ Request comes from browser to IIS (external web server)
 - Note: functionality of the web server (internal) is also accessible by the middleware through specific feature interfaces 
 
 
+#### [5] Building the PIPELINE
+
+The pipeline can be built within `Configure()` method on the `app` object using `Run()`, `Use()` etc.
+Middlewares need to be piped/chained to one another, else the rest will not be executed!
+e.g. (here the `context` is a new entity, not the old one from `System.Web`)
+
+```cs
+app.Use(async (context, next) => 
+{
+	await context.Response.WriteAsync("Response text");
+	await next(); //to next middleware in pipeline
+});
+```
+
+
+----
+
+##### Wait a minute! What is a middleware?
+
+----
+
+In `ASP.NET Core` a middleware is a piece of code that can define how the application will handle any incoming http request. In an ASP.NET Core web application, all http requests are passed through a pipeline which processes the request and produces the response. This pipeline is nothing but a series of middlewares. Or in other words, a middleware is nothing but a piece of the http request processing pipeline. Practically, every `middleware` has access to the `httpContext` object and all it's properties. It can manipulate the details, and then pass on to the next middleware in the pipeline, or return the response directly (called _short-circuiting_).
+
+Understand that the application wouldn't do anything unless proper middlewares were setup. 
+
+One of the most common middlewares is the `MVC` middleware, which is configured with the `.UseMvc()` call in `Configure()` method of the `Startup.cs`. There are lot of in-built middlewares like this, and also it's pretty simple to create a [custom middleware](https://docs.microsoft.com/en-gb/aspnet/core/fundamentals/middleware/index?tabs=aspnetcore2x).
+
+All the middlewares have to be setup in the `Configure()` method, and they will process request in the same order they are registered. A middleware can be inline, or defined in a separate class. Following is an example of an inline middleware (a dummy one rather than something really useful) that _short-circuits_ the pipeline and returns a response directly if the user requests for a `.pdf`.
+
+```cs
+//In Configure() method of Startup.cs
+app.MapWhen(context => context.Request.Path.Value.EndsWith(".pdf"),
+    appBuilder =>
+    {
+        appBuilder.Run(async context =>
+        {
+            context.Response.StatusCode = 400; //Bad request
+            await context.Response.WriteAsync("We do not serve PDFs yet!");
+        });
+    });
+```
+
+Custom middlewares are good place to handle the cross-cutting concerns of the application like logging, exception handling etc. They can pretty well replace global filters. It could also be a good idea to [replace http handlers and modules](https://docs.microsoft.com/en-gb/aspnet/core/migration/http-modules) with middlewares!
+
+Note: An **`IApplicationBuilder`** instance is provided to `Startup.cs` by `Program.cs`, which allows to add middlewares to configure the request pipeline of the application.
+
+----
+
+
 Traditionally ASP.NET was heavily dependent on **System.Web** which was tightly coupled with `IIS`
   - Now it does not use the heavy `System.Web` and no dependency on `IIS`
   - BTW, `IIS` is actually pretty good a web server, the evil mostly comes with `System.Web`
@@ -97,7 +173,7 @@ Traditionally ASP.NET was heavily dependent on **System.Web** which was tightly 
 
 ----
 
-#### [5] Side note: The relationship between OWIN, KATANA & KESTREL (and ASP.NET vNext, ASP.NET Core et al.)
+#### [6] Side note: The relationship between OWIN, KATANA & KESTREL (and ASP.NET vNext, ASP.NET Core et al.)
 
 ----
 
@@ -130,21 +206,6 @@ Traditionally ASP.NET was heavily dependent on **System.Web** which was tightly 
 * If different ports are to be shared on same server, KESTREL cannot do that. It serves just one port in server. 
 
 ----
-
-
-#### [6] Building the PIPELINE
-
-The pipeline can be built within `Configure()` method on the `app` object using `Run()`, `Use()` etc.
-Middlewares need to be piped/chained to one another, else the rest will not be executed!
-e.g. (here the `context` is a new entity, not the old one from `System.Web`)
-
-```cs
-app.Use(async (context, next) => 
-{
-	await context.Response.WriteAsync("Response text");
-	await next(); //to next middleware in pipeline
-});
-```
 
 
 #### [7] MVC & Web API

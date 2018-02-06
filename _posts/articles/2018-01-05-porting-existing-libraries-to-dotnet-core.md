@@ -23,7 +23,7 @@ These are the following type of projects that I've been able to port, with incre
 1. Class libraries are good candidate, can be ported with lesser troubles
 2. Console applications
 3. Unit test projects 
-4. Web API projects
+4. Web API projects (effort needed to update the web infrastructure)
 5. ASP.NET MVC projects
 6. EF (with EF Core 2.0, there are some limitations though)
 
@@ -58,19 +58,19 @@ Porting an application to `.NET Core` is great when it
 4. If the application will ever run on a Windows system only, porting to core might not give lot of benefits
 5. The development team needs to get up-to-date with this new and evolving technology
 6. Since it is still evolving, the code might need more changes in future. More tests again.
-7. The development setup works best with latest infrastructures, e.g. `VS 2017 v15.3+`. For some teams/individuals, the setup cost can become a bummer!
-8. If the application depends on other projects which are not ported to core, it will not help (and if they are from the not supported list [2] like WCF, they cannot be ported)
+7. The development setup works best with latest infrastructures, e.g. `VS 2017 v15.3+`. For some teams/individuals, the setup cost can be a bummer!
+8. If the application depends on other projects which are not compatible with core, it will not help (and if they are from the not supported list [2] like WCF, they cannot be ported anyway)
 9. The full `.NET Framework` is not going anywhere, and it'll always be maintained and updated
 10. If the only compelling reason is _"It's new and cool, and everyone is talking about it"_, just drop the idea already
 
 #### [4] General changes for porting any project
 
-Though the `C#` code written for old `.NET Framework` works fine with `.NET Core`, the whole project does not work as is with Core. The main reasons are
+Though the `C#` code written for old `.NET Framework` works fine with `.NET Core`, the whole project does not work as-is with Core. The main reasons are
 
 1. Some of the features are not available in `.NET Core`
-2. Some features are available with new APIs (the interface, class, method, parameters etc.)
+2. Some features are available with new APIs (new interface, class, method, parameters etc.)
 3. Some functionalities have moved to new `namespace` because of new granular NuGet distribution
-4. Some old NuGet packages are not compatible with `.NET Core`
+4. Some old NuGet packages are not compatible with `.NET Core` (The `CompatShim` can help here)
 
 There are actually a lot of changes required to make it work. And, **some of the code might not work at all** as not everything from full framework is supported in Core. In some cases, you'll have to find alternatives, sometimes you may have to drop some functionality completely. So, that pretty much can be a blocker!
 
@@ -83,12 +83,12 @@ Looking at what NuGet packages are used - whether their latest version support `
 1. The `*.csproj` has changed a lot. So, better create a new project with required framework and version. Then add the code to it.
 2. Since the project file does not list the reference `C#` files, just copying them over to the new project folder automatically includes them in the project.
 3. Now try to build it. Obviously it'll fail as it does not have the other project & NuGet references. Add them.
-4. Add the required project references. Make sure they already are .NET Core projects, else the port will not work.
+4. Add the required project references. Make sure they already are .NET Core projects, else the port might not work (think CopatShim).
 5. Add the required NuGet packages. Make sure the NuGet package targets `.NET Core` or `.NET Standard`. Sometimes you might have to add multiple packages what used to be part of a single package.
     1. Else look for alternative packages which can do the same job. 
     2. Many 3rd party packages have unofficial .NET Core port, which works fine. 
     3. Sometimes you need to select the "include pre-release" options in NuGet package manager to get latest version that works. Make sure the pre-release is stable.
-    4. If none of this works, _you might be stuck !_
+    4. If none of this works, _you might be stuck !_ Add non-standard versions of the package and hope it runs.
 6. Because of the NuGet changes, some of the `namespace` would have changed. Find out the new namespace and do a "Replace All" in your project.
 7. Some of the APIs (the interface, class, method, parameters etc.) might have changed as well. Make necessary changes in the code so that it complies with the new APIs.
 8. `app.config` or `web.config` does not work as they used to. Ideally move all the required settings to `appsettings.json` file or other configuration sources. Make necessary code changes to use settings from the new source.
@@ -182,7 +182,7 @@ Assert.IsNullOrEmpty(result); //is removed, use
 Assert.That(result, Is.Null.Or.Empty);
 ```
 
-* In place of `Ionic.Zip` use the native [System.IO.Compression](https://docs.microsoft.com/en-us/dotnet/standard/io/how-to-compress-and-extract-files)
+* In place of `Ionic.Zip` one can use the native [System.IO.Compression](https://docs.microsoft.com/en-us/dotnet/standard/io/how-to-compress-and-extract-files)
 * Use `EPPlus.Core 1.5.4` for working with Excel as original/official EPPlus doesn't support .NET Core yet
 * `System.Runtime.Caching` is not supported in .NET Core yet. Change to [Microsoft.Extensions.Caching.Memory](https://docs.microsoft.com/en-us/aspnet/core/performance/caching/memory) v2.0.0 NuGet package. Register memory cache `.AddMemoryCache()` in `Startup`, and get `IMemoryCache` injected in client classes.
 * For many framework NuGets, you have to find the new (sometimes multiple) package(s)
