@@ -92,8 +92,8 @@ return new OkObjectResult(new Item { Id = 123, Name = "Hero" });
 
 //following two are funtionally same, but has contrasting semantics
 return new ObjectResult(new Item { Id = 123, Name = "Hero" }) 
-    { StatusCode = 200 }; //status 200 is default
-return StatusCode( 200, new Item { Id = 123, Name = "Hero" });
+    { StatusCode = StatusCodes.Status200OK }; //status 200 is default
+return StatusCode(200, new Item { Id = 123, Name = "Hero" });
 
 //returns JSON, no content negotiation
 return Json(new Item { Id = 123, Name = "Hero" });
