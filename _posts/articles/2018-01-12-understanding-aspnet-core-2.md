@@ -7,14 +7,14 @@ tags: [tech, mvc, dotnet, csharp, aspnet, dotnetcore, aspnetcore]
 categories: articles
 share: true
 comments: true
-modified: 2018-02-05T22:11:53-04:00
+modified: 2018-02-07T22:11:53-04:00
 ---
 
 This article is part of the [.NET Core Series](/articles/dotnet-core-2.0/). Go have a look at the other articles of this series, and run through the previous topics if not done already!
 
 The **ASP.NET** is the _classic_ web application development framework based on `.NET` framework. An `ASP.NET Core` application is nothing but an ASP.NET Web application that targets `.NET Core`. While the class files and code structure (it's still good ol' C#), remains pretty much the same, the web infrastructure has changed a lot since the _classic ASP.NET_! Like the rest of .NET Core, ASP.NET Core is also written from scratch and has all the attributes of [.NET Core](/articles/what-is-new-in-dotnet-core/).
 
-The new infrastructure is very light-weight and highly configurable. From the web host, request pipeline, environments, routing strategy, error-handling and logging to dependency injection, everyhting is built in and customizable. The web application can be hosted on all major platforms (Windows, Linux, Mac OS), with all major web servers (IIS, Nginx, Apache, Docker etc.) and the front end can be build with any front-end framework of choice (plain html-JavaScript, Angular, React or anything) with support for modern web tools like Node, Gulp, Grunt, Bower etc.
+The new infrastructure is very light-weight and highly configurable. From the web host, request pipeline, environments, routing strategy, error-handling and logging to dependency injection, everyhting is built in and customizable. The web application can be hosted on all major platforms (Windows, Linux, MacOS), with all major web servers (IIS, Nginx, Apache, Docker etc.) and the front end can be build with any front-end framework of choice (plain html-JavaScript, Angular, React or anything) with support for modern web tools like Node, Gulp, Grunt, Bower etc.
 
 A web application in `ASP.NET Core 2.0` can be `MVC` or `Razor Page` web application. Or, as many of the modern web based applications are, it can be simply a bunch of RESTful APIs, with an independent user interface. Even a `Web API` RESTful web service is actually a `MVC` web application. 
 
@@ -66,7 +66,8 @@ public static IWebHost BuildWebHost(string[] args) =>
 
 A simple class with two methods that the runtime calls
   - ConfigureServices(IServiceCollection services) - this is optional, to inject required services to container
-  - Configure(IApplicationBuilder app, IHostingEnvironment env) - this is required, to setup http pipeline
+  - Configure(IApplicationBuilder app, IHostingEnvironment env) - this is required, to setup http pipeline. **Any service that hass been registered in above method, can be injected directly in this method parameters**.
+  - Also note that Startup class is a good place to add any custom code that needs to run on application startup, traditionally which used to be inside `Gloabl.asax`.
 
 **Dependency injection**
 		
@@ -77,9 +78,6 @@ The main purposes of `ConfigureServices()` method is to setup dependency injecti
   - Singleton: One per lifetime of application
 - Own IoC can be used, but ASP.NET Core comes with default IoC
 - Default IoC can be used through the `IServiceCollection`
-- To use
-  - Do constructor injection in Controller
-  - Use `@inject` in views (..!!)
 
 ```cs
 public void ConfigureServices(IServiceCollection services)
@@ -91,6 +89,16 @@ public void ConfigureServices(IServiceCollection services)
     services.AddSingleton<IConfigBuilder, FileConfigBuilder>();
 }
 ```
+
+<u>To use an registered service</u>
+- Do constructor injection in Controller & other types those are invoked through DI
+- Through `HttpContext` with 
+   ctx.RequestServices.GetService<ISomeService>();
+- Method parameter injection in middleware `Invoke()`
+- Use `@inject` in views (..!!)
+
+See the **[practical configuration & DI](/articles/practical-configuration-and-di-in-aspnet-core/)** article to see real life code demo on how DI & configuration settings are used in .NET Core.
+
 	
 #### [4] Request processing & HTTP Pipeline & Middleware
 

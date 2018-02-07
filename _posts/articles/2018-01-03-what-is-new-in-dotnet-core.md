@@ -142,21 +142,12 @@ The `Compat Shim` does the magic through internal type forwarding between .NET S
 
 #### [5] Configuration & Settings
 
-- Like older ASP.NET, still the configuration is key-value based 
-- There is no `app.config` and there is no predefined config sections like `appSettings`. Configuration source can be any `XML`, `JSON`, `in-memory`, `command line args`, `INI` file or environment variables
-- First the Startup code needs to read the configuration source as defined in the code, then it can be used app-wide through an injected `IConfiguration` instance
-- Custom sources can be created by deriving from `ConfigurationStore` class (may need to add Microsoft.Extensions.Configuration assembly)
-- e.g. to create a custom JSON configuration file
-  - Create a json file add populate data as simple property and value in json object format (can create complex object as well)
-  - Create a custom class that corresponds to the json structure
-  - Add code to read this config, in Startup.cs (add all requirde packages to project.json)
-  - Setup dependency injection to get those settings as object 
-  - Use multiple `AddJsonFile()` option with {EnvironmentName} to optionally use (priority/override) environment specific config file 
-  - Add configuration json file to publishOptions:include , so that it is published to out directory
-  - Add AddOptions() middleware
-  - This can be injected as IOptions<CustomClass>
-- If any `json` file is used, the values can be read as json object properties e.g. 
-    var outPath = Configuration ["output:directory"];
+- Like older .NET, still the configuration is key-value based 
+- Unlike older .NET, there is no `app.config` and there is no predefined config sections like `appSettings`. Configuration settings in .NET Core is much more flexible.
+- Source of configuration can be any `XML`, `JSON`, `in-memory`, `command line args`, `INI` file or environment variables
+- Configuration source is defined in Program.cs, and registered with DI. Then the configuration values can be used across the application
+- See the **[practical configuration & DI](/articles/practical-configuration-and-di-in-aspnet-core/)** article to see real life code demo on how to use configuration settings in .NET Core
+
 
 #### [6] .NET Core Deployment options
 
