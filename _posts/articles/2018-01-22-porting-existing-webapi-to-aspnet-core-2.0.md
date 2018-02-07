@@ -85,6 +85,25 @@ Web API supports many different result types to format and send data in differen
 3. `ObjectResult` supports content negotiation. When any `object` type is returned from API, they are wrapped inside an ObjectResult. `StatusCode` can be specified too.
 4. `StatusCodeResult` for returning a plain status code.
 
+Following code shows different ways of returning `data` with `status code`.
+
+```cs
+return new OkObjectResult(new Item { Id = 123, Name = "Hero" });
+
+//following two are funtionally same, but has contrasting semantics
+return new ObjectResult(new Item { Id = 123, Name = "Hero" }) 
+    { StatusCode = 200 }; //status 200 is default
+return StatusCode( 200, new Item { Id = 123, Name = "Hero" });
+
+//returns JSON, no content negotiation
+return Json(new Item { Id = 123, Name = "Hero" });
+
+public Item Get()
+{
+    return new Item { Id = 123, Name = "Hero" };
+}
+```
+
 #### [3] There are lot of short-hand methods and types for http-code-specific result
 
 1. 200 - `OkResult` or `OkObjectResult` to include object data

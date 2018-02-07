@@ -63,8 +63,9 @@ public IActionResult Index()
 * There is no `[FromUri]` attribute. Use `[FromQuery]` or attribute routing instead.
 * The `ActionFilter`s are still there, but has changed form. Following needs to be replaced
   * `System.Web.Http.Filters` with `Microsoft.AspNetCore.Mvc.Filters`
-	* `HttpActionContext` with `ActionExecutingContext` for `OnActionExecuting()`
+	* `HttpActionContext` with `ActionExecutingContext` for `OnActionExecuting()` etc.
 * `Razor` views have `Tag Helper`, comparable to what used to be `HTML Helper`.
+* If there is action method to support file upload, the old `HttpPostedFileBase` has to be replaced with `IFormFile` and associated codes will need change too
 * [Anti forgery](https://docs.microsoft.com/en-us/aspnet/core/security/anti-request-forgery) is automatic and more customizable
 * MVC routes are defined in `Configure()` method of `Startup.cs`
 
@@ -311,7 +312,7 @@ routes.MapRoute(
 
 Filters or `ActionFilter`s are pieces of code that can be wired into any controller actions so that they run automatically before/after the actual action code runs.
 
-Since `MVC` and `Web API` are unified now, there is no 2 flavours of filters like
+Since `MVC` and `Web API` are unified now, there is NO 2 flavours of filters like
 - `System.Web.Mvc`
 - `System.Web.Http.Filters`
 
@@ -332,6 +333,7 @@ Filters can be added to
 - Action methods
 - Controller classes
 - Globally, in
+- Handling dependency injection in Filters can be tricky, you'll have to use `TypeFilter` or `ServiceFilter`
 
 ```cs
 public void ConfigureServices(IServiceCollection services)
@@ -354,7 +356,7 @@ Global OnExecuting
 Global OnExecuted
 ```
 
-Any Filter can short-circuit thr rest of filter-pipeline by setting a value to `context.Result`, or throwing `Exception`.
+Any Filter can short-circuit the rest of filter-pipeline by setting a value to `context.Result`, or throwing `Exception`.
 
 Also,
 * Learn about [authorization](https://docs.microsoft.com/en-us/aspnet/core/security/authorization/index) in ASP.NET Core
