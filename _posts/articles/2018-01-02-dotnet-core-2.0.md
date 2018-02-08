@@ -30,4 +30,6 @@ So, here is the list of articles in this series. All the articles collectively p
 
 ##### 5. [Porting Web API services to ASP.NET Core 2.0](/articles/porting-existing-webapi-to-aspnet-core-2.0/)
 
+##### 6. [practical configuration & DI in .NET Core 2.0](/articles/practical-configuration-and-di-in-aspnet-core/)
+
 Like always, the source of knowledge has been MSDN, GitHub, Stack Overflow and various other online forums.

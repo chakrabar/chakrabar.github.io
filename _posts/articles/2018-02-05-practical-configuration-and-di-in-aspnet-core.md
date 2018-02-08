@@ -14,28 +14,36 @@ This article is an extension to the [.NET Core Series](/articles/dotnet-core-2.0
 
 In this article, we'll look at some real life code to see how configuration and DI are used in `.NET Core 2.0` code.
 
-#### [1] Service Registration in .NET Core
+#### [1] DI - Service Registration in .NET Core
 
-`.NET Core` comes with in-built dependency injection (DI). Though practically optional, conventionally it is expected to build the whole application based on DI. That means, register all your dependency to the .NET Core `IoC container` at application startup and get them injected in the client code when required.
+`.NET Core` comes with in-built dependency injection (DI). Though practically optional, conventionally it is expected to build the whole application based on DI. That means, different modules and layers to not depend on each other directly, rather connect via some abstraction (good ol' Dependency Inversion Principle). Talking of `code` you register all your dependency to the .NET Core `IoC container` at application startup and get them injected in the client code when required.
 
-The `Startup.cs` class has a `ConfigureServices` method where all the services are registered. This method is called by the `Main()` method and it passes the `IServiceCollection` to the method, which is used to register services.
+The `Startup.cs` class has a `ConfigureServices` method where all the services are registered. This method is called by the `Main()` method and it passes the `IServiceCollection` to the method, which is used to register services. A service can be registered with 3 different type of scopes or lifetimes. 
 
 - Choice of service lifetimes
   - **Transient**: Creted each time they are requested
   - **Scoped**: Once per http request
   - **Singleton**: One per lifetime of application
 
-Following code shows standard way of registering services in .NET Core 2.0
+Following code shows the standard ways of registering services in .NET Core 2.0
 
 ```cs
 //Startup.cs
 public void ConfigureServices(IServiceCollection services)
 {
+    //with framework provided extension methods
     services.AddDbContext<MyDbContext>(opt => opt.UseInMemoryDatabase("MyDbName"));
     services.AddMvc(); //inject all services related to MVC
+    //simple scoped service registration
     services.AddScoped<IRepository, Repository>();
     services.AddTransient<ISomeService, SomeService>();
     services.AddSingleton<IConfigBuilder, FileConfigBuilder>();
+    //any type that needs injection/to be injected
+    services.AddScoped<JustAnotherEntity>();
+    //instance registration example, sp is IServiceProvider
+    services.AddTransient<MyService>(sp => new MyService(
+        "Some string argument",
+        sp.GetService<ISomeService>()));
 }
 ```
 
@@ -69,7 +77,7 @@ public class TestController : Controller
 
 #### [3] Injecting service without constructor injection
 
-Constructor injection is the ideal way to inject dependency in a class as it is conventional, very descriptive and readable and also it makes the intention very clear that _the code will not work if those dependencies are not provided_.
+Constructor injection is the ideal way to inject dependency in a class as it is conventional, very descriptive and readable. Also it makes the intention very clear that _the code will not function if those dependencies are not provided_.
 
 But there can be cases, where one might need to get a service instance by explicit injection. This can be achieved by asking for an instance directly from `IServiceProvider`. This IServiceProvider itself can be injected through dependency injection. See code below
 
@@ -94,7 +102,173 @@ public class TestController : Controller
 }
 ```
 
-#### [4] Basic Configuration setup in .NET Core 2.0
+I can think of two reasons for using this
+
+1. To create service instances conditionally at runtime
+2. To minimize the parameters of constructor. Only `IServiceProvider` can be injected in constructor, then later the actual services can be instantiated as and when necessary.
+
+**<u>Service instance injection inside the ConfigureServives method</u>**
+
+In some occasions, it might be required to get a service instance injected inside the `ConfigureServices` method itself! The way to do that is again using `IServiceProvider`. The `IServiceCollection` available to the method has an extension to create an `IServiceProvider` instance. See below
+
+```cs
+//Startup.ConfigureServices()
+//using Microsoft.Extensions.DependencyInjection;
+var someService = services.BuildServiceProvider()
+    .GetService<ISomeService>();
+```
+
+**Note:**
+1. Before using this, the `ISomeService` and it's dependecy graph must be registered
+2. For the `Configure` method, any service that has been registered, can be directly injected as method parameters
+
+#### [4] Dependency Injection in Filters
+
+Let's say I have an `ActionFilter` like this, which simply adds a custom header to the response
+
+```cs
+public class MyHeaderFilterAttribute : ActionFilterAttribute
+{
+    public override void OnActionExecuting(ActionExecutingContext context)
+    {
+        context.HttpContext.Response.Headers.Add("MyHeader", "HeaderValue");
+    }
+}
+```
+
+This can be used as an attribute in `controller` or `action` method
+
+```cs
+[MyHeaderFilter]
+public ActionResult Get()
+{
+    return new OkObjectResult(new { Id = 123, Name = "Hero" });
+}
+```
+
+Now, if I have a constructor dependency in the filter, it cannot be used simply as an attribute. The dependency also cannot be injected.
+
+```cs
+public class MyHeaderFilterAttribute : ActionFilterAttribute
+{
+    ISomeService _service;
+
+    public MyHeaderFilterAttribute(ISomeService someService)
+    {
+        _service = someService;
+    }
+
+    public override void OnActionExecuting(ActionExecutingContext context)
+    {
+        _service.DoStuff();
+        context.HttpContext.Response.Headers.Add("MyHeader", "HeaderValue");
+    }
+}
+```
+
+Dependency injection to `Filter` in `ASP.NET` is little tricky. As filters cannot be used directly as attributes anymore, we need to get some work-arounds. The good news is the framework provides us some work-arounds.
+There are basically 3 ways to handle this.
+
+**<u>As ServiceFilter</u>**
+
+For this, 
+- register the filter with container in `Startup`
+- use `ServiceFilter` attribute with type of desired filter that needs service injection
+
+```cs
+//In Startup.ConfigureServices()
+services.AddScoped<MyHeaderFilterAttribute>();
+
+//In controller
+[ServiceFilter(typeof(MyHeaderFilterAttribute))]
+public ActionResult GetWithStatus()
+{
+    return new OkObjectResult(new { Id = 123, Name = "Hero" });
+}
+```
+
+**<u>As TypeFilter</u>**
+
+For this, 
+- registration of the filter is NOT REQUIRED
+- use `TypeFilter` attribute with type of desired filter that needs service injection
+- this doesn't use the DI container directly, rather it internally uses frameworks's `ObjectFactory` to inject the instance. More details [here](https://docs.microsoft.com/en-us/aspnet/core/mvc/controllers/filters)
+- with TypeFilter, additional constructor arguments can also be passed along with injection
+
+```cs
+[TypeFilter(typeof(MyHeaderFilterAttribute))]
+public ActionResult GetWithStatus()
+{
+    return new OkObjectResult(new { Id = 123, Name = "Hero" });
+}
+```
+
+**<u>With TypeFilter wrapper type</u>**
+
+Though the above two way works, they are little cumbersome and the syntax is not clean. To just use the filter directly as attribute, without DI registration we can wrap the actual filter as a `TypeFilter` instance. Then it can be used directly as attribute.Note, this does not allow constructor parameters.
+
+We'll create a simple `ExceptionFilter` to log exceptions, which has got a dependency on some service.
+
+```cs
+public class LogErrorAttribute : TypeFilterAttribute
+{
+    public LogErrorAttribute() 
+        : base(typeof(LogErrorFilterImplementation))
+    {
+    }
+
+    public class LogErrorFilterImplementation : ExceptionFilterAttribute
+    {
+        private static ISomeService _service;
+
+        public LogErrorFilterImplementation(ISomeService someService)
+        {
+            _service = someService;
+        }
+
+        public override void OnException(ExceptionContext context)
+        {
+            if (context.Exception != null)
+            {
+                //do something with injected service
+                _service.DoStuff();
+                //log the exception
+            }
+        }
+    }
+}
+```
+
+This can be used just as an attribute without any registration.
+
+```cs
+//In controller
+[LogError]
+public JsonResult Get()
+{
+    //do some processing
+    return Json(new Item { Id = 123, Name = "Hero" });
+}
+```
+
+Pretty neat I'd say :)
+
+#### [5] Dependency injection with HttpContext
+
+When `HttpContext` is built, it gets it's own copy of `IServiceProvider` as `RequestServices`. So whoever has access to a valid `HttpContext` like a `controller` or `filter`, can use that to get a service instance. We'll see an example using a controller action.
+
+```cs
+public IActionResult Get()
+{
+    var svc = (ISomeService)Request.HttpContext.RequestServices
+        .GetService(typeof(ISomeService));
+    svc.DoStuff(); //use the service as usual
+
+    return new OkObjectResult("Everyone gets a service provider!");
+}
+```
+
+#### [6] Basic Configuration setup in .NET Core 2.0
 
 - Like older .NET, still the configuration is key-value based 
 - Unlike older .NET, there is no `app.config` and there is no predefined config sections like `appSettings`. Configuration settings in .NET Core is much more flexible.
@@ -175,7 +349,7 @@ public class TestController : Controller
 }
 ```
 
-#### [5] Adding additional configuration source
+#### [7] Adding additional configuration source
 
 ```cs
 //Program.cs
@@ -204,7 +378,7 @@ Sample `AppConfigs.xml` configuration XML
 </AppConfigs>
 ```
 
-#### [6] Strongly typed configuration
+#### [8] Strongly typed configuration
 
 ```cs
 public class AppConfigs
@@ -239,7 +413,7 @@ public class Startup
 }
 ```
 
-#### [7] IOptions injection for configuration instance
+#### [9] IOptions injection for configuration instance
 
 The configuration registered in above code can be injected with an IOptions wrapper of the created instance type e.g. `IOptions<AppConfigs>` for our code sample
 
@@ -264,7 +438,7 @@ public class TestController : Controller
 }
 ```
 
-#### [8] Injection of strongly typed configuration without IOptions
+#### [10] Injection of strongly typed configuration without IOptions
 
 ```cs
 public class Startup

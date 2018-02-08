@@ -194,6 +194,8 @@ var appConfig = config.GetSection("App").Get<AppSettings>();
 
 * Understand that Configuration.GetConnectionString ("ConnStrName") methods used to get connection string, is nothing but shorthand for GetSection("ConnectionStrings") ["ConnStrName"] 
 
+See the **[practical configuration & DI](/articles/practical-configuration-and-di-in-aspnet-core/)** article to see real life code demo on how configuration settings are used in .NET Core.
+
 
 #### [6] Environments
 
@@ -332,8 +334,8 @@ All the filters have two `interface` for the `sync` and `async` variants. For, e
 Filters can be added to
 - Action methods
 - Controller classes
-- Globally, in
-- Handling dependency injection in Filters can be tricky, you'll have to use `TypeFilter` or `ServiceFilter`
+- Globally, in `AddMvc()` method in `Startup`
+- Handling dependency injection in Filters can be tricky, you'll have to use `TypeFilter` or `ServiceFilter`. See the **[practical configuration & DI](/articles/practical-configuration-and-di-in-aspnet-core/)** article to see real life code demo on how it is done.
 
 ```cs
 public void ConfigureServices(IServiceCollection services)
