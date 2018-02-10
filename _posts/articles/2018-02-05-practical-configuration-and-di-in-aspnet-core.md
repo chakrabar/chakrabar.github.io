@@ -3,7 +3,7 @@ layout: post
 title: "Practical configuration & DI in ASP.NET Core 2.0"
 excerpt: "Code demo of real life configuration & dependency injection in ASP.NET Core 2.0"
 date: 2018-01-22
-tags: [tech, mvc, csharp, dotnetcore, aspnetcore, configuration, di]
+tags: [tech, csharp, dotnetcore, aspnetcore, configuration, di, aspnetcore20]
 categories: articles
 share: true
 comments: true
@@ -193,8 +193,7 @@ For this,
 - registration of the filter is NOT REQUIRED
 - use `TypeFilter` attribute with type of desired filter that needs service injection
 - this doesn't use the DI container directly, rather it internally uses frameworks's `ObjectFactory` to inject the instance. More details [here](https://docs.microsoft.com/en-us/aspnet/core/mvc/controllers/filters)
-- with TypeFilter, additional constructor arguments can also be passed along with injection, like 
-`Arguments = new object[] { 1, "yo" }`
+- with TypeFilter, additional constructor arguments can also be passed along with injection (e.g. Arguments = new object[] { 1, "yo" } )
 
 ```cs
 [TypeFilter(typeof(MyHeaderFilterAttribute))]
@@ -383,7 +382,7 @@ A sample default `appsettings.json` from ASP.NET Core 2.0 project
 }
 ```
 
-**Reading simple values_ from appsettings file with `IConfiguration`**
+**Reading _simple values_ from appsettings file with `IConfiguration`**
 
 The `IConfiguration` is auto-registered with the DI and can be injected in any class. This IConfiguration has a string based indexer that allow reading values with JSON-style keys. Sample code below.
 
@@ -560,4 +559,41 @@ public class TestController : Controller
 }
 ```
 
+**<u>Runtime reload of configuration values</u>**
 
+When working with configuration, sometimes it is required to update configuration values. Reloading of config values, when a configuration source has been updated, doesn't work out of the box always. To be specific, strongly-typed configurations in `ASP.NET Core 2.0` are not automatically reloaded. 
+
+One options is to simply restart the application, so that the `Startup` is run again, and it reloads the config again. But, it is not a practical solution. All users will lose their state, session, data etc., and there could be an application downtime.
+
+One solution to this problem is to [use IOptionsSnapshot](https://docs.microsoft.com/en-us/aspnet/core/fundamentals/configuration/options#reload-configuration-data-with-ioptionssnapshot). This uses the `IOptionsMonitor` triggers to re-read configuration values from source.
+
+To use, simply use `IOptionsSnapshot<>` in place of `IOptions<>` where a strongly-typed config is being injected. Or to inject the config object type directly, register an instance from the IOptionsSnapshot as singleton.
+
+```cs
+public SomeController(IConfiguration configuration, IOptions<AppConfigs> options,
+    IOptionsSnapshot<AppConfigs> optionsSnapshot, AppConfigs appConfigs)
+{
+    //IOptions does NOT auto-update
+    var c1 = options.Value.LogCount;
+    //object config does NOT auto-update
+    var c2 = appConfigs.LogCount;
+
+    //simple values from IConfiguration DOES auto-update
+    var c3 = configuration["log:count"];    
+    //IOptionsSnapshot DOES auto-update
+    var c4 = optionsSnapshot.Value.LogCount;
+}
+
+//Startup
+//Registering IOptionsSnapshot instance as singleton
+services.AddScoped(cfg => 
+    cfg.GetService<IOptionsSnapshot<AppConfigs>>().Value);
+//Now AppConfigs injected instance auto-updates
+public SomeController(AppConfigs appConfigs)
+{
+    //this RELOADS on source data change
+    var logCount = appConfigs.LogCount;
+}
+```
+
+Hope this helps in understanding the confiduration system and DI in ASP.NET Core 2.0 little more easily. Check back [official documentation](https://docs.microsoft.com/en-gb/aspnet/core/fundamentals/configuration/index?tabs=basicconfiguration) and [GitHub](https://github.com/aspnet) for latest developments on all topics. 
