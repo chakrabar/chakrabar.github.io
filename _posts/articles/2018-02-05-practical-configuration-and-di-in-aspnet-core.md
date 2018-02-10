@@ -102,7 +102,7 @@ public class TestController : Controller
 }
 ```
 
-I can think of two reasons for using this
+As mentioned above, the ideal way to define dependency is the constructor. But there can be some cases when on might want to use the `IServiceProvider`
 
 1. To create service instances conditionally at runtime
 2. To minimize the parameters of constructor. Only `IServiceProvider` can be injected in constructor, then later the actual services can be instantiated as and when necessary.
@@ -112,8 +112,8 @@ I can think of two reasons for using this
 In some occasions, it might be required to get a service instance injected inside the `ConfigureServices` method itself! The way to do that is again using `IServiceProvider`. The `IServiceCollection` available to the method has an extension to create an `IServiceProvider` instance. See below
 
 ```cs
-//Startup.ConfigureServices()
 //using Microsoft.Extensions.DependencyInjection;
+//Startup.ConfigureServices()
 var someService = services.BuildServiceProvider()
     .GetService<ISomeService>();
 ```
@@ -146,7 +146,7 @@ public ActionResult Get()
 }
 ```
 
-Now, if I have a constructor dependency in the filter, it cannot be used simply as an attribute. The dependency also cannot be injected.
+Now, if I have a constructor dependency in the filter, it CANNOT be used simply as an attribute. The dependency also cannot be injected.
 
 ```cs
 public class MyHeaderFilterAttribute : ActionFilterAttribute
@@ -167,9 +167,9 @@ public class MyHeaderFilterAttribute : ActionFilterAttribute
 ```
 
 Dependency injection to `Filter` in `ASP.NET` is little tricky. As filters cannot be used directly as attributes anymore, we need to get some work-arounds. The good news is the framework provides us some work-arounds.
-There are basically 3 ways to handle this.
+There are basically few ways to handle this.
 
-**<u>As ServiceFilter</u>**
+**<u>Using ServiceFilter</u>**
 
 For this, 
 - register the filter with container in `Startup`
@@ -187,13 +187,14 @@ public ActionResult GetWithStatus()
 }
 ```
 
-**<u>As TypeFilter</u>**
+**<u>Using TypeFilter</u>**
 
 For this, 
 - registration of the filter is NOT REQUIRED
 - use `TypeFilter` attribute with type of desired filter that needs service injection
 - this doesn't use the DI container directly, rather it internally uses frameworks's `ObjectFactory` to inject the instance. More details [here](https://docs.microsoft.com/en-us/aspnet/core/mvc/controllers/filters)
-- with TypeFilter, additional constructor arguments can also be passed along with injection
+- with TypeFilter, additional constructor arguments can also be passed along with injection, like 
+`Arguments = new object[] { 1, "yo" }`
 
 ```cs
 [TypeFilter(typeof(MyHeaderFilterAttribute))]
@@ -253,6 +254,8 @@ public JsonResult Get()
 
 Pretty neat I'd say :)
 
+Also, one can implement own **`IFilterFactory`** as outlined [here](https://docs.microsoft.com/en-us/aspnet/core/mvc/controllers/filters#ifilterfactory).
+
 #### [5] Dependency injection with HttpContext
 
 When `HttpContext` is built, it gets it's own copy of `IServiceProvider` as `RequestServices`. So whoever has access to a valid `HttpContext` like a `controller` or `filter`, can use that to get a service instance. We'll see an example using a controller action.
@@ -268,14 +271,63 @@ public IActionResult Get()
 }
 ```
 
+----
+
+**_Notes:_** _Few things to watch out for, specially when converting older projects to .NET Core_.
+
+Before we move on to Configurations, let's quickly talk about some (decided) <u>limitations of the current dependency injection framework in .NET Core</u>.
+
+1. It doesn't support named instances like some other popular DI frameworks like Unity, StructureMap etc.
+2. It doesn't support setter or property injection like Unity, Ninject etc.
+
+From [GitHub](https://github.com/aspnet/DependencyInjection/issues/473), Microsoft does not have a plan to support named instances. There are some workarounds though. This [Stack Overflow QA](https://stackoverflow.com/questions/39174989/how-to-register-multiple-implementations-of-the-same-interface-in-asp-net-core/44177920#44177920) shows some viable alternatives.
+
+The idea is to cleverly use an extension method of `IServiceCollection` that allows registering a function of type `Func<IServiceProvider, TService>`, to actually register a factory function of type `Func<string, TService>`. Now that factory can be injected by the DI framework.
+
+```cs
+//using Microsoft.Extensions.DependencyInjection;
+//Startup.ConfigureServices()
+services.AddTransient(servicrProvider =>
+{
+    Func<string, ISomeService> accesor = key =>
+    {
+        switch (key)
+        {
+            case "My":
+                return servicrProvider.GetService<MyService>();
+            case "Other":
+                return servicrProvider.GetService<OtherService>();
+            default:
+                throw new KeyNotFoundException();
+        }
+    };
+    return accesor;
+});
+//And the default standard instance
+services.AddTransient<ISomeService, MyService>();
+
+//To use a named instance
+//A controller constructor as example
+public TestController(Func<string, ISomeService> serviceAccessor)
+{
+    ISomeService svc = serviceAccessor("Other");
+}
+```
+
+----
+
 #### [6] Basic Configuration setup in .NET Core 2.0
 
-- Like older .NET, still the configuration is key-value based 
-- Unlike older .NET, there is no `app.config` and there is no predefined config sections like `appSettings`. Configuration settings in .NET Core is much more flexible.
-- Source of configuration can be any `XML`, `JSON`, `in-memory`, `command line args`, `INI` file or environment variables
-- Configuration source is defined in Program.cs, and registered with DI. Then the configuration values can be used across the application
+There is a significant change from **classic `.NET`** to **`.NET Core`** on how configuration and settings are handled. There are no preset `app.config` or `web.config` files to dump the config values (well, there is `appsettings.json` but that is practically optional). It comes with lot of flexibility and options on how the config settings can be managed. See the Configuration & settings section of [Porting ASP.NET MVC applications to ASP.NET Core 2.0](/articles/porting-aspnet-apps-to-aspnet-core-2.0/) for a basic understanding of how it works in (ASP).NET Core.
 
-Older .NET Core
+Here are some key points
+
+- Like older .NET, still the configuration is key-value based
+- Unlike older .NET, there is no `app.config` and there is no predefined config sections like `appSettings`. Configuration settings in .NET Core is much more flexible, and the settings can be structured in any form.
+- Source of configuration can be any `XML`, `JSON`, `INI` file or `in-memory`, `command line args` or environment variables
+- Configuration source is defined in Program.cs, and registered with DI in Startuo. Then the configuration values can be used across the application
+
+In the earlier releases of .NET Core, any file or other sources of configuration needed to be explicitly mentioned in Program.cs. Example below
 
 ```cs
 //Program.cs
@@ -287,26 +339,31 @@ public static IWebHost BuildWebHost()
         .ConfigureAppConfiguration((builderContext, config) =>
         {
             IHostingEnvironment env = builderContext.HostingEnvironment;
-
+            //Adding all configuration sources
             config.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
                 .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true, reloadOnChange: true);
+            config.AddEnvironmentVariables();
+            if (args != null)
+            {
+                config.AddCommandLine(args);
+            }
         })
         .UseStartup<Startup>()
         .Build();
 }
 ```
 
-.NET Core 2.0
+Starting with **.NET Core 2.0**, the inclusion of main `appsettings.json`, environment specific `appsettings.{env-name}.json` and other standard configuration sources are implicit. The `CreateDefaultBuilder()` method takes care of that. See the [code on GitHUb](https://github.com/aspnet/MetaPackages/blob/rel/2.0.0/src/Microsoft.AspNetCore/WebHost.cs).
 
 ```cs
 //Program.cs
 public static IWebHost BuildWebHost(string[] args) =>
-    WebHost.CreateDefaultBuilder(args) //adds appsettings.json & appsettings.env.json
+    WebHost.CreateDefaultBuilder(args) //adds appsettings.json, appsettings.env.json
         .UseStartup<Startup>() // Invokes ConfigureServices & Configure on Startup
         .Build();
 ```
 
-Sample default `appsettings.json` from ASP.NET Core 2.0 project
+A sample default `appsettings.json` from ASP.NET Core 2.0 project
 
 ```javascript
 {
@@ -326,24 +383,31 @@ Sample default `appsettings.json` from ASP.NET Core 2.0 project
 }
 ```
 
-Reading **string value** from appsettings file with `IConfiguration`
+**Reading simple values_ from appsettings file with `IConfiguration`**
+
+The `IConfiguration` is auto-registered with the DI and can be injected in any class. This IConfiguration has a string based indexer that allow reading values with JSON-style keys. Sample code below.
 
 ```cs
 using Microsoft.Extensions.Configuration;
 
 public class TestController : Controller
 {
-    IConfiguration _configStore;
+    IConfiguration _configuration;
 
     public TestController(IConfiguration configuration,)
     {
-        _configStore = configuration;
+        _configuration = configuration;
     }
 
     public IActionResult Get()
     {
         //get config value with IConfiguration
-        var logLevel = _configStore["Logging:Debug:LogLevel:Default"];
+        var logLevel = _configuration["Logging:Debug:LogLevel:Default"];
+        //from array with index
+        var firstServerName = _configuration["Servers:0:Name"];
+        //casting with (optional) default value
+        var country = _configuration.GetValue<string>("Address:Country", "India");
+
         return new OkObjectResult($"Log level: {logLevel}");
     }
 }
@@ -351,9 +415,11 @@ public class TestController : Controller
 
 #### [7] Adding additional configuration source
 
+Apart from the default `appsettings.json`, any other source of configuration can also be added. This does not override the initial config, rather appends the new values. Following code shows example of adding an `xml` file as an additional configuration source.
+
 ```cs
-//Program.cs
 //using Microsoft.Extensions.Configuration;
+//Program.cs
 public static IWebHost BuildWebHost(string[] args)
 {
     WebHost.CreateDefaultBuilder(args)
@@ -367,7 +433,7 @@ public static IWebHost BuildWebHost(string[] args)
 }
 ```
 
-Sample `AppConfigs.xml` configuration XML
+Sample `AppConfigs.xml` configuration XML. Here, the name and structure of the XML file doesn't really matter. Once added, the values can be read the same way as shown above.
 
 ```xml
 <?xml version="1.0" encoding="utf-8" ?>
@@ -380,6 +446,10 @@ Sample `AppConfigs.xml` configuration XML
 
 #### [8] Strongly typed configuration
 
+Another useful cool feature of `.NET Core` is, a complete configuration file or any part of it can be easily casted to simple `POCO` object, and then can be passed around as strongly-typed configuration. 
+
+For this, create a class that is compatible with the section of configuration file that needs to be casted. Following is a class that is used to store the configuration values from the XML shown above.
+
 ```cs
 public class AppConfigs
 {
@@ -389,7 +459,9 @@ public class AppConfigs
 }
 ```
 
-Read a whole configuration file or a section of it (Json/XML) into a compatible onject instance. Here, it is important that the structure of the configuration section matches the type of the object.
+Read a whole configuration file or a section of it (Json/XML) into a compatible object instance, and register with the DI container. Here, it is important that the structure of the configuration section matches the type of the object. Following code inside the `ConfigureServices()` method shows how a configuration is casted to an object and registered with the DI container.
+
+**Note**: When this `services.Configure()` method is used, it'll look in all configuration files available in the reverse order of how they were added. So, the source that was added last will be checked first and so on. It'll take the first match, complete file or by section name, checking the properties recursively.
 
 ```cs
 public class Startup
@@ -408,7 +480,7 @@ public class Startup
         services.Configure<AppConfigs>(Configuration);
         //OR read only a section of config file into a compatible onject
         services.Configure<LogSetup>(Configuration.GetSection("Logging"));
-        //Here it'll read from appsettings.json as that has section "Logging"
+        //Here it'll read from appsettings.json as that has matching section "Logging"
     }
 }
 ```
@@ -440,6 +512,8 @@ public class TestController : Controller
 
 #### [10] Injection of strongly typed configuration without IOptions
 
+If we want to use that strongly-typed configuration object without the `IOptions<>` wrapper, we'd need to create an instance of that object in `Startup` and register that as `singleton`. Following code shows an example.
+
 ```cs
 public class Startup
 {
@@ -452,15 +526,18 @@ public class Startup
 
     public void ConfigureServices(IServiceCollection services)
     {
+        //create a new instance of the object
         var appConfigs = new AppConfigs();
+        //bind that object from the config section
         Configuration.Bind(appConfigs);
+        //or Configuration.GetSection("key").Bind(appConfigs);
         //Register the config object as singleton
         services.AddSingleton(appConfigs);
     }
 }
 ```
 
-Inject that singleton object directly by type
+Now, once that object has been registered as **`singleton`**, it can be injected with the DI framework into any class by the config object type. 
 
 ```cs
 public class TestController : Controller
@@ -483,4 +560,4 @@ public class TestController : Controller
 }
 ```
 
-One good [read](https://joonasw.net/view/aspnet-core-2-configuration-changes).
+
