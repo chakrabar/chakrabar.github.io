@@ -102,7 +102,7 @@ public class TestController : Controller
 }
 ```
 
-As mentioned above, the ideal way to define dependency is the constructor. But there can be some cases when on might want to use the `IServiceProvider`
+As mentioned above, the ideal way to define dependency is the constructor. But there can be some cases when one might want to use the `IServiceProvider`
 
 1. To create service instances conditionally at runtime
 2. To minimize the parameters of constructor. Only `IServiceProvider` can be injected in constructor, then later the actual services can be instantiated as and when necessary.
@@ -595,5 +595,7 @@ public SomeController(AppConfigs appConfigs)
     var logCount = appConfigs.LogCount;
 }
 ```
+
+**Note:** This is important to add the configuration sources with `reloadOnChange: true` (see section 7 above) option. Without this, the config values will not reload without an application restart.
 
 Hope this helps in understanding the confiduration system and DI in ASP.NET Core 2.0 little more easily. Check back [official documentation](https://docs.microsoft.com/en-gb/aspnet/core/fundamentals/configuration/index?tabs=basicconfiguration) and [GitHub](https://github.com/aspnet) for latest developments on all topics. 
