@@ -22,8 +22,8 @@ The `Startup.cs` class has a `ConfigureServices` method where all the services a
 
 - Choice of service lifetimes
   - **Transient**: Creted each time they are requested
-  - **Scoped**: Once per http request
-  - **Singleton**: One per lifetime of application
+  - **Scoped**: Created once per http request
+  - **Singleton**: Created once per lifetime of application
 
 Following code shows the standard ways of registering services in .NET Core 2.0
 
@@ -324,7 +324,8 @@ Here are some key points
 - Like older .NET, still the configuration is key-value based
 - Unlike older .NET, there is no `app.config` and there is no predefined config sections like `appSettings`. Configuration settings in .NET Core is much more flexible, and the settings can be structured in any form.
 - Source of configuration can be any `XML`, `JSON`, `INI` file or `in-memory`, `command line args` or environment variables
-- Configuration source is defined in Program.cs, and registered with DI in Startuo. Then the configuration values can be used across the application
+- The configuration sources (e.g. appsettings.json) can be updated without restarting the application
+- Configuration source is defined in Program.cs, and registered with DI in Startup. Then the configuration values can be used across the application
 
 In the earlier releases of .NET Core, any file or other sources of configuration needed to be explicitly mentioned in Program.cs. Example below
 
@@ -352,7 +353,7 @@ public static IWebHost BuildWebHost()
 }
 ```
 
-Starting with **.NET Core 2.0**, the inclusion of main `appsettings.json`, environment specific `appsettings.{env-name}.json` and other standard configuration sources are implicit. The `CreateDefaultBuilder()` method takes care of that. See the [code on GitHUb](https://github.com/aspnet/MetaPackages/blob/rel/2.0.0/src/Microsoft.AspNetCore/WebHost.cs).
+Starting with **.NET Core 2.0**, the inclusion of main `appsettings.json`, environment specific `appsettings.{env-name}.json` and other standard configuration sources are implicit. The `CreateDefaultBuilder()` method takes care of that. See the [code on GitHub](https://github.com/aspnet/MetaPackages/blob/rel/2.0.0/src/Microsoft.AspNetCore/WebHost.cs).
 
 ```cs
 //Program.cs
@@ -445,7 +446,7 @@ Sample `AppConfigs.xml` configuration XML. Here, the name and structure of the X
 
 #### [8] Strongly typed configuration
 
-Another useful cool feature of `.NET Core` is, a complete configuration file or any part of it can be easily casted to simple `POCO` object, and then can be passed around as strongly-typed configuration. 
+Another useful cool feature of `.NET Core` is, a complete configuration file or any part of it can be easily casted to simple `POCO` object, and then can be passed around as strongly-typed configuration. Rather than injecting the `IConfigurationRoot` or `IConfiguration` with all the settings, it is better to have related settings bound to a meaningful POCO and inject where it makes sense. 
 
 For this, create a class that is compatible with the section of configuration file that needs to be casted. Following is a class that is used to store the configuration values from the XML shown above.
 
@@ -484,6 +485,8 @@ public class Startup
 }
 ```
 
+Also **note**, the strongly-typed configuration object registered like this, behaves more like a singleton registration.
+
 #### [9] IOptions injection for configuration instance
 
 The configuration registered in above code can be injected with an IOptions wrapper of the created instance type e.g. `IOptions<AppConfigs>` for our code sample
@@ -509,7 +512,9 @@ public class TestController : Controller
 }
 ```
 
-#### [10] Injection of strongly typed configuration without IOptions
+Instead of `IOptions<T>`, the `IOptionsSnapshot<T>` can also be used. See the last section.
+
+#### [10] Injection of strongly typed configuration without IOptions wrapper
 
 If we want to use that strongly-typed configuration object without the `IOptions<>` wrapper, we'd need to create an instance of that object in `Startup` and register that as `singleton`. Following code shows an example.
 
@@ -565,9 +570,9 @@ When working with configuration, sometimes it is required to update configuratio
 
 One options is to simply restart the application, so that the `Startup` is run again, and it reloads the config again. But, it is not a practical solution. All users will lose their state, session, data etc., and there could be an application downtime.
 
-One solution to this problem is to [use IOptionsSnapshot](https://docs.microsoft.com/en-us/aspnet/core/fundamentals/configuration/options#reload-configuration-data-with-ioptionssnapshot). This uses the `IOptionsMonitor` triggers to re-read configuration values from source.
+One solution to this problem is to [use IOptionsSnapshot](https://docs.microsoft.com/en-us/aspnet/core/fundamentals/configuration/options#reload-configuration-data-with-ioptionssnapshot). This internally uses the `IOptionsMonitor` based triggers to re-read configuration values from source, whenever that is updated.
 
-To use, simply use `IOptionsSnapshot<>` in place of `IOptions<>` where a strongly-typed config is being injected. Or to inject the config object type directly, register an instance from the IOptionsSnapshot as singleton.
+To use, simply use `IOptionsSnapshot<>` in place of `IOptions<>` where a strongly-typed config is being injected. Or to **inject the reloadable config object** type directly, register an instance of the IOptionsSnapshot's `Value` for the config object's type. This is done with an extension method to register a service, like `Func<IServiceProvider, TConfig>`.
 
 ```cs
 public SomeController(IConfiguration configuration, IOptions<AppConfigs> options,
@@ -584,11 +589,13 @@ public SomeController(IConfiguration configuration, IOptions<AppConfigs> options
     var c4 = optionsSnapshot.Value.LogCount;
 }
 
+//using Microsoft.Extensions.DependencyInjection;
 //Startup
-//Registering IOptionsSnapshot instance as singleton
-services.AddScoped(cfg => 
-    cfg.GetService<IOptionsSnapshot<AppConfigs>>().Value);
-//Now AppConfigs injected instance auto-updates
+//Registering IOptionsSnapshot instance as config object
+services.AddScoped(isp =>  //IServiceProvider
+    isp.GetService<IOptionsSnapshot<AppConfigs>>().Value);
+
+//Now the AppConfigs injected instance auto-updates
 public SomeController(AppConfigs appConfigs)
 {
     //this RELOADS on source data change
