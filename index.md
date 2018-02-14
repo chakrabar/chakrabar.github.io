@@ -1,6 +1,7 @@
 ---
 layout: page
 title: "Hello there!"
+excerpt: "Technical notes and titbits of everyday programmer's life"
 ---
 
 ### Welcome to Arghya C's tech shots

@@ -516,7 +516,9 @@ Instead of `IOptions<T>`, the `IOptionsSnapshot<T>` can also be used. See the la
 
 #### [10] Injection of strongly typed configuration without IOptions wrapper
 
-If we want to use that strongly-typed configuration object without the `IOptions<>` wrapper, we'd need to create an instance of that object in `Startup` and register that as `singleton`. Following code shows an example.
+If we want to use that strongly-typed configuration object without the `IOptions<>` wrapper, we'd need to create an instance of that object in `Startup` with the required config section populated, and register that as injectable object. Following code shows an example.
+
+Uses `Configuration.Bind(obj)` or `Configuration.Get<T>()` to populate configuration object instance.
 
 ```cs
 public class Startup
@@ -530,11 +532,13 @@ public class Startup
 
     public void ConfigureServices(IServiceCollection services)
     {
-        //create a new instance of the object
+        //create a new instance of the object and bind to config
         var appConfigs = new AppConfigs();
-        //bind that object from the config section
-        Configuration.Bind(appConfigs);
-        //or Configuration.GetSection("key").Bind(appConfigs);
+        Configuration.Bind(appConfigs); //match a whole file
+        //or Configuration.GetSection("AppConfigs").Bind(appConfigs);
+        //or the strogly typed .Get<T>() method
+        AppConfigs appConfigs1 = Configuration
+            .GetSection("AppConfigs").Get<AppConfigs>();
         //Register the config object as singleton
         services.AddSingleton(appConfigs);
     }
