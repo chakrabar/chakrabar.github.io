@@ -1,7 +1,7 @@
 ---
 layout: page
-title: Articles
-excerpt: "An archive of articles sorted by date."
+title: Tech Articles
+excerpt: "An archive of tech articles sorted by date."
 search_omit: true
 ---
 
