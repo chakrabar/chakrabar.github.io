@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "A Guide to tour through the Turkish province"
-excerpt: "Code demo of real life configuration & dependency injection in ASP.NET Core 2.0"
+excerpt: "A Guide to everything about a Turkish holiday - travel, food, local life and more"
 date: 2018-02-03
 tags: [travel, blog, turkey, europe]
 categories: blog
@@ -10,7 +10,7 @@ comments: true
 modified: 2018-02-03T22:11:53-04:00
 author: pritha
 image:
-  feature: blog/turkey/goreme/ranch.jpg
+  feature: blog/turkey/istanbul/gbazar.jpg
 ---
 
 ## A Guide to tour through the Turkish province

@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "A Guide to Turkish gastronomy"
-excerpt: "A quick guide to Turkish cuisine & streetfood around the country"
+excerpt: "A brief guide to Turkish cuisine & streetfood around the country"
 date: 2018-02-04
 tags: [travel, blog, turkey, europe, food, streetfood]
 categories: blog
