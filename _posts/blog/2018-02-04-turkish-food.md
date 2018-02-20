@@ -10,7 +10,7 @@ comments: true
 modified: 2018-02-04T22:11:53-04:00
 author: pritha
 image:
-  feature: blog/turkey/food/food-cover.jpg
+  feature: blog/turkey/food/food_cover_min.jpg
 ---
 
 #### Food in turkey

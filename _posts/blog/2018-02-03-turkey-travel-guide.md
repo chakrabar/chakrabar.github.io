@@ -10,7 +10,7 @@ comments: true
 modified: 2018-02-03T22:11:53-04:00
 author: pritha
 image:
-  feature: blog/turkey/istanbul/gbazar.jpg
+  feature: blog/turkey/istanbul/gbazar_min.jpg
 ---
 
 ## A Guide to tour through the Turkish province
