@@ -14,7 +14,7 @@ modified: 2018-01-19T08:11:53-04:00
 
 # A quick glance at the dynamic keyword 
 
-It's just a quick-and-dirty code demo, to show the basic usage of dynamic keyword and difference with other similar constructs. This does not cover any theories at all. Go to MSDN or other good resources that can give better explanations.
+It's just a quick-and-dirty code demo, to show the basic usage of `dynamic` keyword and difference with other similar constructs. This does not cover any theories at all. If you're looking for more in-depth knowledge, go to MSDN or other good resources that can give better explanations.
 
 We'll also look at `var` and `object` to see the contrast.
 
@@ -26,15 +26,15 @@ We'll also look at `var` and `object` to see the contrast.
 
 3. From Scott Henselman's [blog](https://www.hanselman.com/blog/C4AndTheDynamicKeywordWhirlwindTourAroundNET4AndVisualStudio2010Beta1.aspx) - ***Dynamically typed objects are still statically typed, as dynamic.*** Yes, the type of those objects are `dynamic`, and internally `object` to the `CLR`. But do not break your head with that, read on.
 
-4. Declaring something as dynamic does this one important thing - defers all the type-checks and invocation till the run-time. Basically, all the statements with dynamic stuffs are ignored at compile-time.
+4. Declaring something as dynamic does this one important thing - defers all the type-checks and invocation till the run-time. Basically, all the statements with dynamic stuffs are ignored at compile-time (syntax is checked though) and executed only at runtime. 
 
 5. Use of `dynamic` gives this one benefit - you can use the same variable to store different types of data (can also be done with `object`) and can seamlessly invoke members on them (NOT possible with `object`), without having to type cast or using reflection!
 
-6. As wel all have heard so many times ***With great power comes great responsibility.*** Using of dynamic gives you the responsibility of writing the correct-and-safe code, as compiler will not do that for you. If you screw up something, your application will break at run-time.
+6. As we all have heard so many times ***With great power comes great responsibility***, using of dynamic gives you the responsibility of writing the correct-and-safe code, as compiler will not do that for you. If you screw up something, your application will break at run-time.
 
 7. This was introduced mostly to work with systems and codes that does not follow `.NET` style strong typing and using `dynamic` will reduce lot of boilerplate code. It is particularly useful when working with `COM` and languages like `Python`, `Ruby` etc. So, again **use `dynamic` only if you really need to**.
 
-8. Big cons of using dynamic - losing compile-time checks, increased probability of errors.
+8. Big downside of using dynamic - losing compile-time checks, increased probability of errors.
 
 Now the code demo:
 ----
@@ -70,7 +70,7 @@ var y = null;
 ```cs
 dynamic x = 3;
 //allowed, as different data types can be stored in dynamic
-x = "jassala";
+x = "woohoo";
 x = 0.5; //same as above
 x += "hello"; //works fine and produces "0.5hello"
 x = new Demo(); //works, obviously
@@ -102,6 +102,7 @@ y = y.GetWhatIsNotThere();
 ```
 
 #### `dynamic` in method return
+
 This is for illustration only. Understand how unsafe and unpredictable the code can be. _Do NOT try this at home or work_ unless you unerstand exactly what you are doing.
 
 ```cs

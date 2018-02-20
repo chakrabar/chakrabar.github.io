@@ -23,11 +23,13 @@ Check my tech-shots, or short technical articles on the articles menu.
 
 ----
 
-### Some of the recent posts. See more in Articles menu.
+### Some of the recent posts. See more in Tech menu.
 
-<!--site.posts-->
+<!--site.posts >> site.categories.articles-->
 <ul class="post-list">
-{% for post in site.categories.articles limit:10 %}
+{% for post in site.posts limit:10 %}
+{% unless post.categories contains "notes"%}
   <li><article><a href="{{ site.url }}{{ post.url }}">{{ post.title }} <span class="entry-date"><time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%B %d, %Y" }}</time></span>{% if post.excerpt %} <span class="excerpt">{{ post.excerpt | remove: '\[ ... \]' | remove: '\( ... \)' | markdownify | strip_html | strip_newlines | escape_once }}</span>{% endif %}</a></article></li>
+{% endunless %}
 {% endfor %}
 </ul>
