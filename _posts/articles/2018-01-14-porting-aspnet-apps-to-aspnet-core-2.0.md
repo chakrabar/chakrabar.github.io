@@ -382,15 +382,18 @@ Before this, please read [Porting existing .NET Framework libraries to .NET Core
 6. Because of the NuGet changes, some of the `namespace` would have changed. Find out the new namespace and do a "Replace All" in your project. Replace `System.Web.Mvc` with `Microsoft.AspNetCore.Mvc`.
 7. Some of the APIs (the interface, class, method, parameters etc.) might have changed as well. Make necessary changes in the code so that it complies with the new APIs.
 8. `web.config` does not work as they used to. Ideally move all the required settings to `appsettings.json` file or other configuration sources. Make necessary code changes to use settings from the new source.
-9. No `AssemblyInfo` class is created by default. If required, add it (e.g. for assembly level settings like "internals visible to")
-10. Remove all {AreaName}AreaRegistration.cs from all areas. Add area route as mentioned in section [8]. Remove `web.config` from views folders.
-11. Make all necessary changes in `ActionFilter`, if any, as mentioned in section [9].
-12. Put all static files like `js`, `css`, `html`, images etc. inside the `wwwroot` folder. they can be kept somewhere else and be moved there later with bundling or built task, but keeping them there will follow the conventions better. Fix all the hard coded paths accordingly.
-13. Update `bundleconfig.json` with all file details to be bundled and minified. Run the bundling task to generate the bundled files. Make sure the created files stay in `wwwroot` folder.
-14. Move any custom routes to `app.UseMvc()` in `Startup`, or use attribute route in specific controller classes.
-15. BUILD IT. Fix any compilation errors.
-16. Run it locally with Kestrel or IISExpress. Run all necessary tests.
-17. If all goes fine, configure it to run with a standard web server e.g.
+9. Any code that needs to run at application startup (those which were called from `Application_Start` method in `Global.asax`), move them inside `Startup` class.
+10. There is no `HttpContext.Current` in ASP.NET Core. Idea is to not litter whole code with random access to current HttpContext. Controllers have an `HttpContext` property that can be used for this purpose, middleware would get HttpContext injected in `Invoke()` method. For anything else, `IHttpContextAccessor` can be injected, which has access to current thread `HttpContext` with a property of same name. Register it in Startup, AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+11. No `AssemblyInfo` class is created by default. If required, add it (e.g. for assembly level settings like "internals visible to"). Like [assembly: InternalsVisibleTo("TestProj")]
+12. Remove all {AreaName}AreaRegistration.cs from all areas. Add area route as mentioned in section [8]. Remove `web.config` from views folders.
+13. Make all necessary changes in `ActionFilter`, if any, as mentioned in section [9].
+14. Put all static files like `js`, `css`, `html`, images etc. inside the `wwwroot` folder. they can be kept somewhere else and be moved there later with bundling or built task, but keeping them there will follow the conventions better. Fix all the hard coded paths accordingly.
+15. Update `bundleconfig.json` with all file details to be bundled and minified. Run the bundling task to generate the bundled files. Make sure the created files stay in `wwwroot` folder.
+16. Remove any use of `JsonRequestBehavior.AllowGet`. For uploading files, use `IFormFile` in place of `HttpPostedFileBase` and change corresponding code.
+17. Move any custom routes to `app.UseMvc()` in `Startup`, or use attribute route in specific controller classes.
+18. BUILD IT. Fix any compilation errors.
+19. Run it locally with Kestrel or IISExpress. Run all necessary tests.
+20. If all goes fine, configure it to run with a standard web server e.g.
     1. [IIS](https://docs.microsoft.com/en-us/aspnet/core/host-and-deploy/iis/?tabs=aspnetcore2x)
     2. [Nginx](https://docs.microsoft.com/en-us/aspnet/core/host-and-deploy/linux-nginx?tabs=aspnetcore2x)
     3. [Apache](https://docs.microsoft.com/en-us/aspnet/core/host-and-deploy/linux-apache)

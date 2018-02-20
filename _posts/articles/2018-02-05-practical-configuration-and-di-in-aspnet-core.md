@@ -107,7 +107,7 @@ As mentioned above, the ideal way to define dependency is the constructor. But t
 1. To create service instances conditionally at runtime
 2. To minimize the parameters of constructor. Only `IServiceProvider` can be injected in constructor, then later the actual services can be instantiated as and when necessary.
 
-**<u>Service instance injection inside the ConfigureServives method</u>**
+**<u>Service instance injection inside the ConfigureServices method</u>**
 
 In some occasions, it might be required to get a service instance injected inside the `ConfigureServices` method itself! The way to do that is again using `IServiceProvider`. The `IServiceCollection` available to the method has an extension to create an `IServiceProvider` instance. See below
 
@@ -363,7 +363,7 @@ public static IWebHost BuildWebHost(string[] args) =>
         .Build();
 ```
 
-A sample default `appsettings.json` from ASP.NET Core 2.0 project
+A sample default `appsettings.json` from ASP.NET Core 2.0 project (with connection strings)
 
 ```javascript
 {
@@ -379,6 +379,10 @@ A sample default `appsettings.json` from ASP.NET Core 2.0 project
         "Default": "Warning"
       }
     }
+  },
+  "ConnectionStrings": {
+    "PrimaryDB": "SomeDBConnectionString",
+    "SecondaryDB": "AnotherDBConnectionString"
   }
 }
 ```
@@ -411,6 +415,16 @@ public class TestController : Controller
         return new OkObjectResult($"Log level: {logLevel}");
     }
 }
+```
+
+Reading **connection strings**
+
+Practically connections strings can be kept in any configuration file and can be read exactly the same way ano other configuration value is read. But, following the conventions, if `ConnectionStrings` is kept at top level of `appsetiings.json`, there is a handy method to read them.
+
+```cs
+var primaryConnStr = Configuration.GetConnectionString("PrimaryDB");
+//which is simply a short-hand for
+var secondaryConnStr = Configuration.GetSection("ConnectionStrings")["SecondaryDB"];
 ```
 
 #### [7] Adding additional configuration source

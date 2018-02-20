@@ -194,9 +194,9 @@ public IActionResult GetByIdWithFormat(long id)
 
 #### [7] Migrating Web API to ASP.NET Core, the good boy way
 
-The basic way to [migrating old Web API code](https://docs.microsoft.com/en-us/aspnet/core/migration/webapi) to `ASP.NET Core` is to convert the old project to new project, and make necssary adjustments to comply with the new conventions of ASP.NET Core `MVC`.
+The basic way to [migrating old Web API code](https://docs.microsoft.com/en-us/aspnet/core/migration/webapi) to `ASP.NET Core` is to convert the old project to new project, and make necssary adjustments to comply with the new conventions of ASP.NET Core `MVC`. See the [Porting ASP.NET MVC apps to ASP.NET Core 2.0 MVC](/articles/porting-aspnet-apps-to-aspnet-core-2.0/) section first.
 
-So, the general process would be
+So, the general process for migrating Web API project would be
 
 1. Create a new `ASP.NET Core 2.0` application and choose the `Web API` template (it's just a template)
 2. Copy over all your existing classes
@@ -259,3 +259,5 @@ public void Configure(IApplicationBuilder app, IHostingEnvironment env)
 ----
 
 This article covered the process of porting existing `ASP.NET Web API` REST services `.NET Core 2.0` services. This concludes the [.NET Core Series](/articles/dotnet-core-2.0/).
+
+Bonus read - [Practical configuration & DI in ASP.NET Core 2.0](/articles/practical-configuration-and-di-in-aspnet-core/) .

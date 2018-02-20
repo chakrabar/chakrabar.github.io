@@ -61,7 +61,7 @@ Porting an application to `.NET Core` is great when it
 7. The development setup works best with latest infrastructures, e.g. `VS 2017 v15.3+`. For some teams/individuals, the setup cost can be a bummer!
 8. If the application depends on other projects which are not compatible with core, it will not help (and if they are from the not supported list [2] like WCF, they cannot be ported anyway)
 9. The full `.NET Framework` is not going anywhere, and it'll always be maintained and updated
-10. If the only compelling reason is _"It's new and cool, and everyone is talking about it"_, just drop the idea already
+10. **If the only compelling reason is _"It's new and cool, and everyone is talking about it"_, just drop the idea already**
 
 #### [4] General changes for porting any project
 
