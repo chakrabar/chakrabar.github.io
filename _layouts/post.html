@@ -16,10 +16,12 @@
     {% if page.image.feature %}<img src="{{ site.url }}/images/{{ page.image.feature }}" class="entry-feature-image" alt="{{ page.title }}" {% if site.logo == null %}style="margin-top:0;"{% endif %}>{% if page.image.credit %}<p class="image-credit">Image credit: <a href="{{ page.image.creditlink }}">{{ page.image.credit }}</a></p>{% endif %}{% endif %}
     <div class="entry-wrapper">
       <header class="entry-header">
+        {% if page.tags.size > 0 %} <!--arghya: tags condition & icon, empty array is truthy in ruby! -->
         <ul class="entry-tags">
-          <i class="fa fa-tags"></i>&nbsp; <!--arghya: tags icon-->
+          <i class="fa fa-tags"></i>&nbsp;
           {% for tag in page.tags %}<li><a href="{{ site.url }}/tags/#{{ tag }}" title="Pages tagged {{ tag }}">{{ tag }}</a></li>{% endfor %}
         </ul>
+        {% endif %}
         {% if page.link %}
           <h1 class="entry-title"><a href="{{ page.link }}">{% if page.headline %}{{ page.headline }}{% else %}{{ page.title }}{% endif %} <span class="link-arrow">&rarr;</span></a></h1>
         {% else %}
@@ -50,23 +52,41 @@
           {% include disqus-comments.html %}
         {% endif %}
 
-        <!-- pagination moved inside "entry-content" by Arghya -->
+        <!--Future fix, when the cuurent one fails to skip over post from another category-->
+        <!-- https://github.com/jekyll/jekyll/issues/260
+          {% if page.categories %}
+            {% assign category = page.categories[0] %}
+            {% assign posts = site.categories[category] %}
+            {% for post in posts %}
+              {% if post.url == page.url %}
+                {% assign post_index0 = forloop.index0 %}
+                {% assign post_index1 = forloop.index %}
+              {% endif %}
+            {% endfor %}
+            {% for post in posts %}
+              {% if post_index0 == forloop.index %}
+                {% assign next_post = post %}
+              {% endif %}
+              {% if post_index1 == forloop.index0 %}
+                {% assign prev_post = post %}
+              {% endif %}
+            {% endfor %}
+          {% endif %}
+        -->
+
+        <!-- pagination moved inside "entry-content" by Arghya, dumb crappy patch to navigate within same category -->
         <nav class="pagination" role="navigation"> <!--Arghya trying to add navigation titles, also exclude notes-->
-          {% if page.previous %}
-          {% unless page.previous.categories contains "notes" %}
+          {% if page.previous and page.previous.categories.first == page.categories.first %}
             <div class="prev">
               <a href="{{ site.url }}{{ page.previous.url }}" class="btn" title="{{ page.previous.title }}">Previous</a>
               <span>{{ page.previous.title }}</span>
             </div>
-          {% endunless %}
           {% endif %}
-          {% if page.next %}
-          {% unless page.next.categories contains "notes" %}
+          {% if page.next and page.next.categories.first == page.categories.first %}
             <div class="next">
               <a href="{{ site.url }}{{ page.next.url }}" class="btn" title="{{ page.next.title }}">Next</a>
               <span>{{ page.next.title }}</span>
             </div>
-          {% endunless %}
           {% endif %}
         </nav><!-- /.pagination -->
       </div><!-- /.entry-content -->
