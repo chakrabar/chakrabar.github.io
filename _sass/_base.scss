@@ -151,7 +151,7 @@ figure {
       -webkit-transition-duration: 0.25s;
       -moz-transition-duration: 0.25s;
       -o-transition-duration: 0.25s;
-      opacity: 0.7;
+      /* opacity: 0.7; Arghya, making box images with link fully opaque by default */
 
       &:hover {
         @include transform(translateY(-5px));

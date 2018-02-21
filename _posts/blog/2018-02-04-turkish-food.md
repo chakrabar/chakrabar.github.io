@@ -27,11 +27,11 @@ When we visit a country, its not just about the places to see, its also about th
 * **Turkish breakfast** - Turkish people really enjoy their breakfast. Breakfast will generally have a wide variety of food, starting form breads (did anyone say _Simit_?), cheese, butter, cookies, olives, fruits, eggs, meat to milk, cereals, and beverages like juice, tea & coffee.
 
 <figure class="half">   
-    <img src="/images/blog/turkey/food/maze-platter.jpg" alt="Maze" title="Maze">
+    <img src="/images/blog/turkey/food/maze-platter.jpg" alt="Meze" title="Meze platter">
     <img src="/images/blog/turkey/food/pide.jpg" alt="Pide" title="Pide">
-    <img src="/images/blog/turkey/food/chicken-hurrem.jpg" alt="Meal" title="Meal">
+    <img src="/images/blog/turkey/food/chicken-hurrem.jpg" alt="Meal" title="Chicken Hurrem meal">
     <img src="/images/blog/turkey/food/breakfast.jpg" alt="Breakfast" title="Breakfast">
-    <figcaption>Maze platter, Pide, Chicken Hurrem meal, breakfast</figcaption>
+    <figcaption>Meze platter, Pide, Chicken Hurrem meal, breakfast</figcaption>
 </figure>
 
 ##### Beverages
@@ -58,13 +58,13 @@ When we visit a country, its not just about the places to see, its also about th
 
 * **Varieties of kebap** - You will get a wide variety of kebap comprising of various kinds of meet. Iskinder kebap, doner kebap, pottery kebap, there are plenty of varieties and all taste great. You should be trying as much of them as you can and you won’t repent
 
-* **Stuffed muscles** - One of the best street food I had while in Turkey. If you love sea food, this is a must try. It is a preparation of muscles stuffed with some flavoured rice and is popular street food of turkey and oh it’s so yumm…! Have a hot plate of it at as cheap as 5 lira and thank me later.
+* **Stuffed mussles** - One of the best street food I had while in Turkey. If you love sea food, this is a must try. It is a preparation of muscles stuffed with some flavoured rice and is popular street food of turkey and oh it’s so yumm…! Have a hot plate of it at as cheap as 5 lira and thank me later.
 
 * **Fresh fried fish sandwiches** - If you are a fish lover, you can choose from a variety of fresh catch of the day and then they will fry the fish of your choice and stuff it in your choice of bread. Its hot fresh and yummy. It costs around 10lira and is a must try.
 
 <figure class="half">   
     <img src="/images/blog/turkey/food/simit.jpg" alt="Simit" title="Simit">
-    <img src="/images/blog/turkey/food/doner-sandwich.jpg" alt="Doner" title="DonerPide">
+    <img src="/images/blog/turkey/food/doner-sandwich.jpg" alt="Doner" title="Doner">
     <img src="/images/blog/turkey/food/stuffed-mussles.jpg" alt="Stuffed mussles" title="Stuffed mussles">
     <img src="/images/blog/turkey/food/halka-tatlisi.jpg" alt="Halka Tatlisi" title="Halka Tatlisi">
     <figcaption>Turkish street food</figcaption>
