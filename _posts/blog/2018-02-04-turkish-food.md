@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "A Guide to Turkish gastronomy"
+title: "A guide to Turkish gastronomy"
 excerpt: "A brief guide to Turkish cuisine & streetfood around the country"
 date: 2018-02-04
 tags: [travel, blog, turkey, europe, food, streetfood]
@@ -31,7 +31,7 @@ When we visit a country, its not just about the places to see, its also about th
     <img src="/images/blog/turkey/food/pide.jpg" alt="Pide" title="Pide">
     <img src="/images/blog/turkey/food/chicken-hurrem.jpg" alt="Meal" title="Meal">
     <img src="/images/blog/turkey/food/breakfast.jpg" alt="Breakfast" title="Breakfast">
-    <figcaption>Turkish food</figcaption>
+    <figcaption>Maze platter, Pide, Chicken Hurrem meal, breakfast</figcaption>
 </figure>
 
 ##### Beverages
@@ -67,12 +67,12 @@ When we visit a country, its not just about the places to see, its also about th
     <img src="/images/blog/turkey/food/doner-sandwich.jpg" alt="Doner" title="DonerPide">
     <img src="/images/blog/turkey/food/stuffed-mussles.jpg" alt="Stuffed mussles" title="Stuffed mussles">
     <img src="/images/blog/turkey/food/halka-tatlisi.jpg" alt="Halka Tatlisi" title="Halka Tatlisi">
-    <figcaption>Street food</figcaption>
+    <figcaption>Turkish street food</figcaption>
 </figure>
 
 ##### Desserts
 
-* **Rice pudding (Sutlac)** - If you are a sweet lover, Rice pudding in turkey is a must have for you.
+* **Rice pudding (Sütlaç)** - If you are a sweet lover, Rice pudding in turkey is a must have for you.
 
 * **Dondurma** - The Turkish ice-cream and its delicate flavours and the style of making it is all like a dream. Dondurmas in turkey come in various flavours and are a definite try.
 
@@ -85,7 +85,7 @@ When we visit a country, its not just about the places to see, its also about th
     <img src="/images/blog/turkey/food/sutlac.jpg" alt="Rice pudding" title="Rice pudding">
     <img src="/images/blog/turkey/food/chicken-pudding.jpg" alt="Chicken breast pudding" title="Chicken breast pudding">
     <img src="/images/blog/turkey/food/halwa.jpg" alt="Halwa" title="Halwa">
-    <figcaption>Desserts</figcaption>
+    <figcaption>Baklava, Sütlaç, Chicken breast pudding & Halwa</figcaption>
 </figure>
 
 And so much more...

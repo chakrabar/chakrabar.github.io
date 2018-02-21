@@ -1,7 +1,7 @@
 ---
 layout: post
-title: "A Guide to tour through the Turkish province"
-excerpt: "A Guide to everything about a Turkish holiday - travel, food, local life and more"
+title: "A travel guide to the Turkish province"
+excerpt: "A guide to everything about a Turkish holiday - travel, food, local life and more"
 date: 2018-02-03
 tags: [travel, blog, turkey, europe]
 categories: blog
@@ -13,7 +13,7 @@ image:
   feature: blog/turkey/istanbul/gbazar_min.jpg
 ---
 
-## A Guide to tour through the Turkish province
+## A guide to tour through the Turkish province
 
 Turkey is a unique province, a perfect amalgamation of Asia and Europe. Unlike what some people think, Turkey is a very safe province. With its rich culture and heritage, it should be on your bucket list of places to see.
 I visited Turkey some months back and it was an enriching experience. Before travelling, I also did my part of research on various websites. There is plenty of information available online. However, very few websites gave me with the exact detail of things in the way I needed them and for some areas, I could not find any information on the internet. Therefore, after coming back from my trip I realized I had to give a firsthand detailed information to people who were planning to travel in future. I learnt a lot while travelling through the province and want to share it with fellow travelers who are looking forward to visiting the province in future.

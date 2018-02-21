@@ -44,12 +44,34 @@
       </footer>
       <div class="entry-content">
         {{ content }}
+
         {% if site.owner.disqus-shortname and page.comments or site.comments %}
           <div id="disqus_thread"></div><!-- /#disqus_thread -->
           {% include disqus-comments.html %}
         {% endif %}
+
+        <!-- pagination moved inside "entry-content" by Arghya -->
+        <nav class="pagination" role="navigation"> <!--Arghya trying to add navigation titles, also exclude notes-->
+          {% if page.previous %}
+          {% unless page.previous.categories contains "notes" %}
+            <div class="prev">
+              <a href="{{ site.url }}{{ page.previous.url }}" class="btn" title="{{ page.previous.title }}">Previous</a>
+              <span>{{ page.previous.title }}</span>
+            </div>
+          {% endunless %}
+          {% endif %}
+          {% if page.next %}
+          {% unless page.next.categories contains "notes" %}
+            <div class="next">
+              <a href="{{ site.url }}{{ page.next.url }}" class="btn" title="{{ page.next.title }}">Next</a>
+              <span>{{ page.next.title }}</span>
+            </div>
+          {% endunless %}
+          {% endif %}
+        </nav><!-- /.pagination -->
       </div><!-- /.entry-content -->
     </div><!-- /.entry-wrapper -->
+    <!--original pagination //moved above by Arghya
     <nav class="pagination" role="navigation">
       {% if page.previous %}
         <a href="{{ site.url }}{{ page.previous.url }}" class="btn" title="{{ page.previous.title }}">Previous</a>

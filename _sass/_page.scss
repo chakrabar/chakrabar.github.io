@@ -234,6 +234,25 @@ letter-spacing: -3px; /*-3 makes things clumsy in small devices
 .pagination {
 	margin-top: 2em;
 	text-align: center;
+
+	/*Arghya - post title with pagination buttons*/
+	span {
+		display: block;
+		font-size: 0.9rem;
+	}
+
+	.prev {
+		max-width: 50%;
+		text-align: left;
+		float: left;
+	}
+
+	.next {
+		max-width: 50%;
+		text-align: right;
+		float: right;
+	}
+	/*Arghya - this section ^ was added by me*/
 }
 
 /*
