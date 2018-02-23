@@ -27,6 +27,7 @@ In .NET (framework version 4.0 and above) we have three high level options
 We'll discuss async-await later, which is a much newer concept. Before making our choice, let's understand what are threads and tasks.
 
 A **`thread`** is a low level construct and roughly represents an actual OS-level thread.
+
 A **`task`** is a .NET abstraction that basically represents _a promise_ of a separate work, that'll be completed in future. Generally a task runs on a separate thread (mostly a managed thread-pool one), managed by the .NET framework.
 {: .notice--info}
 
