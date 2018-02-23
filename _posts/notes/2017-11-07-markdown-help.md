@@ -72,6 +72,47 @@ public class CoolClass
 }
 ```
 
+### Table
+
+
+| Employee         | Salary |                                                              |
+|------------------|--------|--------------------------------------------------------------|
+| [John Doe](#)    | $1     | Because that's all Steve Jobs needed for a salary.           |
+| [Jane Doe](#)    | $100K  | For all the blogging she does.                               |
+| [Fred Bloggs](#) | $100M  | Pictures are worth a thousand words, right? So Jane × 1,000. |
+| [Jane Bloggs](#) | $100B  | With hair like that?! Enough said.                           |
+
+
+| Header1 | Header2 | Header3 |
+|:--------|:-------:|--------:|
+| cell1   | cell2   | cell3   |
+| cell4   | cell5   | cell6   |
+|-----------------------------|
+| cell1   | cell2   | cell3   |
+| cell4   | cell5   | cell6   |
+|=============================|
+| Foot1   | Foot2   | Foot3   |
+
+### Notices
+
+**Watch out!** This paragraph of text has been [emphasized](#) with the `{: .notice}` class.
+{: .notice}
+
+**Watch out!** This paragraph of text has been [emphasized](#) with the `{: .notice--primary}` class.
+{: .notice--primary}
+
+**Watch out!** This paragraph of text has been [emphasized](#) with the `{: .notice--info}` class.
+{: .notice--info}
+
+**Watch out!** This paragraph of text has been [emphasized](#) with the `{: .notice--warning}` class.
+{: .notice--warning}
+
+**Watch out!** This paragraph of text has been [emphasized](#) with the `{: .notice--success}` class.
+{: .notice--success}
+
+**Watch out!** This paragraph of text has been [emphasized](#) with the `{: .notice--danger}` class.
+{: .notice--danger}
+
 For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
 
 ### Jekyll Themes

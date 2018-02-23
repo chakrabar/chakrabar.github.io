@@ -4,8 +4,8 @@
 
 /*
    Default notice
-   ========================================================================== */
-
+   ========================================================================== 
+ORIGINAL
 .notice {
   margin-top: 1.5em;
   padding: .5em 1em;
@@ -14,7 +14,7 @@
   background-color: lighten($black, 95);
   border: 1px solid lighten($black, 90);
   @include rounded(4px);
-}
+} */
 
 /*
    Browser upgrade notice
@@ -23,4 +23,52 @@
 .upgrade {
   padding: 10px;
   text-align: center;
+}
+
+/*Arghya from https://github.com/mmistakes/so-simple-theme/blob/master/_sass/so-simple/_notices.scss */
+
+@mixin notice($notice-color) {
+  margin-top: 1.5em;
+  padding: .5em 1em;
+  text-indent: 0;
+  @include font-size(16);
+  background-color: $notice-color;
+  border: 1px solid $notice-color;
+  @include rounded(4px);
+}
+
+/* Default notice */
+
+.notice {
+  @include notice(#e6e6e6);
+}
+
+/* Primary notice */
+
+.notice--primary {
+  @include notice(#b3b3b3);
+}
+
+/* Info notice */
+
+.notice--info {
+  @include notice(#cbe6ef);
+}
+
+/* Warning notice */
+
+.notice--warning {
+  @include notice(#fddfb4);
+}
+
+/* Success notice */
+
+.notice--success {
+  @include notice(#d0edd0);
+}
+
+/* Danger notice */
+
+.notice--danger {
+  @include notice(#facfce);
 }
