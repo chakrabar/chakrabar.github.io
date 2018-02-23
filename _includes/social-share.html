@@ -1,16 +1,30 @@
 <span class="social-share-twitter">
-  <a href="https://twitter.com/intent/tweet?hashtags={{ page.tags | join: ',' | remove: ' ' }}&amp;text={{ page.title | escape | replace:'#','%23' | replace:' ','%20' | replace:'&amp;','%26' | replace:'ASP.NET','ASPNET' }}&amp;url={{ site.url }}{{ page.url }}{% if author.twitter %}&amp;via={{ author.twitter }}{% endif %}" title="Share on Twitter" itemprop="Twitter"><i class="fa fa-twitter-square"></i> Tweet</a>
+  <a href="https://twitter.com/intent/tweet?hashtags={{ page.tags | join: ',' | remove: ' ' }}&amp;text={{ page.title | escape | replace:'#','%23' | replace:' ','%20' | replace:'&amp;','%26' | replace:'ASP.NET','ASPNET' }}&amp;url={{ site.url }}{{ page.url }}{% if author.twitter %}&amp;via={{ author.twitter }}{% endif %}" 
+    title="Share on Twitter" itemprop="Twitter">
+    <i class="fa fa-twitter-square"></i> Tweet</a>
 </span>
 <span class="social-share-facebook">
-  <a href="https://www.facebook.com/sharer/sharer.php?u={{ site.url }}{{ page.url }}" title="Share on Facebook" itemprop="Facebook"><i class="fa fa-facebook-square"></i> Like</a>
+  <a href="https://www.facebook.com/sharer/sharer.php?u={{ site.url }}{{ page.url }}" 
+    title="Share on Facebook" itemprop="Facebook">
+    <i class="fa fa-facebook-square"></i> Share</a>
 </span>
-<span class="social-share-googleplus">
-  <a href="https://plus.google.com/share?url={{ site.url }}{{ page.url }}" title="Share on Google Plus" itemprop="GooglePlus"><i class="fa fa-google-plus-square"></i> +1</a>
-</span>
-<!-- Arghya, adding Linkedin share -->
+<!-- Arghya, adding Linkedin, Reddit share -->
 <span class="social-share-facebook">
-  <a href="https://www.linkedin.com/shareArticle?url={{ site.url }}{{ page.url }}" title="Share on Linkedin" itemprop="Linkedin">
+  <a href="https://www.linkedin.com/shareArticle?url={{ site.url }}{{ page.url }}" 
+    title="Share on Linkedin" itemprop="Linkedin">
     <i class="fa fa-linkedin-square"></i> Share</a>
   </a>
+</span>
+<span class="social-share-facebook">
+  <a href="https://reddit.com/submit?title={{ page.title | escape | replace:'#','%23' | replace:' ','%20' | replace:'&amp;','%26' | replace:'ASP.NET','ASPNET' }}&amp;url={{ site.url }}{{ page.url }}"
+    title="Share on Reddit" itemprop="Reddit">
+    <i class="fa fa-reddit-square"></i> Share</a>
+  </a>
+</span>
+<!-- Arghya change : End -->
+<span class="social-share-googleplus">
+  <a href="https://plus.google.com/share?url={{ site.url }}{{ page.url }}" 
+    title="Share on Google Plus" itemprop="GooglePlus">
+    <i class="fa fa-google-plus-square"></i> +1</a>
 </span>
 <!-- /.social-share -->
