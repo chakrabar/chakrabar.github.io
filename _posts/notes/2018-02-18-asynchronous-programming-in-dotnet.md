@@ -109,6 +109,8 @@ Now that we are mostly convinced that we want to use Tasks to do stuffs asynchro
 
 They all seem to do pretty much the same thing! Which one to use?
 
+TL;DR Stick to `Task.Run()` unless you need specific customization like `LongRunning` process or cancellation.
+
 #### [6] Task continuation
 
 Well, what if I want to do something only after that `SlowMethod()` is done? Then you have to create a **continuation** of that task. The `Task.Run()` actually returns a `Task` which is kind of a context that can give details of the underlying work that is being executed. It can tell whether the work is completed or not, if that failed etc. and can return any result once that is completed in `task.Result`.
