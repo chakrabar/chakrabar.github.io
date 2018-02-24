@@ -3,7 +3,7 @@ layout: post
 title: "Synchronous to asynchronous in .NET"
 excerpt: "Simple conversion of synchronous code to asynchronous with Tasks"
 date: 2018-02-18
-tags: [tech, csharp, dotnet, async, asynchronous, tasks, threading]
+tags: [tech, csharp, dotnet, async, asynchronous, tasks, threading, TPL]
 categories: notes
 comments: true
 share: true
@@ -30,8 +30,10 @@ We'll discuss async-await later, which is a much newer concept. Before making ou
 
 A **`thread`** is a low level construct and roughly represents an actual OS-level thread.
 {: .notice--info}
-A **`task`** is a .NET abstraction that basically represents _a promise_ of a separate work, that'll be completed in future. Generally a task runs on a separate thread (mostly a managed thread-pool one), managed by the .NET framework.
+A **`task`** is a .NET abstraction that basically represents _a promise_ of a separate work, that'll be completed in future.
 {: .notice--info}
+
+**Note:** Just using a `Task` in code does not mean there are separate threads involved. Generally when using `Task.Run()` or similar constructs, a task runs on a separate thread (mostly a managed thread-pool one), managed by the .NET CLR.
 
 #### [3] Running some code on a separate thread
 
@@ -51,25 +53,41 @@ public void DoWorkOnThread()
 }
 ```
 
-Here we have a method `SlowMethod()` that takes time. So, we simply create a new thread by attaching the method to it, and start. 
+Just for understanding, a `Thread` is not a method, so it does not return a value. But if we want a result back after a thread has completed it's work, there are few ways of doing it. Following code shows an example using a `closure`.
 
-It works, and a `Thread` being a very raw and low level thing, gives the maximum flexibility to control execution and manage some attached resources. But, creating them in code might cause some serious issues as well. 
+```cs
+public void ValueReturningThread()
+{
+    string result = null;
+    Thread thread = new Thread(() => {
+        Thread.Sleep(5000);
+        result = "Thread work completed";
+    });
+    thread.Start();
+    thread.Join(); //wait for thread to terminate
+    Console.WriteLine(result);
+}
+```
+
+In our example we have a method `SlowMethod()` that takes time. So, we simply create a new thread by attaching the method to it, and start. 
+
+It works, and a `Thread` being a very raw and low level thing, gives the maximum flexibility to control execution and manage some attached resources etc. Also the work on the newly created thread starts immediately. But, creating them in code might cause some serious issues as well. 
 
 * Creating a new thread is pretty resource intensive. Starting & stopping threads take time (on the other hand, ThreadPool threads are not terminated once done. Rather they are kept to be re-used again)
 * If we keep creating huge number of new threads it might become very difficult for the system to handle. If there are much more threads than CPU cores, the OS needs to do frequent context switches, which is heavy. That can result in the application hanging or even the whole system crashing
 * Managing and synchronizing them can be pretty complex, from correct coding and actual execution stand point
 
-So, for most purposes in modern .NET programming, it is reccomended to use `Task` instead.
+So, for most purposes in modern .NET programming, it is reccomended to use `Task` instead (which does not necessarily mean separate threads).
 
 #### [4] Synchronous to Asynchronous with Task
 
-Converting a `synchronous` method to `asynchronous` in simple words, is making a normal method to run _'out-of-sync'_ in a separate thread. For that we use `Task.Run()` which takes a `thread` from the `ThreadPool` and runs the method/code on that new thread. As an effect, the main or the original thread can continue to do other stuffs without waiting for that method/code to complete. 
+Converting a `synchronous` method to `asynchronous` in simple words, is making a normal method to run _'out-of-sync'_ in. For that we can use `Task.Run()` which gives the work item to the `ThreadPool`, which takes a `thread` from the `ThreadPool` and runs the method/code on that thread as per schedule and availability. As an effect, the main or the original thread can continue to do other stuffs without waiting for that method/code to complete. 
 
 Now as we discussed the problems of manually creating threads above, it is much better option to run those code as tasks instead. So when a task is started, it grabs an available thread from the `thread-pool` and runs the operation on that. Once completed, the thread is released back to the thread-pool. 
 
 ----
 
-This differs if a task is marked to be a **`LongRunning`** task. For a long-running task, ideally a new thread is used. There are some good QA on StackOverflow about when a Task should be marked LongRunning [here](https://stackoverflow.com/questions/37607911/when-to-use-taskcreationoptions-longrunning) and [here](https://stackoverflow.com/questions/25833054/what-does-long-running-tasks-mean). To create a long running task
+This differs if a task is marked to be a **`LongRunning`** task. For a long-running task, ideally a new thread is used. A long running (0.5 seconds or more) operation should actually be run as long running as that'll not block thread pool threads, which can efficiently run smaller tasks. There are some good QA on StackOverflow about when a Task should be marked LongRunning [here](https://stackoverflow.com/questions/37607911/when-to-use-taskcreationoptions-longrunning) and [here](https://stackoverflow.com/questions/25833054/what-does-long-running-tasks-mean). To create a long running task
 
 ```cs
 var cancellationTokenSource = new CancellationTokenSource();
@@ -99,6 +117,9 @@ public void DoAsyncWorkMethod()
 }
 ```
 
+**Note:** Doing a `new Thread(...).Start()` actually creates and starts a new `Thread`. But doing a `Task.Run(...)` simply _queues_ the work on `ThreadPool`. Then ThreadPool manages the work, assigns the work to a thread from the pool when available.
+{: .notice--success}
+
 #### [5] Starting new Task choices
 
 Now that we are mostly convinced that we want to use Tasks to do stuffs asynchronously, we are again presented with multiple options on how to start a new Task. There are basically 3 options
@@ -109,7 +130,7 @@ Now that we are mostly convinced that we want to use Tasks to do stuffs asynchro
 
 They all seem to do pretty much the same thing! Which one to use?
 
-TL;DR Stick to `Task.Run()` unless you need specific customization like `LongRunning` process or cancellation.
+**TL;DR** Stick to `Task.Run()` unless you need specific customization like `LongRunning` process or a non-default `TaskScheduler`, or synchronizing child tasks with parent. If those are required, use `Task.Factory.StartNew()`.
 
 #### [6] Task continuation
 
@@ -217,13 +238,13 @@ public void DoAsyncWork_5()
 
 In the `DoAsyncWork_5()` example we use a `task.Wait()` call. This actually halts the current thread and waits for the task to complete. Just like above (sample) code, if we do a `Wait()` immediately after running a task, that'll basically behave as a synchronous work. Ideally, you'll do other stuffs before waiting for the task. Also, if the task throws exception, that can be cauth on the `Wait()`. To wait for multiple tasks to complete, use `WaitAll(tasks)`.
 
-#### [8] Tasks, threads and context
+#### [8] Tasks & threads
 
 Task is an abstraction that, most of the times, uses some thread to run the operation asynchronously. So when we are working with Tasks, multiple threads are involed, though we do not generate them on our own. Let's look at a sample code from above and see how threads are involved here.
 
 When a new task is run, it is managed and synchronized by the CLR. The new task (generally) runs on a `ThreadPool` thread. And even the continuation task is assigned to another thread from the thread pool. So, in the following code, 3 threads would get involved.
 
-**Note:** One can use the `ManagedThreadId` property of static `Thread.CurrentThread` to see the CLR thread ID of the currently executing thread.
+**Note:** One can use the `ManagedThreadId` property of static `Thread.CurrentThread` to see the CLR thread ID of the currently executing thread. Useful for debugging.
 {: .notice--info}
 
 ```cs
@@ -263,6 +284,8 @@ public void DoAsyncWork_6()
     //thread #1 continues asynchronously
 }
 ```
+
+Setting `ConfigureAwait(false)` explicitly tells to try run the continuation on a separate thread that is available. This promotes higher degree of concurrency. 
 
 #### [9] Cancellation of Tasks
 
@@ -311,3 +334,8 @@ catch (AggregateException ae)
 See the [Basic task cancellation demo in C#](/notes/task-cancellation/) post for a complete runnable code demo of a simple `Console` application that runs a slow process asynchronously, and gives the user an option to cancel the operation.
 
 In a later post, we'll look at the new and cool `async-await` constructs.
+
+#### [10] Bundling of Tasks
+
+* Task Task.WhenAll(Task[])
+* Task<Task> Task.WhenAny(Task[])
