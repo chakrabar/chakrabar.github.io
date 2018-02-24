@@ -169,7 +169,7 @@ public void DoAsyncWork_2()
 }
 ```
 
-<u>The correct way, check fault on continue</u>
+<u>The correct way, check fault on Task wait/continuation</u>
 
 If the asynchronous method/code fails, the exception details are attached to the returned Task. To handle the exception, we need to handle the exception by getting a handle back from the task. We can check the `IsFaulted` and `Exception` properties on continuation to see if anything went wrong, or handle on `Wait()` or `WaitAll()`. Alternatively, if we want to execute some code only if it worked/failed (e.g. log the exception), `ContinueWith()` has an overload that accepts a `TaskContinuationOptions` that can specify when to run the continuation code. 
 
@@ -221,7 +221,7 @@ Task is an abstraction that, most of the times, uses some thread to run the oper
 
 When a new task is run, it is managed and synchronized by the CLR. The new task (generally) runs on a `ThreadPool` thread. And even the continuation task is assigned to another thread from the thread pool. So, in the following code, 3 threads would get involved.
 
-**Note:** One can use the `Thread.CurrentThread.ManagedThreadId` to see the CLR thread ID of the currently executing code.
+**Note:** One can use the `ManagedThreadId` property of static `Thread.CurrentThread` to see the CLR thread ID of the currently executing thread.
 {: .notice--info}
 
 ```cs
