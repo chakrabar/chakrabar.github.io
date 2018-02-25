@@ -1,11 +1,13 @@
 # Site wide configuration
 
-title: AC's Techshots
+title: AC's Notes
 locale: en_US
-description: Technical notes and titbits of everyday programmer's life.
+description: Technical & non-technical titbits of everyday programmer's life.
 logo: ac/desk.jpg
 search: true
 url: http://arghya.xyz
+
+# title: AC's Techshots - no more
 
 # Jekyll configuration
 
@@ -31,7 +33,7 @@ kramdown:
 mathjax: true
 
 include: [".htaccess"]
-exclude: ["lib", "config.rb", "Capfile", "config", "log", "Rakefile", "Rakefile.rb", "tmp", ".less", "*.sublime-project", "*.sublime-workspace", "test", "artefacts", "spec", "Gruntfile.js", "package.json", "node_modules", "Gemfile", "Gemfile.lock", "LICENSE", "README.md", "vendor"]
+exclude: ["lib", "config.rb", "Capfile", "config", "log", "Rakefile", "Rakefile.rb", "tmp", ".less", "*.sublime-project", "*.sublime-workspace", "test", "artifacts", "spec", "Gruntfile.js", "package.json", "node_modules", "Gemfile", "Gemfile.lock", "LICENSE", "README.md", "vendor"]
 
 
 # Site owner
