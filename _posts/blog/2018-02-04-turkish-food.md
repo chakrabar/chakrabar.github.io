@@ -7,7 +7,6 @@ tags: [travel, blog, turkey, europe, food, streetfood]
 categories: blog
 share: true
 comments: true
-modified: 2018-02-04T22:11:53-04:00
 author: pritha
 image:
   feature: blog/turkey/food/food_cover_min.jpg
