@@ -4,9 +4,8 @@ title: "Setting up a GitHub pages site locally"
 excerpt: "Locally running GitHub pages - Ruby, Bundler, Jekyll & more"
 date: 2017-11-08
 categories: notes
-share: true
-comments: true
 modified: 2017-11-08T22:11:53-04:00
+hidden: true
 ---
 
 Setting up Jekyll (Github page) site locally:

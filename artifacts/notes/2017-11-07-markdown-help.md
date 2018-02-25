@@ -4,9 +4,8 @@ title: "Markdown help"
 excerpt: "Some quick Markdown examples"
 date: 2017-11-07
 categories: notes
-share: true
-comments: true
 modified: 2017-11-07T22:11:53-04:00
+hidden: true
 ---
 
 ## Welcome to GitHub Pages

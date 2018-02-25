@@ -5,14 +5,13 @@ excerpt: "An article to test overriding the default site author."
 categories: notes
 tags: [sample-post, readability, test]
 author: billy_rick
-comments: true
-share: true
 modified: 2016-06-01T14:18:57-04:00
 image:
   path: http://example.com/so-simple-sample-image-1.jpg
   feature: so-simple-sample-image-7.jpg
   credit: WeGraphics
   creditlink: http://wegraphics.net/downloads/free-ultimate-blurred-background-pack/
+hidden: true
 ---
 
 For those of you who may have content written by multiple authors on your site you can now assign different authors to each post if desired.

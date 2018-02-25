@@ -4,9 +4,8 @@ title: "A Post with a Video"
 excerpt: "Custom written post descriptions are the way to go... if you're not lazy."
 categories: notes
 tags: [sample-post, video]
-comments: true
-share: true
 modified: 2016-06-01T14:18:26-04:00
+hidden: true
 ---
 
 <iframe width="560" height="315" src="//www.youtube.com/embed/pdSp4Y4GOQs" frameborder="0"> </iframe>

@@ -4,9 +4,8 @@ title: "Adding remote theme to GitHub pages"
 excerpt: "My experience with updating my GitHub pages site with a remote theme"
 date: 2017-11-09
 categories: notes
-share: true
-comments: true
 modified: 2017-11-09T22:11:53-04:00
+hidden: true
 ---
 
 ## Adding a remote github theme

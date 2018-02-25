@@ -5,6 +5,7 @@ excerpt: "Example and code for using link posts."
 categories: notes
 tags: [sample-post, link-post]
 link: http://mademistakes.com  
+hidden: true
 ---
 
 So Simple Theme now supports **link posts**, made famous by John Gruber. To activate just add `link: http://url-you-want-linked` to the post's YAML front matter and you're done.
