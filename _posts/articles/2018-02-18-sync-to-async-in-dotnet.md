@@ -4,7 +4,7 @@ title: "Synchronous to asynchronous in .NET"
 excerpt: "Simple conversion of synchronous code to asynchronous with Tasks"
 date: 2018-02-18
 tags: [tech, csharp, dotnet, async, asynchronous, tasks, threading, TPL]
-categories: notes
+categories: articles
 comments: true
 share: true
 modified: 2018-02-23T22:11:53-04:00
@@ -33,7 +33,9 @@ A **`thread`** is a low level construct and roughly represents an actual OS-leve
 A **`task`** is a .NET abstraction that basically represents _a promise_ of a separate work, that'll be completed in future.
 {: .notice--info}
 
-**Note:** Just using a `Task` in code does not mean there are separate threads involved. Generally when using `Task.Run()` or similar constructs, a task runs on a separate thread (mostly a managed thread-pool one), managed by the .NET CLR.
+A `Task<T>` is nothing but a task that comes with _promise_ of returning a value of type `T` when the task completes.
+
+**Note:** Just using a `Task` in code does not mean there are separate threads involved. Generally when using `Task.Run()` or similar constructs, a task runs on a separate thread (mostly a managed thread-pool one), managed by the .NET CLR. But, that depends on the actual implementation of the task.
 
 #### [3] Running some code on a separate thread
 
@@ -73,11 +75,11 @@ In our example we have a method `SlowMethod()` that takes time. So, we simply cr
 
 It works, and a `Thread` being a very raw and low level thing, gives the maximum flexibility to control execution and manage some attached resources etc. Also the work on the newly created thread starts immediately. But, creating them in code might cause some serious issues as well. 
 
-* Creating a new thread is pretty resource intensive. Starting & stopping threads take time (on the other hand, ThreadPool threads are not terminated once done. Rather they are kept to be re-used again)
+* Creating a new thread is pretty resource intensive. Starting & stopping threads take time (on the other hand, ThreadPool threads are not created or terminated once done. Rather they are kept to be re-used again)
 * If we keep creating huge number of new threads it might become very difficult for the system to handle. If there are much more threads than CPU cores, the OS needs to do frequent context switches, which is heavy. That can result in the application hanging or even the whole system crashing
 * Managing and synchronizing them can be pretty complex, from correct coding and actual execution stand point
 
-So, for most purposes in modern .NET programming, it is reccomended to use `Task` instead (which does not necessarily mean separate threads).
+So, for most purposes in modern .NET programming, it is reccomended to use `Task` instead (which does not necessarily mean a new threads).
 
 #### [4] Synchronous to Asynchronous with Task
 
@@ -87,13 +89,13 @@ Now as we discussed the problems of manually creating threads above, it is much 
 
 ----
 
-This differs if a task is marked to be a **`LongRunning`** task. For a long-running task, ideally a new thread is used. A long running (0.5 seconds or more) operation should actually be run as long running as that'll not block thread pool threads, which can efficiently run smaller tasks. There are some good QA on StackOverflow about when a Task should be marked LongRunning [here](https://stackoverflow.com/questions/37607911/when-to-use-taskcreationoptions-longrunning) and [here](https://stackoverflow.com/questions/25833054/what-does-long-running-tasks-mean). To create a long running task
+**Note:** This differs if a task is marked to be a **`LongRunning`** task. For a long-running task, a new thread is used. A long running (0.5 seconds or more) operation should actually be run as `LongRunning` as that'll not block thread pool threads, which can efficiently run smaller tasks and rotate. There are some good QA on StackOverflow about when a Task should be marked LongRunning [here](https://stackoverflow.com/questions/37607911/when-to-use-taskcreationoptions-longrunning) and [here](https://stackoverflow.com/questions/25833054/what-does-long-running-tasks-mean). To create a long running task
 
 ```cs
 var cancellationTokenSource = new CancellationTokenSource();
 Task.Factory.StartNew(() => SomeSlowMethod(),
     cancellationTokenSource.Token,
-    TaskCreationOptions.LongRunning, 
+    TaskCreationOptions.LongRunning, //this
     TaskScheduler.Default);
 ```
 
@@ -128,7 +130,9 @@ Now that we are mostly convinced that we want to use Tasks to do stuffs asynchro
 2. Task.Factory.StartNew(Action);
 3. Task.Run(Action);
 
-They all seem to do pretty much the same thing! Which one to use?
+They all seem to do pretty much the same thing! Which one to use? First, let's understand one thing
+
+A **Task** 
 
 **TL;DR** Stick to `Task.Run()` unless you need specific customization like `LongRunning` process or a non-default `TaskScheduler`, or synchronizing child tasks with parent. If those are required, use `Task.Factory.StartNew()`.
 
@@ -192,7 +196,7 @@ public void DoAsyncWork_2()
 }
 ```
 
-<u>The correct way, check fault on Task wait/continuation</u>
+**<u>The correct way, check fault on Task wait OR continuation</u>**
 
 If the asynchronous method/code fails, the exception details are attached to the returned Task. To handle the exception, we need to handle the exception by getting a handle back from the task. We can check the `IsFaulted` and `Exception` properties on continuation to see if anything went wrong, or handle on `Wait()` or `WaitAll()`. Alternatively, if we want to execute some code only if it worked/failed (e.g. log the exception), `ContinueWith()` has an overload that accepts a `TaskContinuationOptions` that can specify when to run the continuation code. 
 
@@ -300,8 +304,9 @@ private void CancellableWork(CancellationToken cancellationToken)
     for (int i = 0; i < 10; i++)
     {
         Thread.Sleep(1000);
-        //check cancellation request and act
+        //check cancellation requested and act
         cancellationToken.ThrowIfCancellationRequested();
+        //else, do normal work
         Console.WriteLine($"Iteration # {i + 1} completed");
     }
 }
@@ -310,7 +315,7 @@ public Task CancellableTask(CancellationToken ct)
     return Task.Factory.StartNew(() => CancellableWork(ct), ct);            
 }
 
-//Calling method
+//The calling method
 CancellationTokenSource source = new CancellationTokenSource();
 var task = new CancellableTask(source.Token);
 
@@ -333,9 +338,10 @@ catch (AggregateException ae)
 
 See the [Basic task cancellation demo in C#](/notes/task-cancellation/) post for a complete runnable code demo of a simple `Console` application that runs a slow process asynchronously, and gives the user an option to cancel the operation.
 
-In a later post, we'll look at the new and cool `async-await` constructs.
-
 #### [10] Bundling of Tasks
 
 * Task Task.WhenAll(Task[])
 * Task<Task> Task.WhenAny(Task[])
+
+
+In a later post, we'll look at the new and cool `async-await` constructs.

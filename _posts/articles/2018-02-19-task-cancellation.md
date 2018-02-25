@@ -3,13 +3,13 @@ layout: post
 title: "Basic task cancellation demo in C#"
 excerpt: "A very basic console application that allows user to cancel a task"
 date: 2018-02-19
-tags: [tech, csharp, dotnet, async, asynchronous, tasks, threading]
-categories: notes
+tags: [tech, csharp, dotnet, async, asynchronous, tasks, TPL]
+categories: articles
 comments: true
 share: true
 ---
 
-Here we'll look at a very basic exmaple of a cancellable `Task`. This is an addition to the post [Synchronous to asynchronous in .NET](/notes/asynchronous-programming-in-dotnet/). This is a complete runnable code demo of a simple `Console` application that runs a slow process asynchronously. User has an option to _"Press C"_ to cancel the operation.
+Here we'll look at a very basic exmaple of a cancellable `Task`. This is an addition to the post [Synchronous to asynchronous in .NET](/notes/sync-to-async-in-dotnet/). This is a complete runnable code demo of a simple `Console` application that runs a slow process asynchronously. User has an option to _"Press C"_ to cancel the operation.
 
 We'll first have the actual synchronous method `CancellableWork()` that is invoked asynchronously. It accepts a `CancellationToken` and periodically checks if cancellation is requested on the token. If requested, it aborts the operation and throws a `TaskCanceledException`.
 
@@ -33,7 +33,7 @@ private void CancellableWork(CancellationToken cancellationToken)
         if (cancellationToken.IsCancellationRequested)
         {
             Console.WriteLine($"Cancelled on iteration # {i + 1}");
-            //the following alone line is enough to check and throw
+            //the following lien alone is enough to check and throw
             cancellationToken.ThrowIfCancellationRequested();
         }
         Console.WriteLine($"Iteration # {i + 1} completed");
