@@ -3,14 +3,14 @@
 - title: Home
   url: /
 
-- title: About
-  url: /about/
-
 - title: Tech
   url: /articles/
 
-#- title: Blog
-#  url: /blog/
+- title: Blog
+  url: /blog/
+
+- title: About
+  url: /about/
 
 - title: Search
   url: /search/

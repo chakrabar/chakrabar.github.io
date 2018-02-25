@@ -130,11 +130,49 @@ Now that we are mostly convinced that we want to use Tasks to do stuffs asynchro
 2. Task.Factory.StartNew(Action);
 3. Task.Run(Action);
 
-They all seem to do pretty much the same thing! Which one to use? First, let's understand one thing
+They all seem to do pretty much the same thing! Which one to use? 
 
-A **Task** 
+**TL;DR** Stick to `Task.Run()` unless you need specific customization like `LongRunning` process or a non-default `TaskScheduler` or synchronizing child tasks with parent etc. If those are required, use `Task.Factory.StartNew()`.
+{: .notice--success}
 
-**TL;DR** Stick to `Task.Run()` unless you need specific customization like `LongRunning` process or a non-default `TaskScheduler`, or synchronizing child tasks with parent. If those are required, use `Task.Factory.StartNew()`.
+First, let's understand one thing, **A Task only executes once** and should be scheduled only once. This needs synchronization to avoid race condition where multiple threads try to start a task (think `new Task()`). Now, as `Task.Factory.StartNew` first starts the task then returns a refernce, this is safe and saves the synchronization cost (internal to CLR). The reason is, once a task has been startded, any call to that task again to `Start()` will simply fail. So, use `Task.Factory.StartNew()` over `new Task().Start()`.
+
+There can some cases though, where creating new Task might be beneficial. One example being, need to derive from the `Task` type. [This](https://blogs.msdn.microsoft.com/pfxteam/2010/06/13/task-factory-startnew-vs-new-task-start/) MSDN article explains with great examples.
+
+Now,
+
+```cs
+Task.Run(SomeAction);
+//is exactly equivalent to
+Task.Factory.StartNew(SomeAction,
+    CancellationToken.None,
+    TaskCreationOptions.DenyChildAttach,
+    TaskScheduler.Default);
+```
+
+So `Task.Run()` is simply a short-hand with default parameters that works fine in most of the cases when we simply want to off load some activity to a background (thread-pool) thread. If you need specific customization like `LongRunning` process or a non-default `TaskScheduler` or synchronizing child tasks with parent etc. then go for `Task.Factory.StartNew()`. Ther is another very interesting article in MSDN [here](https://blogs.msdn.microsoft.com/pfxteam/2011/10/24/task-run-vs-task-factory-startnew/) on this topic and how that helped the newer keyword `await`.
+
+One <u>interesting thing to note is</u>, `Task.Factory.StartNew()` and `Task.Run()` can both accept a `Func<Task<T>>`. And in that case, `Task.Factory.StartNew()` returns a `Task<Task<T>>` whereas the `Task.Run()` returns a `Task<T>`! This is `Task.Run()` internally implements `.Unwrap()` extension method internally!
+
+```cs
+var outTask1 = Task.Factory.StartNew(() => {
+    Task<int> innerTask = Task.Run(() => 100);
+    return innerTask;
+});
+//here outTask1 is Task<Task<int>>
+
+var outTask2 = Task.Run(() => {
+    Task<int> innerTask = Task.Run(() => 100);
+    return innerTask;
+});
+//outTask2 is Task<int>
+
+var outTask3 = Task.Factory.StartNew(() => {
+    Task<int> innerTask = Task.Run(() => 100);
+    return innerTask;
+}).Unwrap();
+//here outTask3 is Task<int>
+```
 
 #### [6] Task continuation
 
@@ -340,8 +378,13 @@ See the [Basic task cancellation demo in C#](/notes/task-cancellation/) post for
 
 #### [10] Bundling of Tasks
 
-* Task Task.WhenAll(Task[])
-* Task<Task> Task.WhenAny(Task[])
+Sometimes we create multiple tasks to do multiple things, then we need to monitor them collectively. The `Task` comes with some handly ways to bundle multiple tasks into a single `Task` and work on that. Some of those methods are
 
+* `Task.WhenAll(Task[])` -> `Task`
+* `Task.WhenAny(Task[])` -> `Task<Task>`
+
+They return a waitable `Task` that completes as per chosen condition. `WhenAll()` completes all the tasks are complete while `WhenAny()` returns when any of the tasks are complete and gives back the completed task. 
+
+----
 
 In a later post, we'll look at the new and cool `async-await` constructs.

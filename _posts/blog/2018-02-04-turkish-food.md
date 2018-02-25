@@ -90,6 +90,8 @@ When we visit a country, its not just about the places to see, its also about th
 
 And so much more...
 
+My list can go on and on. You cant have it all as the varieties of food available is tremendous and delicious. We were left wanting for more even after trying most in our list. You wont be satisfied by having it once and you can never have enough of them. Its a food paradise if you ask me. So, some random food photos.
+
 <figure class="half">   
     <img src="/images/blog/turkey/food/pottery-kebab.jpg" alt="Pottery Kebab" title="Pottery Kebab">
     <img src="/images/blog/turkey/food/karakoy-golluglu.jpg" alt="karaköy güllüoğlu" title="karaköy güllüoğlu">
@@ -100,11 +102,6 @@ And so much more...
     <figcaption>There's no end to Turkish food varieties</figcaption>
 </figure>
 
-<!--this
-<figure class="half">
-    <a href="/images/blog/turkey/food/simit.jpeg"><img src="/images/blog/turkey/food/simit.jpeg" alt="image"></a>
-    <a href="/images/blog/turkey/food/maze-platter.jpeg"><img src="/images/blog/turkey/food/maze-platter.jpeg" alt="image"></a>
-    <a href="/images/blog/turkey/food/pide.jpeg"><img src="/images/blog/turkey/food/pide.jpeg" alt="image"></a>
-  <a href="/images/blog/turkey/food/doner.jpeg"><img src="/images/blog/turkey/food/doner.jpeg" alt="image"></a>
-    <figcaption>Two images.</figcaption>
-</figure>-->
+----
+
+This is a part of [Turkey travel series](/blog/turkey-travel-guide/) blog.
