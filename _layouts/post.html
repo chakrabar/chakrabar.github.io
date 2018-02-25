@@ -74,8 +74,8 @@
           {% endif %}
         -->
 
-        <!-- pagination moved inside "entry-content" by Arghya, dumb crappy patch to navigate within same category -->
-        <nav class="pagination" role="navigation"> <!--Arghya trying to add navigation titles, also exclude notes-->
+        <!-- BUGGY pagination, that retricts to same category, but cannot skip over
+        <nav class="pagination" role="navigation">
           {% if page.previous and page.previous.categories.first == page.categories.first %}
             <div class="prev">
               <a href="{{ site.url }}{{ page.previous.url }}" class="btn" title="{{ page.previous.title }}">Previous</a>
@@ -88,6 +88,18 @@
               <span>{{ page.next.title }}</span>
             </div>
           {% endif %}
+        </nav><!-- /.pagination -->
+
+        <!-- pagination moved inside "entry-content" by Arghya, and to add navigation titles -->
+        <nav class="pagination" role="navigation">
+            <div class="prev">
+              <a href="{{ site.url }}{{ page.previous.url }}" class="btn" title="{{ page.previous.title }}">Previous</a>
+              <span><strong>{{ page.previous.categories.first | replace:'articles','tech' | upcase }}:</strong> {{ page.previous.title }}</span>
+            </div>
+            <div class="next">
+              <a href="{{ site.url }}{{ page.next.url }}" class="btn" title="{{ page.next.title }}">Next</a>
+              <span><strong>{{ page.next.categories.first | replace:'articles','tech' | upcase }}:</strong> {{ page.next.title }}</span>
+            </div>
         </nav><!-- /.pagination -->
       </div><!-- /.entry-content -->
     </div><!-- /.entry-wrapper -->
