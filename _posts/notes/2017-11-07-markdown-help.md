@@ -115,6 +115,62 @@ public class CoolClass
 
 For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
 
+### Some notes on pagination
+
+See code
+
+<!--original pagination //moved above by Arghya
+    <nav class="pagination" role="navigation">
+      {% if page.previous %}
+        <a href="{{ site.url }}{{ page.previous.url }}" class="btn" title="{{ page.previous.title }}">Previous</a>
+      {% endif %}
+      {% if page.next %}
+        <a href="{{ site.url }}{{ page.next.url }}" class="btn" title="{{ page.next.title }}">Next</a>
+      {% endif %}
+    </nav><!-- /.pagination -->
+
+<!-- BUGGY pagination, that retricts to same category, but cannot skip over
+<nav class="pagination" role="navigation">
+    {% if page.previous and page.previous.categories.first == page.categories.first %}
+    <div class="prev">
+        <a href="{{ site.url }}{{ page.previous.url }}" class="btn" title="{{ page.previous.title }}">Previous</a>
+        <span>{{ page.previous.title }}</span>
+    </div>
+    {% endif %}
+    {% if page.next and page.next.categories.first == page.categories.first %}
+    <div class="next">
+        <a href="{{ site.url }}{{ page.next.url }}" class="btn" title="{{ page.next.title }}">Next</a>
+        <span>{{ page.next.title }}</span>
+    </div>
+    {% endif %}
+</nav><!-- /.pagination -->
+
+<!--Future fix, when the cuurent one fails to skip over post from another category-->
+<!-- https://github.com/jekyll/jekyll/issues/260 -->
+{% if page.categories %}
+{% assign category = page.categories[0] %}
+{% assign posts = site.categories[category] %}
+{% for post in posts %}
+    {% if post.url == page.url %}
+    {% assign post_index0 = forloop.index0 %}
+    {% assign post_index1 = forloop.index %}
+    {% endif %}
+{% endfor %}
+{% for post in posts %}
+    {% if post_index0 == forloop.index %}
+    {% assign next_post = post %}
+    {% endif %}
+    {% if post_index1 == forloop.index0 %}
+    {% assign prev_post = post %}
+    {% endif %}
+{% endfor %}
+{% endif %}
+
+<nav class="pagination" role="navigation">
+    <a href="{{ site.url }}{{ prev_post.url }}" class="btn" title="{{ prev_post.title }}">Previous</a>
+    <a href="{{ site.url }}{{ next_post.url }}" class="btn" title="{{ next_post.title }}">Next</a>
+</nav>
+
 ### Jekyll Themes
 
 Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/chakrabar/chakrabar.github.io/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
