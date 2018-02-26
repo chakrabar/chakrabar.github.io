@@ -4,9 +4,7 @@ title: "Hello there!"
 excerpt: "Technical & non-technical titbits of everyday life"
 ---
 
-### Welcome to the technical & everyday-life notes from AC
-
-Here I talk about some daily tips & trick of programming. Mostly I maintain some random developer notes. Sometimes I also write about non-technical normal everyday stuffs.
+Welcome to the technical & everyday-life notes from AC. Here I talk about some daily tips & trick of programming. Mostly I maintain some random developer notes. Sometimes I also write about non-technical normal everyday stuffs.
 
 If you want to see my profile or get in touch, go to the [About](/about) section.
 
@@ -22,7 +20,7 @@ Check my tech-shots, or technical articles on the [Tech](/articles/) menu.
 
 ----
 
-### Some of the recent posts. See more in Tech/Blog menu.
+#### Some of the recent posts. See more in Tech/Blog menu.
 
 <!--site.posts >> site.categories.articles-->
 <!--
