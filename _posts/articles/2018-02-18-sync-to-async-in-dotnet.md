@@ -10,6 +10,8 @@ share: true
 modified: 2018-02-23T22:11:53-04:00
 ---
 
+Here, we'll look at how we can make our .NET application more efficient and better responsive to users.
+
 #### [1] The problem
 
 Before going into solution and available options, lets understand the problem taht we are trying to address. In general form, this is the problem
@@ -17,6 +19,14 @@ Before going into solution and available options, lets understand the problem ta
 > I have some work to be done. But that is a slow process and takes time. How do I do other stuffs while that slow operation is running, rather than just sit idle and wait for it to complete.
 
 With very basic idea of `Operating systems` and `Programming`, we can kind of guess that somehow we have to run the operation on a different thread while keeping the original thread free. Well, in any of the modern tech platforms, we do use that technique to do stuffs `asynchronously`. Asynchronous, in general terms, means multiple things can run without depending on or waiting for each other, and can collaborate later if required.
+
+----
+
+There are three different but very similar and related terms in computing: `concurrent`, `parallel` & `asynchronous`. **Concurrent** basically means multiple works being done in overlapping time (e.g. multiple threads sharing same processor core), which may or may not be parallel. **Parallel** specifically means multiple things are being done actually at the same point of time (e.g. threads in different processor cores running simultaniously). **Asynchronous** means some operation is started out-of-sync in time, which will run on it's own and notify when completed. (Which may involve threads running in the same or different core, or even in different systems!)
+
+The concepts discussed below may apply to all three. Here, we'll use the term `asynchronous` only as that'll be the our main intention.
+
+----
 
 #### [2] Available options in .NET
 
@@ -26,7 +36,7 @@ In .NET (framework version 4.0 and above) we have three high level options
 2. Do it with a `Task`
 3. Use `async-await`
 
-We'll discuss async-await later, which is a much newer concept. Before making our choice, let's understand what are threads and tasks.
+We'll discuss async-await later, which is a comperatively newer concept. Before making our choice, let's understand what are threads and tasks.
 
 A **`thread`** is a low level construct and roughly represents an actual OS-level thread.
 {: .notice--info}
@@ -35,13 +45,14 @@ A **`task`** is a .NET abstraction that basically represents _a promise_ of a se
 
 A `Task<T>` is nothing but a task that comes with _promise_ of returning a value of type `T` when the task completes.
 
-**Note:** Just using a `Task` in code does not mean there are separate threads involved. Generally when using `Task.Run()` or similar constructs, a task runs on a separate thread (mostly a managed thread-pool one), managed by the .NET CLR. But, that depends on the actual implementation of the task.
+**Note:** Just using a `Task` in code does not mean there are separate _new_ threads involved. Generally when using `Task.Run()` or similar constructs, a task runs on a separate thread (mostly a managed thread-pool one), managed by the .NET CLR. But, that depends on the actual implementation of the task.
 
 #### [3] Running some code on a separate thread
 
 First we'll look at a very basic example of running a simple code on a new thread.
 
 ```cs
+//using System.Threading;
 public void SlowMethod()
 {
     Thread.Sleep(1500);
@@ -52,6 +63,7 @@ public void DoWorkOnThread()
 {
     var thread = new Thread(SlowMethod);
     thread.Start(); //starts work on new thread
+    //continue working on current thread
 }
 ```
 
@@ -66,6 +78,7 @@ public void ValueReturningThread()
         result = "Thread work completed";
     });
     thread.Start();
+    //do other stuffs
     thread.Join(); //wait for thread to terminate
     Console.WriteLine(result);
 }
@@ -75,11 +88,11 @@ In our example we have a method `SlowMethod()` that takes time. So, we simply cr
 
 It works, and a `Thread` being a very raw and low level thing, gives the maximum flexibility to control execution and manage some attached resources etc. Also the work on the newly created thread starts immediately. But, creating them in code might cause some serious issues as well. 
 
-* Creating a new thread is pretty resource intensive. Starting & stopping threads take time (on the other hand, ThreadPool threads are not created or terminated once done. Rather they are kept to be re-used again)
+* Creating a new thread is pretty resource intensive. Creating, starting & stopping threads take time & consumes resources (on the other hand, ThreadPool threads are not created or terminated once done. Rather they are kept to be re-used again)
 * If we keep creating huge number of new threads it might become very difficult for the system to handle. If there are much more threads than CPU cores, the OS needs to do frequent context switches, which is heavy. That can result in the application hanging or even the whole system crashing
-* Managing and synchronizing them can be pretty complex, from correct coding and actual execution stand point
+* Managing and synchronizing them can be pretty complex, from correct coding to actual execution stand point
 
-So, for most purposes in modern .NET programming, it is reccomended to use `Task` instead (which does not necessarily mean a new threads).
+So, for most purposes in modern .NET programming, it is reccomended to use `Task` instead (which does not necessarily mean "new" threads). Tasks also inherently support multi-core.
 
 #### [4] Synchronous to Asynchronous with Task
 
@@ -104,6 +117,8 @@ Task.Factory.StartNew(() => SomeSlowMethod(),
 Let's see a simple example of creating a task out of a simple method. This was we can run any code asynchronously.
 
 ```cs
+//System.Threading.Tasks
+
 //a dummy method that simply wastes 1.5 sec before doing work
 public string SlowMethod()
 {
@@ -120,7 +135,10 @@ public void DoAsyncWorkMethod()
 ```
 
 **Note:** Doing a `new Thread(...).Start()` actually creates and starts a new `Thread`. But doing a `Task.Run(...)` simply _queues_ the work on `ThreadPool`. Then ThreadPool manages the work, assigns the work to a thread from the pool when available.
-{: .notice--success}
+{: .notice--info}
+
+**Note:** Important thing to remember here is, the way `Task` and modern `ThreadPool` are created, they are pretty much _multi-core aware_. That means, if there are multiple CPU available in the system, tasks will try to utilize them in an efficient way.
+{: .notice--info}
 
 #### [5] Starting new Task choices
 
@@ -135,7 +153,7 @@ They all seem to do pretty much the same thing! Which one to use?
 **TL;DR** Stick to `Task.Run()` unless you need specific customization like `LongRunning` process or a non-default `TaskScheduler` or synchronizing child tasks with parent etc. If those are required, use `Task.Factory.StartNew()`.
 {: .notice--success}
 
-First, let's understand one thing, **A Task only executes once** and should be scheduled only once. This needs synchronization to avoid race condition where multiple threads try to start a task (think `new Task()`). Now, as `Task.Factory.StartNew` first starts the task then returns a refernce, this is safe and saves the synchronization cost (internal to CLR). The reason is, once a task has been startded, any call to that task again to `Start()` will simply fail. So, use `Task.Factory.StartNew()` over `new Task().Start()`.
+First, let's understand one thing, **a Task only executes once** and should be scheduled only once. This needs synchronization to avoid race condition where multiple threads try to start a task (think `new Task()`). Now, as `Task.Factory.StartNew` first starts the task then returns a refernce, this is safe and saves the synchronization cost (internal to CLR). The reason is, once a task has been startded, any call to that task again to `Start()` will simply fail. So, use `Task.Factory.StartNew()` over `new Task().Start()`.
 
 There can some cases though, where creating new Task might be beneficial. One example being, need to derive from the `Task` type. [This](https://blogs.msdn.microsoft.com/pfxteam/2010/06/13/task-factory-startnew-vs-new-task-start/) MSDN article explains with great examples.
 
@@ -143,16 +161,16 @@ Now,
 
 ```cs
 Task.Run(SomeAction);
-//is exactly equivalent to
+//is equivalent to
 Task.Factory.StartNew(SomeAction,
     CancellationToken.None,
     TaskCreationOptions.DenyChildAttach,
     TaskScheduler.Default);
 ```
 
-So `Task.Run()` is simply a short-hand with default parameters that works fine in most of the cases when we simply want to off load some activity to a background (thread-pool) thread. If you need specific customization like `LongRunning` process or a non-default `TaskScheduler` or synchronizing child tasks with parent etc. then go for `Task.Factory.StartNew()`. Ther is another very interesting article in MSDN [here](https://blogs.msdn.microsoft.com/pfxteam/2011/10/24/task-run-vs-task-factory-startnew/) on this topic and how that helped the newer keyword `await`.
+So `Task.Run()` is simply a short-hand with default parameters that works fine in most of the cases when we simply want to off load some activity to a background (thread-pool) thread. If you need specific customization like `LongRunning` process or a non-default `TaskScheduler` or synchronizing child tasks with parent etc. then go for `Task.Factory.StartNew()`. Ther is another very interesting [MSDN article](https://blogs.msdn.microsoft.com/pfxteam/2011/10/24/task-run-vs-task-factory-startnew/) that explains this topic and how this paved way for the newer keyword `await`.
 
-One <u>interesting thing to note is</u>, `Task.Factory.StartNew()` and `Task.Run()` can both accept a `Func<Task<T>>`. And in that case, `Task.Factory.StartNew()` returns a `Task<Task<T>>` whereas the `Task.Run()` returns a `Task<T>`! This is `Task.Run()` internally implements `.Unwrap()` extension method internally!
+One <u>interesting thing to note</u> is, `Task.Factory.StartNew()` and `Task.Run()` can both accept a `Func<Task<T>>`. And in that case, `Task.Factory.StartNew()` returns a `Task<Task<T>>` whereas the `Task.Run()` returns a `Task<T>`! This is `Task.Run()` internally implements `.Unwrap()` extension method internally! So, the `Run()` method is also easier to use.
 
 ```cs
 var outTask1 = Task.Factory.StartNew(() => {
@@ -187,7 +205,7 @@ public void DoAsyncWorkMethod()
     var task = Task.Run(() => SlowMethod());
     task.ContinueWith(t => UpdateInDB(t.Result));
     //the `t` argument is same as `task`
-    //so execution will continue here normally
+    //method execution will continue here normally
     //when task completed, it'll be updated in DB
 }
 ```
@@ -210,7 +228,7 @@ public void DoAsyncWorkMethod()
 
 How do we handle `Exception` in methods that do asynchronous work? Do we simply wrap them in `try-catch` to handle them? Well, that doesn't work. 
 
-If an snchronous method throws exception, that is being run on another thread, our current thread cannot simply get them. That exception doesn't effect the current thread directly, but the application actually failes internally to do what it was supposed to do. Very unreliable and bad, right? It fails, but user doesn't get to know! 
+If an snchronous method throws exception, that is being run on another thread, our current thread doesn't get to know about that. That exception doesn't effect the current thread directly, but the application actually failes internally to do what it was supposed to do. Very unreliable and bad, right? It fails, but user doesn't get to know! 
 
 So, the following method `DoAsyncWork_2()` **DOES NOT work as expected, and it cannot catch the exception** while the program failed internally! Execution never reaches the `catch` block.
 
@@ -223,11 +241,13 @@ public string SlowBuggyMethod()
 
 public void DoAsyncWork_2()
 {
+    //thread_1
     try
     {
-        Task.Run(() => SlowBuggyMethod());
+        Task.Run(() => SlowBuggyMethod()); //will run on thread_2
+        //thread_1 continues
     }
-    catch (Exception)
+    catch (Exception) //catches exception on thread_1
     {
         Console.WriteLine("Exception caught in DoAsyncWork_2");
     }            
@@ -275,10 +295,10 @@ public void DoAsyncWork_5()
 }
 ```
 
-**Note:** The exception returned by `task.Exception` is of type `AggregateException`, that actually wraps one or more errors that occur during the task execution. It has a collection of actual exceptions in `InnerExceptions` property. If we know there can be just one exception (we are very sure what all things that code is doing), we can simply do task.Exception.InnerExceptions[0].Message;
+**Note:** The exception returned by `task.Exception` is of type `AggregateException`, that actually wraps one or more errors that occur during the task execution. It has a collection of actual exceptions in `InnerExceptions` property. If we know there can be just one exception (we are very sure what all things that code is doing), we can simply use `InnerExceptions[0]`.
 {: .notice--info}
 
-In the `DoAsyncWork_5()` example we use a `task.Wait()` call. This actually halts the current thread and waits for the task to complete. Just like above (sample) code, if we do a `Wait()` immediately after running a task, that'll basically behave as a synchronous work. Ideally, you'll do other stuffs before waiting for the task. Also, if the task throws exception, that can be cauth on the `Wait()`. To wait for multiple tasks to complete, use `WaitAll(tasks)`.
+In the `DoAsyncWork_5()` example we use a `task.Wait()` call. This actually halts the current thread and waits for the task to complete. Just like above (sample) code, if we do a `Wait()` immediately after running a task, that'll basically behave as a synchronous work. Ideally, you'll do other stuffs before waiting for the task. Also, if the task throws exception, that can be caught on the `Wait()`. To wait for multiple tasks to complete, use `WaitAll(tasks)`.
 
 #### [8] Tasks & threads
 
@@ -374,7 +394,7 @@ catch (AggregateException ae)
 }
 ```
 
-See the [Basic task cancellation demo in C#](/notes/task-cancellation/) post for a complete runnable code demo of a simple `Console` application that runs a slow process asynchronously, and gives the user an option to cancel the operation.
+See the [Basic task cancellation demo in C#](/notes/task-cancellation/) for a complete runnable code demo of a simple `Console` application that runs a slow process asynchronously, and gives the user an option to cancel the operation.
 
 #### [10] Bundling of Tasks
 
@@ -383,7 +403,50 @@ Sometimes we create multiple tasks to do multiple things, then we need to monito
 * `Task.WhenAll(Task[])` -> `Task`
 * `Task.WhenAny(Task[])` -> `Task<Task>`
 
-They return a waitable `Task` that completes as per chosen condition. `WhenAll()` completes all the tasks are complete while `WhenAny()` returns when any of the tasks are complete and gives back the completed task. 
+They return a waitable `Task` that completes as per chosen condition. `WhenAll()` completes when all the tasks are complete while `WhenAny()` returns when any of the tasks are complete and gives back the completed task. 
+
+**<u>Parallel - For, Foreach, Invoke, LINQ</u>**
+
+If you just want to do some work in _parallel_, you can use the static methods from `Parallel` class or the parallel `Linq` extension `AsParallel()`. They all let's you run some code - which the CLR will try to run in parallel. Internally they use `Tasks` in optimized way. So, they can pretty much <u>run in parallel in different CPU cores</u> if available.
+
+Some simple examples
+
+```cs
+//A summy method that takes a second to write the value
+public void SlowTyper(int value)
+{
+    Thread.Sleep(1000);
+    Console.WriteLine($"Value: {value}");
+}
+
+//demo methods
+public void ParallelFor()
+{
+    var k = Parallel.For(1, 6,
+        (idx) => SlowTyper(idx));
+}
+
+public void ParallelForEach()
+{
+    Parallel.ForEach(Enumerable.Range(1, 5),
+        (idx) => SlowTyper(idx));
+}
+
+public void ParallelInvoke()
+{
+    Parallel.Invoke(() => SlowTyper(1), () => SlowTyper(2),
+        () => SlowTyper(3), () => SlowTyper(4), () => SlowTyper(5));
+}
+
+public void PLinq()
+{
+    Enumerable.Range(1, 5)
+        .AsParallel()
+        .ForAll(i => SlowTyper(i));
+}
+```
+
+They all generally take much lesser time that general sequential approach (e.g. just above 1 second rather than 5 seconds).
 
 ----
 
