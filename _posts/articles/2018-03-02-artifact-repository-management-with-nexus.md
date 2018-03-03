@@ -1,7 +1,7 @@
 ---
 layout: post
-title: ".NET artifacts repository management with Nexus"
-excerpt: "Setup & configuration of Sonatype Nexus as a artifacts repository manager for .NET projects"
+title: "Nexus artifacts repository manager for .NET with NuGet"
+excerpt: "Setup & configuration of Sonatype Nexus from scratch, as an artifacts repository manager for .NET projects"
 date: 2018-03-02
 tags: [tech, artifact, repository, nexus, package, nuget, dotnet]
 categories: articles
@@ -9,11 +9,11 @@ comments: true
 share: true
 ---
 
-An artifacts what?
+_**"An artifacts what?"**_
 
 For those not familiar with the very popular _"artifact repositories"_ used all over the development community, it might be a pretty unsual thing. But they have been used in many open source and commercial software projects for many years - for a reason. Probably not super popular with the .NET community (_well, we have NuGet, don't we?_), but they are being used increasingly in many .NET projects. And the popular ones now come with .NET support by default.
 
-So what is an **artifacts repository manager**. Going by the standard definition
+So what is an **artifacts repository manager**? Going by the standard definition
 
 > An artifacts repository is basically an application server that can store software artifacts in an organised and versioned manner, and that can be used for software projects as and when required. They are generally wired into application IDEs and build systems to store or fetch project artifacts (binaries, metadata etc.)
 
@@ -36,7 +36,7 @@ Nexus can run on all major OS (Windows, Linux, Mac), comes with greate compatibi
 Alternatives? There are some popular alternatives as well
 
 * [JFrog Artifactory](https://jfrog.com/artifactory/)
-* [Proget](https://inedo.com/proget)
+* [Proget](https://inedo.com/proget) etc.
 * For .NET projects, a local automated [NuGet server](https://www.nuget.org/) can also be used, but they do not come with the bunch of features and flexibility of standard artifact repositories
 
 
@@ -61,6 +61,7 @@ These coordinates generally translate into a URI to point to the binaries, somet
 
 Nexus can have many user with different access rights. The default initial user is admin. To change or add new users, sign in with default admin credentials as `admin/admin123`. Now you can add new users, grant access to LDAP etc.
 
+
 #### Installation
 
 Since we'll be using Nexus for .NET project, we'll install it on a Windows system (becuase most .NET projects are still built on Windows systems. Not because this is the only system I have access to on day-to-day basis). To install on a different system, follow the [official installation guide](https://help.sonatype.com/display/NXRM3/Installation). 
@@ -78,6 +79,8 @@ I'm using the current latest OSS version `3.9.0-01`. Follow this step-by-step in
 * If it starts successfully, it'll display at the end
     * **Started Sonatype Nexus OSS 3.9.0-01**
 
+![Image](/images/posts/nexus/nexus-started.png)
+
 **Note:** If it fails with an error like _"address already in use"_, that means the default URI `http://localhost:8081` is being used by some other application. So, we need to change the port.
 {: .notice--info}
 
@@ -90,33 +93,48 @@ Once started successfully, the user interface can be accessed at http://localhos
 
 ![Image](/images/posts/nexus/nexus-oss-3.9.0.01.png)
 
-If you log in with the admin user, you'll see additional option. The settings menu is on top with the gear sign.
+If you log in with the admin user, you'll see additional option. The settings menu is on top with the gear icon.
 
 ![Image](/images/posts/nexus/snapshot-delete-task.png)
 
 **Note:** For a production deployment, Nexus needs to be installed as a service, so that it can auto-restart and do other stuffs for more fail-safe operation. See instructions [here](https://books.sonatype.com/nexus-book/3.0/reference/install.html#service-windows).
+{: .notice--info}
 
 
 #### Nexus and NuGet
 
-* Proxy
-* Hosted
+Wait wait, we do have `NuGet` which does the job of package management, then why do we need a fancy _"artifacts repository manager?"_ Well, the global NuGet server does it's job , but if we want to manage our own packages (for versioning, distribution and reuse etc.) we need to setup a local network NuGet server. While that is pretty doable, using a `Nexus` server comes with bunch of benefits...
 
-Benefits
-
-1. Host for own (personal/team/org) NuGet packages
-2. One single source (nuget-group) or URI for local & global ([nuget.org](https://www.nuget.org/)) packages
-3. Less network & storage use for nuget.org packages (packages are downloaded only once and cached)
+1. Host for own (personal/team/org) NuGet packages (pretty much like a local NuGet server)
+2. One single source (see `nuget-group` below) or URI for all your local & global ([nuget.org](https://www.nuget.org/)) packages
+3. Less network & storage use for nuget.org packages (in Nexus, packages are downloaded only once and cached. If the same package is needed again, the cached package is served & it does not download them from source again)
 4. Custom or LDAP based access control
+5. Manage other packages like `npm`, `bower` etc. with the same infrastructure and standards
+6. Store and manage even raw binaries (e.g. any *.dll)
+7. All features of Nexus like monitoring, logging, reporting, security, custom tasks etc.
+
+Nexus installation comes with preset NuGet settings. There are three repositories already setup for three different purposes, more can be added if required (To start with, I'm good with the preconfigured ones). 
+
+* Proxy - To proxy the nuget.org global repository. See `nuget.org-proxy` in below image of default instance of Nexus
+* Hosted - To host own packages, this works like a local NuGet server. `nuget-hosted`
+* Group - A group to easily access multiple repositories, from a single source. The default `nuget-group` groups both the proxy and host above, and it can be configured to add more repositories.
+
+![Image](/images/posts/nexus/initial.png)
+
 
 #### Packaging NuGet libraries
 
-[.NET Package Repositories with NuGet - book](http://books.sonatype.com/nexus-book/3.0/reference/nuget.html)
+To have our own NuGet packages hosted in our Nexus server, we need to `package` our .NET libraries as NuGet and then `publish` them to the Nexus server.
 
-[Packaging and publishing your NuGet](https://docs.microsoft.com/en-gb/nuget/quickstart/create-and-publish-a-package-using-the-dotnet-cli)
+The packaging of custom NuGet packages doesn't have much to do with Nexus, they are the usual packaging process of NuGet as detailed in [Packaging and publishing your NuGet](https://docs.microsoft.com/en-gb/nuget/quickstart/create-and-publish-a-package-using-the-dotnet-cli) document. 
+
+Here we'll see a quick step-by-step process of packaging libraries as NuGet. The process basically involves creating a `nuspec` file that defines the package metadata, and calling NuGet tools to create the actual package in `nupkg` format.
+
+**Note:** I'm using a .NET Standard library with `dotnet cli` tools for the packaging. The process might be slightly different for creating .NET Framework libraries with NuGet console.
+{: .notice--info}
 
 * Create a new project or use an existing project (I used one of my existing `.NET Standard 2.0` class library project `LinqExtensions`)
-* Add required minimal metadata needed for creating `nuspec` (an `xml` metadata file that describes the `NuGet` package. See below) in the `LinqExtensions.csproj` project file (inside existing `PropertyGroup` node)
+* Add required minimal metadata needed for creating `nuspec` (an `xml` metadata file that describes the `NuGet` package. See below) in the `LinqExtensions.csproj` project file (inside existing `PropertyGroup` node). Alternatively a separate `nuspec` file can be created and linked.
 
 ```xml
 <PackageId>LinqExtensions</PackageId>
@@ -153,7 +171,21 @@ $ dotnet pack
 </package>
 ```
 
+
 #### Publishing NuGet libraries
+
+To host a NuGet package on server, we need to `publish` the local `nupkg` file to a NuGet enabled server (e.g. a network NuGet server or Nexus). Again, publishing to Nexus is not much different than standard NuGet server, only we need to setup the `NuGet API key`. The [NuGet chapter of the Nexus book](http://books.sonatype.com/nexus-book/3.0/reference/nuget.html) explains the process.
+
+First we need to get the API key. The key is unique to each user. Login to the Nexus web application, go to the user section and click on the left menu `NuGet API key`. See image below. remember, **do not share** your API key as that is the unique id given to you to verify with the Nexus server. (I've changed mine after taking the screensot. You have never seen my key!)
+
+![Image](/images/posts/nexus/nuget-api-key.png)
+
+**Note:** For the NuGet API key to work, first the admin needs to enable the _"NuGet API-Key Realm"_. To do that, go to Realms section in Security menu and add it to the active realms. See image below.
+{: .notice--warning}
+
+![Image](/images/posts/nexus/nuget-realm.png)
+
+Now, all you need to do is run `nuget push` command from the package folder with the key obtained above, to the repository source. We'll be pushing the package to our `nuget-hosted` repository.
 
 ```bash
 # command structure
@@ -166,10 +198,18 @@ And voila! Our `NuGet`  is now available on our `Nexus` manager
 
 ![Image](/images/posts/nexus/hosted-nuget.png)
 
+
 #### Integrating with Visual Studio
 
+Now that we have our artifacts as NuGet package on our Nexus repository manager, we can use it simply as NuGet source for development and build purposes. Here, we'll setup our Nexus repository as NuGet source for Visual Studio.
+
+Go to the Packagae Sources, and add a new source pointing to the `nuget-group` so that we can access the global nuget.org packages as well as our custom packages from the same source.
+
+1. Go to `VS` > `Tools` > `Options` > `NuGet Package Manager` > `Package Sources`
+2. Add a new source (the big bold green plus)
+3. Since it'll access the global packages as well, only this source would be enough for projects
+
 ```bash
-VS > Tools > Options > NuGet Package Manager > Package Sources
 # Give a meaningful name and the Nexus repository source
 Name: Nexus-nuget-group
 Source: http://localhost:9876/repository/nuget-group/
@@ -181,9 +221,10 @@ And now (along with nuget.org packages) my `LinqExtensions` package is also avai
 
 ![Image](/images/posts/nexus/my-nuget-found.png)
 
+
 #### References
 
-* [What is a artifact repository?](https://blog.sonatype.com/2009/04/what-is-a-repository) 
+* [What is artifact repository?](https://blog.sonatype.com/2009/04/what-is-a-repository) 
 * [Sonatype Nexus](https://www.sonatype.com/nexus-repository-sonatype)
 * [The Nexus book](https://books.sonatype.com/nexus-book/3.0/reference/install.html)
 * [Official installation guide](https://help.sonatype.com/display/NXRM3/Installation)
@@ -191,4 +232,4 @@ And now (along with nuget.org packages) my `LinqExtensions` package is also avai
 * [The user interface](https://help.sonatype.com/display/NXRM3/User+Interface)
 * [Admin and configuration](https://help.sonatype.com/display/NXRM3/Configuration)
 * [Install as service for production](https://books.sonatype.com/nexus-book/3.0/reference/install.html#service-windows)
-* [.NET Package Repositories with NuGet - site](https://help.sonatype.com/display/NXRM3/.NET+Package+Repositories+with+NuGet)
+* [.NET Package Repositories with NuGet](https://help.sonatype.com/display/NXRM3/.NET+Package+Repositories+with+NuGet)
