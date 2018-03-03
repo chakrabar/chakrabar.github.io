@@ -31,7 +31,7 @@ Put together, they help improve development, build and distribution of software 
 
 [Sonatype Nexus](https://www.sonatype.com/nexus-repository-sonatype) is one of the most popular artifacts repository managers available in market today. It was initially made popular with `Maven` projects for `Java`, but now they are used in almost all sort of software projects like `.NET`, `Ruby`, `Node`, `Python` etc. as well as any kind of raw binary files. `Nexus` has got an enterprise version as well as a free OSS version available to choose from.
 
-Nexus can run on all major OS (Windows, Linux, Mac), comes with greate compatibility with different tech stacks (Java, .NET, Ruby, Node, Python, Docker etc.) and has lot of useful features (grouped repositories, security, monitoring, reporting and many more).
+Nexus can run on all major OS (Windows, Linux, Mac), comes with greate compatibility with different tech stacks (Java, .NET, Ruby, Node, Python, Docker etc.) and has lot of useful features (grouped repositories, security, monitoring, reporting, automated mails and many more).
 
 Alternatives? There are some popular alternatives as well
 
@@ -100,6 +100,7 @@ If you log in with the admin user, you'll see additional option. The settings me
 **Note:** For a production deployment, Nexus needs to be installed as a service, so that it can auto-restart and do other stuffs for more fail-safe operation. See instructions [here](https://books.sonatype.com/nexus-book/3.0/reference/install.html#service-windows).
 {: .notice--info}
 
+Also, to get automated mail alerts, setup the SMTP server in settings.
 
 #### Nexus and NuGet
 
