@@ -9,7 +9,7 @@ comments: true
 share: true
 ---
 
-_**"An artifacts what?"**_
+_**"An artifacts what??!!!"**_
 
 For those not familiar with the very popular _"artifact repositories"_ used all over the development community, it might be a pretty unsual thing. But they have been used in many open source and commercial software projects for many years - for a reason. Probably not super popular with the .NET community (_well, we have NuGet, don't we?_), but they are being used increasingly in many .NET projects. And the popular ones now come with .NET support by default.
 
