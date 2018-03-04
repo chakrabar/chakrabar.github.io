@@ -22,7 +22,7 @@ In all software projects, we have to deal with bunch of artifacts like code bina
 So, it mainly does two things
 
 * Manage & distribute software artifacts (project binaries and more)
-* Proxy remote repositories (e.g. NuGet/Maven) to a local network server (optional tbh)
+* Proxy remote repositories (e.g. NuGet/Maven) to a local network server
 
 Put together, they help improve development, build and distribution of software systems.
 
