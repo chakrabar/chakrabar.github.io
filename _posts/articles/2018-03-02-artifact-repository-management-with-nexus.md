@@ -22,7 +22,7 @@ In all software projects, we have to deal with bunch of artifacts like code bina
 So, it mainly does two things
 
 * Manage & distribute software artifacts (project binaries and more)
-* Proxy remote repositories (e.g. NuGet/Maven) to a local/network server (optional tbh)
+* Proxy remote repositories (e.g. NuGet/Maven) to a local network server (optional tbh)
 
 Put together, they help improve development, build and distribution of software systems.
 
@@ -69,11 +69,11 @@ Since we'll be using Nexus for .NET project, we'll install it on a Windows syste
 I'm using the current latest OSS version `3.9.0-01`. Follow this step-by-step instructions
 
 * Download the correct version [from here](https://www.sonatype.com/download-oss-sonatype)
-* Extract to `C:/Nexus` (or any folder of choice with access). This extracted folders are basically the Nexus application.
+* Extract to `C:/Nexus` (or any directory of choice with access). This extracted directorys are basically the Nexus application.
 * It'll have two sub [directories](https://help.sonatype.com/display/NXRM3/Directories)
 	* The installation directory `nexus-3.9.0-01` (conventionally `$install-dir`)
 	* The data directory `sonatype-work` (conventionally `$data-dir`)
-* In command prompt, go to folder  $install-dir\nexus-3.9.0-01\bin
+* In command prompt, go to directory  `$install-dir\bin`
 * Run command `nexus.exe /run`
 	* It will show all the log outputs. 
 * If it starts successfully, it'll display at the end
@@ -104,7 +104,11 @@ Also, to get automated mail alerts, setup the SMTP server in settings.
 
 #### Nexus and NuGet
 
-Wait wait, we do have `NuGet` which does the job of package management, then why do we need a fancy _"artifacts repository manager?"_ Well, the global NuGet server does it's job , but if we want to manage our own packages (for versioning, distribution and reuse etc.) we need to setup a local network NuGet server. While that is pretty doable, using a `Nexus` server comes with bunch of benefits...
+Wait wait, we do have `NuGet` which does the job of package management, then why do we need a fancy _"artifacts repository manager?"_ 
+
+Well, the global NuGet server does it's job , but if we want to manage our own packages (for versioning, distribution and reuse etc.) we need to setup a local network NuGet server. While that is pretty doable, wouldn't it be great if you could have just one server infrastructure to hold & manage all (local & global) artifacts for all your development teams (think Maven, NuGet, npm, bower, raw binaries etc.) with additional benefits like monitoring, house keeping, security etc. If your answer is yes, Nexus is there to help you out. 
+
+Using a `Nexus` server comes with bunch of benefits...
 
 1. Host for own (personal/team/org) NuGet packages (pretty much like a local NuGet server)
 2. One single source (see `nuget-group` below) or URI for all your local & global ([nuget.org](https://www.nuget.org/)) packages
@@ -112,7 +116,7 @@ Wait wait, we do have `NuGet` which does the job of package management, then why
 4. Custom or LDAP based access control
 5. Manage other packages like `npm`, `bower` etc. with the same infrastructure and standards
 6. Store and manage even raw binaries (e.g. any *.dll)
-7. All features of Nexus like monitoring, logging, reporting, security, custom tasks etc.
+7. All other features of Nexus like monitoring, logging, reporting, security, custom tasks etc.
 
 Nexus installation comes with preset NuGet settings. There are three repositories already setup for three different purposes, more can be added if required (To start with, I'm good with the preconfigured ones). 
 
@@ -144,7 +148,7 @@ Here we'll see a quick step-by-step process of packaging libraries as NuGet. The
 <Company>Arghya C</Company>
 ```
 
-* Run the `pack` [dotnet cli](https://docs.microsoft.com/en-us/dotnet/core/tools/?tabs=netcore2x) command **from the project folder**
+* Run the `pack` [dotnet cli](https://docs.microsoft.com/en-us/dotnet/core/tools/?tabs=netcore2x) command **from the project directory**
 
 ```bash
 $ dotnet pack
@@ -177,7 +181,7 @@ $ dotnet pack
 
 To host a NuGet package on server, we need to `publish` the local `nupkg` file to a NuGet enabled server (e.g. a network NuGet server or Nexus). Again, publishing to Nexus is not much different than standard NuGet server, only we need to setup the `NuGet API key`. The [NuGet chapter of the Nexus book](http://books.sonatype.com/nexus-book/3.0/reference/nuget.html) explains the process.
 
-First we need to get the API key. The key is unique to each user. Login to the Nexus web application, go to the user section and click on the left menu `NuGet API key`. See image below. remember, **do not share** your API key as that is the unique id given to you to verify with the Nexus server. (I've changed mine after taking the screensot. You have never seen my key!)
+First we need to get the API key. The key is unique to each user. Login to the Nexus web application, go to the user section and click on the left menu `NuGet API key`. See image below. Remember, **do not share** your API key as that is the unique id given to you to verify with the Nexus server. (I've changed mine after taking the screensot. You have never seen my key!)
 
 ![Image](/images/posts/nexus/nuget-api-key.png)
 
@@ -186,7 +190,7 @@ First we need to get the API key. The key is unique to each user. Login to the N
 
 ![Image](/images/posts/nexus/nuget-realm.png)
 
-Now, all you need to do is run `nuget push` command from the package folder with the key obtained above, to the repository source. We'll be pushing the package to our `nuget-hosted` repository.
+Now, all you need to do is run `nuget push` command from the package directory with the key obtained above, to the repository source. We'll be pushing the package to our `nuget-hosted` repository.
 
 ```bash
 # command structure
