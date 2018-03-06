@@ -1,7 +1,7 @@
 ---
 layout: post
-title: "Nexus artifacts repository manager for .NET with NuGet"
-excerpt: "Setup & configuration of Sonatype Nexus from scratch, as an artifacts repository manager for .NET projects"
+title: "Nexus artifact repository manager for .NET"
+excerpt: "Setup & configuration of Sonatype Nexus from scratch, as an artifact repository manager for .NET projects, with NuGet"
 date: 2018-03-02
 tags: [tech, artifacts, nexus, package, nuget, dotnet, repository]
 categories: articles
@@ -9,15 +9,15 @@ comments: true
 share: true
 ---
 
-_**"An artifacts what??!!!"**_
+_**"An artifact what??!!!"**_
 
 For those not familiar with the very popular _"artifact repositories"_ used all over the development community, it might be a pretty unsual thing. But they have been used in many open source and commercial software projects for many years - for a reason. Probably not super popular with the .NET community (_well, we have NuGet, don't we?_), but they are being used increasingly in many .NET projects. And the popular ones now come with .NET support by default.
 
-So what is an **artifacts repository manager**? Going by the standard definition
+So what is an **artifact repository manager**? Going by the standard definition
 
-> An artifacts repository is basically an application server that can store software artifacts in an organised and versioned manner, and that can be used for software projects as and when required. They are generally wired into application IDEs and build systems to store or fetch project artifacts (binaries, metadata etc.)
+> An artifact repository manager is basically an application server that can store software artifacts in an organised and versioned manner, and that can be used for software projects as and when required. They are generally wired into application IDEs and build systems to store or fetch project artifacts (binaries, metadata etc.)
 
-In all software projects, we have to deal with bunch of artifacts like code binaries, metadata files, configurations, xml files etc. In projects with size moderate+ they can become a handful with versions, inter dependencies and all. It can make everyday development, sharing code, building software pretty cumbursome. Here an _artifacts repository manager_ comes to rescue. It simple _manages repositories of artifacts_, where artifacts can be in-house or third party (e.g. NuGet packages for .NET projects).
+In all software projects, we have to deal with bunch of artifacts like code binaries, metadata files, configurations, xml files etc. In projects with size moderate+ they can become a handful with versions, inter dependencies and all. It can make everyday development, sharing code, building software pretty cumbursome. Here an _artifact repository manager_ comes to rescue. It simple _manages repositories of artifacts_, where artifacts can be in-house or third party (e.g. NuGet packages for .NET projects).
 
 So, it mainly does two things
 
@@ -26,10 +26,9 @@ So, it mainly does two things
 
 Put together, they help improve development, build and distribution of software systems.
 
+#### Sonatype Nexus artifact repository manager
 
-#### Sonatype Nexus artifacts repository manager
-
-[Sonatype Nexus](https://www.sonatype.com/nexus-repository-sonatype) is one of the most popular artifacts repository managers available in market today. It was initially made popular with `Maven` projects for `Java`, but now they are used in almost all sort of software projects like `.NET`, `Ruby`, `Node`, `Python` etc. as well as any kind of raw binary files. `Nexus` has got an enterprise version as well as a free OSS version available to choose from.
+[Sonatype Nexus](https://www.sonatype.com/nexus-repository-sonatype) is one of the most popular artifact repository managers available in market today. It was initially made popular with `Maven` projects for `Java`, but now they are used in almost all sort of software projects like `.NET`, `Ruby`, `Node`, `Python` etc. as well as any kind of raw binary files. `Nexus` has got an enterprise version as well as a free OSS version available to choose from.
 
 Nexus can run on all major OS (Windows, Linux, Mac), comes with greate compatibility with different tech stacks (Java, .NET, Ruby, Node, Python, Docker etc.) and has lot of useful features (grouped repositories, security, monitoring, reporting, automated mails and many more).
 
@@ -37,8 +36,8 @@ Alternatives? There are some popular alternatives as well
 
 * [JFrog Artifactory](https://jfrog.com/artifactory/)
 * [Proget](https://inedo.com/proget) etc.
+* [TFS](https://www.visualstudio.com/tfs/)
 * For .NET projects, a local automated [NuGet server](https://www.nuget.org/) can also be used, but they do not come with the bunch of features and flexibility of standard artifact repositories
-
 
 #### Nexus basic concepts & terminology
 
@@ -61,7 +60,6 @@ These coordinates generally translate into a URI to point to the binaries, somet
 
 Nexus can have many user with different access rights. The default initial user is admin. To change or add new users, sign in with default admin credentials as `admin/admin123`. Now you can add new users, grant access to LDAP etc.
 
-
 #### Installation
 
 Since we'll be using Nexus for .NET project, we'll install it on a Windows system (becuase most .NET projects are still built on Windows systems. Not because this is the only system I have access to on day-to-day basis). To install on a different system, follow the [official installation guide](https://help.sonatype.com/display/NXRM3/Installation). 
@@ -78,8 +76,12 @@ I'm using the current latest OSS version `3.9.0-01`. Follow this step-by-step in
 	* It will show all the log outputs. 
 * If it starts successfully, it'll display at the end
     * **Started Sonatype Nexus OSS 3.9.0-01**
+* Press `Ctrl + C` to stop the server
 
 ![Image](/images/posts/nexus/nexus-started.png)
+
+**Tip:** If you want to be able to run the `nexus.exe` commans from any directory, add the bin path to system environment variables. My Computer -> right-click -> Properties -> Advanced system settings -> Advanced tab -> Environment Variables -> edit the `PATH` variable and add `$install-dir\bin` path (e.g. _"C:\Nexus\nexus-3.9.0-01\bin"_).
+{: .notice--success}
 
 **Note:** If it fails with an error like _"address already in use"_, that means the default URI `http://localhost:8081` is being used by some other application. So, we need to change the port.
 {: .notice--info}
@@ -104,7 +106,7 @@ Also, to get automated mail alerts, setup the SMTP server in settings.
 
 #### Nexus and NuGet
 
-Wait wait, we do have `NuGet` which does the job of package management, then why do we need a fancy _"artifacts repository manager?"_ 
+Wait wait, we do have `NuGet` which does the job of package management, then why do we need a fancy _"artifact repository manager?"_ 
 
 Well, the global NuGet server does it's job , but if we want to manage our own packages (for versioning, distribution and reuse etc.) we need to setup a local network NuGet server. While that is pretty doable, wouldn't it be great if you could have just one server infrastructure to hold & manage all (local & global) artifacts for all your development teams (think Maven, NuGet, npm, bower, raw binaries etc.) with additional benefits like monitoring, house keeping, security etc. If your answer is yes, Nexus is there to help you out. 
 
@@ -126,7 +128,6 @@ Nexus installation comes with preset NuGet settings. There are three repositorie
 
 ![Image](/images/posts/nexus/initial.png)
 
-
 #### Packaging NuGet libraries
 
 To have our own NuGet packages hosted in our Nexus server, we need to `package` our .NET libraries as NuGet and then `publish` them to the Nexus server.
@@ -135,7 +136,7 @@ The packaging of custom NuGet packages doesn't have much to do with Nexus, they 
 
 Here we'll see a quick step-by-step process of packaging libraries as NuGet. The process basically involves creating a `nuspec` file that defines the package metadata, and calling NuGet tools to create the actual package in `nupkg` format.
 
-**Note:** I'm using a .NET Standard library with `dotnet cli` tools for the packaging. The process might be slightly different for creating .NET Framework libraries with NuGet console.
+**Note:** I'm using a .NET Standard library with `dotnet cli` tools for the packaging. The process will be slightly different for creating .NET Framework libraries with NuGet console or nuget.exe.
 {: .notice--info}
 
 * Create a new project or use an existing project (I used one of my existing `.NET Standard 2.0` class library project `LinqExtensions`)
@@ -176,7 +177,6 @@ $ dotnet pack
 </package>
 ```
 
-
 #### Publishing NuGet libraries
 
 To host a NuGet package on server, we need to `publish` the local `nupkg` file to a NuGet enabled server (e.g. a network NuGet server or Nexus). Again, publishing to Nexus is not much different than standard NuGet server, only we need to setup the `NuGet API key`. The [NuGet chapter of the Nexus book](http://books.sonatype.com/nexus-book/3.0/reference/nuget.html) explains the process.
@@ -203,6 +203,7 @@ And voila! Our `NuGet`  is now available on our `Nexus` manager
 
 ![Image](/images/posts/nexus/hosted-nuget.png)
 
+Notice it has a asset link like http://localhost:9876/repository/nuget-hosted/LinqExtensions/1.0.0
 
 #### Integrating with Visual Studio
 
@@ -226,6 +227,50 @@ And now (along with nuget.org packages) my `LinqExtensions` package is also avai
 
 ![Image](/images/posts/nexus/my-nuget-found.png)
 
+#### NuGet packages from build
+
+If we want to integrate the package creation and publishing in a build pipeline, we need to do both from the command line rather than Visual Studio. Here we'll do a quick demo.
+
+1. We'll not integrate into any specific build system, we'll simply `pack` and `publish` our NuGet from command line (or bash)
+2. Here, we'll use the traditional NuGet command line interface (not the new `dotnet cli`) or `nuget.exe`
+
+First we'll setup the NuGet command line
+
+* Install the latest NuGet CLI, i.e. the `nuget.exe` from [here](https://www.nuget.org/downloads). This does not come by default with Visual Studio, but the vsix extension (generally found in _"C:\Program Files (x86)\NuGet\Visual Studio 2013"_) is default.
+* The exe itself is the tool (it is not an installer). Save it to some meaningful location where you have access (I just copied it to the same _"C:\Program Files (x86)\NuGet\Visual Studio 2013"_ for consistency)
+* Add this path to system environment variables, so that `nuget` command can be used from any location. My Computer -> right-click -> Properties -> Advanced system settings -> Advanced tab -> Environment Variables -> edit the `PATH` variable and add the _"path-to-nuget.exe"_
+* Now NuGet commands can be run from any folder in `cmd` or `bash`
+
+```bash
+# go to the required project directory
+$ cd /project-folder/
+# create a nuspec file. This is one time activity
+$ nuget spec
+# manually update the nuspec file. We'll keep version as variable
+# nuspec: <version>$version$</version>
+# now create the package. Provide version value here
+$ nuget pack MyLibrary.nuspec -properties version=1.0.0-beta
+# publish to Nexus with correct key & source
+$ nuget push MyLibrary.1.0.0-beta.nupkg a0fdd1a1-af65-3ac9-ab28-c0b1bfadc82a -source http://localhost:9876/repository/nuget-hosted/
+```
+
+**Note:** In the `nuspec` file we kept the version as variable `$version$` so that we can put correct version number while creating the package. In the `pack` command we have provided a _semantic_ version _Major.Minor.Patch_ version with a pre-release suffix `1.0.0-beta`. In actual build, we can also use revision number from the source control/build.
+{: .notice--info}
+
+#### Raw file hosting
+
+As stated before, Nexus can also store raw binary files. That means, we can upload any file like config file or standalone binary, into Nexus and download as and when required. We'll see how to do that.
+
+* First, create a new repository of type `raw (hosted)`, let's name it `raw-hosted`. You need to login as admin.
+* Once created, this repository can host raw binary files. For me, the uri is http://localhost:9876/repository/raw-hosted/
+* Now we can upload any file as explained [here](https://support.sonatype.com/hc/en-us/articles/115006744008). Basically we `http put` a file to the repository URI with valid credentials
+* Here we're using the [cURL tool](https://curl.haxx.se/download.html) for the same. Sample command below
+
+```bash
+$ curl -v -u admin:admin123 --upload-file MyFile.raw http://localhost:9876/repository/raw-hosted/
+```
+
+* To download the raw file, do a `http get` to the asset uri which is like http://localhost:9876/repository/raw-hosted/MyFile.raw
 
 #### References
 
@@ -238,3 +283,4 @@ And now (along with nuget.org packages) my `LinqExtensions` package is also avai
 * [Admin and configuration](https://help.sonatype.com/display/NXRM3/Configuration)
 * [Install as service for production](https://books.sonatype.com/nexus-book/3.0/reference/install.html#service-windows)
 * [.NET Package Repositories with NuGet](https://help.sonatype.com/display/NXRM3/.NET+Package+Repositories+with+NuGet)
+* [Uploading raw artifacts](https://support.sonatype.com/hc/en-us/articles/115006744008)
