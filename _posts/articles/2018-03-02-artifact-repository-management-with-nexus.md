@@ -7,6 +7,7 @@ tags: [tech, artifacts, nexus, package, nuget, dotnet, repository]
 categories: articles
 comments: true
 share: true
+modified: 2018-03-06T22:16:30+04:30
 ---
 
 _**"An artifact what??!!!"**_
@@ -229,10 +230,11 @@ And now (along with nuget.org packages) my `LinqExtensions` package is also avai
 
 #### NuGet packages from build
 
-If we want to integrate the package creation and publishing in a build pipeline, we need to do both from the command line rather than Visual Studio. Here we'll do a quick demo.
+If we want to integrate the package creation and publishing in a build pipeline, we need to do both in an automated way. Here we'll do a quick demo.
 
 1. We'll not integrate into any specific build system, we'll simply `pack` and `publish` our NuGet from command line (or bash)
-2. Here, we'll use the traditional NuGet command line interface (not the new `dotnet cli`) or `nuget.exe`
+2. Here, we'll use the traditional NuGet command line interface (not the new `dotnet cli`) or the `nuget.exe` which can be installed in the build server
+3. We'll see one sample customization in the process and update version dynamically at build time
 
 First we'll setup the NuGet command line
 
@@ -241,6 +243,8 @@ First we'll setup the NuGet command line
 * Add this path to system environment variables, so that `nuget` command can be used from any location. My Computer -> right-click -> Properties -> Advanced system settings -> Advanced tab -> Environment Variables -> edit the `PATH` variable and add the _"path-to-nuget.exe"_
 * Now NuGet commands can be run from any folder in `cmd` or `bash`
 
+Before first time use, we need to create a nuspec file
+
 ```bash
 # go to the required project directory
 $ cd /project-folder/
@@ -248,6 +252,14 @@ $ cd /project-folder/
 $ nuget spec
 # manually update the nuspec file. We'll keep version as variable
 # nuspec: <version>$version$</version>
+```
+
+Following command will create and publish the NuGet package (with specific version)
+
+```bash
+# go to the required project directory
+$ cd /project-folder/
+# we already have nuspec file created above
 # now create the package. Provide version value here
 $ nuget pack MyLibrary.nuspec -properties version=1.0.0-beta
 # publish to Nexus with correct key & source
@@ -267,6 +279,7 @@ As stated before, Nexus can also store raw binary files. That means, we can uplo
 * Here we're using the [cURL tool](https://curl.haxx.se/download.html) for the same. Sample command below
 
 ```bash
+# curl command to upload file to Nexus repo
 $ curl -v -u admin:admin123 --upload-file MyFile.raw http://localhost:9876/repository/raw-hosted/
 ```
 
