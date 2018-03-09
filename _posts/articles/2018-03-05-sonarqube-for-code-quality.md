@@ -94,22 +94,22 @@ Once all the above setup id completed successfully, we are ready to actually ana
 **Note:** We should create separate SonarQube project for each of our codebase, and everytime the analysis reports should be sent to same project for historical analysis. So while running following commands, the project key (which uniquely identifies a SonarQube project) and project display name (optional, used for display on SonarQube UI) should ke kept constant throughout the lifetime of the codebase.
 {: .notice--info}
 
-Now we'll run analysis against our code, and upload results to our SonarQube project. For that go to the desired project (code) directory and **run the following 3 commands in sequence**. Ideally, the 3 commands should be saved in a `bat` file in project folder, and run from there.
+Now we'll run analysis against our code, and upload results to our SonarQube project. For that go to the desired project (code) directory and **run the following 3 commands in sequence**. Ideally, the 3 commands should be saved in a `.bat` file in project folder, and run from there.
 
 ```bash
 # begin analysis - prepare for the analysis
-# command: SonarQube.Scanner.MSBuild.exe begin /k:"unique-project-key" /n:"project-display-name" /v:"project-version"
-$ SonarQube.Scanner.MSBuild.exe begin /k:"oss-proj" /n:"AC Dorkari" /v:"1.0"
+# syntax: SonarQube.Scanner.MSBuild.exe begin /k:"unique-project-key" /n:"project-display-name" /v:"project-version"
+SonarQube.Scanner.MSBuild.exe begin /k:"myproject" /n:"My Project" /v:"1.0"
 # build the project/solution
-$ msbuild solutionName.sln /t:rebuild
+msbuild solutionName.sln /t:rebuild
 # end analysis - this will actually start the analysis!
-$ SonarQube.Scanner.MSBuild.exe begin
+SonarQube.Scanner.MSBuild.exe begin
 ```
 
-**Tip:** For the `end` analysis command, it'll try to fetch `blame` data from the source control (Git & SVN are pre-configured). If your source control needs a VPN or proxy, set them up before running the `end` command.
+**Tip:** For the `end` analysis command, it'll try to fetch `blame` data from the source control (Git & SVN are pre-configured). If your source control needs a **VPN or proxy**, set them up before running the `end` command.
 {: .notice--success}
 
-**Tip:** To run `msbuild` command from any location, add the path of `MSBuild.exe` to the system environment variables. For example, the MSBuild version 15 that comes with Visual Studio 2017, it can be found at _"C:\Program Files (x86)\Microsoft Visual Studio\2017\\{Edition}\MSBuild\15.0\Bin"_.
+**Tip:** To run `msbuild` command from any location, add the path of `MSBuild.exe` to the system environment variables. For example, the MSBuild version 15 that comes with Visual Studio 2017, can be found at _"C:\Program Files (x86)\Microsoft Visual Studio\2017\\{Edition}\MSBuild\15.0\Bin"_.
 {: .notice--success}
 
 The process can take quite a while (the `end` command). For my codebase of 125k lines (that includes ~55k lines C# source code, JavaScript code & libraries, XML files etc.), it took almost 30min to process completely. But that time inludes scanning SVN for blame data over VPN network. In the process, it'll create a new folder `.sonarqube` inside current folder, to write all details.
@@ -118,7 +118,21 @@ The process can take quite a while (the `end` command). For my codebase of 125k 
 
 We can now got the the project in SonarQube server and see the details of the analysis.
 
-![Image](/images/posts/sonarqube/project-dashboard.png)
+<figure class="half">
+	<a href="/images/posts/sonarqube/project-dashboard.png">
+        <img src="/images/posts/sonarqube/project-dashboard.png" alt="dashboard" title="dashboard">
+    </a>
+	<a href="/images/posts/sonarqube/project-issues.png">
+        <img src="/images/posts/sonarqube/project-issues.png" alt="issues" title="issues">
+    </a>
+    <a href="/images/posts/sonarqube/project-issue-details.png">
+        <img src="/images/posts/sonarqube/project-issue-details.png" alt="issue-details" title="issue-details">
+    </a>
+    <a href="/images/posts/sonarqube/project-measures.png">
+        <img src="/images/posts/sonarqube/project-measures.png" alt="measures" title="measures">
+    </a>
+	<figcaption>Project analysis details</figcaption>
+</figure>
 
 #### Production deployment
 
