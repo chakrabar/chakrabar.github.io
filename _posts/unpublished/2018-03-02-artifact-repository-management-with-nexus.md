@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Nexus artifact repository manager for .NET"
+title: "Original: Nexus artifact repository manager for .NET"
 excerpt: "Setup & configuration of Sonatype Nexus from scratch, as an artifact repository manager for .NET projects, with NuGet"
 date: 2018-03-02
 tags: [tech, artifacts, nexus, package, nuget, dotnet, repository]
@@ -8,6 +8,7 @@ categories: articles
 comments: true
 share: true
 modified: 2018-03-06T22:16:30+04:30
+published: false
 ---
 
 _**"An artifact what??!!!"**_

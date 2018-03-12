@@ -104,6 +104,7 @@ SonarQube.Scanner.MSBuild.exe begin /k:"myproject" /n:"My Project" /v:"1.0"
 msbuild solutionName.sln /t:rebuild
 # end analysis - this will actually start the analysis!
 SonarQube.Scanner.MSBuild.exe begin
+# /d:sonar.host.url=https://myserver.com:9000 on begin
 ```
 
 **Tip:** For the `end` analysis command, it'll try to fetch `blame` data from the source control (Git & SVN are pre-configured). If your source control needs a **VPN or proxy**, set them up before running the `end` command.
@@ -112,7 +113,7 @@ SonarQube.Scanner.MSBuild.exe begin
 **Tip:** To run `msbuild` command from any location, add the path of `MSBuild.exe` to the system environment variables. For example, the MSBuild version 15 that comes with Visual Studio 2017, can be found at _"C:\Program Files (x86)\Microsoft Visual Studio\2017\\{Edition}\MSBuild\15.0\Bin"_.
 {: .notice--success}
 
-The process can take quite a while (the `end` command). For my codebase of 125k lines (that includes ~55k lines C# source code, JavaScript code & libraries, XML files etc.), it took almost 30min to process completely. But that time inludes scanning SVN for blame data over VPN network. In the process, it'll create a new folder `.sonarqube` inside current folder, to write all details.
+The process can take quite a while (the `end` command). While it took around 2 minutes to process a codebase of ~20k lines, for my codebase of ~125k lines (that includes ~55k lines C# source code, JavaScript code & libraries, XML files etc.), it took almost 30min to process completely. But that time inludes scanning SVN for blame data over VPN network. In the process, it'll create a new folder `.sonarqube` inside current folder, to write all details. And after the scanner has completed the work, the server may need some more time to process and show updated results.
 
 ![Image](/images/posts/sonarqube/analysis-complete.png)
 
@@ -221,3 +222,4 @@ SonarQube (or SonarLint) comes with a strong set of rule set. But, if you realy 
   * [MSBuild docs](https://docs.microsoft.com/en-us/visualstudio/msbuild/msbuild-concepts)
   * [MSBuild commandline reference](https://msdn.microsoft.com/en-us/library/ms164311.aspx)
   * [Configuring SonarQube Scanner for MSBuild](https://github.com/SonarSource/sonar-.net-documentation/blob/master/doc/appendix-2.md)
+* [runsettngs](https://msdn.microsoft.com/en-us/library/jj159530.aspx?f=255&MSPPError=-2147217396)
