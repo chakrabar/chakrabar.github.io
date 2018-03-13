@@ -12,26 +12,28 @@ image:
   feature: posts/code-spring-2.jpg
 ---
 
-For those not familiar with the very popular _"artifact repositories"_ used all over the development community, it might sound like an unsual thing! But they have been used in many open source and commercial software projects for many years - and for a reason. Initially popular with Java developers only, now they are being used increasingly in many programming communities like .NET, Node, Ruby, Python, web development and more.
+For those not familiar with the very popular _"artifact repositories"_, it might sound like an unsual thing! But they have been used all over the development community in many open source and commercial software projects, for many years. Initially popular with Java developers only, now they are being used increasingly in many programming communities like .NET, Node, Ruby, Python, web development and more.
 
 So what is an **artifact repository manager**? Going by the standard definition
 
-> An artifact repository manager is basically an application server that can store software artifacts in an organised and versioned manner, and that can be used as source of artifacts for software projects as and when required. They are generally wired into application IDEs and build systems to store or fetch project artifacts (binaries, metadata etc.)
+> An artifact repository manager is basically an application server that can store software artifacts in an organised and versioned manner, and can be used as source of artifacts for software projects. They are generally wired into application IDEs and build systems to store or fetch project artifacts (binaries, metadata etc.)
 
-In all software projects, we have to deal with bunch of artifacts like code binaries, metadata files, configurations, xml files etc. In projects with size moderate+ they can soon become a handful with storage, multiple versions, inter dependencies and all. It can make everyday development, sharing code, building software pretty cumbersome. Here an _artifact repository manager_ comes to rescue. It simple _manages repositories of artifacts_ - works as a single repository for many different types of libraries (e.g. Java Maven, .NET NuGet, Docker, Bower, Ruby Gems, NPM etc.), stores & manages different versions, proxy global libraries, hosts in-house or third party dependencies and provides security, analytics & many useful features.
+In all software projects, we have to deal with bunch of artifacts like code binaries, metadata files, configurations, xml files etc. In projects with moderate+ size, they can soon become a handful with storage, different tech stacks, multiple versions, inter dependencies and all. It can make everyday development, sharing code, building software pretty cumbersome. Here an _artifact repository manager_ comes to rescue.
+
+It simple _manages repositories of artifacts_ - works as a single repository for many different types of libraries (e.g. Maven, NuGet, Docker, Bower, Ruby Gems, npm etc.), stores & manages different versions, proxy global libraries, hosts in-house or third party dependencies and provides security, analytics & many useful features.
 
 At the core, it mainly does two things
 
 * Manage & distribute software artifacts (project binaries and more)
 * Proxy remote repositories (e.g. NuGet/Maven) to a local network server
 
-Put together, they greatly improve development, build and distribution of software systems.
+Combined together, they greatly improve development, build and distribution of software systems.
 
 #### Sonatype Nexus artifact repository manager
 
 [Sonatype Nexus](https://www.sonatype.com/nexus-repository-sonatype) is one of the most popular artifact repository managers available in market today. It was initially made popular with `Maven` projects for `Java`, but now they are used in almost all sort of software projects like `.NET`, `Ruby`, `Node`, `Python` etc. They can host any kind of raw binary files as well.
 
-Nexus can run on all major OS (Windows, Linux, Mac), comes with great compatibility with different tech stacks (Java, .NET, Ruby, Node, Python, Docker etc.) and has lot of useful features (grouped repositories, security, monitoring, reporting, automated mails, housekeeping jobs and many more).
+Nexus can run on all major OS (Windows, Linux, Mac), comes with great compatibility with different tech stacks (Java, .NET, Ruby, Node, Python, Docker etc.) and has lot of useful features like grouped repositories, security, monitoring, reporting, automated mails, housekeeping jobs and many more.
 
 Alternatives? There are some popular alternatives like
 
@@ -45,6 +47,7 @@ Nexus generally has two types of repositories. So, any repository is either of
 
 * Release repository - release specific, stable and incremented only on new release
 * Snapshot repository - current, evolving, development repository
+* Mixed - can have both (e.g. NuGet repos). Generally stable and pre-release versions have convention based versioning (`2.0.3` vs `1.0.9-preview`)
 
 Repository Coordinates (or identifiers)
 
@@ -64,7 +67,7 @@ Nexus can have many user with different access rights. The default initial user 
 
 `Nexus` offers an enterprise version and a free OSS version to choose from.
 
-For this setup guide, we'll be using Nexus OSS version and we'll install it on a Windows system. To install on a different system, follow the [official installation guide](https://help.sonatype.com/display/NXRM3/Installation).
+For this setup guide, we'll be using Nexus OSS version and we'll install it on a Windows (8.1 Enterprise, 64-bit) system. The process is very similar to install on a different platform, follow the [official installation guide](https://help.sonatype.com/display/NXRM3/Installation).
 
 I'm using the current latest OSS version `3.9.0-01`. Here's the step-by-step instructions
 
