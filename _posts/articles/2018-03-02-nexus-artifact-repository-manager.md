@@ -7,12 +7,12 @@ tags: [tech, artifacts, nexus, package, artifactrepository, repository]
 categories: articles
 comments: true
 share: true
-modified: 2018-03-10T22:16:30+04:30
+modified: 2018-03-11T22:16:30+04:30
 image:
   feature: posts/code-spring-2.jpg
 ---
 
-For those not familiar with the very popular _"artifact repositories"_, it might sound like an unsual thing! But they have been used all over the development community in many open source and commercial software projects, for many years. Initially popular with Java developers only, now they are being used increasingly in many programming communities like .NET, Node, Ruby, Python, web development and more.
+For those not familiar with the popular _"artifact repositories"_, it might sound like an unsual thing! But they are used all over the development community in many open source and commercial software projects, for many years now. Initially started mostly with Java world, they are now being used increasingly in many programming communities like .NET, Node, Ruby, Python, web development and more.
 
 So what is an **artifact repository manager**? Going by the standard definition
 

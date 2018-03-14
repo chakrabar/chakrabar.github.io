@@ -7,12 +7,12 @@ tags: [tech, artifacts, nexus, package, nuget, dotnet, repository]
 categories: articles
 comments: true
 share: true
-modified: 2018-03-12T22:16:30+04:30
+modified: 2018-03-14T22:16:30+04:30
 image:
   feature: posts/code-spring-2.jpg
 ---
 
-Here, we'll explore the benefits of using _Nexus artifact repository manager_ for .NET projects, and see how to do that starting from ground up. If you are not familiar with artifact repositories or need to setup Nexus server first, read the **[Nexus artifact repository manager](/articles/nexus-artifact-repository-manager/)** post first.
+Here, we'll explore the benefits of using _Nexus artifact repository manager_ for .NET projects, and see how to do that starting from ground up. If you are not familiar with artifact repositories or need to setup Nexus server first, read the **[Nexus artifact repository manager](/articles/nexus-artifact-repository-manager/)** post.
 
 Artifact repositories have been used in many open source and commercial software projects for many years, they are not super popular within the .NET community though. But now, they are being used increasingly in many .NET projects and there are reasons for that.
 
