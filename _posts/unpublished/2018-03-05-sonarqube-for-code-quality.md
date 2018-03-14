@@ -223,3 +223,4 @@ SonarQube (or SonarLint) comes with a strong set of rule set. But, if you realy 
   * [MSBuild commandline reference](https://msdn.microsoft.com/en-us/library/ms164311.aspx)
   * [Configuring SonarQube Scanner for MSBuild](https://github.com/SonarSource/sonar-.net-documentation/blob/master/doc/appendix-2.md)
 * [runsettngs](https://msdn.microsoft.com/en-us/library/jj159530.aspx?f=255&MSPPError=-2147217396)
+* [Report generator](https://github.com/danielpalme/ReportGenerator)
