@@ -1,32 +1,83 @@
 ---
 layout: post
-title: "SonarQube for quality analysis of software codes"
-excerpt: "let's see..."
+title: "SonarQube for quality analysis of software code"
+excerpt: "Common problems with software quality and how SonarQube can help manage them"
 date: 2018-03-05
-tags: [tech, dotnet, codequality, staticanalysis, codemetrics, unittests, codecoverage, sonar, sonarqube]
+tags: [tech, sonar, sonarqube, codequality, staticanalysis, codemetrics, unittests, codecoverage, dotnet]
 categories: articles
 comments: true
 share: true
-published: false
 ---
+
+<small>This post is work-in-progress</small>
+
+**Quality of software**
+
+If you have ever worked on a large software application that does complex processing and is being developed by a big team, you'd know the complexities of maintaining high quality of the software. We as spoftware development teams do lot of things to maintain the codebase with high standards but still many teams struggle with it. In this post we'll look as some basic problems with software code, and look at a tool _"SonarQube"_ that can help us tacle some of the problems.
+
+Before going into `SonarQube` let's look at **some of the common quality issues** we generally face with a software application.
+
+1. Usability issues that are faced by the users
+    1. Incorrect behaviour of the application (visible bugs)
+    2. Non-reliable application (crashing or freezing)
+    3. Poor performance (lags & slowness)
+    4. Complex and/or non-user-friendly interface (usability issues)
+2. Quality issues of the code faced by the development team
+    1. Poorly written code (bad naming practices, no input check, unhandled exceptions etc.)
+    2. Overly complex code (lot of nested loops or if-else)
+    3. Un-structured or spaghetti code (long procedural code that does lot of things in non-structured way)
+    4. Non-modular code (modular: structured in well defined sections/modules/packages that are pluggable)
+    5. Code duplication (exactly same or almsot same code, copy-psted in multiple places)
+    6. Code with security issues (e.g. non-parameterized queries, direct storage of user credentials etc.)
+    7. And many more...
+
+While there are standard approaches to find and reduce both type of issues in a software applications, here we'll talk about the code quality issues only.
+
+#### Common practices to improve code quality
+
+There are bunch of practices that has been established and time-tested by the development community to help tackle the code quality issues. None of them are _"silver bullet"_, and the success rate depends on multiple factors like - skillset and maturity of the developers, team priorities, outlook of the organization, pragmatic approach towards standard practices, choice of tools & plarforms and more.
+
+we'll briefly look at some of the common practices to manage code quality issues
+
+* Training and guidance for the devlopers
+* Set of basic guidelines (checklists) and enforcement of the same
+* Team code reviews (where evrything is discussed from rules to design)
+* Senior developers working hands on with the team
+* Unit tests (coverage is important, so is actual meaningful tests)
+* Regular code audit for design smells
+* Security hackers to test vulnerabilities
+* Code analysis tools (more on this in following sections)
+
+#### Static code analysis
+
+If we look at the list above, we'll see all of them depend heavily on human perfection, except the last one. But like all humans, developers are also not perfect and for the same reason, many a times the above measures does not work as expected. In real world, developers juggle between different tasks, management has changing priorities, there's always hurry to ship products, technical tasks not always get highest priority and get dumped as "backlogs" (some backlogs just remain backlogs forever before they are lost into eternity), good developers are moved to new projects before they could actually make the last one _really awesome_!
+
+#### Continious code quality analysis and why it matters
+
+
 
 # SonarQube benefits
 
-open source
-multi language support (Java, C#, Python, JavaScript, C++, TypeScript, XML) [details](https://docs.sonarqube.org/display/PLUG/Plugin+Library)
-features
-    static analysis on source code
-    Static analysis on compiled code (selected languages, line Java, C#)
-    code complexity ??
-    duplication ??
-    code coverage ??
-    historical analysis ??
-VS (Eclipse etc) integration - SonarLint
-Build tool integration - MSBuild, Ant, Maven, Gradle etc.
-extensibility
+* Open source (Source code on [GitHub](https://github.com/SonarSource/sonarqube))
+* Multi language support (Java, C#, Python, JavaScript, C++, TypeScript, XML etc.) [details](https://docs.sonarqube.org/display/PLUG/Plugin+Library)
+* IDE integration - SonarLint for Visual Studio, Eclipse etc.
+* Build tool integration - MSBuild, Ant, Maven, Gradle etc.
+* Extensibility with plug-ins
+* Authentication & authorization [options](https://docs.sonarqube.org/display/PLUG/Plugin+Library) - LDAP, Azure, Google, GitHub, GitLab etc.
+* Source control - SVN & Git are supported out of the box
 
-Authentication & authorization [options](https://docs.sonarqube.org/display/PLUG/Plugin+Library) - LDAP, Azure, Google, GitHub, GitLab etc.
-Source control - SVN & Git are supported out of the box
+Code analysis features
+
+* Static analysis on source code
+* Code complexity
+* Lines of code
+* Code duplication
+* Code issues (bugs, vulnerabilities, code smells)
+* Unit test results
+* Code coverage (Unit tests)
+* Historical analysis
+* Technical debt analysis
+
 From site
 
 Supported project types and build systems
@@ -224,3 +275,34 @@ SonarQube (or SonarLint) comes with a strong set of rule set. But, if you realy 
   * [Configuring SonarQube Scanner for MSBuild](https://github.com/SonarSource/sonar-.net-documentation/blob/master/doc/appendix-2.md)
 * [runsettngs](https://msdn.microsoft.com/en-us/library/jj159530.aspx?f=255&MSPPError=-2147217396)
 * [Report generator](https://github.com/danielpalme/ReportGenerator)
+* [Narrowing focus](https://docs.sonarqube.org/display/SONAR/Narrowing+the+Focus#NarrowingtheFocus-patterns)
+
+```bat
+"C:\ReportGenerator_2.1.4.0\bin\ReportGenerator.exe" -reports:"Reports\Test.xml" -targetdir:"Reports" -reporttypes:HtmlSummary
+```
+
+* [More examples](https://stackoverflow.com/questions/69835/how-do-i-use-nant-ant-naming-patterns/86915#86915)
+
+SonarQube coverage exclusions:
+
+**/Scripts/** > works
+**/BT.UKB.SaaS.Argon.LivingSpecs/** > nope
+PMF.Common.InstallerActions/** > nope
+*Console/**/* > nope
+Argon.DataAccess/**/* > nope
+**/*Models/** > nope
+**/PMFEditor.XmlGenerator/**/* > nope
+PMF.Services** > nope
+**/*VM.cs > yep!
+**DM.cs > yep!
+
+**/*Console/** > nope
+**/BT\.UKB\.SaaS\.Argon\.LivingSpecs/** > nope
+**Console/** > nope
+**/PMFEditor.XmlGenerator/**/* > nope
+PMF.Services/** > nope
+
+
+Interface only (contract) projects are excluded as they do not have any executable LoC
+
+**/Scripts/** lol
