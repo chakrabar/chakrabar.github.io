@@ -5,8 +5,7 @@ excerpt: "Common problems with software quality and how SonarQube can help manag
 date: 2018-03-05
 tags: [tech, sonar, sonarqube, codequality, staticanalysis, codemetrics, unittests, codecoverage, dotnet]
 categories: articles
-comments: true
-share: true
+published: false
 ---
 
 <small>This post is work-in-progress</small>
@@ -44,9 +43,10 @@ we'll briefly look at some of the common practices to manage code quality issues
 * Training and guidance for the devlopers
 * Set of basic guidelines (ruleset/checklists) and enforcement of the same
 * Team code reviews (where evrything is discussed from rules to design)
-* Senior developers actively working hands on with the team
 * Unit tests (coverage is important, so is actual meaningful tests)
+* Automated functional tests for E2E correctness
 * Regular code audit for design smells
+* Senior developers actively working hands on with the team
 * Security hackers to test vulnerabilities
 * Code analysis tools
 
@@ -68,25 +68,33 @@ Most of the modern IDEs can do pretty good analysis (e.g. Visual Studio), and th
 
 #### Static Code Analysis
 
-Static Code Analysis tools are a type of applications that can read through static code (without executing the code) and find problems. They generally have a set of rules for good-code (also called _"coding guidelines"_, _"styling rules"_ etc.), and check the current code follow those rules or not. For each deviation from those rules, it shows errors/warings/suggestion as configured. For example, **[SonarQube](https://www.sonarqube.org/)** has static code analysis for many languages. For .NET projects, there are some specific tools like [StyleCop](https://github.com/StyleCop) that looks at source code and [FxCop](https://msdn.microsoft.com/en-us/library/bb429476(v=vs.80).aspx) that examines compiled binaries.
+Static Code Analysis tools are a type of applications that can read through static code (without executing the code) and find problems. They generally have a set of rules for good-code (also called _"coding rules"_, _"style guidelines"_ etc.), and check if the current code follow those rules or not. For each deviation from those rules, it shows errors/warings/suggestion as configured. For example, [SonarQube](https://www.sonarqube.org/) has static code analysis for many languages. For .NET projects, there are some specific tools like [StyleCop](https://github.com/StyleCop) that looks at C# source code and [FxCop](https://msdn.microsoft.com/en-us/library/bb429476(v=vs.80).aspx) that examines compiled binaries.
 
 How does static code analysis help?
 
-#### Continious code quality analysis and why it matters
+In a big project, it's pretty tideous to review code line-by-line. Also, for codebase of any size, it is inevitable to miss many code issues for human limitations, time constraints, low-readability code etc. Static code analysis tools do those common code inspections automatically and very fast with no miss. Using static code analysis tools can save lot of manual effort, make (basic) code review fast & easy, generally give feedback immediately, and catch many issues which are very hard to find with manual inspection (e.g code duplication across codebase).
 
+#### Continuous code quality analysis and why it matters
 
+Another huge benefit of the code analysis tools is that, they can be integrated into IDEs and build systems. So, effectively we can get _"continious code quality analysis"_. With continuous code quality analysis, developers get immediate feedback on their code (as they type code in IDE or at build), and can fix the issues before merging or pushing the code in centralized repository. This prevents _"bad code"_ from enetering the system and keeps the codebase clean & more maintainable. In turn it reduces code review time and chances of bugs.
 
-# SonarQube benefits
+As an ultimate result, it _produces better quality product, saves money and helps ship your product faster_.
+
+----
+
+Now we'll look at a very popular tool **[SonarQube](https://www.sonarqube.org/features/clean-code/)** for continuous code quality analysis (formerly known as _"Sonar"_).
+
+## Benefits of SonarQube
 
 * Open source (Source code on [GitHub](https://github.com/SonarSource/sonarqube))
-* Multi language support (Java, C#, Python, JavaScript, C++, TypeScript, XML etc.) [details](https://docs.sonarqube.org/display/PLUG/Plugin+Library)
-* IDE integration - SonarLint for Visual Studio, Eclipse etc.
-* Build tool integration - MSBuild, Ant, Maven, Gradle etc.
-* Extensibility with plug-ins
-* Authentication & authorization [options](https://docs.sonarqube.org/display/PLUG/Plugin+Library) - LDAP, Azure, Google, GitHub, GitLab etc.
-* Source control - SVN & Git are supported out of the box
+* Multi language support (Java, C#, Python, JavaScript, C++, TypeScript, XML etc.), see [details](https://docs.sonarqube.org/display/PLUG/Plugin+Library)
+* IDE integration - SonarLint for [Visual Studio](https://www.sonarlint.org/visualstudio/), [Eclipse](https://www.sonarlint.org/eclipse/) etc.
+* Build tool integration - MSBuild, Ant, Maven, Gradle, TFS etc.
+* Extensibility with [plugins](https://docs.sonarqube.org/display/PLUG) & custom rules
+* Authentication & authorization [choices](https://docs.sonarqube.org/display/PLUG/Plugin+Library) - LDAP, Azure, Google, GitHub, GitLab etc.
+* Source control - SVN & Git supported out of the box, more with plugins
 
-Code analysis features
+#### Code analysis features
 
 * Static analysis on source code
 * Code complexity
@@ -96,22 +104,10 @@ Code analysis features
 * Unit test results
 * Code coverage (Unit tests)
 * Historical analysis
+* Leak period analysis (issues from last commit)
 * Technical debt analysis
 
-From site
-
-Supported project types and build systems
-
-* Easy analysis of any existing Visual Studio Solution or MSBuild project
-* Native integration with any existing build in TFS or VSTS
-
-Metrics
-
-* Code coverage by tests: SonarC# supports the import of Microsoft Visual Studio, dotCover, OpenCover, and NCover 3 test coverage reports.
-
-Custom Rules
-
-* SonarC# supports custom rules written in Roslyn, and packaged via the SonarQube Roslyn SDK project.
+In the next section, we'll see [how to setup & use SonarQube for .NET projects](#next).
 
 #### SonarQube infrastructure
 
