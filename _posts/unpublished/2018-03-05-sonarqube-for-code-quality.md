@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "SonarQube for quality analysis of software code"
+title: "TEMPORARY SQ for quality analysis of software code"
 excerpt: "Common problems with software quality and how SonarQube can help manage them"
 date: 2018-03-05
 tags: [tech, sonar, sonarqube, codequality, staticanalysis, codemetrics, unittests, codecoverage, dotnet]
@@ -13,9 +13,11 @@ share: true
 
 **Quality of software**
 
-If you have ever worked on a large software application that does complex processing and is being developed by a big team, you'd know the complexities of maintaining high quality of the software. We as spoftware development teams do lot of things to maintain the codebase with high standards but still many teams struggle with it. In this post we'll look as some basic problems with software code, and look at a tool _"SonarQube"_ that can help us tacle some of the problems.
+If you have ever worked on a large software application that does complex processing and is being developed by a big team, you'd know the complexities of maintaining high quality of the software. We as spoftware development teams do lot of things to maintain the application with high standards but still almost all teams struggle with it. In this post we'll look as some basic problems with software code, and look at some ways that can help us tacle some of the problems.
 
-Before going into `SonarQube` let's look at **some of the common quality issues** we generally face with a software application.
+Before going into _"solutions"_ let's look at **some of the common quality issues** we face with a software application.
+
+There are basically two types of issues of a software application, the ones faced by the users and those developers have to deal with.
 
 1. Usability issues that are faced by the users
     1. Incorrect behaviour of the application (visible bugs)
@@ -26,7 +28,7 @@ Before going into `SonarQube` let's look at **some of the common quality issues*
     1. Poorly written code (bad naming practices, no input check, unhandled exceptions etc.)
     2. Overly complex code (lot of nested loops or if-else)
     3. Un-structured or spaghetti code (long procedural code that does lot of things in non-structured way)
-    4. Non-modular code (modular: structured in well defined sections/modules/packages that are pluggable)
+    4. Non-modular code (modular: structured in well defined modules/packages/layers that are pluggable)
     5. Code duplication (exactly same or almsot same code, copy-psted in multiple places)
     6. Code with security issues (e.g. non-parameterized queries, direct storage of user credentials etc.)
     7. And many more...
@@ -35,22 +37,40 @@ While there are standard approaches to find and reduce both type of issues in a 
 
 #### Common practices to improve code quality
 
-There are bunch of practices that has been established and time-tested by the development community to help tackle the code quality issues. None of them are _"silver bullet"_, and the success rate depends on multiple factors like - skillset and maturity of the developers, team priorities, outlook of the organization, pragmatic approach towards standard practices, choice of tools & plarforms and more.
+There are bunch of practices that has been established and time-tested by the development community to help tackle the code quality issues. None of them are _"silver bullet"_, and the success rate depends on multiple factors like - skillset and maturity of the developers, team priorities, outlook of the organization, pragmatic approach towards standard practices, choice of tools & plarforms etc.
 
 we'll briefly look at some of the common practices to manage code quality issues
 
 * Training and guidance for the devlopers
-* Set of basic guidelines (checklists) and enforcement of the same
+* Set of basic guidelines (ruleset/checklists) and enforcement of the same
 * Team code reviews (where evrything is discussed from rules to design)
-* Senior developers working hands on with the team
+* Senior developers actively working hands on with the team
 * Unit tests (coverage is important, so is actual meaningful tests)
 * Regular code audit for design smells
 * Security hackers to test vulnerabilities
-* Code analysis tools (more on this in following sections)
+* Code analysis tools
 
-#### Static code analysis
+#### Tools for code analysis
 
-If we look at the list above, we'll see all of them depend heavily on human perfection, except the last one. But like all humans, developers are also not perfect and for the same reason, many a times the above measures does not work as expected. In real world, developers juggle between different tasks, management has changing priorities, there's always hurry to ship products, technical tasks not always get highest priority and get dumped as "backlogs" (some backlogs just remain backlogs forever before they are lost into eternity), good developers are moved to new projects before they could actually make the last one _really awesome_!
+If we look at the list above, we'll see all of them depend heavily on human perfection, except the last one. But like all humans, developers are also not perfect and for the same reason, many a times the above measures does not work as expected.
+
+In real world, developers juggle between different tasks, management has changing priorities, there's always hurry to ship products, technical tasks doesn't always get high priority and get dumped as "backlogs" (some backlogs just remain backlogs forever before they are lost into eternity), good developers are moved to new projects before they could actually make the last one _really awesome_!
+
+So, one thing that (in many ways) overcomes these problems, are tools for automatically checking code and look for issues. If configured properly, they can do stuffs like
+
+* Code reviews (against set rules)
+* Run unit tests
+* Find possible bugs
+* Suggest improvements
+* Calculate code complexities, etc.
+
+Most of the modern IDEs can do pretty good analysis (e.g. Visual Studio), and there are great extensions and 3rd party tools available for the same (e.g. ReSharper).
+
+#### Static Code Analysis
+
+Static Code Analysis tools are a type of applications that can read through static code (without executing the code) and find problems. They generally have a set of rules for good-code (also called _"coding guidelines"_, _"styling rules"_ etc.), and check the current code follow those rules or not. For each deviation from those rules, it shows errors/warings/suggestion as configured. For example, **[SonarQube](https://www.sonarqube.org/)** has static code analysis for many languages. For .NET projects, there are some specific tools like [StyleCop](https://github.com/StyleCop) that looks at source code and [FxCop](https://msdn.microsoft.com/en-us/library/bb429476(v=vs.80).aspx) that examines compiled binaries.
+
+How does static code analysis help?
 
 #### Continious code quality analysis and why it matters
 

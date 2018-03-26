@@ -7,7 +7,7 @@ tags: [tech, artifacts, nexus, package, artifactrepository, repository]
 categories: articles
 comments: true
 share: true
-modified: 2018-03-11T22:16:30+04:30
+modified: 2018-03-26T22:16:30+04:30
 image:
   feature: posts/code-spring-2.jpg
 ---
@@ -126,6 +126,29 @@ $ curl -v -u admin:admin123 --upload-file MyFile.dll http://localhost:9876/repos
 * To download the raw file, do a `http get` to the asset uri which is like http://localhost:9876/repository/raw-hosted/MyFile.dll
 
 ![Image](/images/posts/nexus/raw-hosted.png)
+
+We can do the same with any `REST client`, either programatically or through GUI. Below we'll see how to upload an artifact to `raw-hosted` repository using the **Postman** client GUI.
+
+* Create a `PUT` request for http://{raw-hosted-uri}/{resource-name}
+* Use `Basic Auth` with username/password - it'll automatically create an `Authorization` header with _"Basic Base64-encoded-credentials"_
+* In `Body`, add the raw file as `binary`
+* Send the request
+
+The actual http request looks like
+
+```bash
+PUT /repository/raw-hosted/Utilities-1.2.dll HTTP/1.1
+Host: localhost:9876
+Authorization: Basic YWRtaW46YWRtaW4xMjM=
+
+# with the file data
+```
+
+**Note:** For a REST call to PUT an artifact to raw-hosted repository, we need to add a filename (need not match the actual filename) to the uri path.
+{: .notice--info}
+
+![Image](/images/posts/nexus/postman-1.png)
+![Image](/images/posts/nexus/postman-2.png)
 
 In the next section, we'll create a **[Nexus repository for .NET projects](/articles/nexus-artifact-repository-for-dotnet/)**.
 
