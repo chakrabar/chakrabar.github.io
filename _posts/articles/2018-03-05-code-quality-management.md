@@ -1,9 +1,9 @@
 ---
 layout: post
-title: "Code quality management - common problems & how to reduce them"
+title: "Code quality management - common problems & how to solve them"
 excerpt: "Common problems with software code quality and how SonarQube can help manage them"
 date: 2018-03-05
-tags: [tech, sonar, sonarqube, codequality, staticanalysis, codemetrics, unittests, codecoverage, dotnet]
+tags: [tech, sonar, sonarqube, codequality, staticanalysis, codemetrics]
 categories: articles
 comments: true
 share: true
