@@ -122,4 +122,4 @@ There's no doubt that SonarQube's an excellent tool, but like all tools, it also
 * Cannot analyse architectural or design aspects
 * Does not participate in load or stress testing
 
-In the next section, we'll see [how to setup & use SonarQube for .NET projects](#next).
+In the next section, we'll see **[how to setup & use SonarQube for .NET projects](/articles/sonarqube-for-dotnet/)**.
