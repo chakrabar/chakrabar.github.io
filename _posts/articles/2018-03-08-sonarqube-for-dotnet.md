@@ -6,7 +6,7 @@ date: 2018-03-08
 tags: [tech, sonar, sonarqube, codequality, staticanalysis, codemetrics]
 categories: articles
 image:
-  feature: posts/sonarqube/sq-blog.png
+  feature: posts/sonarqube/sq-blog-2.jpg
   credit: sonarqube.org
   creditlink: https://docs.sonarqube.org/display/SONAR/Architecture+and+Integration
 comments: true

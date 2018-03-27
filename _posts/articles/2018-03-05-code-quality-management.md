@@ -15,11 +15,11 @@ share: true
 
 **Quality of software**
 
-If you have ever worked on a large software application that does complex processing and is being developed by a big team, you'd know the complexities of maintaining high quality of the software. We as software development teams do lot of things to maintain the application with high standards but still almost all teams struggle with it. In this post we'll look as some basic problems with software code, and look at some ways that can help us tackle the problems.
+If you have ever worked on a large software application that does complex processing and is being developed by a big team, you'd know the complexities of maintaining high quality of the software. We as software development teams do lot of things to maintain the application with high standards but still almost all teams struggle with it. In this post we'll look at some basic problems with software code, and some ways that can help us tackle the problems.
 
 Before going into _"solutions"_ let's look at **some of the common quality issues** we face with a software application.
 
-There are basically two types of issues of a software application - the ones faced by the users and those developers have to deal with.
+There are basically two types of issues of a software application - the ones faced by the users and others that the developers have to deal with.
 
 1. Usability issues that are faced by the users
     1. Incorrect behaviour of the application (visible bugs)
@@ -32,7 +32,7 @@ There are basically two types of issues of a software application - the ones fac
     3. Un-structured or spaghetti code (long procedural code that does lot of things in non-structured way)
     4. Non-modular code (modular: structured in well-defined modules/packages/layers that are pluggable)
     5. Code duplication (exactly same or almost same code, copy-pasted in multiple places)
-    6. Code with security issues (e.g. non-parameterized queries, direct storage of user credentials etc.)
+    6. Code with security issues (e.g. non-parameterized queries, direct storage of user credentials)
     7. And many more...
 
 While there are standard approaches to find and reduce both type of issues in a software applications, here we'll talk about managing the code quality issues.
@@ -47,7 +47,7 @@ There is no standard definition of _"code quality"_, and there is no single metr
 
 > In addition to being functionally correct and performant, a high-quality code is easy to read, understand, debug, build, test, maintain, reuse, replace, extend and is just-enough documented.
 
-There are bunch of practices that has been established and time-tested by the development community to help tackle the code quality issues. None of them are _"silver bullet"_, and the success rate depends on multiple factors like - skillset and maturity of the developers, team priorities, outlook of the organization, pragmatic approach towards standard practices, choice of tools & platforms etc.
+There are bunch of practices that has been established and time-tested by the development community to help tackle the code quality issues. None of them are _"silver bullet"_, and the success rate depends on multiple factors like - skillset and maturity of the developers, team priorities, outlook of the organization, pragmatic approach towards standard coding practices, choice of tools & platforms etc.
 
 we'll briefly look at some of the common practices to manage code quality issues
 
@@ -79,21 +79,25 @@ Most of the modern IDEs can do pretty good analysis (e.g. Eclipse for Java, Visu
 
 #### Static Code Analysis
 
-Static Code Analysis tools are a type of applications that can read through static code (without executing the code) and find problems. They generally have a set of rules for good-code (also called _"coding rules"_, _"style guidelines"_ etc.) like, _"class names should have Pascal casing", "methods should not be more than 20 lines", "input parameters should be null checked", "exception should not be swallowed"_ etc.
+Static Code Analysis tools are a type of applications that can read through static code (without executing the code) and find problems. They generally have a set of rules for good-code (also called _"coding rules"_ or _"style guidelines"_) like, _"class names should have Pascal casing", "methods should not be more than 20 lines", "input parameters should be null checked", "exception should not be swallowed"_ etc.
 
 Static code analysis tools check if the current code follow those rules or not. For each deviation from those rules, it shows errors/warnings/suggestion as configured. For example, [SonarQube](https://www.sonarqube.org/) or [Coverity Scan](https://scan.coverity.com/) has static code analysis for many languages. And there are language specific tools like [IntelliJ Idea](https://www.jetbrains.com/idea/index.html), [FindBugs](http://findbugs.sourceforge.net/) for Java, [StyleCop](https://github.com/StyleCop), [FxCop](https://msdn.microsoft.com/en-us/library/bb429476(v=vs.80).aspx) for .NET etc.
 
 How does static code analysis help?
 
-In a big project, it's pretty tedious to review code line-by-line. Also, for codebase of any size, it is inevitable to miss many code issues for human limitations, time constraints, low-readability code etc. Static code analysis tools do those common code inspections automatically and very fast with no miss. Using static code analysis tools can save lot of manual effort, make (basic) code review fast & easy, generally give feedback immediately, and catch many issues which are very hard to find with manual inspection (e.g. code duplication across codebase).
+In a big project, it's pretty tedious to review code line-by-line. Also, for codebase of any size, it is inevitable to miss many code issues because of human limitations, time constraints, low-readability code etc. Static code analysis tools do those common code inspections automatically and very fast with no miss. Using static code analysis tools can save lot of manual effort, make (basic) code review fast & easy, generally give feedback immediately, and catch many issues which are very hard to find with manual inspection (e.g. code duplication across codebase).
 
 #### Continuous code quality analysis and why it matters
 
 Another huge benefit of the code analysis tools is that, they can be integrated into IDEs and build systems. So, effectively we can get _"continuous code quality analysis"_. With continuous code quality analysis, developers get immediate feedback on their code (as they type code in IDE or at build), and can fix the issues before merging or pushing the code into main centralized repository. This prevents _"bad code"_ from entering the system and keeps the codebase clean & more maintainable. In turn it reduces code review time and chances of bugs.
 
-Continuous code analysis tools are ideally integrated into Continuous Integration (CI) systems, so that analysis is done on each commit of code, and results are maintained as historical data.
+Continuous code analysis tools are ideally integrated into **Continuous Integration (CI)** systems, so that analysis is done on each commit of code, and results are maintained as historical data.
 
-As an ultimate result, it _produces better quality product, saves money and helps ship your product faster_.
+Ultimately it results in
+
+* _**High quality product**_
+* _**Reduced cost**_
+* _**Faster shipping of product**_
 
 ----
 
@@ -108,7 +112,7 @@ SonarQube was formerly known as _"Sonar"_, and it's probably the most popular to
 * IDE integration - SonarLint for [Visual Studio](https://www.sonarlint.org/visualstudio/), [Eclipse](https://www.sonarlint.org/eclipse/) etc.
 * Build tool integration - MSBuild, Ant, Maven, Gradle, TFS etc.
 * Extensibility with [plugins](https://docs.sonarqube.org/display/PLUG) & custom rules
-* Authentication & authorization [choices](https://docs.sonarqube.org/display/PLUG/Plugin+Library) - LDAP, Azure, Google, GitHub, GitLab etc.
+* Authentication & authorization [choices](https://docs.sonarqube.org/display/PLUG/Plugin+Library) - LDAP, Azure, Google, GitHub, GitLab and more.
 * Source control - SVN & Git supported out of the box, more with plugins
 
 #### Code analysis features
