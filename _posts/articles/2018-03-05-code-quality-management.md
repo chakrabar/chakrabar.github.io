@@ -75,13 +75,13 @@ So, one thing that (in many ways) overcomes these problems, are tools for automa
 * Suggest improvements
 * Calculate code complexities, etc.
 
-Most of the modern IDEs can do pretty good analysis (e.g. Visual Studio), and there are great extensions and 3rd party tools available for the same (e.g. ReSharper).
+Most of the modern IDEs can do pretty good analysis (e.g. Eclipse for Java, Visual Studio for .NET, PyCharm for Python), and there are great extensions and 3rd party tools available for the same (e.g. [IntelliJ Idea](https://www.jetbrains.com/idea/index.html), [ReSharper](https://www.jetbrains.com/resharper/), [ESLint](https://eslint.org/), [Coverity Scan](https://scan.coverity.com/)).
 
 #### Static Code Analysis
 
 Static Code Analysis tools are a type of applications that can read through static code (without executing the code) and find problems. They generally have a set of rules for good-code (also called _"coding rules"_, _"style guidelines"_ etc.) like, _"class names should have Pascal casing", "methods should not be more than 20 lines", "input parameters should be null checked", "exception should not be swallowed"_ etc.
 
-Static code analysis tools check if the current code follow those rules or not. For each deviation from those rules, it shows errors/warnings/suggestion as configured. For example, [SonarQube](https://www.sonarqube.org/) has static code analysis for many languages. For .NET projects, there are some specific tools like [StyleCop](https://github.com/StyleCop) that looks at C# source code and [FxCop](https://msdn.microsoft.com/en-us/library/bb429476(v=vs.80).aspx) that examines compiled binaries.
+Static code analysis tools check if the current code follow those rules or not. For each deviation from those rules, it shows errors/warnings/suggestion as configured. For example, [SonarQube](https://www.sonarqube.org/) or [Coverity Scan](https://scan.coverity.com/)] has static code analysis for many languages. And there are language specific tools like [IntelliJ Idea](https://www.jetbrains.com/idea/index.html), [FindBugs](http://findbugs.sourceforge.net/) for Java, [StyleCop](https://github.com/StyleCop), [FxCop](https://msdn.microsoft.com/en-us/library/bb429476(v=vs.80).aspx) for .NET etc.
 
 How does static code analysis help?
 
@@ -130,4 +130,4 @@ There's no doubt that SonarQube's an excellent tool, but like all tools, it also
 * Cannot analyse architectural or design aspects
 * Does not participate in load or stress testing
 
-In the next section, we'll see **[how to setup & use SonarQube for .NET projects](/articles/sonarqube-for-dotnet/)**.
+In the next section, we'll see **[how to setup & use SonarQube for continuous analysis of .NET projects](/articles/sonarqube-for-dotnet/)**.
