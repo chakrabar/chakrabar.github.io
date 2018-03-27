@@ -127,7 +127,7 @@ SonarQube was formerly known as _"Sonar"_, and it's probably the most popular to
 There's no doubt that SonarQube's an excellent tool, but like all tools, it also has its limitations (which are pretty obvious actually)
 
 * Cannot see user interface issues
-* Cannot analyse architectural or design aspects
+* Cannot analyse architectural or high level design aspects
 * Does not participate in load or stress testing
 
 In the next section, we'll see **[how to setup & use SonarQube for continuous analysis of .NET projects](/articles/sonarqube-for-dotnet/)**.
