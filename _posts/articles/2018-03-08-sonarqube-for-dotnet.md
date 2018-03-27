@@ -5,11 +5,16 @@ excerpt: "How to setup & use SonarQube for .NET projects, with SonarC# and MSBui
 date: 2018-03-08
 tags: [tech, sonar, sonarqube, codequality, staticanalysis, codemetrics]
 categories: articles
+image:
+  feature: posts/sonarqube/sq-blog.png
+  credit: sonarqube.org
+  creditlink: https://docs.sonarqube.org/display/SONAR/Architecture+and+Integration
 comments: true
 share: true
 ---
 
-<small>This article is in-progress</small>
+**Note:** This article is currently in-progress
+{: .notice--danger}
 
 This post is a continuation of **[Code quality management - common problems & how to solve them](/articles/code-quality-management/)**, read that first for a general discussion of software code quality management and how SonarQube helps in the process.
 
@@ -92,7 +97,7 @@ The process can take quite a while (the `end` command) for the first-time use. W
 
 We can now go the the project in SonarQube interface and see the details of the analysis.
 
-<figure class="half">
+<figure>
 	<a href="/images/posts/sonarqube/project-dashboard.png">
         <img src="/images/posts/sonarqube/project-dashboard.png" alt="dashboard" title="dashboard">
     </a>
@@ -115,6 +120,47 @@ For development or testing, SonarQube server can be installed on almost any mach
 For the production installation, see [instructions here](https://docs.sonarqube.org/display/SONAR/Installing+the+Server).
 
 Also see the [available editions and pricing](https://www.sonarsource.com/plans-and-pricing/).
+
+#### Detailed analysis with SonarQube
+
+<figure>
+	<a href="/images/posts/sonarqube/ms-sonarqube.png">
+        <img src="/images/posts/sonarqube/ms-sonarqube.png" alt="build" title="build">
+    </a>
+	<figcaption>Source <a href="https://blogs.msdn.microsoft.com/devops/2015/09/23/sonarqube-integration-plans/">MSDN</a></figcaption>
+</figure>
+
+```bash
+@echo off
+
+REM Remove output directory
+IF EXIST "TestOutputs" RD /S /Q TestOutputs
+
+REM (re)create output directory
+MD TestOutputs
+
+REM begin analysis - prepare for the analysis
+REM specify unit test results & opencover coverage reports
+SonarQube.Scanner.MSBuild.exe begin /k:"myproject" /n:"My Project" /v:"1.0" /d:sonar.cs.nunit.reportsPaths="TestOutputs\NUnitResults.xml" /d:sonar.cs.opencover.reportsPaths="TestOutputs\opencover.xml"
+
+REM build the project/solution
+msbuild MySolution.sln /t:rebuild
+
+REM run NUnit tests
+"C:\Program Files (x86)\NUnit 2.6.4\bin\nunit-console.exe" /result=TestOutputs\NUnitResults.xml Core\bin\Debug\MyProject.CoreTests.dll Data\bin\Debug\MyProject.Data.Tests.dll Services\bin\Debug\UIModules.ServicesTests.dll Web\bin\Debug\UIModules.Web.Tests.dll
+
+REM run OpenCover coverage, use filters to include/exclude dlls
+"C:\Users\Me\AppData\Local\Apps\OpenCover\OpenCover.Console.exe" -register:user "-target:C:\Program Files (x86)\NUnit 2.6.4\bin\nunit-console.exe" "-targetargs:Core\bin\Debug\MyProject.CoreTests.dll Data\bin\Debug\MyProject.Data.Tests.dll Services\bin\Debug\UIModules.ServicesTests.dll Web\bin\Debug\UIModules.Web.Tests.dll /noshadow" "-output:TestOutputs\opencover.xml" "-filter:+[MyProject*]* +[My.Shared*]* +[UIModules*]* -[*Tests]* -[*.Console]* -[*Models]*"
+
+REM process end analysis
+SonarQube.Scanner.MSBuild.exe end
+
+REM keep window open
+pause
+```
+
+**Tip:** You can use [OpenCover filters](https://github.com/opencover/opencover/blob/master/main/OpenCover.Documentation/Usage.pdf) to include and exclude specific assemblies and classes from coverage analysis.
+{: .notice--success}
 
 #### SonarLint code analysis for Visual Studio
 
@@ -167,40 +213,6 @@ Notice that the code analysis settings are saved in the `project.csproj`, inside
 ```
 
 SonarQube (or SonarLint) comes with a strong set of rule set. But, if you really need, you can customize own rules with the [SonarQube Roslyn SDK](https://github.com/SonarSource/sonarqube-roslyn-sdk). The source code for current set of ruls is available [here](https://github.com/SonarSource/sonar-csharp/tree/master/sonaranalyzer-dotnet/src/SonarAnalyzer.CSharp/Rules).
-
-#### Detailed analysis with SonarQube
-
-```bash
-@echo off
-
-REM Remove output directory
-IF EXIST "TestOutputs" RD /S /Q TestOutputs
-
-REM (re)create output directory
-MD TestOutputs
-
-REM begin analysis - prepare for the analysis
-REM specify unit test results & opencover coverage reports
-SonarQube.Scanner.MSBuild.exe begin /k:"myproject" /n:"My Project" /v:"1.0" /d:sonar.cs.nunit.reportsPaths="TestOutputs\NUnitResults.xml" /d:sonar.cs.opencover.reportsPaths="TestOutputs\opencover.xml"
-
-REM build the project/solution
-msbuild MySolution.sln /t:rebuild
-
-REM run NUnit tests
-"C:\Program Files (x86)\NUnit 2.6.4\bin\nunit-console.exe" /result=TestOutputs\NUnitResults.xml Core\bin\Debug\MyProject.CoreTests.dll Data\bin\Debug\MyProject.Data.Tests.dll Services\bin\Debug\UIModules.ServicesTests.dll Web\bin\Debug\UIModules.Web.Tests.dll
-
-REM run OpenCover coverage, use filters to include/exclude dlls
-"C:\Users\Me\AppData\Local\Apps\OpenCover\OpenCover.Console.exe" -register:user "-target:C:\Program Files (x86)\NUnit 2.6.4\bin\nunit-console.exe" "-targetargs:Core\bin\Debug\MyProject.CoreTests.dll Data\bin\Debug\MyProject.Data.Tests.dll Services\bin\Debug\UIModules.ServicesTests.dll Web\bin\Debug\UIModules.Web.Tests.dll /noshadow" "-output:TestOutputs\opencover.xml" "-filter:+[MyProject*]* +[My.Shared*]* +[UIModules*]* -[*Tests]* -[*.Console]* -[*Models]*"
-
-REM process end analysis
-SonarQube.Scanner.MSBuild.exe end
-
-REM keep window open
-pause
-```
-
-**Tip:** You can use [OpenCover filters](https://github.com/opencover/opencover/blob/master/main/OpenCover.Documentation/Usage.pdf) to include and exclude specific assemblies and classes from coverage analysis.
-{: .notice--success}
 
 #### References
 
