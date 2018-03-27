@@ -25,7 +25,7 @@ There are basically two types of issues of a software application - the ones fac
     1. Incorrect behaviour of the application (visible bugs)
     2. Non-reliable application (crashing or freezing)
     3. Poor performance (lags & slowness)
-    4. Complex and/or non-user-friendly interface (usability issues)
+    4. Complex and/or non-user-friendly interface (usability issues)
 2. Quality issues of the code faced by the development team
     1. Poorly written code (bad naming practices, no input check, unhandled exceptions etc.)
     2. Overly complex code (lot of nested loops or if-else)
