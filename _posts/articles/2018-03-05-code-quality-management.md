@@ -3,8 +3,12 @@ layout: post
 title: "Code quality management - common problems & how to solve them"
 excerpt: "Common problems with software code quality and how SonarQube can help manage them"
 date: 2018-03-05
-tags: [tech, sonar, sonarqube, codequality, staticanalysis, codemetrics]
+tags: [tech, codequality, staticanalysis, codemetrics, sonar, sonarqube]
 categories: articles
+image:
+  feature: posts/sonarqube/lynda-checklist.jpg
+  credit: Lynda.com
+  creditlink: https://www.lynda.com/Developer-Programming-Foundations-tutorials/Foundations-Programming-Software-Quality-Assurance/126119-2.html
 comments: true
 share: true
 ---
@@ -75,7 +79,7 @@ Most of the modern IDEs can do pretty good analysis (e.g. Visual Studio), and th
 
 #### Static Code Analysis
 
-Static Code Analysis tools are a type of applications that can read through static code (without executing the code) and find problems. They generally have a set of rules for good-code (also called _"coding rules"_, _"style guidelines"_ etc.) like, "this class name does not have recommended Pascal casing", "that method is too long", "this statement should have a null check", "exception is swallowed here" etc.
+Static Code Analysis tools are a type of applications that can read through static code (without executing the code) and find problems. They generally have a set of rules for good-code (also called _"coding rules"_, _"style guidelines"_ etc.) like, _"class names should have Pascal casing", "methods should not be more than 20 lines", "input parameters should be null checked", "exception should not be swallowed"_ etc.
 
 Static code analysis tools check if the current code follow those rules or not. For each deviation from those rules, it shows errors/warnings/suggestion as configured. For example, [SonarQube](https://www.sonarqube.org/) has static code analysis for many languages. For .NET projects, there are some specific tools like [StyleCop](https://github.com/StyleCop) that looks at C# source code and [FxCop](https://msdn.microsoft.com/en-us/library/bb429476(v=vs.80).aspx) that examines compiled binaries.
 
@@ -85,7 +89,9 @@ In a big project, it's pretty tedious to review code line-by-line. Also, for cod
 
 #### Continuous code quality analysis and why it matters
 
-Another huge benefit of the code analysis tools is that, they can be integrated into IDEs and build systems. So, effectively we can get _"continuous code quality analysis"_. With continuous code quality analysis, developers get immediate feedback on their code (as they type code in IDE or at build), and can fix the issues before merging or pushing the code in centralized repository. This prevents _"bad code"_ from entering the system and keeps the codebase clean & more maintainable. In turn it reduces code review time and chances of bugs.
+Another huge benefit of the code analysis tools is that, they can be integrated into IDEs and build systems. So, effectively we can get _"continuous code quality analysis"_. With continuous code quality analysis, developers get immediate feedback on their code (as they type code in IDE or at build), and can fix the issues before merging or pushing the code into main centralized repository. This prevents _"bad code"_ from entering the system and keeps the codebase clean & more maintainable. In turn it reduces code review time and chances of bugs.
+
+Continuous code analysis tools are ideally integrated into Continuous Integration (CI) systems, so that analysis is done on each commit of code, and results are maintained as historical data.
 
 As an ultimate result, it _produces better quality product, saves money and helps ship your product faster_.
 
@@ -93,7 +99,7 @@ As an ultimate result, it _produces better quality product, saves money and help
 
 Now we'll look at a very popular tool **[SonarQube](https://www.sonarqube.org/features/clean-code/)** for continuous code quality analysis.
 
-SonarQube was formerly known as _"Sonar"_, and it's probably the most popular tool for continuous code analysis. Initially popular with Java, now they support 20+ programming languages.
+SonarQube was formerly known as _"Sonar"_, and it's probably the most popular tool for continuous code analysis now. Initially popular with Java, now they support 20+ programming languages.
 
 ## Benefits of SonarQube
 
