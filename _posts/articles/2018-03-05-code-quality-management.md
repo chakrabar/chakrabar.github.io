@@ -21,7 +21,7 @@ There are basically two types of issues of a software application - the ones fac
     1. Incorrect behaviour of the application (visible bugs)
     2. Non-reliable application (crashing or freezing)
     3. Poor performance (lags & slowness)
-    4. Complex and/or non-user-friendly interface (usability issues)
+    4. Complex and/or non-user-friendly interface (usability issues)
 2. Quality issues of the code faced by the development team
     1. Poorly written code (bad naming practices, no input check, unhandled exceptions etc.)
     2. Overly complex code (lot of nested loops or if-else)
@@ -75,7 +75,9 @@ Most of the modern IDEs can do pretty good analysis (e.g. Visual Studio), and th
 
 #### Static Code Analysis
 
-Static Code Analysis tools are a type of applications that can read through static code (without executing the code) and find problems. They generally have a set of rules for good-code (also called _"coding rules"_, _"style guidelines"_ etc.), and check if the current code follow those rules or not. For each deviation from those rules, it shows errors/warnings/suggestion as configured. For example, [SonarQube](https://www.sonarqube.org/) has static code analysis for many languages. For .NET projects, there are some specific tools like [StyleCop](https://github.com/StyleCop) that looks at C# source code and [FxCop](https://msdn.microsoft.com/en-us/library/bb429476(v=vs.80).aspx) that examines compiled binaries.
+Static Code Analysis tools are a type of applications that can read through static code (without executing the code) and find problems. They generally have a set of rules for good-code (also called _"coding rules"_, _"style guidelines"_ etc.) like, "this class name does not have recommended Pascal casing", "that method is too long", "this statement should have a null check", "exception is swallowed here" etc.
+
+Static code analysis tools check if the current code follow those rules or not. For each deviation from those rules, it shows errors/warnings/suggestion as configured. For example, [SonarQube](https://www.sonarqube.org/) has static code analysis for many languages. For .NET projects, there are some specific tools like [StyleCop](https://github.com/StyleCop) that looks at C# source code and [FxCop](https://msdn.microsoft.com/en-us/library/bb429476(v=vs.80).aspx) that examines compiled binaries.
 
 How does static code analysis help?
 
