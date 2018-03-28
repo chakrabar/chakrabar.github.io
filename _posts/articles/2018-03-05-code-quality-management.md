@@ -37,7 +37,7 @@ There are basically two types of issues of a software application - the ones fac
 
 While there are standard approaches to find and reduce both type of issues in a software applications, here we'll talk about managing the code quality issues.
 
-Some of the common practices for reducing first type of issues are - well written functional tests, manual tests, load testing & profiling the application, early & frequent review with end users, regular code reviews etc.
+Some of the common practices for reducing first type of issues are - well written functional tests, manual testing, load testing & profiling the application, early & frequent review with end users, regular code reviews etc.
 
 #### Common practices to manage code quality
 
