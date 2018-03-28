@@ -61,7 +61,7 @@ we'll briefly look at some of the common practices to manage code quality issues
 * Security hackers to test vulnerabilities
 * Code analysis tools
 
-**Note:** *Some of the very popular tools for end to end functional testing (some of them support BDD too) are - [Selenium](https://www.seleniumhq.org/),  [Cucumber](https://cucumber.io/),  [SpecFlow](http://specflow.org/),  [Nightwatch.js](http://nightwatchjs.org/),  [Protractor](http://www.protractortest.org/#/),  [SauceLabs](https://saucelabs.com/),  [CodedUI](https://github.com/icnocop/cuite)  etc.
+**Note:** *Some of the very popular tools for end to end functional testing (some of them support BDD too) are - [Selenium](https://www.seleniumhq.org/),  [Cucumber](https://cucumber.io/),  [SpecFlow](http://specflow.org/),  [Nightwatch.js](http://nightwatchjs.org/),  [TestCafé](https://testcafe.devexpress.com/),  [Protractor](http://www.protractortest.org/#/),  [SauceLabs](https://saucelabs.com/),  [CodedUI](https://github.com/icnocop/cuite)  etc.
 {: .notice--success}
 
 #### Tools for code analysis
