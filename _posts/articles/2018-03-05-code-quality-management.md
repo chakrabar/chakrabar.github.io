@@ -3,7 +3,7 @@ layout: post
 title: "Code quality management - common problems & how to solve them"
 excerpt: "Common problems with software code quality and how SonarQube can help manage them"
 date: 2018-03-05
-tags: [tech, codequality, staticanalysis, codemetrics, sonar, sonarqube]
+tags: [tech, codequality, staticanalysis, codemetrics, tools, sonar, sonarqube]
 categories: articles
 image:
   feature: posts/sonarqube/lynda-checklist.jpg
@@ -54,12 +54,15 @@ we'll briefly look at some of the common practices to manage code quality issues
 * Training and guidance for the developers
 * Set of basic guidelines (ruleset/checklists) and enforcement of the same
 * Team code reviews (where everything is discussed from rules to design)
-* Unit tests (coverage is important, so is actual meaningful tests)
-* Automated functional tests for E2E correctness
+* Unit tests (with meaningful tests and a reasonable coverage)
+* Automated functional tests for E2E correctness*
 * Regular code audit for design smells
 * Senior developers actively working hands on with the team
 * Security hackers to test vulnerabilities
 * Code analysis tools
+
+**Note:** *Some of the very popular tools for end to end functional testing (some of them support BDD too) are - [Selenium](https://www.seleniumhq.org/),  [Cucumber](https://cucumber.io/),  [SpecFlow](http://specflow.org/),  [Nightwatch.js](http://nightwatchjs.org/),  [Protractor](http://www.protractortest.org/#/),  [SauceLabs](https://saucelabs.com/),  [CodedUI](https://github.com/icnocop/cuite)  etc.
+{: .notice--success}
 
 #### Tools for code analysis
 
@@ -91,7 +94,10 @@ In a big project, it's pretty tedious to review code line-by-line. Also, for cod
 
 Another huge benefit of the code analysis tools is that, they can be integrated into IDEs and build systems. So, effectively we can get _"continuous code quality analysis"_. With continuous code quality analysis, developers get immediate feedback on their code (as they type code in IDE or at build), and can fix the issues before merging or pushing the code into main centralized repository. This prevents _"bad code"_ from entering the system and keeps the codebase clean & more maintainable. In turn it reduces code review time and chances of bugs.
 
-Continuous code analysis tools are ideally integrated into **Continuous Integration (CI)** systems (e.g. [Travis CI](https://travis-ci.org/), [Shippable](https://www.shippable.com/), [VSTS](https://www.visualstudio.com/team-services/), [Jenkins](https://jenkins.io/), [GoCD](https://www.gocd.org/) etc.), so that analysis is done on each commit of code, and results are maintained as historical data.
+Continuous code analysis tools are ideally integrated into **Continuous Integration (CI)*** systems, so that analysis is done on each commit of code, and results are maintained as historical data.
+
+**Note:** *Some of the very popular CI/CD tools currently being used by the development/DevOps community are - [Travis CI](https://travis-ci.org/),  [Shippable](https://www.shippable.com/),  [VSTS](https://www.visualstudio.com/team-services/),  [Jenkins](https://jenkins.io/),  [GoCD](https://www.gocd.org/)  etc.
+{: .notice--success}
 
 Ultimately it results in
 
