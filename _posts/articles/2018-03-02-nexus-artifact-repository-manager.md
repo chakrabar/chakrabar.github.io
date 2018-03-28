@@ -33,7 +33,7 @@ Combined together, they greatly improve development, build and distribution of s
 
 [Sonatype Nexus](https://www.sonatype.com/nexus-repository-sonatype) is one of the most popular artifact repository managers available in market today. It was initially made popular with `Maven` projects for `Java`, but now they are used in almost all sort of software projects like `.NET`, `Ruby`, `Node`, `Python` etc. They can host any kind of raw binary files as well.
 
-Nexus can run on all major OS (Windows, Linux, Mac), comes with great compatibility with different tech stacks (Java, .NET, Ruby, Node, Python, Docker etc.) and has lot of useful features like grouped repositories, security, monitoring, reporting, automated mails, housekeeping jobs and many more.
+Nexus can run on all major OS (Windows, Linux, macOS), comes with great compatibility with different tech stacks (Java, .NET, Ruby, Node, Python, Docker etc.) and has lot of useful features like grouped repositories, security, monitoring, reporting, automated mails, housekeeping jobs and many more.
 
 Alternatives? There are some popular alternatives like
 

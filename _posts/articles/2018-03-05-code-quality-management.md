@@ -91,7 +91,7 @@ In a big project, it's pretty tedious to review code line-by-line. Also, for cod
 
 Another huge benefit of the code analysis tools is that, they can be integrated into IDEs and build systems. So, effectively we can get _"continuous code quality analysis"_. With continuous code quality analysis, developers get immediate feedback on their code (as they type code in IDE or at build), and can fix the issues before merging or pushing the code into main centralized repository. This prevents _"bad code"_ from entering the system and keeps the codebase clean & more maintainable. In turn it reduces code review time and chances of bugs.
 
-Continuous code analysis tools are ideally integrated into **Continuous Integration (CI)** systems, so that analysis is done on each commit of code, and results are maintained as historical data.
+Continuous code analysis tools are ideally integrated into **Continuous Integration (CI)** systems (e.g. [Travis CI](https://travis-ci.org/), [Shippable](https://www.shippable.com/), [VSTS](https://www.visualstudio.com/team-services/), [Jenkins](https://jenkins.io/), [GoCD](https://www.gocd.org/) etc.), so that analysis is done on each commit of code, and results are maintained as historical data.
 
 Ultimately it results in
 

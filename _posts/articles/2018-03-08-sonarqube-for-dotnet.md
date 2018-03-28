@@ -28,7 +28,7 @@ SonarQube needs three components to work, `SonarQube server`, `SonarQube Scanner
 
 #### SonarQube setup process for development
 
-We'll setup the infrastructure on a `Windows` system. They can be setup on `Linux` and `Mac OS` as well. We'll run analysis on a `.NET` project, so we'll use `SonarC#` ([SonarVB](https://www.sonarsource.com/products/codeanalyzers/sonarvbnet.html) is also available) plugin and MSBuild runner. Seeting up and running for other languages and project types will have a similar but slightly different setup process.
+We'll setup the infrastructure on a `Windows` system. They can be setup on `Linux` and `macOS` as well. We'll run analysis on a `.NET` project, so we'll use `SonarC#` ([SonarVB](https://www.sonarsource.com/products/codeanalyzers/sonarvbnet.html) is also available) plugin and MSBuild runner. Seeting up and running for other languages and project types will have a similar but slightly different setup process.
 
 ###### [1] Install and run the SonarQube Server
 
