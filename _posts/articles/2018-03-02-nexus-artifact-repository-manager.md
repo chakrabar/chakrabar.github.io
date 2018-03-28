@@ -35,11 +35,12 @@ Combined together, they greatly improve development, build and distribution of s
 
 Nexus can run on all major OS (Windows, Linux, macOS), comes with great compatibility with different tech stacks (Java, .NET, Ruby, Node, Python, Docker etc.) and has lot of useful features like grouped repositories, security, monitoring, reporting, automated mails, housekeeping jobs and many more.
 
-Alternatives? There are some popular alternatives like
+Alternatives? There are some similar alternatives like
 
 * [JFrog Artifactory](https://jfrog.com/artifactory/)
 * [Proget](https://inedo.com/proget)
-* [TFS](https://www.visualstudio.com/tfs/) etc.
+* [TFS](https://www.visualstudio.com/tfs/)
+* [Docker registry](https://docs.docker.com/registry/) etc.
 
 #### Nexus basic concepts & terminology
 
