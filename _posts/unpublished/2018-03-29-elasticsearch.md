@@ -50,7 +50,11 @@ So, if you just want to use the super-fast full-text-search capabilities on a si
 
 
 
-#### .NET clients
+#### Clients
+
+###### Clients for different languages
+
+* [Official & community clients](https://www.elastic.co/guide/en/elasticsearch/client/index.html)
 
 ###### Elasticsearch .NET clients
 

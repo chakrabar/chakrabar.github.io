@@ -6,6 +6,7 @@ date: 2017-11-09
 categories: notes
 modified: 2017-11-09T22:11:53-04:00
 hidden: true
+published: false
 ---
 
 ## Adding a remote github theme

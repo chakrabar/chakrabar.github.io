@@ -6,6 +6,7 @@ date: 2017-11-08
 categories: notes
 modified: 2017-11-08T22:11:53-04:00
 hidden: true
+published: false
 ---
 
 Setting up Jekyll (Github page) site locally:
