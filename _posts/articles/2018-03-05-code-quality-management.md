@@ -11,6 +11,7 @@ image:
   creditlink: https://www.lynda.com/Developer-Programming-Foundations-tutorials/Foundations-Programming-Software-Quality-Assurance/126119-2.html
 comments: true
 share: true
+modified: 2018-03-27T22:10:00-04:30
 ---
 
 **Quality of software**
@@ -46,6 +47,10 @@ What is code quality?
 There is no standard definition of _"code quality"_, and there is no single metric that can measure it. Code that does not suffer from the issues mentioned above can be considered good code. Well, it's almost impossible to have a large codebase with no issues at all, but lesser the issues - better the codebase. My general definition of high quality code would be
 
 > In addition to being functionally correct and performant, a high-quality code is easy to read, understand, debug, build, test, maintain, reuse, replace, extend and is just-enough documented.
+
+Why is it important?
+
+Application with poor code quality often tends to have much more issues than those with high code quality. Poor quality code is hard to read, understand, debug (and everything from the list above), so developers spend longer stressful hours to fix or enhance the code. Finally it becomes a maintenance nightmare!
 
 There are bunch of practices that has been established and time-tested by the development community to help tackle the code quality issues. None of them are _"silver bullet"_, and the success rate depends on multiple factors like - skillset and maturity of the developers, team priorities, outlook of the organization, pragmatic approach towards standard coding practices, choice of tools & platforms etc.
 
