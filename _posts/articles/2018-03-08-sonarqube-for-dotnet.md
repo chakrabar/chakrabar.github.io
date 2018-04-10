@@ -13,7 +13,7 @@ comments: true
 share: true
 ---
 
-**Note:** This article is currently in-progress
+**Note:** This article is currently incomplete & in-progress
 {: .notice--danger}
 
 This post is a continuation of **[Code quality management - common problems & how to solve them](/articles/code-quality-management/)**, read that first for a general discussion of software code quality management and how SonarQube helps in the process.

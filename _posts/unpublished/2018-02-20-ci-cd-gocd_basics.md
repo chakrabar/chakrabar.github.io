@@ -31,7 +31,7 @@ The whole essence of things here are:
 2. Real progress in terms of developed, tested, deployable functionalities
 3. Building the right thing. From continuous delivery, one can get quick and frequent user feedback and fix stuffs quickly when that goes away from expectation.
 
-DevOps is a culture. It is how the different parts of the team interact & collaborate. Generally, there is no sense in having a "DevOps team"!
+**DevOps** is a culture. It is how the different parts of the team interact & collaborate. Generally, there is no sense in having a "DevOps team"!
 
 Usability testing: Users approve that they feel the app is easy to use.
 User acceptance testing: Users can complete transactions using the app in near-production setup.
@@ -45,7 +45,7 @@ Keep logic out of CI/CD tools - use external scripts if required (and version co
 
 **Agent:** A system that actually does the user created works. Like, building, running unit tests etc. To enable running any command from GoCD, the corresponding client/application needs to be installed on the GoCD Agents.
 
-**Material:** A material is something that can trigger a pipeline. Most common form of material are source control systems (like Git, SVN etc.). A pipeline can have one or more materials.
+**Material:** A material is something that can trigger a pipeline. Most common form of material are source control systems (like Git, SVN etc.). A pipeline can have one or more materials, even another pipeline or a stage in a pipeline as material.
 
 **A pipeline has stages. Stages have jobs. Jobs have tasks.**
 
@@ -54,16 +54,17 @@ Keep logic out of CI/CD tools - use external scripts if required (and version co
 * Smallest piece of a work, like a single command (e.g. Build)
 * It's not necessary for that command to be simple, that one command can be something like a NAnt batch
 * GoCD supports `Ant`, `NAnt`, `Rake` tasks by default. More are available as plugins. If not plugin, virtually anything can be run as "custom command"
+* Task is not a specific element within GoCD system, it can by any type of command
 
 **Job:** A collection of tasks
 
 * Tasks in a job run sequentially. If one fails, job fails
-* A job is run on one agent, so all tasks in a job run in same agent
-* Different jobs in same stage always run in parallel. If not required, create one job per stage
+* A job is run on one agent, so all tasks in a job run in same agent. Different jobs in same stage may run on different agents
+* Different jobs in same stage always run in parallel, in any possible order (should be independent of each other). If not required, create one job per stage
 
 **Stage:** collection of build job [the green/yellow/red bar at bottom of pipeline]
 
-* They run in sequence, either in same agent or different
+* They (different stages) run in sequence, either in same agent or different
 * Stages can be like - build, unit test, publish report, pack, deploy etc.
 
 **Pipeline:** Workflow for a build process, can run single or multiple commands - like a job in Jenkins [big white square cards on UI]
@@ -80,13 +81,14 @@ Agents: users for an environment
 
 
 
-Value Stream: The UI representation of the whole work-flow (multiple interacting pipelines, with fan-in and fan-out etc.)  
+Value Stream: The UI representation of the whole work-flow (multiple interacting pipelines, with fan-in and fan-out etc.)
 
 Pipeline: name, group
-Group: group of pipelines (?), e.g Mobile app pipelines for different runtime 
+Group: group of pipelines (?), e.g Mobile app pipelines for different runtime
 
 #### GoCD
 
 * [Installation](https://docs.gocd.org/current/installation/installing_go_server.html)
 * [Bare basic setup](https://www.gocd.org/getting-started/part-1/)
 * [Detailed documentation](https://docs.gocd.org/current/)
+* [GoCD code](https://github.com/gocd/gocd/)
