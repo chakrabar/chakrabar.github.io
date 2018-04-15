@@ -1,9 +1,9 @@
 ---
 layout: post
 title: "nAnt"
-excerpt: "Not any tutorial, just unordered notes"
+excerpt: "Automating tasks with NAnt"
 date: 2018-04-04
-tags: [tech, nant, nantcontrib, installation, setup, buildfile]
+tags: [nant, nantcontrib, dotnet, automation, installation, setup, buildfile, tasks]
 categories: articles
 comments: true
 share: true
@@ -30,6 +30,12 @@ NAnt has binary and source distributions. Binary is enough to setup and run buil
 * Download the current version from [here](http://nant.sourceforge.net/) - see "Releases" menu on the left, e.g. nant-0.92-bin.zip
 * Extract the contents to a directory where you have access. e.g. _"C:\nant"_
 * Add this path to _"System Environment PATH"_ for easy access. Once done, command `nant -help` should work
+* OR, in case you do not want to add another new path, create a wrapper over `nant.exe` on a system accessible path. So, create a batch file as `nant.bat` and save it inside (for example) `C:\Windows` with following content (make sure the path is correct)
+
+```bash
+@echo off
+"C:\nant\bin\NAnt.exe" %*
+```
 
 **Note:** The NAnt configuration is present in _"C:\nant\bin\NAnt.exe.config"_ (based on your installation path). You can check and change some configurations, if needed e.g. default .NET framework. Also, **global properties** can be set in this file.
 {: .notice--info}
@@ -92,11 +98,14 @@ Example - TO CHANGE <<
 
 ```xml
 <?xml version="1.0"?>
-<project name="Hello World" default="hello">
-    <property name="user.string" value="AC" />
-    <target name="hello" description="Echoes 'Hello _user_'">
-        <echo message="Hello ${user.string}" />
-    </target>
+<project name="Hello World" default="time">
+  <property name="user.name" value="friend" />
+  <target name="hello" description="Says hello to user">
+    <echo message="Hello ${user.name}" />
+  </target>
+  <target name="time" description="Says current time" depends="hello">
+    <echo message="The current time is ${datetime::now()}" />
+  </target>
 </project>
 ```
 
@@ -111,16 +120,16 @@ Example - TO CHANGE <<
 
 ```bash
 # single or default build file and default target
-c:\\builddirectory>nant
+$ nant
 # single or default build file with specific target
-# can specify multiple targets, separated by space (?)
-c:\\builddirectory>nant hello
-# with specific build file and default target
-c:\\builddirectory>nant -buildfile:hello.build
-# with specific build file and specific target, can use -f: as well
-c:\\builddirectory> nant -buildfile:hello.build hello
+# can specify multiple targets, separated by space
+$ nant hello
+# with specific build file and default target, -f: also works
+$ nant -buildfile:hello.build
+# with specific build file and specific target
+$ nant -f:hello.build hello
 # passing a property value, enclose in quotes in value has spaces
-c:\\builddirectory>nant -D:user.string=developers
+$ nant -D:user.name=Arghya
 ```
 
 * A NAnt script can also have [expressions](http://nant.sourceforge.net/release/0.85/help/fundamentals/expressions.html) like `if` condition or simple function call like `${datetime::now()}`.
@@ -128,7 +137,7 @@ c:\\builddirectory>nant -D:user.string=developers
 * Functions can use properties simply by the name like `${path::combine(src.dir, 'app.sln')}`
 
 **Note:** If no default target is mentioned in .build file and no target specified as command argument, NAnt will simply exit without doing anything.
-{: .notice--danger}
+{: .notice--warning}
 
 #### Building a project
 
