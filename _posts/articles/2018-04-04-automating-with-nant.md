@@ -100,7 +100,7 @@ Each `NAnt` build file is an `XML` file with bunch of command and configuration.
 
 ###### `<project>`
 
-* Build files will have **`<project>`** as the root element
+* Build files will have `<project>` as the root element
 * Basically each file is a NAnt project
 * Project can have optional `description` and `basedir` which will be base root path for all relative paths
 * Project generally defines the `default` target to be executed
@@ -197,7 +197,7 @@ This happens for a target mismatch with MSbuild versions, as explained [here](ht
 1. To solve for a specific project/solution, add the [Web.targets](https://www.nuget.org/packages/MSBuild.Microsoft.VisualStudio.Web.targets/) `NuGet` to the project/solution.
 2. To solve it for all builds on the machine. Simply copy the targets from a compatible MSBuild location to target MSBuild directory. For example, copy from _"C:\Program Files (x86)\MSBuild\Microsoft\VisualStudio\v10.0\WebApplications"_ to _"C:\Program Files (x86)\MSBuild\Microsoft\VisualStudio\v11.0\WebApplications"_
 
-###### Running MSBuild.exe directly with <exec>
+###### Running MSBuild.exe directly with \<exec\>
 
 The problem with NAntContrib `<msbuild>` task is, it is not updated to work with newer solution or project formats & framework versions. The .NET framework and Visual Studio keeps updating almost every year, and so does the MSBuild. So, at some point the msbuild task will get outdated, if it isn't already!
 
