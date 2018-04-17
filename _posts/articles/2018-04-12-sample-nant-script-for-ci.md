@@ -5,9 +5,10 @@ excerpt: "A sample NAnt script for common CI tasks like pulling code, building r
 date: 2018-04-12
 tags: [nant, nantcontrib, dotnet, automation, buildfile, tasks, ci, cd, cicd]
 categories: articles
+image:
+  feature: posts/nant/nant_script.png
 comments: true
 share: true
-published: false
 ---
 
 This post is a continuation of **[Automating tasks with NAnt](/articles/automating-with-nant/)**, read that first to understand what is NAnt and why to use it.
@@ -27,17 +28,17 @@ This post just shows a sample NAnt script that can be used as part of a CI (Cont
 
 #### High-level overview
 
-I'll not go into detailed explanation of the script as it is mostly self-explanatory, I'll just mention few key points. For inital understanding of NAnt, read [this](/articles/automating-with-nant/) post, and see the references there for additional resources.
+I'll not go into detailed explanation of the script as it is mostly self-explanatory, I'll just mention few key points. For initial understanding of NAnt, read [this](/articles/automating-with-nant/) post, and see the references there for additional resources.
 
-* This scipt has a bunch of `<property>` which are used to configure the script. To directly use it for your own project, simply update the values of properties as required. Properties are commented and grouped into different sections based on when you should update them. Basically, look for _"CHANGE"_ in the comments.
-* There are two main `<target>`s, _"quick-deploy"_ & _"ci-deploy"_. The seconds one does all the tasks mentioned above, while the first one simply compiles and deploys the application. Add/modify targets to costomize it for specifci needs. Note, here the targets were called one-by-one rather than having nested dependency for simplicity & readability.
+* This script has a bunch of `<property>` which are used to configure the script. To directly use it for your own project, simply update the values of properties as required. Properties are commented and grouped into different sections based on when you should update them. Basically, look for _"CHANGE"_ in the comments.
+* There are two main `<target>`s, _"quick-deploy"_ & _"ci-deploy"_. The seconds one does all the tasks mentioned above, while the first one simply compiles and deploys the application. Add/modify targets to customize it for specific needs. Note, here the targets were called one-by-one rather than having nested dependency for simplicity & readability.
 * Build logs are saved with `<record>` task in `Logs` directory with a name formal like `build_2018Apr08_19-10-30.log`.
 * The `<tstamp>` task is used to get current timestamp. In other places, function `${datetime::now()}` is used for similar purpose.
-* The solution can be build with two standard configurations `debug` and `release`. Default is `debug`, if required, pass the value as command-line arg e.g. `-D:build.config=release`.
+* The solution can be built with two standard configurations `debug` and `release`. Default is `debug`, if required, pass the value as command-line arg e.g. `-D:build.config=release`.
 * The scripts does code analysis with SonarQube and loads artifacts to a Nexus repository. If not required, skip those targets. To understand them, read the [SonarQube](/articles/sonarqube-for-dotnet/) and [Nexus](/articles/nexus-artifact-repository-mnager/) posts.
-* All the non-NAnt commands are run simply with `<exec>` task, which is nothing but NAnt way of running command-line applications. Arguments are passed with `<arg>` tasks, where `value` is used for simple single-value arguments, and complicated ones with `line` which can basically accept _"a line of arguments"_ i.e. single or multiple values passed as-is to the executing comman-line app.
+* All the non-NAnt commands are run simply with `<exec>` task, which is nothing but NAnt way of running command-line applications. Arguments are passed with `<arg>` tasks, where `value` is used for simple single-value arguments, and complicated ones with `line` which can basically accept _"a line of arguments"_ i.e. single or multiple values passed as-is to the executing command-line app.
 * The unit test run reports & coverage reports get saved in `..BuildOutput\Argon\TestOutputs` directory, unless configured differently. See [NUnit](http://nunit.org/docs/2.2.6/consoleCommandLine.html) and [OpenCover](https://github.com/opencover/opencover/wiki/Usage) documentations for their specific syntax and options.
-* The _"getSVNRevision"_ task, though looks complicated, actually just gets the curent SVN revision number in `svn.revision` property, to be used later in package name. This part of script was taken from [here](http://untidy.net/blog/2006/08/21/subversion-revision-number-in-nant/).
+* The _"getSVNRevision"_ task, though looks complicated, actually just gets the current SVN revision number in `svn.revision` property, to be used later in package name. This part of script was taken from [here](http://untidy.net/blog/2006/08/21/subversion-revision-number-in-nant/).
 * Finally it creates a compressed artifact package and loads to `Nexus` for later use.
 * `MSBuild` is executed same way with `exec` task, directly running the `msbuild.exe`. It uses local copy of MSBuild to compile a .NET solution. Do not forget to set the correct value of `${latest.msbuild}` to the path of desired MSBuild executable.
 
