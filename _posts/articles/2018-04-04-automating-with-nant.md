@@ -6,7 +6,7 @@ date: 2018-04-04
 tags: [nant, nantcontrib, dotnet, automation, installation, setup, build, tasks]
 categories: articles
 image:
-  feature: posts/nant/nant_script.png
+  feature: posts/nant/nant_script2.png
 comments: true
 share: true
 ---
@@ -189,13 +189,13 @@ There is a `<solution>` task that can directly build a solution or one or more p
 
 The limitation of the `<solution>` task is, it cannot build solutions that are created Visual Studio versions later that 2003! So, for those projects, the easiest solution is to use the `<msbuild>` task from NAntContrib. See this [NAntCOntrib MSBuild reference](http://nantcontrib.sourceforge.net/release/0.85/help/tasks/msbuild.html).
 
-**Note:** While building a newer (VS 2012+) solution file (generally a MVC web project) with NAntContrib `msbuild` task, you may face this error: "[msbuild] err or MSB4019: The imported project "C:\Program Files (x86)\MSBuild\Microsoft\VisualStudio\v11.0\WebApplications\Microsoft.WebApplication.targets" was not found. Confirm that the path in the \<Import\> declaration is correct, and that the file exists on disk."
+**Note:** While building a newer (VS 2012+) solution file (generally a MVC web project) with NAntContrib `msbuild` task, you may face this error: "[msbuild] err or MSB4019: The imported project "C:\Program Files (x86)\MSBuild\Microsoft \VisualStudio\v11.0 \WebApplications \Microsoft.WebApplication.targets" was not found. Confirm that the path in the \<Import\> declaration is correct, and that the file exists on disk."
 {: .notice--danger}
 
 This happens for a target mismatch with MSbuild versions, as explained [here](https://stackoverflow.com/questions/3980909/microsoft-webapplication-targets-was-not-found-on-the-build-server-whats-your) and [here](https://stackoverflow.com/questions/17433904/v11-0-webapplications-microsoft-webapplication-targets-was-not-found-when-file-a). There are two basic solutions to problem.
 
 1. To solve for a specific project/solution, add the [Web.targets](https://www.nuget.org/packages/MSBuild.Microsoft.VisualStudio.Web.targets/) `NuGet` to the project/solution.
-2. To solve it for all builds on the machine. Simply copy the targets from a compatible MSBuild location to target MSBuild directory. For example, copy from _"C:\Program Files (x86)\MSBuild\Microsoft\VisualStudio\v10.0\WebApplications"_ to _"C:\Program Files (x86)\MSBuild\Microsoft\VisualStudio\v11.0\WebApplications"_
+2. To solve it for all builds on the machine. Simply copy the targets from a compatible MSBuild location to target MSBuild directory. For example, copy from _"C:\Program Files (x86)\ MSBuild\Microsoft\VisualStudio \v10.0\WebApplications"_ to _"C:\Program Files (x86)\ MSBuild\Microsoft\VisualStudio \v11.0\WebApplications"_
 
 ###### Running MSBuild.exe directly with \<exec\>
 
