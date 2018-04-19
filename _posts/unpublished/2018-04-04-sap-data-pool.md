@@ -29,6 +29,7 @@ published: false
 #### What is SAP
 
 * Initial understandings...
+* System Application and Products
 * SAP has it's own set of database/tables. The native data manipulation language is ABAP, a SAP specific language
 * SAP table names are generally cryptic
 * Apart from physical data tables, SAP also contains logocal tables like _pooled_ & _cluster_
@@ -39,10 +40,10 @@ published: false
 
 #### Some SAP modules
 
-* MM - 
-* PP - 
-* SD - 
-* FICO - 
+* MM - Material Management is one of the vital modules in SAP ERP software and MM application module supports the procurement and inventory functions occurring in day-to-day business operations.
+* PP - Production Planning is the process of aligning demand with manufacturing capacity to create production and procurement schedules for finished products and component materials.
+* SD - The SAP SD module is one of the primary ERP module developed by SAP. SAP service and distribution deals in better management of sales and customer distribution data and processes in organizations.
+* FICO - The best configuration for internal as well as external accounting processes; represents FI (Financial Accounting) plus CO (Controlling). It is an important core module of ERP processes, wherein real time financial transactions are integrated with various parallel SAP modules for best results.
 
 #### SAP data store
 
