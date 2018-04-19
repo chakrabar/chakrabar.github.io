@@ -26,6 +26,8 @@ published: false
 
 #### What is ERP
 
+Enterprise Resource Planning...
+
 #### What is SAP
 
 * Initial understandings...
