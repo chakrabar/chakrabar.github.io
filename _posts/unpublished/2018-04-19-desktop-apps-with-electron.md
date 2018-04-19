@@ -59,4 +59,7 @@ published: false
 
 * Electron has multiple processes running all the time. SOme of the main ones are
   * Main - always one _"Main"_ process. Loads first and controlls other stuffs, and can spawn new process.
-  * Rendered
+  * Renderer - creates the display, There can be many of them. Can also create other _"Renderer"_ process
+  * Modules available for each process in listed [here](https://github.com/electron/electron/tree/master/docs)
+  * Main & Renderer processess communicate to each other via `IPC` or inter-process-communication
+  * Each process has it's own IPC module and they interact through a `pub-sub` model. For example, if a Renderer detects a click event, it reports to Main. Main in tern broadcasts the event to all it's child renderer processes, and whoever has subscribed to that event can raise an event-handler

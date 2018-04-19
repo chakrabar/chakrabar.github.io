@@ -29,10 +29,14 @@ Always verify the validity and compatibility of suggestions with your codebase.
 
 [Details](https://nvd.nist.gov/vuln/detail/CVE-2017-18258)
 
-Currently in my `Gemfile.lock`
-`nokogiri (>= 1.4)`
+## Currently in my `Gemfile.lock`
 
-Updated to
-`nokogiri (>= 1.8.2)`
+`nokogiri (>= 1.4)` line 79
+`nokogiri (1.8.1-x64-mingw32)` line 199
+
+## Updated to
+
+`nokogiri (>= 1.4)` line 79
+`nokogiri (1.8.2-x64-mingw32)` line 199
 
 > Seems to be working fine! Will check back later.
