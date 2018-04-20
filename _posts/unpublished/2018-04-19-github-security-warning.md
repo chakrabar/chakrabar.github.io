@@ -23,9 +23,9 @@ nokogiri ~> 1.8.2
 Always verify the validity and compatibility of suggestions with your codebase.
 ```
 
-![Image](/images/posts/security/Warning.png)
-![Image](/images/posts/security/Warning-2.png)
-![Image](/images/posts/security/Warning-3.png)
+![Image](/images/posts/misc/Warning.png)
+![Image](/images/posts/misc/Warning-2.png)
+![Image](/images/posts/misc/Warning-3.png)
 
 [Details](https://nvd.nist.gov/vuln/detail/CVE-2017-18258)
 

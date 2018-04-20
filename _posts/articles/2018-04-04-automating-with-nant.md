@@ -6,7 +6,7 @@ date: 2018-04-04
 tags: [nant, nantcontrib, dotnet, automation, build, tasks, installation, setup]
 categories: articles
 image:
-  feature: posts/nant/nant_script2.png
+  feature: posts/misc/nant_script2.png
 comments: true
 share: true
 modified: 2018-04-17T20:30:00-05:30
@@ -188,7 +188,7 @@ $ nant -D:user.name=Arghya
 
 The above script produces output like this
 
-![Image](/images/posts/nant/output.png)
+![Image](/images/posts/misc/output.png)
 
 **Note:** If no default target is mentioned in .build file and no target specified as command-line argument, NAnt will simply exit without doing anything.
 {: .notice--warning}

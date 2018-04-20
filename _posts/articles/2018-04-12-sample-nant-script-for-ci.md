@@ -6,9 +6,10 @@ date: 2018-04-12
 tags: [nant, nantcontrib, dotnet, automation, buildfile, tasks, ci, cd, cicd]
 categories: articles
 image:
-  feature: posts/nant/nant_script.png
+  feature: posts/misc/nant_script.png
 comments: true
 share: true
+modified: 2018-04-20T22:30:00-05:30
 ---
 
 This post is a continuation of **[Automating tasks with NAnt](/articles/automating-with-nant/)**, read that first to understand what is NAnt and why to use it.
@@ -261,7 +262,9 @@ I'll not go into detailed explanation of the script as it is mostly self-explana
 ```
 
 **Note:** The script needs both **NAnt** & **NAntContrib** to be installed on the system. See [this](/articles/automating-with-nant/) for setup help.
-{: .notice--success}
+{: .notice--info}
 
 **Note:** To use the full script, you needs to have this tools installed too - [SVN](https://tortoisesvn.net/downloads.html), [NUnit](http://nunit.org/docs/2.4/installation.html), [OpenCover](https://github.com/opencover/opencover/releases), [MSBuild](https://github.com/Microsoft/msbuild/releases), [SonarQube MSBuild runner](https://docs.sonarqube.org/display/SCAN/Analyzing+with+SonarQube+Scanner+for+MSBuild), [curl](https://curl.haxx.se/download.html).
-{: .notice--success}
+{: .notice--info}
+
+If, you want to trigger a jenkins build (a job basically, like running functional tests) from NAnt, see the post **[How to trigger a Jenkins job remotely](/articles/triggering-jenkins-job-remotely/)**.
