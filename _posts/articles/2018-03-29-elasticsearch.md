@@ -7,7 +7,7 @@ tags: [tech, database, nosql, search, textsearch, fulltextsearch, lucene, elasti
 categories: articles
 comments: true
 share: true
-published: false
+published: true
 ---
 
 # Elasticsearch
@@ -19,8 +19,8 @@ published: false
 
 A distributed schema-less database with very fast full-text search capabilities. [Official documentation](https://www.elastic.co/guide/en/elasticsearch/reference/current/getting-started.html).
 
-* A wrapper over Lucene (written in Java), as a distributed system with http interface - that is very fast & scalable
-* At heart, the actual work is done by Lucene which provides full-text search
+* A wrapper over Lucene (written in Java), as a distributed system with http interface - that is very fast & (auto) scalable
+* At heart, the core work is done by Lucene which provides full-text search
 * Works as a JSON-based full-text no-sql DB
 * Returns text-search result based on relevance, also creates analytics on data
 * Comes with rich set of built-in aggregation and statistics/calculation options
@@ -51,8 +51,8 @@ So, if you just want to use the super-fast full-text-search capabilities on a si
 
 ###### How does it work ?
 
-Doc.1 : "I love cakes"
-Doc.2 : "I Write code"
+Doc.1 : "I love cakes" <br />
+Doc.2 : "I Write code" <br />
 Doc.3 : "Cakes and cookies"
 
 |Term|Document IDs|
@@ -83,15 +83,16 @@ One can use the .ToUpper(target_string) funtion
 
 #### Installation
 
-* Install on Windows as service
+* Install on Windows as service from [here](https://www.elastic.co/guide/en/elasticsearch/reference/current/_installation.html)
 * In `config.yml`, change node and cluster name if required
 * Now the APIs are available at `http://localhost:9200`
-* Install plugins - Marvel as interactive GUI for monitoring clusters & query data (built on Kibana - data visualization tool)
+* Install plugins - [Marvel](https://www.elastic.co/downloads/marvel) as interactive GUI for monitoring clusters & query data (built on Kibana - data visualization tool)
   * Go to Elasticsearch install directory `C:\elasticsearch\bin` in command prompt
   * Type in `plugin.bat -i elasticsearch/marvel/latest`
   * Once installed, restart Elasticsearch service
   * The cluster dashboard is viewable at http://localhost:9200/_plugin/marvel 
   * The query interface is available at Sense dashboard http://localhost:9200/_plugin/marvel/sense/index.html
+* Also look at plugin [head](https://github.com/mobz/elasticsearch-head) which gives an easy to use GUI
 
 #### Elasticsearch Schemas or Mappings
 
@@ -107,7 +108,7 @@ POST http://localhost:9200/blog //blog index
 	  }
   },
   "mappings": { //schema of index
-    "post": { //type
+    "post": { //a type
       "properties": {
         "title": {
           "type": "string",
@@ -378,7 +379,7 @@ Example ??
 ###### Elasticsearch .NET clients
 
 * Elasticsearch.Net - low level, covering the basic elasticsearch APIs as methods
-* NEST - high level wrapper over Elasticsearch.Net that provides more abstraction & strongly-typed DSL that maps 1 to 1 with the Elasticsearch query DSL
+* NEST - high level wrapper over Elasticsearch.Net that provides more abstraction & strongly-typed DSL that maps 1 to 1 with the Elasticsearch query DSL, officially supported
 
 ###### Lucene .NET clients
 

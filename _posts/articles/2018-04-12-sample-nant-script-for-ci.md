@@ -9,7 +9,7 @@ image:
   feature: posts/misc/nant_script.png
 comments: true
 share: true
-modified: 2018-04-20T22:30:00-05:30
+modified: 2018-05-07T22:30:00-05:30
 ---
 
 This post is a continuation of **[Automating tasks with NAnt](/articles/automating-with-nant/)**, read that first to understand what is NAnt and why to use it.
@@ -261,10 +261,22 @@ I'll not go into detailed explanation of the script as it is mostly self-explana
 </project>
 ```
 
-**Note:** The script needs both **NAnt** & **NAntContrib** to be installed on the system. See [this](/articles/automating-with-nant/) for setup help.
+**Note:** The script uses both **NAnt** & **NAntContrib** to be installed on the system. See [this](/articles/automating-with-nant/) for setup help. Also, to use the full script, you needs to have this tools installed too - [SVN](https://tortoisesvn.net/downloads.html), [NUnit](http://nunit.org/docs/2.4/installation.html), [OpenCover](https://github.com/opencover/opencover/releases), [MSBuild](https://github.com/Microsoft/msbuild/releases), [SonarQube MSBuild runner](https://docs.sonarqube.org/display/SCAN/Analyzing+with+SonarQube+Scanner+for+MSBuild), [curl](https://curl.haxx.se/download.html).
 {: .notice--info}
 
-**Note:** To use the full script, you needs to have this tools installed too - [SVN](https://tortoisesvn.net/downloads.html), [NUnit](http://nunit.org/docs/2.4/installation.html), [OpenCover](https://github.com/opencover/opencover/releases), [MSBuild](https://github.com/Microsoft/msbuild/releases), [SonarQube MSBuild runner](https://docs.sonarqube.org/display/SCAN/Analyzing+with+SonarQube+Scanner+for+MSBuild), [curl](https://curl.haxx.se/download.html).
-{: .notice--info}
+**Tips:** If your script is becoming big, you can break it down to multiple .build files and include them in the main file with `<include>`. And, to fail a target based on custom logic, you can use a `<fail>` task with the logic. See example below.
+{: .notice--success}
+
+```xml
+<?xml version="1.0"?>
+<project name="Modular build" default="custom">
+  <include buildfile="path_to/another.build"/>
+  <target name="custom">
+    <call target="target_in_another" />
+    <property name="var" value="100" />
+    <fail if="${double::parse(var) &lt; 500}" message="We were expecting 500+" />
+  </target>
+</project>
+```
 
 If, you want to trigger a jenkins build (a job basically, like running functional tests) from NAnt, see the post **[How to trigger a Jenkins job remotely](/articles/triggering-jenkins-job-remotely/)**.
