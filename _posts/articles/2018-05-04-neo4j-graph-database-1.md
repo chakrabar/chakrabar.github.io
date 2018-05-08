@@ -35,23 +35,23 @@ In the above graph, we have
 
 #### Characteristics of a Graph Database
 
-A graph database (something that stores data) is very different from other type of databases (e.g. relational, document, key-value etc.) that, it [1] actually stores the data in a graph structure, and [2] treats relationships between different pieces of data with the same importance of data itself. So data models, internal storage and data retrieval, all revolves around data and relationships. Some main features of standard graph databases are
+A graph database is very different from other type of databases (e.g. relational, document, key-value) such that, it [1] actually stores the data in a graph structure, and [2] treats relationships between different pieces of data with the same importance of data itself. So data models, internal storage and data retrieval, all revolves around data and relationships. Some main features of standard graph databases are
 
 * Stores data in graph structure - has nodes & relationships
 * Data stored in nodes, represent real-world entities (like objects in OOP), and have properties
 * Relations are first class citizen of the system
-  * Relations are not conceptual, they are as real as the data itself (unlike relational database, where data are stored in rows, but relationships are formed with foreign keys primary key equality)
+  * Relations are not conceptual, they are as real as the data itself (unlike relational database, where data are stored in rows, but relationships are formed based on foreign-key primary-key equality)
   * Relationships can also have properties
   * Relationships are named & directed (between a pair of nodes)
 * Data models are intuitive - they are basically how developers explain them on white-board! They are easier on brain, to read & write
 * Data retrieval is very fast for _highly related data_, even with huge number of nodes
-* Flexible & data structures - nodes do not have fixed schema (just like document databases), and any node can have relationship with any other node
+* Flexible data structures - nodes do not have fixed schema (just like document databases), and any node can have relationship with any other node
 * Is a no-sql database, has own query language
 * Related data are fetched with patterns (unlike joins in relational databases)
 
 So, in real life systems, when we have data with lot of relationships among them, and we are interested around how data pieces are related to each other, want to search data with arbitrary multi-level relationships, graph databases provides us with very powerful set of tools.
 
-Some very common **use cases** of graph databases are - social networks, recommendation systems, master data management, network operations, any graph based searches etc.
+Some very common **use cases** of graph databases are - social networks, recommendation systems, master data management, network operations (well, networks are basically graphs), any graph based searches etc.
 
 #### The neo4j database
 
@@ -108,12 +108,12 @@ Both the above type of database performs very poorly when data has multi-level a
 
 It works really well when we have queries like (around an e-commerce system)
 
-* _"Which all customers have bought Camlin ball pen?"_
+* _"Which all customers have bought Camlin ball pen from that supplier?"_
 * _"Which all customers bough the same items as Madhu?"_
 * _"Who shopped last week and bough most items common as Sumit?"_
 * _"Is there any relationship between entity X and Y, and if yes, how?"_
 
-Other type of databases also provide great value in specific use-cases, like <u>key-value databases</u> (like `Redis`, `Memcached`) for caching, <u>text-search databases</u> (like `Elasticsearch`, `Solr`) when we want to search text data with arbitrary keywords or phrases etc.
+Other type of databases also provide great value in specific use-cases, like <u>key-value</u> databases (like `Redis`, `Memcached`) for caching, <u>text-search</u> databases (like `Elasticsearch`, `Solr`) when we want to search text data with arbitrary keywords or phrases etc.
 
 **Note:** In the next section, we'll see **[how to work with data in Neo4j](#)**. This article is currently in-progress, and will be published soon. Come back later to see this post.
 {: .notice--warning}
