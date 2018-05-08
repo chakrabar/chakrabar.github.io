@@ -92,8 +92,8 @@ Here we'll look at some common types of databases and when it _"might"_ be more 
 
 Relational databases like `MySQL`, `Oracle`, `SQL Server` etc. works really well, when storage & data retrieval needs align with their capabilities. They are great at maintaing fixed structure data and running table-level queries with not-so-many relationships between big set of tables. Beyond that, the queries with lot of joins tends to degrade in performance. Prefer it when
 
-1. Having fixed structured data is important (e.g. fixed format data, reporting and standard calculations)
-2. Lot of table level calculations are used (e.g. Max, Min, Avg etc.)
+1. Data is well defined & fixed structured, with limited level of relationships
+2. Lot of column based aggregations are used (e.g. sum, average, standard deviation etc.)
 
 <u>Document database</u>
 
