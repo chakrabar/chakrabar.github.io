@@ -11,7 +11,7 @@ image:
   creditlink: https://neo4j.com/blog/other-graph-database-technologies/
 comments: true
 share: true
-published: true
+published: false
 ---
 
 # neo4j
