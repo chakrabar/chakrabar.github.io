@@ -6,7 +6,7 @@ date: 2018-05-04
 tags: [database, neo4j, graph, graphdatabase, nosql]
 categories: articles
 image:
-  feature: posts/neo4j/graph_2.jpeg
+  feature: posts/neo4j/graph_2.jpg
   credit: Medium
   creditlink: https://medium.com/@JonRamer/day-84-graph-data-structures-es6-magic-3cb77ac632ba
 comments: true
@@ -121,5 +121,6 @@ Other type of databases also provide great value in specific use-cases, like <u>
 #### References
 
 * [Introduction to graph database, property graph model](https://neo4j.com/developer/graph-database/)
-* [Basic video tutorials](https://neo4j.com/blog/neo4j-video-tutorials/)
 * [Youtube series](https://www.youtube.com/watch?v=5Tl8WcaqZoc)
+* [sample use cases](https://neo4j.com/graphgists/)
+* [Ebboks, including free](https://neo4j.com/books/)
