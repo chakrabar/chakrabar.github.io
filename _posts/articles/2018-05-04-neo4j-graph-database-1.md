@@ -1,7 +1,7 @@
 ---
 layout: post
-title: "Introduction to Graph Database with Neo4j - Part I"
-excerpt: "The basics of Graph database for database developers & programmers"
+title: "Introduction to Graph Database  - Neo4j Part I"
+excerpt: "The basics of graph database for database developers & programmers"
 date: 2018-05-04
 tags: [database, neo4j, graph, graphdatabase, nosql]
 categories: articles
@@ -115,8 +115,8 @@ It works really well when we have queries like (around an e-commerce system)
 
 Other type of databases also provide great value in specific use-cases, like <u>key-value</u> databases (like `Redis`, `Memcached`) for caching, <u>text-search</u> databases (like `Elasticsearch`, `Solr`) when we want to search text data with arbitrary keywords or phrases etc.
 
-**Note:** In the next section, we'll see **[how to work with data in Neo4j](#)**. This article is currently in-progress, and will be published soon. Come back later to see this post.
-{: .notice--warning}
+**Note:** In the next section, we'll see **[how to work with graph data in Neo4j with Cypher](/articles/neo4j-graph-database-2/)**. We'll use Cypher query language to fetch & update data, build index and much more.
+{: .notice--info}
 
 #### References
 

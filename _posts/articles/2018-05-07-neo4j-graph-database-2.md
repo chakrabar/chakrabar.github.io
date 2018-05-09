@@ -1,7 +1,7 @@
 ---
 layout: post
-title: "Introduction to Graph Database with Neo4j - Part II"
-excerpt: "Working with neo4j Graph database & Cypher query"
+title: "Introduction to Cypher query language - Neo4j Part II"
+excerpt: "Working with neo4j graph data with Cypher query"
 date: 2018-05-07
 tags: [tech, database, neo4j, graph, graphdatabase, cypher, query]
 categories: articles
@@ -11,43 +11,50 @@ image:
   creditlink: https://neo4j.com/blog/other-graph-database-technologies/
 comments: true
 share: true
-published: false
+published: true
 ---
 
-# neo4j
-
-**Note:** This article is currently incomplete & in-progress
+**Note:** This article is currently incomplete & in-progress. It'll be updated soon.
 {: .notice--danger}
+
+This article talks about Cypher query language for Neo4j graph database. Before going into the details of Cypher, read the **[introduction to graph database](/articles/neo4j-graph-database-1/)** first.
 
 #### What is a "Cypher"?
 
-Cypher - the neo4j query language
+Cypher is the neo4j query language. `Cypher` (pronounced _psy-pher_) is a query language designed specifically for `neo4j` graph database, that is being adopted in [other graph systems](https://neo4j.com/blog/open-cypher-sql-for-graphs/) as well. Cypher is used to both manipulate & query data in graph databases. It is generally easier to learn compared to SQL, also easier to read & write. Learn more about Cypher [here](https://neo4j.com/developer/cypher-query-language/). Some of the main features of Cypher are
 
-`Cypher` is a query language (not SQ) designed specifically for `neo4j` graph database, that is used to both manipulate & query data. It is generally easier to learn compared to SQL, also easier to read & write. Learn more about Cypher [here](https://neo4j.com/developer/cypher-query-language/). Some of the main features of Cypher are
-
-* Queries follow the pattern - `MATCH <PATTERN> RETURN`, where MATCH & RETURN are keywords
-* All the main query logic are in the pattern, where a pattern represents what data we are interested in
 * It is a _declarative query language_. It specify _"what data to fetch"_ rather than _"how to fetch the data"_, unlike SQL
-* It also uses bunch of SQL-like constructs e.g. WHERE, OREDR BY, MAX, MIN, EXISTS, IN, UNION, STARTS WITH etc.
+* Queries follow the pattern - `MATCH <PATTERN> RETURN`, where MATCH & RETURN are keywords
+* The main query logic for any CRUD operation, are in the pattern. A pattern represents what data we are interested in
+* It also uses bunch of common SQL-like constructs e.g. WHERE, OREDR BY, MAX, MIN, EXISTS, IN, UNION, STARTS WITH, RANGE etc.
 * It supports many graph-specific constructs (which are not available by default in other database query languages) like - get _shortest distance_ between nodes, find all relationships between a pair of nodes, n-th level relationships etc.
 
-Patterns are like ASCII-art_, i.e. representation of the actual graph with ASCII characters. 
+#### Patterns in Cypher
 
-MATCH (node:Label) RETURN node.property
+![Image](/images/posts/neo4j/pattern.png)
 
-MATCH (node1:Label1)-[:RELATION_NAME]->(node2:Label2)
-WHERE node1.propertyA = {value}
-RETURN node2.propertyA, node2.propertyB
+Pattern contains the data-matching logic, based on which data is either retrieved or manipulated in neo4j database. Patterns are like **`ASCII-art`**, i.e. representation of the actual (part of) graph with ASCII characters. The above shows a sample Cypher query, where the `(:Book) -[r]- (:Author)` part is a pattern, it says a node with Book label is related to a node with label Author.
 
-**Note** Type of relationship is optional in a query. The relationship name is preceeded by a colon [:FREIND_OF] or [rel:FRIEND_OF]
+In Cypher pattern, nodes are shows as `()` and relationships as `-[]->`. The arrow head shows the direction of relationship and is optional in some cases. let's look at a more complete query below.
 
-* functions
-* path
-* range constraint
-* type constraint
-* modelling
+```fsharp
+MATCH path =
+(p:Person) -[r:ACTED_IN]-> (m:Movie)
+RETURN p.name, m.title
+```
+
+Here, `:Person` and `:Movie` are labels of nodes. The relationship is `:ACTED_IN` and `p`, `r`, `m` are variables representing the corresponding nodes and relationship. The Cypher keywords (like MATCH, RETURN) are not case-sensitive, but it's convention to write them in upper case. But the property, labels & relationships are case-sensitive. Also by convention, property names and functions (e.g. count, exists) are written in lowercase/Pascal-case.
+
+**Path**. A whole relationship sequence, including the nodes and relationships, is called a path. The `path` in above query is just a variable name though.
+
+**Note:** The colon(:) in a node label is optional, it can be omitted if variable name is not used. For the relationship though, it MUST be preceded by the colon. Otherwise it'll be considered as a variable name.
+{: .notice--warning}
 
 #### Data creation
+
+Here we'll see how to create data in neo4j with Cypher query. `CREATE` is used to create nodes and relationships. `MERGE` can be used in place of CREATE, to optionally create the data if it does not exist already, else it'll just return the existing one.
+
+Properties are created as `{key: 'Value'}` pairs and the data-type is interpreted by neo4j from the data. Properties can only be of premitive types, that includes - boolean, byte, short, int, long, float, double, char, string and their arrays, like int[], char[] etc. Null is not allowed.
 
 ```fsharp
 //create 1, 2 nodes. // for comment, end ; is optional
@@ -72,17 +79,22 @@ WHERE b.name = 'Tintin in Tibet'
 AND c.name = 'Tintin'
 CREATE path = (b) -[:HAS_CHARACTER {type:'Main'}]-> (c)
 RETURN path
+//create node if not there already - MERGE
+MERGE (c:Character {name: 'Sabu'})
+RETURN c
 ```
 
-#### Querying
+**Note:** When any data is inserted into the database, neo4j creates an internal `<id>` property which has incremental integer value, starting at 0. It is unique across all nodes and cannot be customized. For querying, the value can be fetched with `id(n)` function.
+{: .notice--info}
 
-Basic queries to fetch data
+#### Querying data
+
+Here we have some very basic queries to fetch data, based on the data created above. Queries are all about patterns. The result set can be customized with custom column names with `AS`, can be sorted with `OREDR BY [DESC]`, paginated with `SKIP` and `LIMIT` etc.
 
 ```fsharp
 //get all nodes
 MATCH (n) RETURN n;
-//the database creates an interal <id> which is incremental integer starting at 0. It is unique across all nodes and cannot be customized
-//....??
+//get all nodes with <id> less than or equal 100, with custom column names and ordering
 MATCH (n)
 WHERE id(n) <= 100
 RETURN id(n) AS Id, n.name AS Name
@@ -93,9 +105,14 @@ MATCH (n:Book) RETURN n LIMIT 10
 MATCH (n) WHERE n.isbn <> '' RETURN n
 //get all nodes that does NOT have isbn property
 MATCH (n) WHERE NOT exists(n.isbn) RETURN n
+//get all books published in 1950-2000, that is available in Hindi
+MATCH (b:Book)
+WHERE b.year IN RANGE (1950, 2000)
+AND ANY (lang IN b.languages WHERE lang = 'Hindi')
+RETURN b
 ```
 
-For the rest of the quesries, we'll be using the sample Movies database [available on neo4j site](https://neo4j.com/developer/movie-database/). This also comes with the default installation. Follow the instructions from the initial screen in the web interface. Jump into code -> Write code -> Movie Graph -> Create a graph
+Below queries are slightly more complex, uses relationships & pattern matching. For this part we'll be using the sample Movies database [available on neo4j site](https://neo4j.com/developer/movie-database/), that revolves around movies and people who are involved in them. This sample database also comes with the default installation of neo4j. Follow the instructions from the initial screen in the web interface to get the data. Jump into code -> Write code -> Movie Graph -> Create a graph.
 
 ![Image](/images/posts/neo4j/movie.png)
 
@@ -133,7 +150,7 @@ MATCH (Person{name:'Robin Williams'})-[]-(x) RETURN x
 MATCH (:Person{name:'Al Pacino'})-[*1..5]-(x) RETURN x
 ```
 
-When finding relationships with multiple hops, neo4j avoids linking back to same node. So that it is not like _(node1) -[:some_relation]- (node2) -[:some_relation]- (node1)_. Same nodes are also not included in result set, but can be added explicitly. Following is a sample query and the result set.
+When finding relationships with multiple hops, neo4j avoids linking back to same node. So that it is not like _(node1) -[:some_relation]- (node2) -[:some_relation]- (node1)_. So, same nodes are also not included in result set, but can be added explicitly. Following is a sample query and the result set.
 
 ```fsharp
 MATCH (p:Person{name:'Al Pacino'})-[*1..3]-(x) RETURN x, p
@@ -143,25 +160,30 @@ MATCH (p:Person{name:'Al Pacino'})-[*1..3]-(x) RETURN x, p
 
 #### Data definition/schema
 
+Neo4j does not have specific schema. But it allows some schema based constructs like `Index` and `Constraints`. They are conceptually the same as in other database systems. Index creates an ordered dictionary with specified property as key so that it's easier for lookup. `Unique constraints` make sure there is no duplicate value for the given property within the same label.
+
+**Note:** Unique constraint also creates an index implicitly. Unique key does not make the property to always have a value. For that `existence constraint` or `node key` can be used.
+{: .notice--info}
+
 ```fsharp
 //create an index - does NOT make the property required/unique
 CREATE INDEX ON :Book(name)
-//DROP INDEX ON :Book(name) ...??
+//DROP INDEX ON :Book(name) //to drop the index
 
 //show all indexes & constraints across database
 :schema
-//index hint, generally neo4j will figure out anyway
+//using index hint, generally neo4j will figure out anyway
 MATCH (b:Book)
 USING INDEX b:Book(name)
 WHERE b.name STARTS WITH 'Tintin'
 RETURN b
-//create unique constraint
+//create unique constraint. Replace CREATE with DROP to drop
 CREATE CONSTRAINT ON (b:Book)
 ASSERT b.isbn IS UNIQUE
 //show all constraints
 CALL db.constraints
 
-//following 2 features are available *ONLY ON Enterprise Edition*
+//following 2 features are available **ONLY ON Enterprise Edition**
 //existence constraint - property must exist
 CREATE CONSTRAINT ON (c:Character) ASSERT exists(c.Name)
 //NODE KEY - must exist & be unique
@@ -171,6 +193,8 @@ ASSERT (n.name) IS NODE KEY
 ```
 
 #### Deleting data
+
+To be updated...
 
 ```fsharp
 //DELETE ALL NODES, if there are no relationships
@@ -195,8 +219,17 @@ DELETE path
 
 #### Updating data
 
-```fsharp
+To be updated...
 
+```fsharp
+MATCH (m:Movie{title:'Da Vinci Code'})
+SET m.released = 2010, m.tagline = "The secret revealed"
+
+MATCH (f:Formats{type: 'Kindle'})
+SET f.price = null
+
+MATCH (:Book) -[r]- (:Character {name: 'Sabu'})
+REMOVE r
 ```
 
 #### References
