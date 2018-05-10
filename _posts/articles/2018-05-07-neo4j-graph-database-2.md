@@ -224,9 +224,7 @@ DELETE is used to delete data, i.e. nodes & relationships. If you want to update
 
 #### Updating data
 
-To set a value to a property, the `SET` command is used. If the said property already exists, it's value is updated. Otherwise the property is added.
-
-To remove a property or label, `REMOVE` command is used.
+To set a value to a property, the `SET` command is used. If the said property already exists, it's value is updated. Otherwise the property is added. To remove a property or label, `REMOVE` command is used.
 
 ```fsharp
 //set properties to a node = add/update value
@@ -248,7 +246,7 @@ REMOVE n:Fictional
 RETURN n.name, labels(n)
 ```
 
-Since `NULL` is not a allowed value for a property, setting null to a property removes it from the node. But it's always better to use `REMOVE` to remove a property as it is more intuitive and states that the property is not removed by mistake.
+Since `NULL` is not a allowed value for a property, setting null to a property removes it from the node. But it's always better to use `REMOVE` to remove a property as it is more intuitive and makes it clear that the property is not removed by mistake.
 
 **Note:** I'll publish another post in the Neo4j series and discuss about some common scenarios (like, shortest path calculation) and considerations for production deployment. Do come back later for the next post.
 {: .notice--info}
