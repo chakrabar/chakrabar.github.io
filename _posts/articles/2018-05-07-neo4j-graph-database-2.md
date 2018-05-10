@@ -115,7 +115,7 @@ AND ANY (lang IN b.languages WHERE lang = 'Hindi')
 RETURN b
 ```
 
-Below queries are slightly more complex, uses relationships & pattern matching. For this part we'll be using the sample Movies database [available on neo4j site](https://neo4j.com/developer/movie-database/), that revolves around movies and people who are involved in them. This sample database also comes with the default installation of neo4j. Follow the instructions from the initial screen in the web interface to get the data. Jump into code -> Write code -> Movie Graph -> Create a graph.
+Below queries are slightly more complex, uses relationships & pattern matching. For this part we'll be using the sample Movies database [available on neo4j site](https://neo4j.com/developer/movie-database/), that revolves around movies and people who are involved in them. This sample database also comes with the default installation of neo4j. Follow the instructions from the initial screen in the web interface to get the data. Jump into code -> Write code -> Movie Graph -> Create a graph. Or simply type _":play movie-graph"_ in the web editor.
 
 ![Image](/images/posts/neo4j/movie.png)
 
@@ -148,12 +148,34 @@ Return m.title AS Movie, p.name AS Director, 'Demi Moore' AS Actress
 
 //Get all nodes that are directly related (in any direction) to Robin Williams
 MATCH (Person{name:'Robin Williams'})-[]-(x) RETURN x
-
-//Get all nodes that are related (in any direction) to Al Pacino, within 5 levels/hops
-MATCH (:Person{name:'Al Pacino'})-[*1..5]-(x) RETURN x
 ```
 
-When finding relationships with multiple hops, neo4j avoids linking back to same node. So that it is not like _(node1) -[:some_relation]- (node2) -[:some_relation]- (node1)_. So, same nodes are also not included in result set, but can be added explicitly. Following is a sample query and the result set.
+###### Variable length pattern matching
+
+[Variable length pattern matching](https://neo4j.com/docs/developer-manual/current/cypher/syntax/patterns/#cypher-pattern-varlength) is used when the level of relationship, or number of hops between the nodes can be variable. A variable length relationship is indicated with an asterix followed by a number pattern. In simplest form, `(x)-[*2]->(y)` denotes relationship between node x and y with exactly 2 relationships/hops in between, which is same as (x)->()->(y).
+
+To have a variable length pattern, a range is used. For example, `[*1..5]` indicates relationship with 1-5 hops. `[*3..]` and `[*..3]` indicates minimum 3 and maximum 3 hops respectively. To indicate any/infinite number of hops `[*]` is used. Minimum hops by default is 1, but 0 can also be used to indicate no hops or the same node, e.g. in case of `(a)-[*0..1]-(b)`, a and b can be the same node as well!
+
+Let's look at some examples in a typical social network, where people "know" other people, and direct relations are friends. Following queries can be used to find _friends-of-a-friend_ and suggest new friends.
+
+```fsharp
+//get all friends of a person named Lily (which is a simple query)
+MATCH (:Person {name: 'Lily'}) -[:KNOWS]-> (friend) RETURN friend
+//get all second level friends of Lily (friend of a friend)
+MATCH (p:Person {name: 'Lily'}) -[:KNOWS*2]-> (foaf)
+WHERE NOT ((p) -[:KNOWS]-> (foaf))
+RETURN foaf
+//get all perople known to Lily upto 5 levels, not direct friends
+MATCH (p:Person {name: 'Lily'}) -[:KNOWS*2..5]-> (foaf)
+WHERE NOT ((p) -[:KNOWS]-> (foaf))
+RETURN p, foaf
+// ^ infinite level can be used [:KNOWS*], but query might be super expensive
+//just a related query, find common friends between Maggie & Lucie
+MATCH (:Person {name: 'Maggie'}) -[:KNOWS]- (cf:Person) -[:KNOWS]- (:Person {name: 'Lucie'})
+RETURN cf
+```
+
+When finding relationships with multiple hops, neo4j avoids linking back to same node. So that it is not like _(n1) -[:KNOWS]- (n2) -[:KNOWS]- (n1)_. So, same nodes are also not included in result set, but can be added explicitly. Following is a sample query and the result set.
 
 ```fsharp
 MATCH (p:Person{name:'Al Pacino'})-[*1..3]-(x) RETURN x, p
@@ -248,7 +270,7 @@ RETURN n.name, labels(n)
 
 Since `NULL` is not a allowed value for a property, setting null to a property removes it from the node. But it's always better to use `REMOVE` to remove a property as it is more intuitive and makes it clear that the property is not removed by mistake.
 
-**Note:** I'll publish another post in the Neo4j series and discuss about some common scenarios (like, shortest path calculation) and considerations for production deployment. Do come back later for the next post.
+**Note:** I'll publish another post in the Neo4j series and discuss about some common scenarios (e.g. shortest path calculations, importing RDBMS data etc.) and considerations for production deployment. Do come back later for the next post.
 {: .notice--info}
 
 #### References
