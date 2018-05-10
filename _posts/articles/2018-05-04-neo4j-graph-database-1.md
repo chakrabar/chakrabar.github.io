@@ -51,7 +51,7 @@ A graph database is very different from other type of databases (e.g. relational
 
 So, in real life systems, when we have data with lot of relationships among them, and we are interested around how data pieces are related to each other, want to search data with arbitrary multi-level relationships, graph databases provides us with very powerful set of tools.
 
-Some very common **use cases** of graph databases are - social networks, recommendation systems, master data management, network operations (well, networks are basically graphs), any graph based searches etc.
+Some very common **use cases** of graph databases are - social networks, recommendation systems, master data management, network operations (well, graphs are basically networks), any graph based searches etc.
 
 #### The neo4j database
 
@@ -92,8 +92,8 @@ Here we'll look at some common types of databases and when it _"might"_ be more 
 
 Relational databases like `MySQL`, `Oracle`, `SQL Server` etc. works really well, when storage & data retrieval needs align with their capabilities. They are great at maintaing fixed structure data and running table-level queries with not-so-many relationships between big set of tables. Beyond that, the queries with lot of joins tends to degrade in performance. Prefer it when
 
-1. Data is well defined & fixed structured, with limited level of relationships
-2. Lot of column based aggregations are used (e.g. sum, average, standard deviation etc.)
+1. Data is well defined & fixed structured, with limited level of pre-defined relationships
+2. Lot of column based aggregations are used (e.g. sum, average, standard deviation etc.), as column-wise retreival is pretty fast
 
 <u>Document database</u>
 
