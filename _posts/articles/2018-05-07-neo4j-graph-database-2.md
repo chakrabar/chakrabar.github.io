@@ -42,7 +42,7 @@ RETURN p.name, m.title
 
 Here, `:Person` and `:Movie` are labels of nodes. The relationship is `:ACTED_IN` and `p`, `r`, `m` are variables representing the corresponding nodes and relationship.
 
-The Cypher keywords (like MATCH, RETURN) are not case-sensitive, but it's convention to write them in upper case. But the property, labels & relationships are case-sensitive. Also by convention, property names, variables and functions like count(), exists() are written in lowercase/Pascal-case.
+The Cypher keywords (like MATCH, RETURN) are not case-sensitive, but it's convention to write them in upper case. But the property, labels & relationships are case-sensitive. Also by convention, property names, variables and functions like count(), exists() are written in lowercase/camel-case.
 
 **Path**. A whole relationship sequence, including the nodes and relationships, is called a path. The `path` in above query is just a variable name for the path expressions _(p:Person) -[r:ACTED_IN]-> (m:Movie)_ though.
 
