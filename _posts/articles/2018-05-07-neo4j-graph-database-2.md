@@ -32,7 +32,7 @@ Cypher is the neo4j query language. `Cypher` (pronounced _psy-pher_) is a query 
 
 Pattern contains the data-matching logic, based on which data is either retrieved or manipulated in neo4j database. Patterns are like **`ASCII-art`**, i.e. representation of the actual (part of) graph with ASCII characters. The above shows a sample Cypher query, where the `(:Book) -[r]- (:Author)` part is a pattern, it says a node with Book label is related to a node with label Author.
 
-In Cypher pattern, nodes are shows as `()` and relationships as `-[]->`. The arrow head shows the direction of relationship and is optional in some cases. let's look at a more complete query below.
+In Cypher pattern, nodes are shows as `()` and relationships as `-[]->`. The arrow head shows the direction of relationship and is optional in some cases. Let's look at a more complete query below.
 
 ```fsharp
 MATCH path =
