@@ -14,9 +14,6 @@ share: true
 published: true
 ---
 
-**Note:** This article is currently incomplete & in-progress. It'll be updated soon.
-{: .notice--danger}
-
 This article talks about Cypher query language for Neo4j graph database. Before going into the details of Cypher, read the **[introduction to graph database](/articles/neo4j-graph-database-1/)** first.
 
 #### What is a "Cypher"?
