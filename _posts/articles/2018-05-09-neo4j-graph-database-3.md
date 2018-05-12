@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Some scenarios and considerations - Neo4j Part II"
+title: "Some scenarios and considerations - Neo4j Part IV"
 excerpt: "Common use cases and neo4j graph database for production"
 date: 2018-05-09
 tags: [tech, database, neo4j, graph, graphdatabase, cypher, query]
@@ -46,6 +46,11 @@ CREATE (:Genre { GenreId: line[0], Name: line[1]})
 * Query execution plans - Prepend the Cypher statement with `EXPLAIN` to see estimated execution plan without executing the statement. Use `PROFILE` to run query and see plan. See [query tuning](https://neo4j.com/docs/developer-manual/current/cypher/query-tuning/) for more details.
 
 #### Data modelling
+
+https://neo4j.com/blog/data-modeling-basics/
+https://neo4j.com/blog/data-modeling-pitfalls/
+
+Graph database book, chapter 3 - 5
 
 #### Graph algorithms
 

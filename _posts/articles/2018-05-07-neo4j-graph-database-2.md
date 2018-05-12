@@ -23,7 +23,7 @@ Cypher is the neo4j query language. `Cypher` (pronounced _psy-pher_) is a query 
 * It is a _declarative query language_. It specify _"what data to fetch"_ rather than _"how to fetch the data"_, unlike SQL
 * Queries follow the pattern - `MATCH <PATTERN> COMMAND`, where COMMAND can be RETURN, CREATE, MERGE, DELETE etc.
 * The main query logic for any CRUD operation, are in the pattern. A pattern represents what data we are interested in
-* It also uses bunch of common SQL-like constructs e.g. WHERE, OREDR BY, MAX, MIN, EXISTS, IN, UNION, STARTS WITH, RANGE etc.
+* It also uses bunch of common SQL-like constructs e.g. WHERE, OREDR BY, MAX, MIN, EXISTS, IN, UNION, STARTS WITH, RANGE, DISTINCT etc.
 * It supports many graph-specific constructs (which are not available by default in other database query languages) like - get _shortest distance_ between nodes, find all relationships between a pair of nodes, n-th level relationships etc.
 
 #### Patterns in Cypher
@@ -46,7 +46,7 @@ The Cypher keywords (like MATCH, RETURN) are not case-sensitive, but it's conven
 
 **Path**. A whole relationship sequence, including the nodes and relationships, is called a path. The `path` in above query is just a variable name for the path expressions _(p:Person) -[r:ACTED_IN]-> (m:Movie)_ though.
 
-**Note:** The colon(:) in a node label is optional, it can be omitted if variable name is not used. For the relationship though, it MUST be preceded by the colon. Otherwise it'll be considered as a variable name.
+**Note:** The colon(:) in node & relationship is optional but important. It can be omitted if node label or relationship type is not specified. If they are required for the pattern, it MUST include the colon. Otherwise the text will be considered as a variable name.
 {: .notice--warning}
 
 #### Data creation
@@ -150,6 +150,19 @@ Return m.title AS Movie, p.name AS Director, 'Demi Moore' AS Actress
 MATCH (Person{name:'Robin Williams'})-[]-(x) RETURN x
 ```
 
+###### Query chaining
+
+Sometimes there are more than one parts in a query and we want to pass or _pipe_ the result from a MATCH to the next part of the query. Using the keyword `WITH` we can do that. Using WITH, we can process output from the previous part before passing on to the following part of query.
+
+Look at the following query, we want to get all the movies that Charlize Theron acted in, ordered by movie title. We use `collect()` function to create a comma separated list. Since we could not use OREDR BY on movie title at the end (as it does not exist anymore after collect() as Movies), we pass along the movie variable and ORDER BY it before passing it to the RETURN.
+
+```fsharp
+MATCH (:Person {name: "Charlize Theron"}) -[:ACTED_IN]-> (movie)
+WITH movie //movie being passed on to the next part
+ORDER BY movie.title //process movie before RETURN
+RETURN collect(movie.title) AS Movies
+```
+
 ###### Variable length pattern matching
 
 [Variable length pattern matching](https://neo4j.com/docs/developer-manual/current/cypher/syntax/patterns/#cypher-pattern-varlength) is used when the level of relationship, or number of hops between the nodes can be variable. A variable length relationship is indicated with an asterix followed by a number pattern. In simplest form, `(x)-[*2]->(y)` denotes relationship between node x and y with exactly 2 relationships/hops in between, which is same as (x)->()->(y).
@@ -175,7 +188,7 @@ MATCH (:Person {name: 'Maggie'}) -[:KNOWS]- (cf:Person) -[:KNOWS]- (:Person {nam
 RETURN cf
 ```
 
-When finding relationships with multiple hops, neo4j avoids linking back to same node. So that it is not like _(n1) -[:KNOWS]- (n2) -[:KNOWS]- (n1)_. So, same nodes are also not included in result set, but can be added explicitly. Following is a sample query and the result set.
+When finding relationships with multiple hops, neo4j avoids linking back to same node. So that it is not like _(n1) -[:KNOWS]- (n2) -[:KNOWS]- (n1)_. Also, same nodes are also not included in result set, but can be added explicitly. Following is a sample query and the result set.
 
 ```fsharp
 MATCH (p:Person{name:'Al Pacino'})-[*1..3]-(x) RETURN x, p

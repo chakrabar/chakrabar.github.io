@@ -49,7 +49,7 @@ A graph database is very different from other type of databases (e.g. relational
 * Is a no-sql database, has own query language
 * Related data are fetched with patterns (unlike joins in relational databases)
 
-So, in real life systems, when we have data with lot of relationships among them, and we are interested around how data pieces are related to each other, want to search data with arbitrary multi-level relationships, graph databases provides us with very powerful set of tools.
+So, in real life systems, when we have data with lot of relationships among them, and we are interested around how data pieces are related to each other, want to search data with arbitrary multi-level relationships, graph databases provides us with very powerful set of tools. Conceptually, a graph is how real life things are actually connected with many level of arbitrary relationship other among things, where relationships can also change over time.
 
 Some very common **use cases** of graph databases are - social networks, recommendation systems, master data management, network operations (well, graphs are basically networks), any graph based searches etc.
 
@@ -57,7 +57,7 @@ Some very common **use cases** of graph databases are - social networks, recomme
 
 **`Neo4j`** is the oldest & most widely used graph database[*](https://db-engines.com/en/ranking/graph+dbms) in market that has all the above properties. It supports [ACID](https://en.wikipedia.org/wiki/ACID) transactions. It also provides great real-like visualizations to see and interact with data, comes with many other great features, and offers a rich set of REST APIs that enable interacting with data. With this available, virtually all programming languages & platforms can use neo4j. It is open source on [GitHub](https://github.com/neo4j/neo4j).
 
-Neo4j follows the **`Property Graph Model`**. That means, properties are also stored with nodes & relationships. It's also called **`Labelled Property Graph`** as the nodes can have one or more `labels`. Labels are like tags, which generally talk about the _"type of node"_. With this, we can identify and group nodes. Labels can be thought to be somewhat relatable to tables in relational databases (because that is how we group similar data there), but actually they are not. Also, nodes can have multiple labels, like a node can be person, teacher & photographer.
+Neo4j follows the **`Property Graph Model`**. That states, relationships are always between a pair of nodes and are directed. Properties are also stored with nodes & relationships. It's also called **`Labelled Property Graph`** as the nodes can have one or more `labels`. Labels are like tags, which generally talk about the _"type of node"_. With this, we can identify and group nodes. Labels can be thought to be somewhat relatable to tables in relational databases (because that is how we group similar data there), but actually they are not. Also, nodes can have multiple labels, like a node can be person, teacher & photographer.
 
 ![Image](/images/posts/neo4j/pgm.png)
 
@@ -86,7 +86,7 @@ You can directly run queries here on top section, and see the result below. It a
 
 There are different types of database and they all have their rightful places. There is no one-size-fits-all solutions and it needs thoughtful consideration to select a specific database for an application. It depends on the specific use-cases, common query needs, infrastructure, cost, team-expertise, type of application and many other factors.
 
-Here we'll look at some common types of databases and when it _"might"_ be more useful than others. But understand every project/application is different and only a person with enough knowledge of the application should be able to select a database. Also, in most of the complex application needs, it's not just one database, but a combination of different data storage strategies gives a good-enough solution.
+Here we'll look at some common types of databases and when it _"might"_ be more useful than others. But understand every project/application is different and only a person with enough knowledge of the application should be able to select a database. Also, in most of the complex application needs, it's not just one database, but a combination of different data storage strategies that gives a good-enough solution.
 
 <u>Relational database</u>
 
@@ -97,7 +97,7 @@ Relational databases like `MySQL`, `Oracle`, `SQL Server` etc. works really well
 
 <u>Document database</u>
 
-Document databases like `MongoDB`, `Couchbase` stores data in JSON-like format, where all the data related to a central entity is stored as a single document. They are generally schema-less and provides great read speed as all the required data is at one place. Generally, document databases also support foreign keys & joins, but does not perform that great when we want to fetch related data from multiple documents. Because of its nature, it's also easier to distribute & shard the database, as related data always stays together. Prefer it when
+Document databases like `MongoDB`, `Couchbase` stores data in JSON-like format, where all the data related to a central entity is stored as a single document. They are generally schema-less and provides great read speed as all the required data is at one place. Generally, document databases also support foreign keys & joins, but does not perform that great when we want to fetch related data from multiple documents. Because of its nature, it's also easier to distribute & physically shard the database, as related data always stays together. Prefer it when
 
 1. We want to store and retrieve big chunk of data about a specific entity (e.g. all data related to one user in an e-commerce system is saved as one document. So, for example, the product details are stored with each user's, each order. Normalization is not a priority) with high-speed reads
 2. When data model changes regularly, as document databases are generally schema-less
@@ -106,14 +106,14 @@ Document databases like `MongoDB`, `Couchbase` stores data in JSON-like format, 
 
 Both the above type of database performs very poorly when data has multi-level arbitrary relationships. Graph data performs really well when we want to establish relationships among any arbitrary (not very closely related or obvious) set of data. It can traverse the graph structure and find relationships and data spread across many nodes. With more hops (traversing from one node to another), the speed decreases, but not much.
 
-It works really well when we have queries like (around an e-commerce system)
+It works really well when we have queries like (e.g. around an e-commerce system)
 
 * _"Which all customers have bought Camlin ball pen from that supplier?"_
 * _"Which all customers bough the same items as Madhu?"_
 * _"Who shopped last week and bough most items common as Sumit?"_
 * _"Is there any relationship between entity X and Y, and if yes, how?"_
 
-Other type of databases also provide great value in specific use-cases, like <u>key-value</u> databases (like `Redis`, `Memcached`) for caching, <u>text-search</u> databases (like `Elasticsearch`, `Solr`) when we want to search text data with arbitrary keywords or phrases etc.
+Other type of databases also provide great value in specific use-cases, like <u>key-value</u> databases (like `Redis`, `Memcached`) for caching, <u>text-search</u> databases (like `Elasticsearch`, `Solr`) when we want to search text data with arbitrary keywords or phrases etc. [This](https://neo4j.com/blog/aggregate-stores-tour/) article also provides  quick com[arative study.]
 
 **Note:** In the next section, we'll see **[how to work with graph data in Neo4j with Cypher](/articles/neo4j-graph-database-2/)**. We'll use Cypher query language to fetch & update data, build index and much more.
 {: .notice--info}
@@ -121,6 +121,7 @@ Other type of databases also provide great value in specific use-cases, like <u>
 #### References
 
 * [Introduction to graph database, property graph model](https://neo4j.com/developer/graph-database/)
+* [Graph databases for beginners articles](https://neo4j.com/blog/why-graph-databases-are-the-future/)
 * [Youtube series](https://www.youtube.com/watch?v=5Tl8WcaqZoc)
 * [sample use cases](https://neo4j.com/graphgists/)
 * [Ebboks, including free](https://neo4j.com/books/)
