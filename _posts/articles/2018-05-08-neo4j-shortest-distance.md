@@ -153,6 +153,8 @@ AS line
 MATCH (c1:City { id: toInteger(line.FromCity) }),
   (c2:City { id: toInteger(line.ToCity) })
 CREATE path = (c1) -[:LINK {avgSpeed: toFloat(line.SpeedKmph), name: 'NH-' + line.Id, distance: toInteger(line.DistanceKM) }]-> (c2)
+
+//run Q6 to add the road blocks
 ```
 
 With our new roads (i.e. [:LINK] relationships) with property `avgSpeed`, we can calculate the fastest route using similar logic, only we choose route with minimal travel time that distance. Just for a comparison, we'll print out all the possible routes with in order of travel time. Also, we used directed paths for this query. Results are shown below.
