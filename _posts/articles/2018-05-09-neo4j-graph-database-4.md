@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Some scenarios and considerations - Neo4j Part IV"
+title: "Some common scenarios and considerations - Neo4j Part IV"
 excerpt: "Common use cases and neo4j graph database for production"
 date: 2018-05-09
 tags: [tech, database, neo4j, graph, graphdatabase, cypher, query]
@@ -57,6 +57,8 @@ Graph database book, chapter 3 - 5
 * Shortest path
 * DFS
 * BFS
+
+Learning neo4j book, chapter 6
 
 #### Neo4j for production
 

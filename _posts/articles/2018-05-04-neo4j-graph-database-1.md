@@ -57,7 +57,9 @@ Some very common **use cases** of graph databases are - social networks, recomme
 
 **`Neo4j`** is the oldest & most widely used graph database[*](https://db-engines.com/en/ranking/graph+dbms) in market that has all the above properties. It supports [ACID](https://en.wikipedia.org/wiki/ACID) transactions. It also provides great real-like visualizations to see and interact with data, comes with many other great features, and offers a rich set of REST APIs that enable interacting with data. With this available, virtually all programming languages & platforms can use neo4j. It is open source on [GitHub](https://github.com/neo4j/neo4j).
 
-Neo4j follows the **`Property Graph Model`**. That states, relationships are always between a pair of nodes and are directed. Properties are also stored with nodes & relationships. It's also called **`Labelled Property Graph`** as the nodes can have one or more `labels`. Labels are like tags, which generally talk about the _"type of node"_. With this, we can identify and group nodes. Labels can be thought to be somewhat relatable to tables in relational databases (because that is how we group similar data there), but actually they are not. Also, nodes can have multiple labels, like a node can be person, teacher & photographer.
+Neo4j data model has 4 main constructs - **nodes, relationships, properties & labels**.
+
+Neo4j follows the **`Property Graph Model`**. That states, relationships are always between a pair of nodes and are directed. Properties are also stored with nodes & relationships. It's also called **`Labeled Property Graph`** as the nodes can have one or more `labels`. Labels are like tags, which generally talk about the _"type of node"_. With this, we can identify and group nodes. Labels can be thought to be somewhat relatable to tables in relational databases (because that is how we group similar data there), but actually they are not. Also, nodes can have multiple labels, like a node can be person, teacher & photographer.
 
 ![Image](/images/posts/neo4j/pgm.png)
 
@@ -90,10 +92,10 @@ Here we'll look at some common types of databases and when it _"might"_ be more 
 
 <u>Relational database</u>
 
-Relational databases like `MySQL`, `Oracle`, `SQL Server` etc. works really well, when storage & data retrieval needs align with their capabilities. They are great at maintaing fixed structure data and running table-level queries with not-so-many relationships between big set of tables. Beyond that, the queries with lot of joins tends to degrade in performance. Prefer it when
+Relational databases like `MySQL`, `Oracle`, `SQL Server` etc. works really well, when storage & data retrieval needs align with their capabilities. They are great at maintaining fixed structure data and running table-level queries with not-so-many relationships between big set of tables. Beyond that, the queries with lot of joins tends to degrade in performance. Prefer it when
 
 1. Data is well defined & fixed structured, with limited level of pre-defined relationships (decided at design time)
-2. Lot of column based aggregations are used (e.g. sum, average, standard deviation etc.), as column-wise retreival is pretty fast
+2. Lot of column based aggregations are used (e.g. sum, average, standard deviation etc.), as column-wise retrieval is pretty fast
 
 <u>Document database</u>
 
@@ -104,7 +106,7 @@ Document databases like `MongoDB`, `Couchbase` stores data in JSON-like format, 
 
 <u>Graph database</u>
 
-Both the above type of database performs very poorly when data has multi-level arbitrary relationships. Graph data performs really well when we want to establish relationships among any arbitrary (not very closely related or obvious) set of data. It can traverse the graph structure and find relationships and data spread across many nodes. With more hops (traversing from one node to another), the speed decreases, but not much.
+Both the above type of database performs very poorly when data has multi-level arbitrary relationships. Graph data performs really well when we want to relate among arbitrary (not very closely related or obvious) set of data with semantically rich & diverse set of relationships. It can traverse the graph structure and find relationships and data spread across many nodes. With more hops (traversing from one node to another), the speed decreases, but not much.
 
 It works really well when we have queries like (e.g. around an e-commerce system)
 
@@ -113,7 +115,7 @@ It works really well when we have queries like (e.g. around an e-commerce system
 * _"Who shopped last week and bough most items common as Sumit?"_
 * _"Is there any relationship between entity X and Y, and if yes, how?"_
 
-Other type of databases also provide great value in specific use-cases, like <u>key-value</u> databases (like `Redis`, `Memcached`) for caching, <u>text-search</u> databases (like `Elasticsearch`, `Solr`) when we want to search text data with arbitrary keywords or phrases etc. [This](https://neo4j.com/blog/aggregate-stores-tour/) article also provides  quick com[arative study.]
+Other type of databases also provide great value in specific use-cases, like <u>key-value</u> databases (like `Redis`, `Memcached`) for caching, <u>text-search</u> databases (like `Elasticsearch`, `Solr`) when we want to search text data with arbitrary keywords or phrases etc. [This](https://neo4j.com/blog/aggregate-stores-tour/) article also provides quick comparative study.
 
 **Note:** In the next section, we'll see **[how to work with graph data in Neo4j with Cypher](/articles/neo4j-graph-database-2/)**. We'll use Cypher query language to fetch & update data, build index and much more.
 {: .notice--info}

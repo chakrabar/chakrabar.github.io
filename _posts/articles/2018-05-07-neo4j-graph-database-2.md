@@ -42,7 +42,7 @@ RETURN p.name, m.title
 
 Here, `:Person` and `:Movie` are labels of nodes. The relationship is `:ACTED_IN` and `p`, `r`, `m` are variables representing the corresponding nodes and relationship.
 
-The Cypher keywords (like MATCH, RETURN) are not case-sensitive, but it's convention to write them in upper case. But the property, labels & relationships are case-sensitive. Also by convention, property names, variables and functions like count(), exists() are written in lowercase/camel-case.
+The Cypher keywords (like `MATCH`, `RETURN`) are not case-sensitive, but it's general convention to write them in upper case. On the other hand, the property, labels & relationships are case-sensitive. Also by convention, property names, variables and functions like `count()`, `exists()` are written in lowercase/camel-case.
 
 **Path**. A whole relationship sequence, including the nodes and relationships, is called a path. The `path` in above query is just a variable name for the path expressions _(p:Person) -[r:ACTED_IN]-> (m:Movie)_ though.
 
@@ -84,6 +84,8 @@ RETURN path
 MERGE (c:Character {name: "Sabu"})
 RETURN c
 ```
+
+`CREATE UNIQUE` can be used to make sure data is not created if it already exists.
 
 **Note:** When any data is inserted into the database, neo4j creates an internal `<id>` property which has incremental integer value, starting at 0. It is unique across all nodes and cannot be customized. For querying, the value can be fetched with `id(n)` function.
 {: .notice--info}
@@ -140,19 +142,23 @@ MATCH
 RETURN m.title AS Movie, collect(p.name) AS CoActors, count(p) + 1 AS TotalCast
 
 //UNION - get directors of all movies by Charlize Theron/Demi Moore. Union All to include duplicates
-MATCH (Person {name:'Charlize Theron'}) -[:ACTED_IN]-> (m:Movie) <-[:DIRECTED]- (p:Person)
+MATCH (:Person {name:'Charlize Theron'}) -[:ACTED_IN]-> (m:Movie) <-[:DIRECTED]- (p:Person)
 Return m.title AS Movie, p.name AS Director, 'Charlize Theron' AS Actress
 UNION
-MATCH (Person {name:'Demi Moore'}) -[:ACTED_IN]-> (m:Movie) <-[:DIRECTED]- (p:Person)
+MATCH (:Person {name:'Demi Moore'}) -[:ACTED_IN]-> (m:Movie) <-[:DIRECTED]- (p:Person)
 Return m.title AS Movie, p.name AS Director, 'Demi Moore' AS Actress
 
 //Get all nodes that are directly related (in any direction) to Robin Williams
 MATCH (Person{name:'Robin Williams'})-[]-(x) RETURN x
+
+//find what role Tom Cruise played in movie Matrix
+MATCH (:Person {name: 'Tom Cruise'}) -[r]-> (:Movie {title: 'The Matrix'})
+RETURN type(r)
 ```
 
 ###### Query chaining
 
-Sometimes there are more than one parts in a query and we want to pass or _pipe_ the result from a MATCH to the next part of the query. Using the keyword `WITH` we can do that. Using WITH, we can process output from the previous part before passing on to the following part of query.
+Sometimes there are more than one parts in a query and we want to pass or _pipe_ the result from a MATCH to the next part of the query. Using the keyword `WITH` we can do that. Using WITH, we can process output from the previous part before passing on to the following part of query. It can be though to be a type of RETURN that passes data to next query part rather than the result set.
 
 Look at the following query, we want to get all the movies that Charlize Theron acted in, ordered by movie title. We use `collect()` function to create a comma separated list. Since we could not use OREDR BY on movie title at the end (as it does not exist anymore after collect() as Movies), we pass along the movie variable and ORDER BY it before passing it to the RETURN.
 
@@ -165,7 +171,7 @@ RETURN collect(movie.title) AS Movies
 
 ###### Variable length pattern matching
 
-[Variable length pattern matching](https://neo4j.com/docs/developer-manual/current/cypher/syntax/patterns/#cypher-pattern-varlength) is used when the level of relationship, or number of hops between the nodes can be variable. A variable length relationship is indicated with an asterix followed by a number pattern. In simplest form, `(x)-[*2]->(y)` denotes relationship between node x and y with exactly 2 relationships/hops in between, which is same as (x)->()->(y).
+[Variable length pattern matching](https://neo4j.com/docs/developer-manual/current/cypher/syntax/patterns/#cypher-pattern-varlength) is used when the level of relationship, or number of hops between the nodes can be variable. A variable length relationship is indicated with an asterisk (*) followed by a number pattern. In simplest form, `(x)-[*2]->(y)` denotes relationship between node x and y with exactly 2 relationships/hops in between, which is same as (x)->()->(y).
 
 To have a variable length pattern, a range is used. For example, `[*1..5]` indicates relationship with 1-5 hops. `[*3..]` and `[*..3]` indicates minimum 3 and maximum 3 hops respectively. To indicate any/infinite number of hops `[*]` is used. Minimum hops by default is 1, but 0 can also be used to indicate no hops or the same node, e.g. in case of `(a)-[*0..1]-(b)`, a and b can be the same node as well!
 
@@ -183,9 +189,9 @@ MATCH (p:Person {name: 'Lily'}) -[:KNOWS*2..5]-> (foaf)
 WHERE NOT ((p) -[:KNOWS]-> (foaf))
 RETURN p, foaf
 // ^ infinite level can be used [:KNOWS*], but query might be super expensive
-//just a related query, find common friends between Maggie & Lucie
-MATCH (:Person {name: 'Maggie'}) -[:KNOWS]- (cf:Person) -[:KNOWS]- (:Person {name: 'Lucie'})
-RETURN cf
+//just a related query, find mutual friends between Maggie & Lucie
+MATCH (:Person {name: 'Maggie'}) -[:KNOWS]- (mf:Person) -[:KNOWS]- (:Person {name: 'Lucie'})
+RETURN count(mf) AS TotalMFs, collect(mf.name) AS MutualFriends
 ```
 
 When finding relationships with multiple hops, neo4j avoids linking back to same node. So that it is not like _(n1) -[:KNOWS]- (n2) -[:KNOWS]- (n1)_. Also, same nodes are also not included in result set, but can be added explicitly. Following is a sample query and the result set.
@@ -283,7 +289,7 @@ RETURN n.name, labels(n)
 
 Since `NULL` is not a allowed value for a property, setting null to a property removes it from the node. But it's always better to use `REMOVE` to remove a property as it is more intuitive and makes it clear that the property is not removed by mistake.
 
-**Note:** I'll publish another post in the Neo4j series and discuss about some common scenarios (e.g. shortest path calculations, importing RDBMS data etc.) and considerations for production deployment. Do come back later for the next post.
+**Note:** In the next article we'll look at some **[practical routing problems in graph](/articles/neo4j-shortest-distance/)** and how to solve them with Neo4j database.
 {: .notice--info}
 
 #### References
