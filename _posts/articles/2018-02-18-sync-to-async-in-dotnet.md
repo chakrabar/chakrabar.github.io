@@ -256,7 +256,7 @@ public void DoAsyncWork_2()
 
 **<u>The correct way, check fault on Task wait OR continuation</u>**
 
-If the asynchronous method/code fails, the exception details are attached to the returned Task. To handle the exception, we need to handle the exception by getting a handle back from the task. We can check the `IsFaulted` and `Exception` properties on continuation to see if anything went wrong, or handle on `Wait()` or `WaitAll()`. Alternatively, if we want to execute some code only if it worked/failed (e.g. log the exception), `ContinueWith()` has an overload that accepts a `TaskContinuationOptions` that can specify when to run the continuation code. 
+If the asynchronous method/code fails, the exception details are attached to the returned Task. To handle the exception, we need to handle the exception by getting a handle back from the task. We can check the `IsFaulted` and `Exception` properties on continuation to see if anything went wrong, or handle on `Wait()` or `WaitAll()` or `.Result`. Alternatively, if we want to execute some code only if it worked/failed (e.g. log the exception), `ContinueWith()` has an overload that accepts a `TaskContinuationOptions` that can specify when to run the continuation code.
 
 ```cs
 public void DoAsyncWork_3()
@@ -280,13 +280,13 @@ public void DoAsyncWork_4()
         TaskContinuationOptions.OnlyOnFaulted);
 }
 
-//with Wait()
+//with Wait() or .Result
 public void DoAsyncWork_5()
 {
     var task = Task.Run(() => SlowBuggyMethod());
     try
     {
-        task.Wait();
+        task.Wait(); //or task.Result;
     }
     catch (Exception)
     {
