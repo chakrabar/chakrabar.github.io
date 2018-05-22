@@ -7,7 +7,7 @@ tags: [tech, database, nosql, search, textsearch, fulltextsearch, lucene, elasti
 categories: articles
 comments: true
 share: true
-published: true
+published: false
 ---
 
 # Elasticsearch
