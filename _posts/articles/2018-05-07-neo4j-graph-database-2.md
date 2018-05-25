@@ -51,7 +51,7 @@ The Cypher keywords (like `MATCH`, `RETURN`) are not case-sensitive, but it's ge
 
 #### Data creation
 
-Here we'll see how to create data in neo4j with Cypher query. `CREATE` is used to create nodes and relationships. `MERGE` can be used in place of CREATE, to optionally create the data if it does not exist already, else it'll just return the existing one.
+Here we'll see how to create data in neo4j with Cypher query. `CREATE` is used to create nodes and relationships. `MERGE` can be used in place of CREATE, to optionally create the data (including nodes & relationship) if it does not exist already, else it'll just return the existing one.
 
 Properties are created as `{key: 'Value'}` pairs and the data-type is interpreted by neo4j from the data. Properties can only be of primitive types, that includes - boolean, byte, short, int, long, float, double, char, string and their arrays, like int[], char[] etc. Null is not a allowed value.
 
@@ -85,7 +85,7 @@ MERGE (c:Character {name: "Sabu"})
 RETURN c
 ```
 
-`CREATE UNIQUE` can be used to make sure data is not created if it already exists.
+Run `call db.schema()` to see a high level schema or relationship between all nodes & relationships.
 
 **Note:** When any data is inserted into the database, neo4j creates an internal `<id>` property which has incremental integer value, starting at 0. It is unique across all nodes and cannot be customized. For querying, the value can be fetched with `id(n)` function.
 {: .notice--info}
