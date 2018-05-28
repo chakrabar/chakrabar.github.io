@@ -52,7 +52,7 @@ https://neo4j.com/blog/data-modeling-pitfalls/
 
 Graph database book, chapter 3 - 5
 
-#### Graph algorithms
+#### Graph algorithms - naah
 
 * Shortest path
 * DFS
@@ -84,6 +84,8 @@ RETURN p1.name AS TargetCustomer, p2.name AS ReferenceCustomer, br.name AS Brand
   prod2.name AS Recommendedproduct, count(prod1) AS CommonProducts
 ORDER BY CommonProducts DESC
 ```
+
+WITH DISTINCT 1 AS ResetCardinality
 
 #### Neo4j for production
 

@@ -157,7 +157,7 @@ CREATE path = (c1) -[:LINK {avgSpeed: toFloat(line.SpeedKmph), name: 'NH-' + lin
 //run Q6 to add the road blocks
 ```
 
-With our new roads (i.e. [:LINK] relationships) with property `avgSpeed`, we can calculate the fastest route using similar logic, only we choose route with minimal travel time that distance. Just for a comparison, we'll print out all the possible routes with in order of travel time. Also, we used directed paths for this query. Results are shown below.
+With our new roads (i.e. [:LINK] relationships) with property `avgSpeed`, we can calculate the fastest route using similar logic, only we choose route with minimal travel time than distance. Just for a comparison, we'll print out all the possible routes with in order of travel time. Also, we used directed paths for this query. Results are shown below.
 
 ```fsharp
 //Q10 - fastest route

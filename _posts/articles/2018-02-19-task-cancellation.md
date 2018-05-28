@@ -42,7 +42,7 @@ private void CancellableWork(CancellationToken cancellationToken)
 
 public Task CancellableTask(CancellationToken ct)
 {
-    return Task.Factory.StartNew(() => CancellableWork(ct), ct);            
+    return Task.Factory.StartNew(() => CancellableWork(ct), ct);
 }
 ```
 
@@ -56,6 +56,7 @@ static void Main(string[] args)
     Console.WriteLine("Starting application...");
 
     CancellationTokenSource source = new CancellationTokenSource();
+    //assuming the wrapping class is TplTest
     var task = new TplTest().CancellableTask(source.Token);
 
     Console.WriteLine("Heavy process invoked");
@@ -75,13 +76,18 @@ static void Main(string[] args)
     }
     catch (AggregateException ae)
     {
-        foreach (var e in ae.InnerExceptions)
-        {
-            if (e is TaskCanceledException)
-                Console.WriteLine("Task canceled exception detected");
-            else
-                throw;
-        }
+        if (ae.InnerExceptions.Any(e => e is TaskCanceledException))
+            Console.WriteLine("Task canceled exception detected");
+        else
+            throw;
+    }
+    catch (Exception)
+    {
+        throw;
+    }
+    finally
+    {
+        source.Dispose();
     }
 
     Console.WriteLine("Process completed");

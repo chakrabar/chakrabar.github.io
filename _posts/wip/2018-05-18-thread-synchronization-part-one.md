@@ -7,7 +7,7 @@ tags: [thread, synchronization, lock, monitor, semaphore, deadlock]
 categories: articles
 image:
   feature: posts/threads/ogqcorp.jpg
-  credit: Tapzin
+  credit: ogqcorp.com
   creditlink: http://bgh.ogqcorp.com/share/h/SmP2O
 comments: true
 share: true
@@ -154,6 +154,19 @@ Locking does not work on value types. On `lock`/`Monitor.Enter`, the instance of
 
 Generally a string name is used to identify a [Mutex](https://docs.microsoft.com/en-us/dotnet/api/system.threading.mutex?view=netframework-4.7.2) in inter-process thread synchronization, and that can be across the machine. It can be used in intra-process synchronization as well, but Monitor is prefferd as it makes better use of resources.
 
+```csharp
+static Mutex mutex = new Mutex();
+
+if (mutex.WaitOne(2000)) //wait to get mutext with timeout of 2 seconds
+{
+    Console.WriteLine("Entered mutex");
+    //do the work
+    Console.WriteLine("Releasing mutex");
+}
+else
+    Console.WriteLine("Timeout expired");
+```
+
 #### ReaderWriteLock
 
 The [ReaderWriterLock](https://docs.microsoft.com/en-us/dotnet/api/system.threading.readerwriterlock?view=netframework-4.7.2) provides a locking mechanism that supports single writer and multiple readers to a shared resource. It provides `AcquireReaderLock` and `AcquireWriterLock` methods, where multiple threads can aquire reader lock simultaniously, but only one thread can have writer lock at a time and no thread can read at that time.
@@ -229,20 +242,17 @@ public class SafeReadWrite {
 
 It laso provides methods `EnterUpgradeableReadLock` and `ExitUpgradeableReadLock` to upgrade a reader lock to writer, and bring back avoiding possible deadlocks. When this is used, the thread upgrading to writer lock gets placed at writer queue.
 
-**????**
-Note that ReaderWriterLock generally uses `SpinLock`. which does _"spinning"_ or _"busy waiting"_. That means, it keeps checking to get a lock in a loop, keeping the CPU busy. On the other hand, Monitor _"generally"_ (not in all situations) puts a thread in `Blocked`/`Waiting` state, which does not use CPU.
-
 #### Semaphore & SemaphoreSlim
 
-`Semaphore class in .NET is a thin wrapper around the OS level counting semaphores synchronization object, which can be used to controll access to a pool of resources, i.e. limit the number of threads that can access it concurrently. .NET [Semaphore](https://docs.microsoft.com/en-us/dotnet/api/system.threading.semaphore?view=netcore-2.0) also suppport named instances for system-wide or inter-process collaboration.
+`Semaphore` class in .NET is a thin wrapper around the OS level counting semaphores synchronization object, which can be used to controll access to a pool of resources, i.e. limit the number of threads that can access it concurrently. .NET [Semaphore](https://docs.microsoft.com/en-us/dotnet/api/system.threading.semaphore?view=netcore-2.0) also suppport named instances for system-wide or inter-process collaboration.
 
-SemaphoreSlim` is a lightweight version, for using within a process. Also supports cancellation tokens and async wait. For single application, it is recommended to use the slim version. We'll use the same for our examples.
+`SemaphoreSlim` is a lightweight version, for using within a process. Also supports cancellation tokens and async wait. For single application, it is recommended to use the slim version. We'll use the same for our examples.
 
 SemaphoreSlim maintains an internal **count** which says how many threads can access the resource concurrently. It has a  property `CurrentCount` that says how many new threads can still take the semaphore.
 
 Each successful call to `Wait()` decreases the CurrentCount by 1 (every thread should wait-and-enter the semaphore before accessing the shared resource). Every call to `Release()` increases the CurrentCount by 1 (every thread should release it, once they are done using the resource), and a call to `Release(n)` increases the CurrentCount by n. When the CurrentCount reaches 0, no more threads can take the semaphore, and has to wait until the count increases to 1 or more. When there are multiple threads waiting, and CurrentCount goes above 0, there is no pre-defined order in which threads will enter the semaphore.
 
-The constructor of SemaphoreSlim takes two integer arguments, `initialCount` and `maxCount`. The initial count indicates how many threads can immediately take the semaphoore (Wait) without getting blocked. In other words, this is the value that will be initially set to count (and to CurrentCount). The `maxCount` is optional, and says what is the maximum allowed value of count. If a thread tries to release the semaphore which will take the count (or CurrentCount) to more than maxCount, it'll throw exception. CurrentCount <= count <= maxCount
+The constructor of [SemaphoreSlim](https://docs.microsoft.com/en-us/dotnet/api/system.threading.semaphoreslim?view=netframework-4.7.2) takes two integer arguments, `initialCount` and `maxCount`. The initial count indicates how many threads can immediately take the semaphoore (Wait) without getting blocked. In other words, this is the value that will be initially set to count (and to CurrentCount). The `maxCount` is optional, and says what is the maximum allowed value of count. If a thread tries to release the semaphore which will take the count (or CurrentCount) to more than maxCount, it'll throw exception. CurrentCount <= count <= maxCount
 
 In simple cases, if you want to allow concurrent access of 5 threads, use `SemaphoreSlim(5, 5)`. Below code shows a SemaphoreSlim with initial count 1 and max count 3. This is just for demonstration, NOT the right way to write code.
 
@@ -262,7 +272,7 @@ internal static void Execute()
     smps.Release(3); //CurrentCount = 3
     smps.Wait(); //CurrentCount = 2
     smps.Wait(); //CurrentCount = 1
-    smps.Release(3); //EXCEPTION (CurrentCount = 4 > maxCount 3)
+    smps.Release(3); //=> EXCEPTION (CurrentCount = 4 > maxCount 3)
 }
 
 private static void ReleaseSemaphore()
@@ -280,3 +290,5 @@ Continue to **[next module](/articles/thread-synchronization-part-two/)**.
 #### References
 
 * [Synchronization in Windows](https://msdn.microsoft.com/en-us/library/ms686353.aspx)
+* [Processes, Threads, and Jobs in the Windows](https://www.microsoftpressstore.com/articles/article.aspx?p=2233328&seqNum=7)
+* [Runtime object creation in CLR](/assets/downloads/Objects_MSDN_May2005.pdf)

@@ -10,15 +10,13 @@ comments: true
 modified: 2018-01-19T08:11:53-04:00
 ---
 
-
-
 # A quick glance at the new capabilities of C# 6 
 
 ***This is a code demo, not elaborate theories.***
 
 If you are like me who got little late in catching up with the latests and greatests of the `C#` language, this will help you catch up quickly.
 
-There are no theoretical or academic details here. If you are interested in them, there are tons of resources in MSDN and all over internet, just do your reserach. This article will directly introduce you to some of the most useful features of `C# 6` in a code & code-only manner (with a bit of explanation in the comments). 
+There are no theoretical or academic details here. If you are interested in them, there are tons of resources in MSDN and all over internet, just do your reserach. This article will directly introduce you to some of the most useful features of `C# 6` in a code & code-only manner (with a bit of explanation in the comments).
 
 `C# 6` does not add new framework features, rather gives a bunch of cool new language constructs. All the enhancements we'll see, will help developers write cleaner & more precise code.
 
@@ -38,7 +36,7 @@ There are no theoretical or academic details here. If you are interested in them
 ### So, here you go
 
 ```cs
-public class DemoType //A demo class that we'll be
+public class DemoType //A demo class that we'll be using in example
 {
     public string Name { get; set; }
     public int Count { get; set; }
@@ -50,6 +48,7 @@ public class DemoType //A demo class that we'll be
 ```
 
 #### [1] Auto read-only property
+
 * Makes a read-only property, that can be set ONLY in constructor or initializer
 * Earlier, declaring only get accessor was not allowed, `private set;` was allowed though
 
@@ -63,6 +62,7 @@ public CSharp6()
 ```
 
 #### [2] Auto property initializer
+
 * Set initial value of properties in declaration with an assignment sign
 
 ```cs
@@ -71,9 +71,10 @@ public int AutoInitializedProperty { get; set; } = 10;
 public IList<decimal> AutoInitializedListProperty { get; } = new List<decimal>();
 //See Expression-bodied function & String Interpolation below
 public Func<string, string> WelcomeMessageGeneratorProp { get; set; } = (name) => $"Welcome {name}.";
-```     
+```
 
 #### [3] Expression-bodied functions
+
 * Shorten code for simple Methods or Read-Only Properties with lambda expressions
 
 ```cs
@@ -84,10 +85,13 @@ public string AnotherReadonlyProp => "Hello there";
 ```
 
 #### [4] Using static
+
 * Import static methods of a class by declaring - using static Namespace.Class;
 * After that use all the STATIC methods directly wothout mentioning class-name
 
 ```cs
+using static CSharpLearning.DemoType; //this
+//namespace & class declaration
 void SomeMethod()
 {
     //class-name not used, like - SomeUtility.AddSmiley("Hello devs");
@@ -99,6 +103,7 @@ void SomeMethod()
 * **Note 2:** When a class is imported like this, nested classes are also imported
 
 #### [5] Null-conditionals OR null-propagation operators
+
 * When this (.?) is used, compiler will always check for null before invoking the next member. If null is encountered, null is returned as result
 
 ```cs
@@ -122,6 +127,7 @@ void NullDemoMethod()
 * **Note:** With null conditional operator, the expression is EVALUATED JUST ONCE AND CACHED. So it wil not face a situation where the check has reached `nth` level and then some other code sets `(n-1)th` part to `null`. It will still work as it has been cached already. Really helpful for delegate invokation.
 
 #### [6] String interpolation
+
 * New syntax for string formatting. String expression is prefixed with `$`, then variables/expressions are placed within `{braces}`
 * Functionally a better alternative (still available though) for `String.Format`
 
@@ -140,6 +146,7 @@ void StringFormattingDemo()
 ```
 
 #### [7] Exception filters
+
 * You can now filter `catch` blocks with conditions. Only when the condition (and Exception type) matches, the block will execute. Else, skip.
 * Condition is checked before entering block. If none of the catch blocks match (Exception type + condition), program skips all and throws.
 
@@ -163,12 +170,14 @@ void ExceptionFilterDemo()
 * **NOTE:** Interesting, if `obj.Name` is `null`, stack will show original `Exception` thrown in original point, as execution never reached the catch block.
 
 Following dummy log methods are used in following code samples
+
 ```cs
 void Log(string msg) { } 
 public async Task LogAsync(Exception ex) { await Task.Delay(2000); }
 ```
 
 #### [8] nameof() Expressions
+
 * Gets you the simple (unqualified) string name of a variable, type, or member.
 * The basic idea is to use an expressions rather than a hard-coded string value, so that code survives through refactorin/rename
 
@@ -184,16 +193,17 @@ public void NameofDemo()
     //var n4 = nameof(obj.GetType());
     //Compile error: Expression does not have  a name
     //var n5 = nameof(typeof(DemoType));
-    
+
     //sample use case
     //Upgrade from hard coded "Name" in log message "Value of Name was null"
-    Log($"Value of {nameof(obj.Name)} was null");    
+    Log($"Value of {nameof(obj.Name)} was null");
 }
 ```
 
 * **Note** the huge benefit here - if name of `Name` property is changed, the log message will automatically be updated! Or throw error in compile time.
 
 #### [9] Await in Catch & Finally blocks
+
 * Now await can be used in `catch` & `finally` blocks as well
 
 ```cs
@@ -204,7 +214,7 @@ public async void AwaitDemo()
         await System.IO.File.ReadAllLinesAsync("path to file");
     }
     catch (Exception exception)
-    {                
+    {
         //Async catch //can be in finally too
         await LogAsync(exception);
     }
@@ -212,6 +222,7 @@ public async void AwaitDemo()
 ```
 
 #### [10] Index initializers
+
 * `C# 6` introduces initializing indexed collections and dictionaries like lists
 
 ```cs
@@ -229,7 +240,7 @@ public void IndexInitializerDemo()
         {5, "Neha" },
         {8, "Vikas" }
     };
-    //Understand the differences below    
+    //Understand the differences below
 }
 ```
 
@@ -238,6 +249,7 @@ public void IndexInitializerDemo()
 * **Note:** If you have a custom collections that does not have an `Add()` method, you can now create an extension method and use collection initializers.
 
 #### One **REMOVED feature** - Primary constructor
+
 * Idea was to define constructor parameters with class declaration. It was never released.
 
 ```cs
@@ -247,7 +259,6 @@ public class CoolNew (string name, int code)
     public int AreaCode { get; } = code;
 }
 ```
-
 
 So that's all we had for today. It'll be good idea to copy-paste the whole code, call the methods and debug, to understand them better. You can run all the snippets above by wrapping them inside a code like this
 
@@ -263,11 +274,10 @@ namespace CSharpLearning
     public class CSharp6
     {
         //all code snippets here
-    }    
+    }
 }
 ```
 
+Once done, continue to **[features demo of C# 7](/articles/new-features-of-csharp-7)**.
 
-Once done, continue to [features demo of C# 7](/articles/new-features-of-csharp-7).
-
-> Note: Source of knowledge for this article are MSDN, StackOverflow and other forums.
+> _Note: Source of knowledge for this article are MSDN, StackOverflow and other forums._
