@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Asynchronous with Async-Await - Part I"
-excerpt: "A quick introduction to Async-Await in .NET"
+excerpt: "A simple explanation of Async-Await in .NET"
 date: 2018-05-28
 tags: [async, await, asynchronous, threading, synchronization, tasks, concurrency]
 categories: articles
