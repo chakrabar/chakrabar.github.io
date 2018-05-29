@@ -394,7 +394,7 @@ catch (AggregateException ae)
 }
 ```
 
-See the [Basic task cancellation demo in C#](/notes/task-cancellation/) for a complete runnable code demo of a simple `Console` application that runs a slow process asynchronously, and gives the user an option to cancel the operation.
+See the [Basic task cancellation demo in C#](/articles/task-cancellation/) for a complete runnable code demo of a simple `Console` application that runs a slow process asynchronously, and gives the user an option to cancel the operation.
 
 #### [10] Bundling of Tasks
 
