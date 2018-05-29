@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Easier asynchronous with Async-Await - Part I"
+title: "Asynchronous with Async-Await - Part I"
 excerpt: "A quick introduction to Async-Await in .NET"
 date: 2018-05-28
 tags: [async, await, asynchronous, threading, synchronization, tasks, concurrency]
@@ -11,7 +11,7 @@ image:
   creditlink: https://pxhere.com/en/photo/1032879
 comments: true
 share: true
-published: true
+published: false
 ---
 
 **Note:** This article is currently incomplete & in-progress. It'll be updated soon.
@@ -90,7 +90,7 @@ The answer is, NO. There might or might not be additional threads involved. If a
 
 So, when is thread pool thread used? If not, how does the work complete without a thread!
 
-Before answering this, first lets understand that generally there are two types of work that are done asynchronously - **CPU bound**, and **I/O bound**. A CPU bound work is something that does some heavy computation, like running some formula along a huge set of data. This needs continuous CPU cycles. This will need a dedicated thread, and will _generally_ use a `ThreadPool` thread. On the other hand, I/O bound work is something that depends on something outside the CPU system. For example, time to get response from a web service, or to write data to a disk. This type of work _may not_ need any dedicated threads (the network or disk driver may handle it by themselves). Only few time-slices of thread(s) are used just for start/stop/progress notification.
+Before answering this, first lets understand that generally there are two types of work that are done asynchronously - **CPU bound**, and **I/O bound**. A CPU bound work is something that does some heavy computation, like running some formula along a huge set of data. This needs continuous CPU attention. This will need a dedicated thread, and will _generally_ use a `ThreadPool` thread. On the other hand, I/O bound work is something that depends on something outside the CPU system. For example, time to get response from a web service, or to write data to a disk. This type of work _may not_ need any dedicated threads (the network or disk driver may handle it by themselves). Only few time-slices of thread(s) are used just for start/stop/progress notification.
 
 Now that we have understood (at least on a high level), what happens during compilation & run-time, we know the framework is actually doing bunch of additional works to make it work. It is creating task continuation and scheduling them. It is managing the threads etc. Because of all these, additional time and resource are used. So, it is not advisable to add `async` to very lightweight works, as the overhead might outweigh the benefits.
 
