@@ -10,6 +10,7 @@ image:
 comments: true
 share: true
 published: true
+modified: 2018-06-02T22:30:00-04:00
 ---
 
 This article is a continuation of the Neo4j database series. If you are coming here directly and not familiar with **`Neo4j`** database & **`Cypher`** query language, read these articles first.
@@ -65,7 +66,9 @@ RETURN path
 
 It returns the path _"Amritsar --> Bengaluru --> Hyderabad"_, with a total distance of 810km.
 
-Note that it returns the _shortest path_ that has _minimum number of hops_. It does not take the distance into calculation. This is the behaviour of the default `shortestpath()` function and no custom property is used for the calculation. This is definitely not be the best solution for a map navigation problem, as the _"shortest path"_ is not actually the shortest one as per the distance traversed. But this is very useful in lot of situations like calculation the most efficient path to deliver data packets over a wired network (where no. of hops is more costly than distance) or figuring out closest relation between two persons on a social network.
+Note that it returns the _shortest path_ that has _minimum number of hops_. It does not take the distance into calculation. This is the behaviour of the default `shortestpath()` function and no custom property is used for the calculation.
+
+This is definitely not be the best solution for a map navigation problem, as the _"shortest path"_ is not actually the shortest one as per our distance property is concerned. But this is very useful in lot of situations like calculation the most efficient path to deliver data packets over a wired network (with minimum hops) or figuring out closest relation between two persons on a social network.
 
 #### Weighted shortest path - distance
 
@@ -100,7 +103,8 @@ It produces the following results:
 <br />**Distance:** 560 km
 {: .notice--success}
 
-Understand that this query works fine even with unlimited number of hops (see `-[road:LINK*]-`) because the size of the graph is very small. When there are millions of nodes in the graph, this query will not be practical, and we might have to restrict the paths within a range of hops like `-[road:LINK*1..n]-` with a reasonable value of n.
+**Note:** Understand that this query works fine even with unlimited number of hops (see `-[road:LINK*]-`) because the size of the graph is very small. When there are millions of nodes in the graph, this query will not be practical, and we might have to restrict the paths within a range of hops like `-[road:LINK*1..n]-` with a reasonable value of `n` or look for other alternatives.
+{: .notice--warning}
 
 **Note:** Here we have considered all the roads are two-way i.e. if there is a road from Delhi to Bhubaneswar, there is also a return way from Bhubaneswar to Delhi. If that is not true, and roads are one-way as shown in the graph diagram, we just need to make the MATCH pattern have a directed relationship to solve it. Now, when we make the MATCH pattern directed `()-[:LINK]->()`, we get most common variant of [Dijkstra's algorithm](https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm) solved.
 {: .notice--info}
@@ -172,7 +176,7 @@ RETURN REDUCE (cities = head(nodes(path)).name, n IN tail(nodes(path)) | cities 
 
 ![Image](/images/posts/neo4j/all-route-results.png)
 
-This concludes this post and we have seen some variations of practical shortest path problems, form minimum hops to shortest path by distnace, and then avoiding road blocks and traffic. Though these are over-simplified examples, they should give some idea on how to use Neo4j database and Cypher queries to solve practical graph problems.
+This concludes this post and we have seen some variations of practical shortest path problems, form minimum hops to shortest path by distnace, and then avoiding road blocks and traffic. Though these are over-simplified examples, and may not be applicable to solve real life problems within practical limits, they should give some idea on how to use Neo4j database and Cypher queries to solve problems in different graph-related problems.
 
 **Note:** I'll publish another post in the Neo4j series and discuss about some common considerations for production deployment of Neo4j. Do come back later for the next post.
 {: .notice--info}
