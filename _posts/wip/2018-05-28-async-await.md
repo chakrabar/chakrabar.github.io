@@ -59,7 +59,7 @@ The points 1-3 makes the method asynchronous. The `async` enables the `await` fu
 
 The `await` is the part which actually turns the method asynchronous! When the execution hits the line with `await` - it first checks if the work has completed. If yes, it simply continues as normal synchronous method. Else the current executing thread _suspends_ the work-flow of the method, captures the current context, and _returns from the method_ to the calling method. So, the main thread can continue executing other works in the calling method, and the awaited task continues in the background.
 
-The return type of a `async` method can only be `Task`, `Task<T>` or `void`. As a general suggestion, avoid using `void` return type, as that makes the method non-awaitable, i.e. the method cannot be used with `await` from another method. If there is a result to return, use `Task<TResult>` or just use `Task`.
+The return type of a `async` method can only be `Task`, `Task<T>` or `void`. As a general suggestion, avoid using `void` return type, as that makes the method non-awaitable, i.e. the method cannot be used with `await` from another method. Also error handling is complicated. If there is a result to return, use `Task<TResult>` or just use `Task`.
 
 Now, interestingly, notice our sample method for once. The method actually returns just an integer (message.Length), but the return type is `Task<int>`! How does that work? This piece of magic is done by the `async` keyword. In simple terms, it just means that, the method returns an integer, but does that _asynchronously_ after the control was already returned from the method. See the next section.
 
@@ -109,14 +109,28 @@ In simple words, it means that the CLR remembers the execution context before su
 **Note:** The standard classes provided by the framework for I/O works, all supports `async` operations. These are well designed, and should be used in place of the synchronous counterparts whenever they make sense. For example, `File.WriteAllBytesAsync()` or `HttpClient().GetStreamAsync()`.
 {: .notice--info}
 
+* Exception handling
+* ASP.NET
+* Revisit & recap async
+
 ###### Other articles in the series
 
 * **[Synchronous to asynchronous in .NET](/articles/sync-to-async-in-dotnet/)**
 * **[Basic task cancellation demo in C#](/articles/task-cancellation/)**
+* Async-await II
+* Thread synchronization I
+* Thread synchronization II
+
+- concurrent collections
+- monitor pulse
+
+- closure
+- microservices, event-sourcing, reactive-programming (e.g. akka)
+- [reactive extensions](https://docs.microsoft.com/en-us/previous-versions/dotnet/reactive-extensions/hh242985(v=vs.103))
 
 #### References
 
-* Asnc Await documentation - [MSDN](https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/concepts/async/), &nbsp; [Control flow](https://docs.microsoft. com/en-us/dotnet/csharp/programming-guide/concepts/async/control-flow-in-async-programs), &nbsp; [TAP - Task-based Asynchronous Pattern](https://docs.microsoft.com/en-us/dotnet/standard/asynchronous-programming-patterns/task-based-asynchronous-pattern-tap)
+* Asnc Await documentation - [MSDN](https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/concepts/async/), &nbsp; [Control flow](https://docs.microsoft. com/en-us/dotnet/csharp/programming-guide/concepts/async/control-flow-in-async-programs), &nbsp; [TAP - Task-based Asynchronous Pattern](https://docs.microsoft.com/en-us/dotnet/standard/asynchronous-programming-patterns/task-based-asynchronous-pattern-tap), &nbsp; [FAQs](https://blogs.msdn.microsoft.com/pfxteam/2012/04/12/asyncawait-faq/)
 * How does it work? From StackOverflow QA - [CLR implementation](https://stackoverflow.com/questions/4047427/c-sharp-async-how-does-it-work/4047607#4047607), &nbsp; [int to Task&lt;int&gt;](https://stackoverflow.com/questions/13159080/how-does-taskint-become-a-int), &nbsp; [The wrong implementation](https://stackoverflow.com/questions/14455293/how-and-when-to-use-async-and-await)
 * Async-Await & threads
   * [SO - how applications are responsive if there are no threads](https://stackoverflow.com/questions/37419572/if-async-await-doesnt-create-any-additional-threads-then-how-does-it-make-appl)
