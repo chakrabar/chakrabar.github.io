@@ -287,6 +287,15 @@ private static void ReleaseSemaphore()
 
 Continue to **[next module](/articles/thread-synchronization-part-two/)**.
 
+###### Other posts in the series - Tasks, Threads, Asynchronous
+
+* **[Synchronous to asynchronous in .NET](/articles/sync-to-async-in-dotnet/)**
+* **[Basic task cancellation demo in C#](/articles/task-cancellation/)**
+* **[How does Async-Await work - Part I](/articles/async-await/)**
+* **[How does Async-Await work - Part II](/articles/async-await-2/)**
+* **[Basic thread synchronization with examples - Part I](/articles/thread-synchronization-part-one/)**
+* **[Basic thread synchronization with examples - Part II](/articles/thread-synchronization-part-two/)**
+
 #### References
 
 * [Synchronization in Windows](https://msdn.microsoft.com/en-us/library/ms686353.aspx)

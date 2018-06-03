@@ -206,6 +206,22 @@ So, what kind of code is at risk of above type of issues? Any code that works on
 
 ## Thread safe collections
 
+- concurrent collections
+- monitor pulse
+
+- closure
+- microservices, event-sourcing, reactive-programming (e.g. akka)
+- [reactive extensions](https://docs.microsoft.com/en-us/previous-versions/dotnet/reactive-extensions/hh242985(v=vs.103))
+
+###### Other posts in the series - Tasks, Threads, Asynchronous
+
+* **[Synchronous to asynchronous in .NET](/articles/sync-to-async-in-dotnet/)**
+* **[Basic task cancellation demo in C#](/articles/task-cancellation/)**
+* **[How does Async-Await work - Part I](/articles/async-await/)**
+* **[How does Async-Await work - Part II](/articles/async-await-2/)**
+* **[Basic thread synchronization with examples - Part I](/articles/thread-synchronization-part-one/)**
+* **[Basic thread synchronization with examples - Part II](/articles/thread-synchronization-part-two/)**
+
 #### References
 
 * [Thread synchronization - MSDN](https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/concepts/threading/thread-synchronization)

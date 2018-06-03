@@ -226,9 +226,9 @@ public void DoAsyncWorkMethod()
 
 #### [7] Handling exception in Task
 
-How do we handle `Exception` in methods that do asynchronous work? Do we simply wrap them in `try-catch` to handle them? Well, that doesn't work. 
+How do we handle `Exception` in methods that do asynchronous work? Do we simply wrap them in `try-catch` to handle them? Well, that doesn't work.
 
-If an snchronous method throws exception, that is being run on another thread, our current thread doesn't get to know about that. That exception doesn't effect the current thread directly, but the application actually failes internally to do what it was supposed to do. Very unreliable and bad, right? It fails, but user doesn't get to know! 
+If an snchronous method throws exception, that is being run on another thread, our current thread doesn't get to know about that. That exception doesn't effect the current thread directly, but the application actually failes internally to do what it was supposed to do. Very unreliable and bad, right? It fails, but user doesn't get to know!
 
 So, the following method `DoAsyncWork_2()` **DOES NOT work as expected, and it cannot catch the exception** while the program failed internally! Execution never reaches the `catch` block.
 
@@ -250,13 +250,13 @@ public void DoAsyncWork_2()
     catch (Exception) //catches exception on thread_1
     {
         Console.WriteLine("Exception caught in DoAsyncWork_2");
-    }            
+    }
 }
 ```
 
 **<u>The correct way, check fault on Task wait OR continuation</u>**
 
-If the asynchronous method/code fails, the exception details are attached to the returned Task. To handle the exception, we need to handle the exception by getting a handle back from the task. We can check the `IsFaulted` and `Exception` properties on continuation to see if anything went wrong, or handle on `Wait()` or `WaitAll()` or `.Result`. Alternatively, if we want to execute some code only if it worked/failed (e.g. log the exception), `ContinueWith()` has an overload that accepts a `TaskContinuationOptions` that can specify when to run the continuation code.
+If the asynchronous method/code fails, the task terminates & the exception details are attached to the returned Task. To handle the exception, we need to get back the exception by getting a handle back from the task. We can check the `IsFaulted` and `Exception` properties on continuation to see if anything went wrong, or handle on `Wait()` or `WaitAll()` or `.Result`. Alternatively, if we want to execute some code only if it worked/failed (e.g. log the exception), `ContinueWith()` has an overload that accepts a `TaskContinuationOptions` that can specify when to run the continuation code.
 
 ```cs
 public void DoAsyncWork_3()
@@ -288,9 +288,9 @@ public void DoAsyncWork_5()
     {
         task.Wait(); //or task.Result;
     }
-    catch (Exception)
+    catch (AggregateException ae)
     {
-        Console.WriteLine("Exception: " + task.Exception.Message);
+        Console.WriteLine("Exception: " + ae.InnerException.Message);
     }
 }
 ```
