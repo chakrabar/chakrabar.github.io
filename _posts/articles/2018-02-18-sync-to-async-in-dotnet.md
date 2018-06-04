@@ -450,4 +450,11 @@ They all generally take much lesser time that general sequential approach (e.g. 
 
 ----
 
-In a later post, we'll look at the new and cool `async-await` constructs.
+And since the `C# 5` was released, we have a cleaner way to do asynchronous programming using the [Async-Await](/articles/async-await/). Also see the [code demo of cancellation](/articles/task-cancellation/).
+
+###### All posts in the series - Tasks, Threads, Asynchronous
+
+* **[Synchronous to asynchronous in .NET](#)**
+* **[Basic task cancellation demo in C#](/articles/task-cancellation/)**
+* **[How does Async-Await work - Part I](/articles/async-await/)**
+* **[How does Async-Await work - Part II](/articles/async-await-2/)**

@@ -6,16 +6,12 @@ date: 2018-05-28
 tags: [async, await, asynchronous, threading, synchronization, tasks, concurrency]
 categories: articles
 image:
-  feature: posts/threads/pxhere.jpg
-  credit: pxhere
-  creditlink: https://pxhere.com/en/photo/1032879
+  feature: posts/threads/antalya.jpg
+  credit: Author - Antalya marina, Turkey
 comments: true
 share: true
-published: false
+published: true
 ---
-
-**Note:** This article is currently incomplete & in-progress. It'll be updated soon.
-{: .notice--danger}
 
 The keyword pair [Async-Await](https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/concepts/async/) was introduced in `C# 5` as a way of writing cleaner (synchronous-like) code for asynchronous operations. With use of `async-await`, a method can be written which looks very similar in structure to standard synchronous code, but can work asynchronously without keeping the calling thread busy.
 
@@ -40,7 +36,7 @@ public async Task<int> GetMessageLengthAsync()
 
 Note that we are taking the `GetMessageLengthAsync()` as the sample `async` method. The `GetTimeTakingMessageAsync()` that is called from inside, is just another `async` method, but that is not target of the discussion.
 
-an `async` method basically means, it can run in background, leaving the calling thread free. The single most important thing to understand here is, _**the method suspends the current work-flow at `await` and waits for the long-running work to complete asynchronously, without blocking the calling thread**_. That means, the thread that originally had called `GetMessageLengthAsync()`, gets free at this point and _leaves the method_. Read along for more details.
+an `async` method basically means, it _can_ run in background, leaving the calling thread free to do other stuffs. The single most important thing to understand here is, _**the method suspends the current work-flow at `await` and waits for the long-running work to complete asynchronously, without blocking the calling thread**_. That means, the thread that originally had called `GetMessageLengthAsync()`, gets free at this point and _leaves the method_ back to the original calling location. Read along for more details.
 
 _Well, what happens after that?_ Before the original calling thread leaves at `await`, the runtime captures the current `SynchronizationContext` and the `TaskScheduler` and internally creates a continuation workflow. Now the calling thread leaves the method, and is free to do other tasks. Meanwhile the long-running work that was started, keeps running in the background. Note that the `GetTimeTakingMessageAsync` must also be an `async` method for our code to work. But the actual implementation does not matter.
 
@@ -57,17 +53,17 @@ The method looks pretty similar to a synchronous method in structure but there a
 
 The points 1-3 makes the method asynchronous. The `async` enables the `await` functionality in the method. You CANNOT use `await` without using the `async` declaration on the method signature. On the other hand, a method can be declared as `async` without using `await` in the method body. It does work, but the just runs synchronously.
 
-The `await` is the part which actually turns the method asynchronous! Roughly it means, now it wants the work to be done and get the result, but asynchronously! When the execution hits the line with `await` - it first checks if the work has completed. If yes, it simply continues as normal synchronous method. Else the current executing thread _suspends_ the work-flow of the method, captures the current context, and _returns from the method_ to the calling method. So, the main thread can continue executing other works in the calling method, and the awaited task continues in the background.
+The `await` is the part which actually turns the method asynchronous! Roughly it means, now it wants the work to be done and get the result, but asynchronously! When the execution hits the line with `await` - it first checks if the work has already completed. If yes, it simply continues as normal synchronous method. Else the current executing thread _suspends_ the work-flow of the method, captures the current context, and _returns from the method_ to the calling method. So, the main thread can continue executing other works in the calling method, and the awaited task continues in the background. Once that task completes, the method _resumes_ from the `await` point, on the captured context.
 
 The return type of a `async` method can only be `Task`, `Task<T>` or `void`. As a general suggestion, avoid using `void` return type, as that makes the method non-awaitable, i.e. the method cannot be used with `await` from another method in a non-blocking way (unless we just want to _fire-and-forget_). Also exception handling becomes complicated. If there is a result to return, use `Task<TResult>` or just use `Task`.
 
 Now, interestingly, notice our sample method for once. The method actually returns just an integer (message.Length), but the return type is `Task<int>`! How does that work? This piece of magic is done by the `async` keyword. In simple terms, it just means that, the method returns an integer, but does that _asynchronously_ after the control was already returned from the method. See the next section.
 
-The `Async` suffix to the method is totally optional, but it is the general convention to name `async` methods that way so that it's easier to read and notice.
+The "Async" suffix to the method is totally optional, but it is the general convention to name `async` methods that way so that it's easier to read and notice.
 
 #### The control flow
 
-Before we explore the control flow in a `async` method, let's first understand what happens to the code when it is compiled. In compilcation, the compiler basically (taking it in an overly-simplified way) creates a continuation for the part of code, that is after `await`. This continuation is implementade as an auto-generated class with a _state-machine_. The state-machine has 2 states - incomplete, complete (just giving some names for easy understanding). Initially, when the work is started, it goes to _incomplete_ state. Later, when the awaited work is complete, the state-machine goes to _complete_ state, and the next part of the code is kicked off.
+Before we explore the control flow in a `async` method, let's first understand what happens to the code when it is compiled. In compilation, the compiler basically (talking it in an overly-simplified way) creates a continuation for the part of code, that is after `await`. This continuation is implemented as an auto-generated class with a _state-machine_. The state-machine has 2 states - incomplete, complete (just giving some names for easy understanding). Initially, when the work is started, it goes to _incomplete_ state. Later, when the awaited work is complete, the state-machine goes to _complete_ state, and the next part of the code is kicked off.
 
 So, basically the compiler breaks the method at `await` and puts the rest of the code as a continuation with a state machine to control the continuation.
 
@@ -105,15 +101,15 @@ In simple words, it means that the CLR remembers the execution context before su
 **Note: Things to remember**<br />
 [1] It's the return type that makes it awaitable. Because the method returns `Task` or `Task<T>`, the method can be await-ed from another method. Not because it has `async` in signature, or it uses `await` inside it's body.<br />
 [2] Async all the way - if a method towards the end of a calling hierarchy is `async`, it's better to make the whole hierarchy `async`, up till the entry point method. This helps in keeping the whole process un-blocked, also the whole code follows same standard. For some discussion, see [this](https://msdn.microsoft.com/en-us/magazine/jj991977.aspx) and [this](https://stackoverflow.com/questions/29808915/why-use-async-await-all-the-way-down).<br />
-[3] Do not make all methods async - do not make all your existing code `async`, just becaue you can. As discussed above, that might degrade performance in some scenarios. Can also lead to deadlocks if done incorrectly.
+[3] Do not make all methods async - do NOT make all your existing code `async`, just becaue you can. As discussed above, that might degrade performance in some scenarios. Can also lead to deadlocks if done incorrectly.
 {: .notice--warning}
 
 **Note:** The standard classes provided by the framework for I/O works, all supports `async` operations. These are well designed, and should be used in place of the synchronous counterparts whenever they make sense. For example, `File.WriteAllBytesAsync()` or `HttpClient().GetStreamAsync()`.
 {: .notice--info}
 
-This concludes our discussion. In the next post **[Part II](/articles/async-await-2/)** of this post, we'll look at some common use cases and see how to turn a synchronous method to asynchronous step-by-step.
+This concludes our discussion on _"how does async-await work"_. In the **[Part II](/articles/async-await-2/)** of this post, we'll look at some general usage scenarios and see how to turn a synchronous method to asynchronous step-by-step.
 
-###### Other posts in the series - Tasks, Threads, Asynchronous
+#### All posts in the series - Tasks, Threads, Asynchronous
 
 * **[Synchronous to asynchronous in .NET](/articles/sync-to-async-in-dotnet/)**
 * **[Basic task cancellation demo in C#](/articles/task-cancellation/)**
@@ -122,7 +118,7 @@ This concludes our discussion. In the next post **[Part II](/articles/async-awai
 
 #### References
 
-* Asnc Await documentation - [MSDN](https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/concepts/async/), &nbsp; [Control flow](https://docs.microsoft. com/en-us/dotnet/csharp/programming-guide/concepts/async/control-flow-in-async-programs), &nbsp; [TAP - Task-based Asynchronous Pattern](https://docs.microsoft.com/en-us/dotnet/standard/asynchronous-programming-patterns/task-based-asynchronous-pattern-tap), &nbsp; [FAQs](https://blogs.msdn.microsoft.com/pfxteam/2012/04/12/asyncawait-faq/)
+* Async-Await documentation - [MSDN](https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/concepts/async/), &nbsp; [Control flow](https://docs.microsoft. com/en-us/dotnet/csharp/programming-guide/concepts/async/control-flow-in-async-programs), &nbsp; [TAP - Task-based Asynchronous Pattern](https://docs.microsoft.com/en-us/dotnet/standard/asynchronous-programming-patterns/task-based-asynchronous-pattern-tap), &nbsp; [FAQs](https://blogs.msdn.microsoft.com/pfxteam/2012/04/12/asyncawait-faq/)
 * How does it work? From StackOverflow QA - [CLR implementation](https://stackoverflow.com/questions/4047427/c-sharp-async-how-does-it-work/4047607#4047607), &nbsp; [int to Task&lt;int&gt;](https://stackoverflow.com/questions/13159080/how-does-taskint-become-a-int), &nbsp; [The wrong implementation](https://stackoverflow.com/questions/14455293/how-and-when-to-use-async-and-await)
 * Async-Await & threads
   * [SO - how applications are responsive if there are no threads](https://stackoverflow.com/questions/37419572/if-async-await-doesnt-create-any-additional-threads-then-how-does-it-make-appl)
@@ -131,4 +127,3 @@ This concludes our discussion. In the next post **[Part II](/articles/async-awai
   * [Await, Synchronization Context, and Console Apps - Stephen Toub](https://blogs.msdn.microsoft.com/pfxteam/2012/01/20/await-synchronizationcontext-and-console-apps/)
   * [There is no thread - Stephen Cleary](http://blog.stephencleary.com/2013/11/there-is-no-thread.html), &nbsp; [SO - related](https://stackoverflow.com/questions/600795/asynchronous-vs-multithreading-is-there-a-difference)
 * More detailed, in depth discussions by experts - [Stephen Cleary](http://blog.stephencleary.com/2012/02/async-and-await.html), &nbsp; [Eric Lippert](https://blogs.msdn.microsoft.com/ericlippert/tag/async/), &nbsp; [Jon Skeet](https://codeblog.jonskeet.uk/?s=eduasync)
-* [Video: Short explanation on internal implementation of async await](https://www.youtube.com/watch?v=6_GTdR0gBVE)

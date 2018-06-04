@@ -213,7 +213,7 @@ So, what kind of code is at risk of above type of issues? Any code that works on
 - microservices, event-sourcing, reactive-programming (e.g. akka)
 - [reactive extensions](https://docs.microsoft.com/en-us/previous-versions/dotnet/reactive-extensions/hh242985(v=vs.103))
 
-###### Other posts in the series - Tasks, Threads, Asynchronous
+###### All posts in the series - Tasks, Threads, Asynchronous
 
 * **[Synchronous to asynchronous in .NET](/articles/sync-to-async-in-dotnet/)**
 * **[Basic task cancellation demo in C#](/articles/task-cancellation/)**

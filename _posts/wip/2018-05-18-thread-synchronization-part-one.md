@@ -287,7 +287,7 @@ private static void ReleaseSemaphore()
 
 Continue to **[next module](/articles/thread-synchronization-part-two/)**.
 
-###### Other posts in the series - Tasks, Threads, Asynchronous
+###### All posts in the series - Tasks, Threads, Asynchronous
 
 * **[Synchronous to asynchronous in .NET](/articles/sync-to-async-in-dotnet/)**
 * **[Basic task cancellation demo in C#](/articles/task-cancellation/)**
