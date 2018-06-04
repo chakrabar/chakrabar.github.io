@@ -13,7 +13,7 @@ share: true
 published: true
 ---
 
-The keyword pair [Async-Await](https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/concepts/async/) was introduced in `C# 5` as a way of writing cleaner (synchronous-like) code for asynchronous operations. With use of `async-await`, a method can be written which looks very similar in structure to standard synchronous code, but can work asynchronously without keeping the calling thread busy.
+In this post, we'll see how does `async-await` work in .NET platform. The keyword pair [Async-Await](https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/concepts/async/) was introduced in `C# 5` as a way of writing cleaner (synchronous-like) code for asynchronous operations. With use of `async-await`, a method can be written which looks very similar in structure to standard synchronous code, but can work asynchronously without keeping the calling thread busy.
 
 Here, we'll look at a typical `async` method, and see how they work practically, without going too deep in the implementation details.
 
