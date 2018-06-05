@@ -62,17 +62,20 @@ public static async Task<string> GetPersonDetailsAsync()
 }
 ```
 
-This works fine. But we can improve it. In the above code, it executes the tasks one-by-one. We can simply start them both (when they are independent) and then wait for them to complete, speeding up the overall process. The trick is to bundle the tasks with `Task.WhenAll()` and use a single `await`.
+This works fine. But we can improve it. In the above code, it executes the tasks one-by-one. We can simply start them both (ONLY when they are independent of each other) and then wait for them to complete, speeding up the overall process. The trick is to bundle the tasks with `Task.WhenAll()` and use a single `await`.
 
 ```cs
 public static async Task<string> GetPersonDetails2()
 {
     Task<int> idTask = GetIdAsync();
     Task<string> nameTask = GetNameAsync();
-    await Task.WhenAll(idTask, nameTask); //wait for both to complete
+    await Task.WhenAll(idTask, nameTask); //await both the tasks
     return $"Person Id:{idTask.Result}, Name:{nameTask.Result}";
 }
 ```
+
+**Note:** Understand that using a `Task.WhenAll()` does not block the thread. It simply returns a `Task` that can be awaited, and will complete when all the tasks are complete. On the other hand, `Task.WaitAll()` will block the current thread until all the tasks are complete. This may lead to undesirable performances, and can also lead to deadlocks in some scenarios. More details later.
+{: .notice--warning}
 
 #### Exception handling
 
@@ -85,7 +88,7 @@ public async static void Execute()
 {
     try
     {
-        var message = await GetMessageAsync(); //.Result for sync
+        var message = await GetMessageAsync(); //.Result for synchronous
     }
     catch (Exception ex) //exception will be caught here
     {
@@ -96,7 +99,7 @@ public async static void Execute()
 
 Things are different if the async method (e.g. GetNameAsync here) is void and it's difficult to handle the exception nicely. So, as discussed before, return a `Task` or `Task<T>` and avoid the void return.
 
-> Async void methods have different error-handling semantics. When an exception is thrown out of an async Task or async Task&lt;T&ht; method, that exception is captured and placed on the Task object. With async void methods, there is no Task object, so any exceptions thrown out of an async void method will be raised directly on the SynchronizationContext that was active when the async void method started. - [MSDN](https://msdn.microsoft.com/en-us/magazine/jj991977.aspx)
+> Async void methods have different error-handling semantics. When an exception is thrown out of an async Task or async Task&lt;T&gt; method, that exception is captured and placed on the Task object. With async void methods, there is no Task object, so any exceptions thrown out of an async void method will be raised directly on the SynchronizationContext that was active when the async void method started. - [MSDN](https://msdn.microsoft.com/en-us/magazine/jj991977.aspx)
 
 #### Synchronous to asynchronous
 
@@ -239,4 +242,4 @@ The `Main` method remains the same as in case of `async-await`, and it also perf
 * **[Synchronous to asynchronous in .NET](/articles/sync-to-async-in-dotnet/)**
 * **[Basic task cancellation demo in C#](/articles/task-cancellation/)**
 * **[How does Async-Await work - Part I](/articles/async-await/)**
-* **[How does Async-Await work - Part II](#)**
+* **How does Async-Await work - Part II**

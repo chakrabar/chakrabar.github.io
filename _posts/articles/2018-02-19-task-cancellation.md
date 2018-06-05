@@ -9,11 +9,11 @@ comments: true
 share: true
 ---
 
-Here we'll look at a very basic exmaple of a cancellable `Task`. This is an addition to the post [Synchronous to asynchronous in .NET](/notes/sync-to-async-in-dotnet/). This is a complete runnable code demo of a simple `Console` application that runs a slow process asynchronously. User has an option to _"Press C"_ to cancel the operation.
+Here we'll look at a very basic example of a cancellable `Task`. This is an addition to the post [Synchronous to asynchronous in .NET](/notes/sync-to-async-in-dotnet/). This is a complete runnable code demo of a simple `Console` application that runs a slow process asynchronously. User has an option to _"Press C"_ to cancel the operation.
 
 We'll first have the actual synchronous method `CancellableWork()` that is invoked asynchronously. It accepts a `CancellationToken` and periodically checks if cancellation is requested on the token. If requested, it aborts the operation and throws a `TaskCanceledException`.
 
-The method `CancellableTask()` starts the operation asynchronously and passes a cancellation token. It then retuns the resulting `Task` to the calling method. So, the calling method can pass a `CancellationToken` while invoking this method and request a cancellation later.
+The method `CancellableTask()` starts the operation asynchronously and passes a cancellation token. It then retunes the resulting `Task` to the calling method. So, the calling method can pass a `CancellationToken` while invoking this method and request a cancellation later.
 
 **Note:** Just passing a `CancellationToken` and requesting a `Cancel()` doesn't do much by itself. It's up to the actual working logic to check and respond to `IsCancellationRequested`. Also, the code decides whether to throw a `TaskCanceledException` by convention, or not.
 {: .notice--warning}
@@ -77,7 +77,7 @@ static void Main(string[] args)
     catch (AggregateException ae)
     {
         if (ae.InnerExceptions.Any(e => e is TaskCanceledException))
-            Console.WriteLine("Task canceled exception detected");
+            Console.WriteLine("Task cancelled exception detected");
         else
             throw;
     }
@@ -108,13 +108,13 @@ Iteration # 3 completed
 c
 Task cancellation requested.
 Cancelled on iteration # 4
-Task canceled exception detected
+Task cancelled exception detected
 Process completed
 ```
 
 ###### All posts in the series - Tasks, Threads, Asynchronous
 
 * **[Synchronous to asynchronous in .NET](/articles/sync-to-async-in-dotnet/)**
-* **[Basic task cancellation demo in C#](#)**
+* **Basic task cancellation demo in C#**
 * **[How does Async-Await work - Part I](/articles/async-await/)**
 * **[How does Async-Await work - Part II](/articles/async-await-2/)**

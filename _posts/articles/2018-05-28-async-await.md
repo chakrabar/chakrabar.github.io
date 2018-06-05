@@ -113,7 +113,7 @@ This concludes our discussion on _"how does async-await work"_. In the **[Part I
 
 * **[Synchronous to asynchronous in .NET](/articles/sync-to-async-in-dotnet/)**
 * **[Basic task cancellation demo in C#](/articles/task-cancellation/)**
-* **[How does Async-Await work - Part I](/#)**
+* **How does Async-Await work - Part I**
 * **[How does Async-Await work - Part II](/articles/async-await-2/)**
 
 #### References
