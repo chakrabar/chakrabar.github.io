@@ -110,3 +110,5 @@ Cypher is a descriptive query language, Cypher queries describe what data to fet
 * [Release-wise downloads](http://tinkerpop.apache.org/downloads.html)
 * [Gremlin console](http://tinkerpop.apache.org/docs/current/tutorials/the-gremlin-console/)
 * [Documentation reference](http://docs.janusgraph.org/latest/gremlin.html)
+
+* [extending neo4j](https://neo4j.com/docs/java-reference/current/#server-extending)

@@ -95,7 +95,7 @@ Here we'll look at some common types of databases and when it _"might"_ be more 
 Relational databases like `MySQL`, `Oracle`, `SQL Server` etc. works really well, when storage & data retrieval needs align with their capabilities. They are great at maintaining fixed structure data and running table-level queries with not-so-many relationships between big set of tables. Beyond that, the queries with lot of joins tends to degrade in performance. Prefer it when
 
 1. Data is well defined & fixed structured, with limited level of pre-defined relationships (decided at design time)
-2. Lot of column based aggregations are used (e.g. sum, average, standard deviation etc.), as column-wise retrieval is pretty fast
+2. Lot of column based aggregations are used (e.g. ranking queries, or average, standard deviation etc.), as column-wise retrieval is pretty fast
 
 <u>Document database</u>
 
@@ -125,5 +125,5 @@ Other type of databases also provide great value in specific use-cases, like <u>
 * [Introduction to graph database, property graph model](https://neo4j.com/developer/graph-database/)
 * [Graph databases for beginners articles](https://neo4j.com/blog/why-graph-databases-are-the-future/)
 * [Youtube series](https://www.youtube.com/watch?v=5Tl8WcaqZoc)
-* [sample use cases](https://neo4j.com/graphgists/)
-* [Ebboks, including free](https://neo4j.com/books/)
+* [Sample use cases](https://neo4j.com/graphgists/)
+* [Ebooks, including free](https://neo4j.com/books/)
