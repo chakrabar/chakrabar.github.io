@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Non-blocking Thread synchronisation, deadlock & more  | Thread synchronisation Part IV"
+title: "Non-blocking Thread synchronisation, deadlock & more | Thread synchronisation Part IV"
 excerpt: "High level overview of some less common cases of thread synchronization continued"
 date: 2018-06-09
 tags: [thread, synchronization, signaling, monitor, semaphore, deadlock]

@@ -10,7 +10,7 @@ image:
 comments: true
 share: true
 published: true
-modified: 2018-06-02T22:30:00-04:00
+modified: 2018-06-02T22:30:00+05:30
 ---
 
 This article is a continuation of the Neo4j database series. If you are coming here directly and not familiar with **`Neo4j`** database & **`Cypher`** query language, read these articles first.

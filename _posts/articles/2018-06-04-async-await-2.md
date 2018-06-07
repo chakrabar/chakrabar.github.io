@@ -11,6 +11,7 @@ image:
 comments: true
 share: true
 published: true
+modified: 2018-06-08T02:45:00+05:30
 ---
 
 This post is a continuation of **[How does Async-Await work - Part I](/articles/async-await/)**. Now that we understand the basics of how Async-Await works in .NET, we'll look at some general development scenarios and see how we can convert a simple synchronous method to asynchronous step-by-step.
@@ -81,16 +82,16 @@ public static async Task<string> GetPersonDetails2()
 
 As discussed in [Synchronous to asynchronous in .NET](/articles/sync-to-async-in-dotnet/), if a task fails to run successfully, it terminates the task and attaches the exception in the returned `Task`. This exception can be handled when doing a `task.Wait()` or `task.Result` in a synchronous style code.
 
-In case of `async` code, we can simply wrap the `await task` call inside a `try-catch` block.
+In case of `async` code, we can simply wrap the `await task` call inside a `try-catch` block. An important difference here from `task.Wait()` is, await _unwraps_ the `AggregateException` and sends back the original exception, making the exception handling even more clean. So, you can write `catch` logic directly for specific exceptions.
 
 ```cs
 public async static void Execute()
 {
     try
     {
-        var message = await GetMessageAsync(); //.Result for synchronous
+        var message = await GetMessageAsync();
     }
-    catch (Exception ex) //exception will be caught here
+    catch (Exception ex) //specific exception will be caught here
     {
         Console.WriteLine("Oh snap! " + ex.Message);
     }
@@ -233,6 +234,19 @@ The `Main` method remains the same as in case of `async-await`, and it also perf
 
 1. The runtime does not capture the context in continuation, so that runs without context, generally on a separate thread
 2. And we have made our code more clumsy compared to the simple syntax of `async-await`. It's still readable, but as we keep doing this, the whole codebase becomes less and less readable
+
+We can get a scheduler based on the current synchronization context, and continue the task on that. But that may lead to unexpected behaviours, and also adds to the complexity.
+
+```csharp
+TaskScheduler targetScheduler = SynchronizationContext.Current != null
+    ? TaskScheduler.FromCurrentSynchronizationContext() //e.g. app with UI thread
+    : TaskScheduler.Current; //when there is NO SynchronizationContext e.g. Console
+
+var lengthTask = messageTask.ContinueWith((stringTask) =>
+{
+    //same code as above
+}, targetScheduler);
+```
 
 **Note:** Using a blocking call like `task.Result` or `task.Wait()` on an `await`-able task may sometimes lead to deadlock in applications like `WPF`. The reason is [1] there is just one main UI thread that does all the UI update work, and [2] by default `async` methods try to run the continuation on the main thread. So, if the main thread is blocked (waiting for the method to complete) and the method is waiting for it to continue, it may lead to `deadlock`!
 {: .notice--danger}
