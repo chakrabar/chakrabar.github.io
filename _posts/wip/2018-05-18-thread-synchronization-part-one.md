@@ -59,7 +59,7 @@ Multi-threading is when you have more than one thread being used by a process. I
 
 ###### ThreadPool
 
-We've seen above that spinning up a new thread takes considerable amount of resources. Also maintaining threads has its own overheads. So, most of the times, it makes sense to re-use threads than creating new ones. One easy way to do that is to use the .NET managed `ThreadPool`. ThreadPool maintains a pool of worker threads, which are assigned to do _tasks_ on demand. Once the task is completed, the thread is taken back to the pool and used for other tasks as required.
+We've seen above that spinning up a new thread takes considerable amount of resources. Also maintaining threads has its own overheads. So, most of the times, it makes sense to re-use threads rather than creating new ones. One easy way to do that is to use the .NET managed `ThreadPool`. ThreadPool maintains a pool of worker threads, which are assigned to do _tasks_ on demand. Once the task is completed, the thread is taken back to the pool and used for other tasks as required.
 
 * Keeps a pool of worker threads. And all threads are [background](https://msdn.microsoft.com/en-us/library/system.threading.threadpool.aspx) threads (terminates if main thread terminates)
 * New work is allocated to idle threads, and are returned to the pool once done
@@ -104,33 +104,42 @@ So, in multi-threaded applications, the threads needs to be synchronized, so tha
     2. Volatile, Thread.VolatileRead, Thread.VolatileWrite
     3. Interlocked
 
+Here, we'll look at the some of the commonly used ways of thread synchronization. First, the exclusive locks. They make sure, that one and only one thread can enter a critical section of code.
+
 #### Monitor & lock
 
 The `lock()` is the most widely used construct for thread synchronization, and it's one of the easiest ones to use. It can lock a section of code that needs to be handled in thread-safe way, or commonly known as a _"critical section"_ of code.
 
 Lock creates something like a room with lock, for which only one key is there and only the person with the key can enter. The next person has to wait until the previous person comes out and gives her the key. So, only one thread can enter the block of code protected with a `lock(lockObject)`.
 
-In .NET, the `lock()` is actually constructed with `Monitor` class internally, i.e. the compiler translates the lock statement into a `Monitor.Enter()` and `Monitor.Exit()` pair. Basically, a `lock()` is safe syntax (because `Monitor.Exit()` is put in `finally`) for using Enter-Exit pair of Monitr class.
+In .NET, the `lock()` is actually constructed with `Monitor` class internally, i.e. the compiler translates the lock statement into a `Monitor.Enter()` and `Monitor.Exit()` pair. Basically, a `lock()` is safe syntax (because `Monitor.Exit()` is put in `finally`) for using Enter-Exit pair of Monitor class.
 
 ```cs
 private static readonly object lockObject = new object();
-lock(lockObject) {
+lock(lockObject)
+{
     //critical section of code
 }
 
 //translates to (C# 4, .NET 4.0 and above)
 bool acquiredLock = false;
-try {
+try
+{
     Monitor.Enter(lockObject, ref acquiredLock);
     //on Enter, acquiredLock is automatically marked true
     //do the actual work
 }
-finally {
-    if (acquiredLock)     {
+finally
+{
+    if (acquiredLock)
+    {
         Monitor.Exit(lockObject);
     }
 }
 ```
+
+**Note:** The most widely used way to protect a piece of code (or the resource it accesses) from being used by multiple threads simultaneously, is to use a `lock()`. It's almost always advised to use `lock()` over other synchronization constructs, as it is easier to use and chances of writing error-prone multi-threaded code is much less than the others. Use the other synchronization constructs for specific needs, for example, when you want to allow a specific number (more than one) of threads to access the _critical section_.
+{: .notice--success}
 
 The [Monitor](https://msdn.microsoft.com/en-us/library/system.threading.monitor.aspx#Lock) class is a .NET specific class used for exclusive locks. It cannot be instantiated, and has only static methods & can be called from any context. The `Monitor` based locks are uniquely identified with an `object`. So, one specific lock needs to use a specific object, and if two separate locks are needed, two separate objects need to be used. The `Monitor` can associate itself with object(s) on demand (i.e. on `Monitor.Enter(obj)` or `Monitor.TryEnter(obj)` or `lock(obj)`). `Monitor.Enter()` acquires an exclusive lock based on the lock-object, and `Monitor.Exit()` releases the lock. For each `lock-object`, it keeps track of
 
@@ -146,6 +155,8 @@ It's suggested to use a `private readonly static` object to lock
 
 Locking does not work on value types. On `lock`/`Monitor.Enter`, the instance of the lock object gets a `Sync Block` structure added to its managed memory block (sync block can also get initialized for other reasons, e.g. to store results of `GetHashCode()` method), and the `ManagedThreadId` of the current thread holding the lock is saved. This is used by the `Monitor` for synchronization. For the same reason, a `null` object cannot be locked.
 
+The `Monitor` class also supports signalling, that we'll see later.
+
 #### Mutex
 
 `Mutex` (from _"**mut**ually **ex**clusive"_) is similar to `Monitor` in that, it allows only one thread to execute a block of code, but unlike Monitor, it can work across processes. Monitor is more of a .NET construct, whereas Mutex is a wrapper over OS level Win32 construct.
@@ -160,15 +171,13 @@ if (mutex.WaitOne(2000)) //wait to get mutext with timeout of 2 seconds
     Console.WriteLine("Entered mutex");
     //execute the critical section of work
     Console.WriteLine("Releasing mutex");
+    mutex.ReleaseMutex();
 }
 else
-    Console.WriteLine("Timeout expired");
+    Console.WriteLine("Could not acquire Mutex, timeout expired");
 ```
 
-In the next set of articles, we'll look at the other options for thread synchronization.
-
-**Note:** The rest of the articles in this _thread synchronization_ series are in-progress, and not published yet. Please come back soon for more on multi-threading & thread synchronization.
-{: .notice--info}
+In the next article, we'll look at **[multi-threading with non-exclusive locks](/articles/thread-synchronization-part-two/)**.
 
 #### All posts in the series - Tasks, Threads, Asynchronous
 
@@ -176,7 +185,8 @@ In the next set of articles, we'll look at the other options for thread synchron
 * **[Basic task cancellation demo in C#](/articles/task-cancellation/)**
 * **[How does Async-Await work - Part I](/articles/async-await/)**
 * **[How does Async-Await work - Part II](/articles/async-await-2/)**
-* **Multithreading - lock, Monitor & Mutex | Thread synchronization Part I**
+* **Multithreading - lock, Monitor & Mutex &#124; Thread synchronization Part I**
+* **[Multi-threading with non-exclusive locks &#124; Thread synchronisation Part II](/articles/thread-synchronization-part-two/)**
 
 #### References
 
