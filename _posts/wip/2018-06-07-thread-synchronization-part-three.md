@@ -42,7 +42,7 @@ There are several types of synchronization events
 
 * [AutoResetEvent](https://msdn.microsoft.com/en-us/library/system.threading.autoresetevent.aspx) - allows exclusive **_access to a single thread at a time_**. It maintains an internal queue of all waiting threads, and lets one thread pass when it is _signaled_. The moment one thread with `WaitOne()` gets activated, it **_automatically_** resets to _nonsignaled_ state. Hence the name.
 * [ManualResetEvent](https://msdn.microsoft.com/en-us/library/system.threading.manualresetevent.aspx) - **_allows access to any number of threads_** in _signaled_ state. When it is in _signaled_ state, it allow all of the waiting threads to get activated, and keeps allowing new threads until some thread calls `Reset()` **_manually_** to put it in _nonsignaled_ state. Hence the name.
-* There is another very similar synchronization construct [CountdownEvent](https://msdn.microsoft.com/en-us/library/system.threading.countdownevent.aspx) - which is based on a counter. It gets set to _signaled_ state when it's count reaches 0, and allows all waiting threads to proceed. It stays in _nonsignaled_ state al long as count is greater than 0. It is instatntiated with an initial count e.g. `new CountdownEvent(3)`, and count can be increased and decreased with `AddCount()` and `Signal()` respectively. **Note:** [1] If an attemp is made to bring the count below 0, it throws exception [2] Once the count reached 0, `AddCount()` cannot be called, but `Reset()` can be called to get the count to the initial value.
+* There is another very similar synchronization construct [CountdownEvent](https://msdn.microsoft.com/en-us/library/system.threading.countdownevent.aspx) - which is based on a counter.
 
 We'll look at some very basic examples to see how different `EventWaitHandle` work. First, lets look at **AutoResetEvent**
 
@@ -127,6 +127,13 @@ Thread 5 leaving...
 Thread 4 leaving...
 Thread 3 leaving...
 ```
+
+###### CountdownEvent
+
+The `CountdownEvent` gets to _signaled_ state when it's count reaches 0, and allows all waiting threads to proceed. It stays in _nonsignaled_ state as long as count is greater than 0. It is instatntiated with an initial count e.g. `new CountdownEvent(3)`, and count can be increased and decreased with `AddCount(n)` and `Signal()` respectively.
+
+**Note:** [1] If an attemp is made to bring the count below 0, it throws exception [2] Once the count reached 0, `AddCount()` cannot be called, but `Reset()` can be called to get the count to the initial value.
+{: .notice--warning}
 
 ## Signalling with Monitor Wait and Pulses
 
