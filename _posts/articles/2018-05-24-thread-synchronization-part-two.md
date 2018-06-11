@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Multithreading with non-exclusive locks | Thread synchronisation Part II"
+title: "Multithreading with non-exclusive locks | Thread synchronization Part II"
 excerpt: "Synchronizing multiple threads with non-exclusive locks in .NET"
 date: 2018-05-24
 tags: [thread, synchronization, multithreading, readerwriterlock, semaphore, non-exclusive-locks]
@@ -184,5 +184,6 @@ In the next article, we'll look at **[multithreading with signals](/articles/thr
 * **[How does Async-Await work - Part I](/articles/async-await/)**
 * **[How does Async-Await work - Part II](/articles/async-await-2/)**
 * **[Multithreading - lock, Monitor & Mutex &#124; Thread synchronization Part I](/articles/thread-synchronization-part-one/)**
-* **Multithreading with non-exclusive locks &#124; Thread synchronisation Part II**
-* **[Multithreading with signals &#124; Thread synchronisation Part III](/articles/thread-synchronization-part-three/)**
+* **Multithreading with non-exclusive locks &#124; Thread synchronization Part II**
+* **[Multithreading with signals &#124; Thread synchronization Part III](/articles/thread-synchronization-part-three/)**
+* **[Non-blocking multithreading & concurrent collections &#124; Thread synchronization Part IV](/articles/thread-synchronization-part-four/)**

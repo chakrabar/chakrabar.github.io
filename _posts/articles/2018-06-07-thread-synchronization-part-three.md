@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Multithreading with signals | Thread synchronisation Part III"
+title: "Multithreading with signals | Thread synchronization Part III"
 excerpt: "Thread synchronization in .NET with signal & pulses"
 date: 2018-06-07
 tags: [thread, synchronization, multithreading, signal, waitevent, pulse]
@@ -14,7 +14,7 @@ share: true
 published: true
 ---
 
-In this post, we'll see how to coordinate among many threads using signals. This is a continuation in the multithreading series, following **[Multithreading with non-exclusive locks &#124; Thread synchronisation Part II](/articles/thread-synchronization-part-two/)**.
+In this post, we'll see how to coordinate among many threads using signals. This is a continuation in the multithreading series, following **[Multithreading with non-exclusive locks &#124; Thread synchronization Part II](/articles/thread-synchronization-part-two/)**.
 
 ## Signals
 
@@ -201,8 +201,7 @@ class SimpleProducerConsumerQueue<T>
 
 The `Monitor` based signalling, being more flexible, is also easier to get wrong. Read Joseph Albahari's [book](http://www.albahari.com/threading/part4.aspx) for more detailed explanations and the correct & safe pattern for using Monitor based signalling.
 
-The last article in this _thread synchronization_ series is currently in-progress, and not published yet. Please come back soon for more on multi-threading & thread synchronization.
-{: .notice--info}
+In the next & last article in this _thread synchronization_ series, we'll look at some **[non-blocking multithreading & concurrent collections](/articles/thread-synchronization-part-four/)**.
 
 ###### All posts in the series - Tasks, Threads, Asynchronous
 
@@ -211,8 +210,9 @@ The last article in this _thread synchronization_ series is currently in-progres
 * **[How does Async-Await work - Part I](/articles/async-await/)**
 * **[How does Async-Await work - Part II](/articles/async-await-2/)**
 * **[Multithreading - lock, Monitor & Mutex &#124; Thread synchronization Part I](/articles/thread-synchronization-part-one/)**
-* **[Multithreading with non-exclusive locks &#124; Thread synchronisation Part II](/articles/thread-synchronization-part-two/)**
-* **Multithreading with signals &#124; Thread synchronisation Part III**
+* **[Multithreading with non-exclusive locks &#124; Thread synchronization Part II](/articles/thread-synchronization-part-two/)**
+* **Multithreading with signals &#124; Thread synchronization Part III**
+* **[Non-blocking multithreading & concurrent collections &#124; Thread synchronization Part IV](/articles/thread-synchronization-part-four/)**
 
 #### References
 
