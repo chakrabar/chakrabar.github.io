@@ -98,4 +98,3 @@ So, what kind of code is at risk of above type of issues? Any code that works on
 ## Thread safe collections
 
 * concurrent collections
-* monitor pulse

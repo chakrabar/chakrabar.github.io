@@ -177,7 +177,7 @@ else
     Console.WriteLine("Could not acquire Mutex, timeout expired");
 ```
 
-In the next article, we'll look at **[multi-threading with non-exclusive locks](/articles/thread-synchronization-part-two/)**.
+In the next article, we'll look at **[multithreading with non-exclusive locks](/articles/thread-synchronization-part-two/)**.
 
 #### All posts in the series - Tasks, Threads, Asynchronous
 
@@ -186,10 +186,12 @@ In the next article, we'll look at **[multi-threading with non-exclusive locks](
 * **[How does Async-Await work - Part I](/articles/async-await/)**
 * **[How does Async-Await work - Part II](/articles/async-await-2/)**
 * **Multithreading - lock, Monitor & Mutex &#124; Thread synchronization Part I**
-* **[Multi-threading with non-exclusive locks &#124; Thread synchronisation Part II](/articles/thread-synchronization-part-two/)**
+* **[Multithreading with non-exclusive locks &#124; Thread synchronisation Part II](/articles/thread-synchronization-part-two/)**
+* **[Multithreading with signals &#124; Thread synchronisation Part III](/articles/thread-synchronization-part-three/)**
 
 #### References
 
 * [Synchronization in Windows](https://msdn.microsoft.com/en-us/library/ms686353.aspx)
+* [Threading in C# by Joseph Albahari](http://www.albahari.com/threading/)
 * [Processes, Threads, and Jobs in the Windows](https://www.microsoftpressstore.com/articles/article.aspx?p=2233328&seqNum=7)
 * [Runtime object creation in CLR](/assets/downloads/Objects_MSDN_May2005.pdf)

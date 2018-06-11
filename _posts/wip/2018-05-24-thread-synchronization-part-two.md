@@ -1,7 +1,7 @@
 ---
 layout: post
-title: "Multi-threading with non-exclusive locks | Thread synchronisation Part II"
-excerpt: "High level overview of some less common cases of thread synchronization"
+title: "Multithreading with non-exclusive locks | Thread synchronisation Part II"
+excerpt: "Synchronizing multiple threads with non-exclusive locks in .NET"
 date: 2018-05-24
 tags: [thread, synchronization, multithreading, readerwriterlock, semaphore, non-exclusive-locks]
 categories: articles
@@ -175,8 +175,7 @@ internal static void AccessSharedResource()
 **Important:** It does not matter which thread calls the `Wait()` and which one does `Release()`, they just change the shared semaphore CurrentCount value. It's the responsibility of the program to make sure overall sanity is maintained through the `Wait()` and `Release()` calls from all threads. In general cases, write the code that uses the shared resource pool within a wait-release pair, which must be the only way to access the resource by any thread.
 {: .notice--danger}
 
-The rest of the articles in this _thread synchronization_ series are in-progress, and not published yet. Please come back soon for more on multi-threading & thread synchronization.
-{: .notice--info}
+In the next article, we'll look at **[multithreading with signals](/articles/thread-synchronization-part-three/)**.
 
 #### All posts in the series - Tasks, Threads, Asynchronous
 
@@ -185,4 +184,5 @@ The rest of the articles in this _thread synchronization_ series are in-progress
 * **[How does Async-Await work - Part I](/articles/async-await/)**
 * **[How does Async-Await work - Part II](/articles/async-await-2/)**
 * **[Multithreading - lock, Monitor & Mutex &#124; Thread synchronization Part I](/articles/thread-synchronization-part-one/)**
-* **Multi-threading with non-exclusive locks &#124; Thread synchronisation Part II**
+* **Multithreading with non-exclusive locks &#124; Thread synchronisation Part II**
+* **[Multithreading with signals &#124; Thread synchronisation Part III](/articles/thread-synchronization-part-three/)**
