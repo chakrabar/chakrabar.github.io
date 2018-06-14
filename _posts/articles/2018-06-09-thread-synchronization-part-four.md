@@ -124,7 +124,7 @@ Some of the very useful thread-safe collections are (there are more)
 * [ConcurrentBag&lt;T&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.collections.concurrent.concurrentbag-1?view=netframework-4.7.2) : thread-safe collection of unordered items
 * [ConcurrentQueue&lt;T&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.collections.concurrent.concurrentqueue-1?view=netframework-4.7.2) : thread-safe FIFO collection
 * [ConcurrentStack&lt;T&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.collections.concurrent.concurrentstack-1?view=netframework-4.7.2) : thread-safe LIFO collection
-* [ConcurrentDictionary&lt;TKey,TValue&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.collections.concurrent.concurrentdictionary-2?view=netframework-4.7.2) : thread-safe collection of key-value dictionary
+* [ConcurrentDictionary&lt;TKey,TValue&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.collections.concurrent.concurrentdictionary-2?view=netframework-4.7.2) : thread-safe collection of key-value pairs
 
 They all provide safe methods for adding data, and useful properties like `IsEmpty` and `Count`. The `ConcurrentDictionary` provides an additional bunch of practical methods like `AddOrUpdate()`, `GetOrAdd()` etc.
 
