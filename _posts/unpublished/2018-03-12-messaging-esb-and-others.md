@@ -20,7 +20,7 @@ Main reason for using MQs are - Scalability, distribution, asynchrony etc.
 * Distribution - Many applications can write to, or read from, or both from a (single or distributed) MQ. They make sure all messages are read only once
 * Asynchrony - the read-write can work out-of-sync (even when some components are offline), but in order
 
-Examples of MQ are - [Rabbit MQ](http://www.rabbitmq.com/), [MSMQ](https://msdn.microsoft.com/en-us/library/ms711472(VS.85).aspx), [Zero MQ](http://zeromq.org/)
+Examples of MQ are - [Rabbit MQ](http://www.rabbitmq.com/), [MSMQ](https://msdn.microsoft.com/en-us/library/ms711472(VS.85).aspx), [Zero MQ](http://zeromq.org/) etc.
 
 #### What is an ESB
 
@@ -34,7 +34,7 @@ It may come with some disadvantages as well
 * Slower communictaion for compatible services
 * Single point of failure
 
-Examples of current ESBs - [nServiceBus](https://particular.net/nservicebus), [Oracle Service Bus](http://www.oracle.com/technetwork/middleware/service-bus/overview/index.html), [Mule ESB](https://www.mulesoft.com/platform/soa/mule-esb-open-source-esb) etc.
+Examples of current ESBs - [nServiceBus](https://particular.net/nservicebus), [Oracle Service Bus](http://www.oracle.com/technetwork/middleware/service-bus/overview/index.html), [Mule ESB](https://www.mulesoft.com/platform/soa/mule-esb-open-source-esb), [MassTransit](http://masstransit-project.com/) etc.
 
 #### What is an API Gateway
 
