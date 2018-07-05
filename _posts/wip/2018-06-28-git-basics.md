@@ -55,7 +55,7 @@ Git commands can be run in `Git Bash` that comes with default installation. Stan
 git init <path>
 #leave <path> as empty to run on current directory
 # clone a remote repo (with https) example
-git clone https://github.com/Readify/Neo4jClient.git
+git clone https://github.com/angular/angular.git
 # clone with ssh (needs SSH configured)
 git clone ssh://<user>@<host>/path/to/repo.git
 ```
@@ -195,10 +195,12 @@ branches are super light-weight. Git simply maintains the HEAD commit-id for the
 git branch #see all branches, current active one is starred*
 git branch cool-feature #create a new branch 'cool-feature'
 git checkout cool-feature #switch to branch
-#now staging & commit will happen to cool-feature branch
-#now switch to another branch before deleting
+# now staging & commit will happen to cool-feature branch
+# now switch to another branch before deleting
 git branch -d cool-feature #delete merged branch, history preserved
 git branch -D cool-feature #force delete un-merged branch
+# to compare between two branches
+git diff branch1..branch2
 ```
 
 
@@ -232,11 +234,11 @@ Automatic merge failed; fix conflicts and then commit the result.
 ```
 
 ```
-<<<<<<< HEAD
+<<<<<< HEAD
 1st line in master branch
-=======
+======
 1st line from feature2 branch
->>>>>>> feature2
+>>>>>> feature2
 ```
 
 ```bash
@@ -295,31 +297,59 @@ git rebase origin/remote-branch
 
 ###### Pull & Push
 
-Git `pull` is a combination of `git fetch` and `git merge`. It downloads the remote contents and then merges it into the local branch.
+Git `pull` is a combination of `git fetch` and `git merge`. It downloads the remote contents and then merges it into the local branch. See all options [here](https://git-scm.com/docs/git-pull).
 
 It is generally considered as NOT SAFE as it'll automatically change local branch after fetching the remote branch.
 
-Git `push` sends the local branch to the remote repository. It uploads the local data to the remote, and creates a _local branch_ in the remote repository with the same name as the local-branch from where it was pushed (if a new remote-branch name is used).
+Git `push` sends the local branch to the remote repository. It uploads the local branch contents to the remote, and creates a new branch in the remote repository with the same name as the _local-branch_ from where it was pushed (if it doesn't exist already in remote). See more options [here](https://git-scm.com/docs/git-push).
 
 ```bash
 # PULL
-git pull origin/remote-branch
-# is same as...
+git pull origin remote-branch #branch is optional
+# is same as the following 2 COMMANDS
 git fetch origin remote-branch #download remote branch
 git merge origin/remote-branch #merge remote to local
 
 # PUSH
-# first, checkout the correct local branch
-git push remote-repo remote-branch
+# first, checkout the correct local branch, then
+git push <remote-repo> <local-branch>
 # in it's simple form
 git push origin master
+git push origin HEAD #push current branch with same name to remote
+git push origin <local-branch>:<new-remote-branch> # with new name in remote
 ```
+
+If `<remote-repo>` is not mentioned, it is taken as `origin`, given origin exists. If `<local-branch>` is not mentioned, currently checked-out branch is used. If this branch does not exist in the remote, it'll be created.
 
 ## GitHub
 
-43-75
+GitHub is an online service for hosting Git based repositories. Currently it is the largest source of open source softwares and developers. Apart from being a (mostly free) source code hosting service, it provides many _social media features_ like - **users**, **collaboration**, **comments**, **stars** (like 'like' in facebook), **follow** etc.
 
-at least 68-75
+[GitHub](https://github.com/) provides bunch of very useful features for collaboration & project management like **Wikis**, **Issues** (for bugs, feature requests etc.), **Project dashboards** (e.g. Kanban board), project collaborators, [CI/CD plugins](https://github.com/marketplace/category/continuous-integration) etc. It also provides services like [HitHubGist](https://gist.github.com/) for short independent documentation & [GitHub Pages](https://pages.github.com/) for hosting web pages.
+
+#### GitHub specific concepts
+
+GitHub is specifically designed for OSS projects (though private or enterprise repositories are also possible). So, any user, registered or not, can see the public projects on GitHub. Registers users can create their own projects and interact with other users/projects.
+
+But users do not have write access to other people's projects. They can simply download the code as zip, if they want to run the code locally or clone them with Git. Users can also comment on issues, submit code reviews and do other things that does not directly affect the codebase.
+
+GitHub supports all the Git based operations like branching, pull, push, merge etc. But being an online repository of public open source projects, it also has some own concepts/features.
+
+###### Collaborators
+
+Collaborators of a project are the developers who are officially working on a project. It's completely up to the owner to select the collaborators, they can be his/her colleagues, friends, online acquiatances or complete stragers who share some common interest.
+
+Collaborators have write access to the project, so they can directly push their changes. Collaborators can also work on issues, wiki docs etc.
+
+###### Forking
+
+Forking is basically creating clone of the project, but on the server side. It creates a server side (online) copy of the project under the user, that can be developed independent of the original project. This is generally used to [1] make a new project based on the existing code, or [2] work on something on the project codebase like enhancement or bug independently, which can be later submitted in pull-request to merge into original project.
+
+###### Pull request
+
+A pull request is a request from an independent developer to the owner of the project, to pull changes from her code (ideally forked from the original project) and merge into the original project. Users submit pull request to the owner generally when they have something to offer which they think will help the original project, like a bug fix or an enhancement.
+
+When the owner gets the notification for pull request, it's upto her to merge the code, reject or ask for some modifications before it's ready for a merge. Note that collaborators of a project have push access to the project. So, if they want, they can directly merge into the codebase.
 
 #### Further reading
 
