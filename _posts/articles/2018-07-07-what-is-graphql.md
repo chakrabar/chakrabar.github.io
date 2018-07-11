@@ -14,13 +14,17 @@ published: true
 
 # GraphQL
 
-The term `GraphQL` has been around for quite a while, but still it is not very clear to many developers what it really is! At least it wasn't for me. Also, many people relate GraphQL and Graph Databases, which are actually not related in any way! Let's just try to wrap our head around the basic concepts and see if it can help us solve some of our real life problems.
+The term `GraphQL` has been around for quite a while, but still it is not very clear to many developers what it really is! At least it wasn't for me. Also, many people relate GraphQL and Graph Databases, which are actually not related in any way! Some of the definitions on the internet can also be confusing! So let's just try simplify the terminology & wrap our head around the basic concepts, and see if it can help us solve some of our real life problems.
 
 #### What is GraphQL
 
-<u>GraphQL is an API standard</u>. It defines a way of building smart APIs where the client can ask for exactly what data is needed, and the API/Server returns the same data as requested by the client. GraphQL stands for "Graph Query Language", but it's not a query language as SQL, it is way of building standard APIs like REST principles. It can also be thought of as a smart way of fetching data.
+<u>GraphQL is an API standard</u>. It defines a way of building smart APIs where the client can ask for exactly what data is needed, and the API server returns the same data as requested by the client.
 
-[GraphQL](https://graphql.org/) was initially designed in Facebook for their back-end for web & mobile apps. Now it has been made [open source](https://github.com/graphql) and supported by a large community.
+> GraphQL is a query language for APIs and a runtime for fulfilling those queries with your existing data. - [GraphQL home](http://graphql.github.io/)
+
+GraphQL stands for "Graph Query Language". It's not a database query language like SQL, it is a way of building standard APIs like REST principles, which allows data queries. It can also be thought of as a smart way of fetching data.
+
+[GraphQL](https://graphql.org/) was initially designed in Facebook for their back-end apps for web & mobile apps. It was made [open source](https://github.com/graphql) in 2015 and now it's supported by a large community.
 
 Since it's more of a standard than a specific implementation, it's possible to use them on almost any platform. There is already support in many languages for [GraphQL servers](http://graphql.github.io/code/) & [clients](http://graphql.github.io/code/#graphql-clients) including `JavaScript`, `Java`, `C#/.NET`, `Go`, `Python`, `Scala` etc.
 
@@ -111,11 +115,11 @@ GitHub provides a nice interface to write interactive GraphQL queries on its liv
 
 ![Image](/images/posts/misc/github-graphiql.png)
 
-Now, on the API side, the server needs to know how to fulfil the queries. To do this, the GraphQL servers use some specialized _`GraphQL execution engine`_ that knows _how to get data for each fields defined in the schema_.
+Now, on the API side, the server needs to know how to fulfil the queries. To do this, the GraphQL servers use some specialized _`GraphQL execution engine`_ that knows _how to get data for each fields defined in the schema_ and combine them into requested form.
 
-So when the server receives the query, it and parses and executes the query. If something is found wrong (e.g. a field that is not defined in the schema), it throws a user-friendly message stating what went wrong with the query.
+So when the server receives the query, it parses and executes the query. If something is found wrong (e.g. a field that is not defined in the schema), it throws a user-friendly message stating what went wrong with the query.
 
-Generally it produces a bunch of smaller queries to fulfil individual fields requested in the query. Then the execution engine tries to run all the queries in most efficient manner, concurrently and combines them back to produce the final result. This result is sent back to the client is the original requested format, generally as `JSON`.
+Generally it produces a bunch of smaller queries to fulfil individual fields requested in the query. Then the execution engine tries to run all the queries in most efficient manner, concurrently and combines them back to produce the final result. This result is sent back to the client in the original requested format, generally as `JSON`.
 
 **Note:** There is no constraint on the source of data. For example, it's totally fine to get some audit records from a SQL Server database, user document from MongoDB and transaction details from another API.
 {: .notice--info}
