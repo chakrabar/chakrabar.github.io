@@ -1,4 +1,20 @@
+---
+layout: post
+title: "Azure basics"
+excerpt: "WIP"
+date: 2018-07-08
+tags: [graphql, api, graph, webservice]
+categories: articles
+image:
+  feature: posts/misc/og-image-lg.jpg
+comments: true
+share: true
+published: false
+---
+
 # Azure for .NET developers
+
+(From Scott Allen's Pluralsight course)
 
 Platform support - ASP.NET, Java, Node, Rails, php, Python Django etc.
 

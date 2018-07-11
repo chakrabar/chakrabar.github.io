@@ -1,3 +1,17 @@
+---
+layout: post
+title: "ASP.NET Core deployment"
+excerpt: "WIP"
+date: 2018-06-15
+tags: [graphql, api, graph, webservice]
+categories: articles
+image:
+  feature: posts/misc/og-image-lg.jpg
+comments: true
+share: true
+published: false
+---
+
 SQL performance & query tuning
 A standard noSQL database - MongoDB
 Building basic CI/CD pipeline
