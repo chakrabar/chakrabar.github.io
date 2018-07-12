@@ -24,7 +24,7 @@ The term `GraphQL` has been around for quite a while, but still it is not very c
 
 GraphQL stands for "Graph Query Language". It's not a database query language like SQL, it is a way of building standard APIs like REST principles, which allows data queries. It can also be thought of as a smart way of fetching data.
 
-[GraphQL](https://graphql.org/) was initially designed in Facebook for their back-end apps for web & mobile apps. It was made [open source](https://github.com/graphql) in 2015 and now it's supported by a large community.
+[GraphQL](https://graphql.org/) was initially designed in Facebook for their back-end services for web & mobile clients. It was made [open source](https://github.com/graphql) in 2015 and now it's supported by a large community.
 
 Since it's more of a standard than a specific implementation, it's possible to use them on almost any platform. There is already support in many languages for [GraphQL servers](http://graphql.github.io/code/) & [clients](http://graphql.github.io/code/#graphql-clients) including `JavaScript`, `Java`, `C#/.NET`, `Go`, `Python`, `Scala` etc.
 
