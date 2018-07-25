@@ -549,6 +549,7 @@ Now the page reads the results from Cosmos DB and displays on the page
 ## Continuous Integration with VSTS
 
 VSTS = Visual Studio Team Services
+
 For source control & delivery pipeline. Free credits available @ https://visualstudio.microsoft.com/ (free for up to 5 users, unlimited stakeholders, unlimited private Git repos!)
 
 Supports web & native apps on Windows, Linux, iOS, Android etc. Can also deploy to app stores like Apple app store, or Android PlayStore. Supports C#/.NET, Java, Node, Go among others.
