@@ -9,6 +9,7 @@ image:
   feature: posts/misc/jenkins-2.png
 comments: true
 share: true
+modified: 2018-08-19T13:10:00+05:30
 ---
 
 [Jenkins](https://jenkins.io/) is one of the oldest & most popular CI (Continuous Integration) servers, and many teams still configure and run their daily and ad-hoc build jobs with Jenkins.
@@ -49,12 +50,12 @@ In that case you need to use an user-api-token. It is an authentication token fo
 Let's see how the above three options look in practice. Here we are using [curl](https://curl.haxx.se/) command-line tool for the http requests. See this for [quick reference of curl post](https://gist.github.com/subfuzion/08c5d85437d5d4f00e58).
 
 ```bash
-# basic curl command syntax for POST
+# basic curl command syntax for POST, with username & password
 $ curl -d "data-as-query-parameters" -i -X POST http://username:password@site-uri/path
-# Option 1 : with basic authentication & job-token
-$ curl -d "token=job-token&anotherparam=value" -i -X POST http://username:Passw0rd@myjenkins:8080/job/my-job/buildWithParameters
-# Option 2 : with api-token
-$ curl -d "param=value" -i -X POST http://username:abcdef123456@myjenkins:8080/job/my-job/buildWithParameters
+# Option 1 : with username & basic job-token
+$ curl -d "token=job-token&anotherparam=value" -i -X POST http://username:myJobToken@myjenkins:8080/job/my-job/buildWithParameters
+# Option 2 : with username & api-token
+$ curl -d "param=value" -i -X POST http://username:myApiKey@myjenkins:8080/job/my-job/buildWithParameters
 ```
 
 **Note:** Once you have triggered a build remotely in Jenkins, you'd probably want to know the ID of the build that was triggered. Unfortunately, that is not very straight-forward, and flaky. Jenkins returns a 'Location' header with a queue-ID. Then you [have to poll](https://stackoverflow.com/questions/24507262/retrieve-id-of-remotely-triggered-jenkins-job) the API with the queue-ID to see generated job-ID (RunID). Now, that doesn't work in all scenarios, as vaguely discussed [here](https://issues.jenkins-ci.org/browse/JENKINS-30317) and [here](https://issues.jenkins-ci.org/browse/JENKINS-31039).
@@ -66,22 +67,23 @@ In real-life scenarios, you'll probably want to trigger the job from a build sys
 
 ```xml
 <?xml version="1.0" encoding="utf-8" ?>
-<project name="RunTestsOnJenkins" default="run-jenkins">
-  <!--details of JENKINS JOB, skip if not required-->
+<project name="RunAJobOnJenkins" default="run-jenkins">
+  <property name="curl.path" value="C:\path\to\curl.exe" />
+  <property name="jenkins.protocol" value="http://" />
+  <property name="jenkins.uri" value="172.0.0.1:1234" />
   <property name="jenkins.user" value="username" />
-  <property name="jenkins.apikey" value="abcdefghij1234567890"/>
-  <property name="jenkins.uri" value="http://172.0.0.1:1234" />
-  <property name="jenkins.jobname" value="FunctionalTestSuite"/>
-  <property name="jenkins.parameters" value="testenv=DEV"/>
+  <property name="jenkins.jobname" value="FunctionalTestSuite" />
+  <property name="jenkins.parameters" value="testenv=DEV" />
+  <property name="jenkins.apikey" value="abcdefghij1234567890xxx" />
 
   <!-- Trigger a JENKINS JOB, e.g. a functional test suite -->
-  <target name="run-jenkins">
-    <property name="jenkins.api" value="http://${jenkins.user}:${jenkins.apikey}@${jenkins.uri}/job/${jenkins.jobname}/buildWithParameters" />
-    <exec program="${curl.path}" verbose="true">
-      <arg line="-d ${jenkins.parameters}" />
-      <arg line="-i -X POST ${jenkins.api}" />
-    </exec>
-  </target>
+  <target name="trigger-jenkins-job">
+        <property name="jenkins.api" value="${jenkins.protocol}${jenkins.user}:${jenkins.apikey}@${jenkins.uri}/job/${jenkins.jobname}/buildWithParameters" />
+        <exec program="${curl.path}" verbose="true">
+            <arg line="-d ${jenkins.parameters}" />
+            <arg line="-i -X POST ${jenkins.api}" />
+        </exec>
+    </target>
 </project>
 ```
 
