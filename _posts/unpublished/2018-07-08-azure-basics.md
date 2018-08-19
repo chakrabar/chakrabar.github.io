@@ -539,12 +539,12 @@ Rather than making RAW API calls, Microsoft provides bunch of NuGet packages wit
 
 #### A complete flow
 
-User loads an image from the website hosted on App Service
-It saves the image in Azure Storage (Blob)
-That fires a blob-trigger hosted on Azure Function
-This invokes Azure AI & cognitive service to do a face analysis on the image saved, from the blob URI
-After analysis, the results get stored in Cosmos DB collection
-Now the page reads the results from Cosmos DB and displays on the page
+* User loads an image from the website hosted on App Service
+* It saves the image in Azure Storage (Blob)
+* That fires a blob-trigger hosted on Azure Function
+* This invokes Azure AI & cognitive service to do a face analysis on the image saved, from the blob URI
+* After analysis, the results get stored in Cosmos DB collection
+* Now the page reads the results from Cosmos DB and displays on the page
 
 ## Continuous Integration with VSTS
 

@@ -72,7 +72,7 @@ i.e. To have a specific access (e.g. to add new books to library system), the us
 
 ### Cookie based claims identity
 
-It generally works on Cookie-based authentication. On first authentication, a cookie is set. 
+It generally works on Cookie-based authentication. On first authentication, a cookie is set.
 
 The cookie contains the identity and related claims in encrypted format. Browser saves that and sends that with each request to the domain.
 
@@ -142,7 +142,7 @@ WHY?
 
 The main limitation of cookie-based authentication is that, it works only for a single domain (web) or sub-domain. Because the browser will send the specific cookie for the specific domain/sub-domain. Also the same cookie is hard to share between multiple clients.
 
-The main differences for token based authentication are 
+The main differences for token based authentication are
 
 1. **Tokens are stateless on server**. All the information are encrypted and signed, and written on token that is given back to client to be used for each request. Server does not store any data, it fetches back the required info from the token every time.
 2. **Tokens are generally passed around in (authorization) header**. So it does not have the issues of single client and single domain. The client can request related data from another sub domain or service with the same token (think smart client like a mobile app), and it'll work if the other systems knows how to handle the token. Also, each request can go to any server or cluster node within the same back-end system. But, tokens can also be transmitted through URI or post data. Or, cookie as well, if the need be.
@@ -191,7 +191,7 @@ There are 2 types of tokens
 
 * Identity token - on authentication
 * Access token - when user wants to access a resource, like call an API. this is sent to the API call
- 
+
 IdentityServer implements 2 standard protocols
 
 * **OpenID Connect** : authentication protocol amd extension on top of OAuth 2.0
@@ -201,7 +201,7 @@ IdentityServer also supports external login like Google, Facebook, Twitter etc.
 
 ## Common types of attacks
 
-#### XSS : Cross-Site Scripting attack
+#### XSS : Cross-Site Scripting
 
 To run a malicious script on the page. Easiest way is to add that script as some input data (e.g. a textbox), so that it'll execute when that data is sent back to the page.
 
@@ -210,11 +210,11 @@ In ASP.NET Core, the @ in razor pages (e.g. @User.Name) already HTML encripts da
 
 #### XSRF : Cross-Site Request Forgery
 
-For example, you get a malicious mail that takes you to a unintended website (which may look similar to your knows site, like your bank site).
+For example, you get a malicious mail that takes you to a unintended website (which may look similar to your known site, like your XYZ bank site).
 
-And then it makes you click a button (or does that automatically through a script), which posts a request to the other site (the actual bank site). Assuming you are already logged in to a secure site from the same browser, the browser will send the valid authentication cookie. This request will succeed and can do harmful things.
+And then it makes you click a button (or does that automatically through a script), which posts a request to the other site (the actual XYZ bank site). Assuming you are already logged in to a secure site from the same browser, the browser will send the valid authentication cookie. This request will succeed and can do harmful things.
 
-ASP.NET Core can use some NuGet packages to add anti-forgery keys to the page. This basically adds some random encrypted value in the cookie, as well as in some hidden form field. the form fields request token also includes some additional user specific data. On post to server, it matches those two values. If they are not same (the random key in cookie and from form post), or request token does not match a valid user, the server rejects the request.
+ASP.NET Core can use some NuGet packages to add **anti-forgery token** to the page. This basically adds some random encrypted value in the cookie, as well as in some hidden form field. the form field's request token also includes some additional user specific data. On post to server, it matches those two values. If they are not same (the random key in cookie and from form post), or request token does not match a valid user, the server rejects the request.
 
 #### SQL Injection
 
@@ -238,19 +238,45 @@ How to protect:
 
 Parameterized queries automatically sanitize query parameters. The parameters can also be sanitized manually to remove unsafe characters like "'". Also, use a database account with least privilege, that does not have rights to create or drop tables etc.
 
+#### Open Redirect Attack
+
+You are asked to login to a trusted site, but because of the malicious URL, it tries to take you to an untrusted site.
+
+For example, you are simply taken to your actual XYZ bank site. But that URL has a redirect to another fake XYZ bank site, which looks exactly same as the original site. Most people will not notive that malicious redirect link in the URL, e.g. http://xyzbank.com/Account/Login?url=http://xysbank.com. Once you have successfully logged in, it sends you to the fake site which will have 'incorrect credentials' page open. Then maybe, it'll ask you to reenter your credentials. Thinking you mistyped it last time, you'll enter them again. Now that fake site has your credentials!
+
+To prevent this, in login method, one can check if the redirect URL is a local one
+
+```cs
+//after authentication
+if (Url.IsLocalUrl(returnUrl))
+  return Redirect(returnUrl);
+else
+  return Redirect(Some local url);
+```
+  
+#### URL Manipulation / URL Probing
+
+Simply change URl manually to probe a site
+http://mysite.com/getresults?id=110&isAdmin=false
+Anyone can change these values to get other user or even admin data.
+
+URL are always public. Do NOT put sensitive data there. If needed, put them in encrypted form. Also implement access control.
+
+<u>GET requests should be idempotent</u>, meaning calling them over and over should get same results. In simple words, they should not make any change on server side.
+
 #### CORS
 
-Cross-Origin Resource Sharing - <u>Not an attack</u>
+Cross-Origin Resource Sharing (<u>Not an attack</u>)
 
 Browsers apply same-origin policy by default: If applications need to share data with another site, they must have same origins. That means - they should have same domain, scheme, hosts & port. CORS allows server to share data or resources with trusted origin(s).
 
 ```cs
 public void ConfigureServices(IServiceCollection services)
 {
-  services.AddCors(options => 
+  services.AddCors(options =>
   {
     options.AddPolicy("SomePolicyName",
-      builder => 
+      builder =>
         builder
         .WithOrigins("http://myothersite.com")
         .WithMethods("GET")
@@ -264,30 +290,6 @@ public void Configure(IApplicationBuilder app, IHostingEnvironment env)
   app.UseMvc();
 }
 ```
-
-#### Open Redirect Attack
-
-You are asked to login to a trusted site, but because of the malicious URL, it tries to take you to an untrusted site. For example http://mysite.com/Account/Login?url=http://mysite2.com Then maybe, it'll ask you to reenter your credentials. Thinking you mistyped it last time, you'll enter them again. Now that site has your credentials!
-
-To prevent this, in login method, one can check if the redirect URL is a local one
-
-```cs
-//after authentication
-if (Url.IsLocalUrl(returnUrl))
-  return Redirect(returnUrl);
-else
-  return Redirect(Some local url);
-```
-  
-#### URL Manipulation
-
-Simply change URl manually to probe a site
-http://mysite.com/getresults?id=110&isAdmin=false
-Anyone can change these values to get other user or even admin data.
-
-URL are always public. Do NOT put sensitive data there. If needed, put them in encrypted form. Also implement access control.
-
-<u>GET requests should be idempotent</u>, meaning calling them over and over should get same results. In simple words, they should not make any change on server side.
 
 ## ENCRYPTION
 
