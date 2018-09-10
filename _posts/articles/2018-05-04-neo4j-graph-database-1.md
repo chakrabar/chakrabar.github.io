@@ -12,6 +12,7 @@ image:
 comments: true
 share: true
 published: true
+modified: 2018-09-10T22:46:00+05:30
 ---
 
 #### What is a "Graph"?
@@ -72,7 +73,7 @@ Neo4j follows the **`Property Graph Model`**. That states, relationships are alw
 Neo4j runs on all major platforms viz. Windows, Linux & macOS etc. For all the platforms, it (we'll see the community edition here) supports running as a command-line application as well as an installed service. For Windows systems, it also offers a simple GUI module. Let's quickly install it as service on a Windows system, with the zip package. Alternatively, you can also run the exe from the same page below.
 
 1. See the options [here](https://neo4j.com/download/) or directly download the zip for Windows [here](https://neo4j.com/download/other-releases/#releases)
-2. Before installation, install JRE 8 from [here](http://www.oracle.com/technetwork/java/javase/downloads/jre8-downloads-2133155.html)
+2. Before installation, install JRE 8 from [here](http://www.oracle.com/technetwork/java/javase/downloads/jre8-downloads-2133155.html). Remember, you may have to set the `JAVA_HOME` environment variable in Windows, to the bin of installed JRE.
 3. Extract the contents of the zip from _"neo4j-{version}-{platform}.zip\{platform}-{version}"_ in a directory with access, e.g. `C:\neo4j`
 4. Open command-prompt in the _"bin"_ directory with admin access
 5. Run `neo4j install-service` to install neo4j as service
