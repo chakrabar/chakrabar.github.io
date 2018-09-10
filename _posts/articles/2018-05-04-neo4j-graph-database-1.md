@@ -3,7 +3,7 @@ layout: post
 title: "Introduction to Graph Database  - Neo4j Part I"
 excerpt: "The basics of graph database for database developers & programmers"
 date: 2018-05-04
-tags: [database, neo4j, graph, graphdatabase, nosql]
+tags: [database, neo4j, graph, graphdatabase, nosql, data]
 categories: articles
 image:
   feature: posts/neo4j/graph_2.jpg
