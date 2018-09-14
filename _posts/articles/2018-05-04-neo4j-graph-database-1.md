@@ -12,7 +12,7 @@ image:
 comments: true
 share: true
 published: true
-modified: 2018-09-10T22:46:00+05:30
+modified: 2018-09-14T19:38:00+05:30
 ---
 
 #### What is a "Graph"?
@@ -84,6 +84,13 @@ Once the service is started, visit the web interface at http://localhost:7474/br
 You can directly run queries here on top section, and see the result below. It also provides access to settings, documentation and other useful stuffs on the left menu.
 
 ![Image](/images/posts/neo4j/bolt.png)
+
+To make any settings change, update the `neo4j.conf` file inside `conf` directory. Find the line with related settings, uncomment and make necessary changes. You may need to restart the neo4j server for the changes to take effect.
+
+```yaml
+dbms.connector.http.listen_address=:7900 #change default port from 7474 to 7900
+dbms.connectors.default_listen_address=0.0.0.0 #make it accessible over network
+```
 
 #### Graph and other databases
 

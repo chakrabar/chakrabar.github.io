@@ -1,9 +1,9 @@
 ---
 layout: post
-title: "Basic coding guidelines for OOP"
-excerpt: "A general coding guidelines for Object Oriented Programming, like C# and others"
-date: 2018-08-25
-tags: [coding, standards, guidelines, bestpractices]
+title: "Hosting an ASP.NET Core web application on IIS"
+excerpt: "A quick guide to deploying your new ASP.NET Core app on existing IIS web server"
+date: 2018-09-12
+tags: [aspnet, aspnetcore, web, iis, deployment]
 categories: articles
 comments: true
 share: true
@@ -88,7 +88,7 @@ To make sure firewall allows inbound requests for your configured port. Check [t
 
 12. In the Application Pool, set Managed pipeline mode: "Integrated", .NET CLR version: "No Managed Code" ~gyan, core runs as a process outside IIS
 
-13 If you get **HTTP Error 502.5 - Process Failure** that basically means IIS could not find .NET Core. The options are
+13. If you get **HTTP Error 502.5 - Process Failure** that basically means IIS could not find .NET Core. The options are
 
   1. Add the .NET Core path to environment PATH (e.g. C:\ProgramFiles\dotnet)
   2. Mention the full path to `dotnet.exe` in (for FDD) or `.\My.Web.Project.exe` (for SCD) `aspNetCore processPath` of `web.config`
@@ -121,5 +121,3 @@ https://github.com/dotnet/coreclr/issues/13542
   1. Install .NET Core full [SDK](https://www.microsoft.com/net/download/archives) (not the runtime) on the server
   2. Add this flag to your main `csproj` <PublishWithAspNetCoreTargetManifest>false</PublishWithAspNetCoreTargetManifest>
   3. If it is a framework dependent deployment, publish your app with specific runtime ID (e.g. win-x64 or linux-x64)
-	
-

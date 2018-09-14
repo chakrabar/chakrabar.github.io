@@ -17,7 +17,7 @@ published: true
 
 This document describes briefly, the coding standards & practices all the developers (including automation engineers, and anyone who writes code) should follow while developing a software application.
 
-This document is written for any developer _**working with a modern object oriented programming language**_. But at few places it is slightly biased towards `C#`, those have been marked specifically.
+This document is written for any developer _**working with a modern object oriented programming language**_. These generic principles and practices apply to almost all modern OOP based programming languages. At few places it uses `C#` specific examples, those have been marked specifically.
 
 This document is not exhaustive; it describes only the most important set of guidelines to follow. This document will be updated as and when necessary.
 
@@ -75,7 +75,8 @@ This document is not exhaustive; it describes only the most important set of gui
    3. Use naming that visually describes scope like _privateField, CONSTANT etc.
    4. Use readonly/immutable when a field’s value should not be change after initialization
    5. Use only get, for properties that should not be updated from outside
-   6. Don’t forget the **"law of Demeter"**, entities should have minimum knowledge of outside world. [See SOLID section for more on this]
+   6. Don’t forget the _**law of Demeter**_, entities should have minimum knowledge of outside world [See SOLID section for more on this]
+   7. All the code entities (interface, class, package etc.) should have _**the maximum cohesion and least coupling possible**_. That means, the members of the entity (e.g. methods in a class) should be very closely related to each other, i.e. cohesion. Also, different entities should have the least inter-dependency as possible, i.e. coupling.
 
 5. **DRY** – it is not an option, DRY is the law
    1. Do not repeat code. Think a million times before copy-pasting code
@@ -86,7 +87,7 @@ This document is not exhaustive; it describes only the most important set of gui
    4. Always write short methods, short classes
    5. One single method should not have too many logic, long conditional flow or too many parameters (exception can be, for example, mapper methods for third-party/legacy entities)
    6. One single class should not have many methods [See SRP in SOLID]
-   7. Methods over 20 lines and classes over 100 lines should be thought through, for possible "separation of concerns"
+   7. Methods over 20 lines and classes over 100 lines should be thought through, for possible **_"separation of concerns"_**. Separation of concerns is extremely important for a codebase to be maintainable in long term. It basically means, separate your concerns so that different entities (interface, class, package etc.) have their own independent things to take care of. For example, do NOT make the same method read data from database, and also format it for the UI. Reading data and formatting data are two different concerns.
 
 6. **SOLID principles** - follow religiously, they will battle out the evils of bad code
    1. Strictly follow _Single Responsibility Principle (SRP)_ when writing methods, classes, modules, projects., packages or any other code entities. They all must have one and only one reason to change
@@ -110,7 +111,7 @@ This document is not exhaustive; it describes only the most important set of gui
    1. Always handle exceptions
         1. Use `Try-Catch-Finally` whenever required
         2. Use exception filter attribute/annotation whenever possible
-        3. Do NOT swallow exceptions. Do a `throw;` rather than `throw ex`
+        3. Do NOT swallow exceptions. Do a `throw;` rather than `throw ex;`
         4. Show proper message in UI as applicable
         5. Do NOT use exception as control flow logic
         6. Do it for `JavaScript` code as well, especially when calling a service
@@ -138,5 +139,8 @@ This document is not exhaustive; it describes only the most important set of gui
     4. Refactor. It’s a continuous process, do it often (when adding new code, or fixing bugs, or doing general clean up). But do it precisely and methodically, otherwise there is a high chance of breaking existing functionalities. Run tests, to make sure everything is working as expected
     5. Learn and use established Design Patterns, whenever they fit
     6. <u>Performance</u> – last but not the least! Always consider **performance and scalability** issues while writing code. [Details of good coding practices for performance & scalability are beyond the scope of this document!]
+    7. <u>Threading</u> - to increase throughput of application, use multi-threading where applicable. But be very cautious and use standard and understandable constructs only, as incorrect use of them can cause critical bugs in the application which might be very difficult to debug
 
-`C#` denotes some C# language specific constructs. If you are using some other language for development, similar constructs available for that language/platform can be used.
+**Note 1:** `C#` denotes some C# language specific constructs. If you are using some other language for development, similar constructs available for that language/platform can be used.
+
+**Note 2:** (2018) Also, it does not consider latest C# features like `dynamic`, `async-await` and other C# 5.0+ language features.
