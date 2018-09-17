@@ -197,4 +197,4 @@ Host name: <Leave it blank>
 
 ![Image](/images/posts/misc/iis-bindings.png)
 
-Also, make sure that the port that you used (e.g. 8080) is allowed by allows inbound requests and is not blocked by firewall.
+Also, make sure that the port that you used (e.g. 8080) is allowed to receive inbound requests and is not blocked by firewall.
