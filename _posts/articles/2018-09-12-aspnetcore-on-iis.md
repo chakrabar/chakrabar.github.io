@@ -16,9 +16,12 @@ We'll not cover anything about .NET Core development in general, or about IIS as
 
 If you are not looking for hosting your application on Windows IIS, head over to this [official documentation](https://docs.microsoft.com/en-us/aspnet/core/host-and-deploy/?view=aspnetcore-2.1&tabs=aspnetcore2x) to learn how to host it on `Linux`, `MacOS`, `Docker` or `Azure`. If you want to learn about .NET Core, check out this **[series on .NET Core development](/articles/dotnet-core-2.0/)**.
 
+**TL;DR** If you already know how to host a website on IIS and the deployment options for .NET Core applications (FDD & SCD), the most important step for hosting ASP.NET Core applications on IIS server is that, you'll need to install the **`ASP.NET Core IIS Module`**.
+{: .notice--success}
+
 Just before we jump in, one might be wondering, when ASP.NET Core application already comes with its own web server [Kestrel](https://docs.microsoft.com/en-us/aspnet/core/fundamentals/servers/?view=aspnetcore-2.1&tabs=aspnetcore2x), why would anyone host it on IIS! Kestrel is very lean (and fast), and does only what is required, i.e. serve a HTTP request with a response. On the other hand, mature web servers like `IIS`, `Nginx`, `Apache` etc. have much more functionality built into them. So, it is always advised to use Kestrel behind a full web server as _reverse proxy_, for production use. That means, the web server will receive the request from internet, and forward it to Kestrel after some general preliminary work and send the response back from Kestrel.
 
-![Image](/images/posts/misc/kestrel-to-internet2.png)
+![Image](/images/posts/misc/kestrel-to-internet.png)
 
 With a full web server, viz. IIS, you can do stuffs that are not possible with Kestrel. Some examples are - running multiple apps on same server sharing same port (e.g. mysite.com and othersite.com both listening to HTTP port 80), public domain & SSL certificate management, security & authentication, request limiting, caching, URL re-writing etc.
 
