@@ -7,7 +7,7 @@ tags: [database, sql, nosql, coucdb, distributedsystems, partitioning]
 categories: articles
 comments: true
 share: true
-published: true
+published: false
 ---
 
 # NoSQL databases
