@@ -14,7 +14,7 @@ In this post, we'll see how to host your brand new shiny `ASP.NET Core` web appl
 
 We'll not cover anything about .NET Core development in general, or about IIS as a general purpose web server on `Windows` computers or the application publish/deployment process. If you have already creates some ASP.NET Core application and run them locally, and you have hosted .NET Framework web applications on IIS, this post will show you how to quickly host your ASP.NET Core application on IIS. The purpose of existence of this post is, the process is different from that for full .NET Framework applications. Along the way, we'll cover some basic concepts and explain few things in brief.
 
-If you are not looking for hosting your application on Windows IIS, head over to this [official documentation](https://docs.microsoft.com/en-us/aspnet/core/host-and-deploy/?view=aspnetcore-2.1&tabs=aspnetcore2x) to learn how to host it on `Linux`, `MacOS`, `Docker` or `Azure`. If you want to learn about .NET Core, check out this **[series on .NET Core development](/articles/dotnet-core-2.0/)**.
+If you are not looking for hosting your application on Windows IIS, head over to this [official documentation](https://docs.microsoft.com/en-us/aspnet/core/host-and-deploy/?view=aspnetcore-2.1&tabs=aspnetcore2x) to learn how to host it on `Linux`, `MacOS`, `Docker` or `Azure`. If you want to learn about .NET Core, check out this series on **[Working with .NET Core 2.0](/articles/dotnet-core-2.0/)**.
 
 **TL;DR** If you already know how to host a website on IIS and the deployment options for .NET Core applications (FDD & SCD), the most important step for hosting ASP.NET Core applications on IIS server is that, you'll need to install the **`ASP.NET Core IIS Module`**.
 {: .notice--success}

@@ -75,40 +75,6 @@ Now, if we look in terms of NoSQL databases
    2. Keep both the collections (employee & department), but do not consider anyone master as such. When any update happens, update in all the places. This makes the system consistent at a cost of write efficiency.
    3. Do not store real data, store references to them (e.g. employee record having department document id). This makes them much closer to SQL databases. This preserves the high write speed as well as consistency, but loses on read speed as you need to query related documents to get complete data.
 
-## Examples - [CouchDB](http://couchdb.apache.org/)
-
-CouchDB is an [open source](https://github.com/apache/couchdb) database under the [Apache Software Foundation](https://github.com/apache), which follows the semantics of a document store database. 
-
-CouchDB can be [installed](http://couchdb.apache.org/#download) on Windows, macOS and Linux systems, as a single node database or a scalable cluster. It uses `JSON` for documents, provides `HTTP APIs` to interact with data. `JavaScript` can be used to manipulate data with functions like _MapReduce_.
-
-* A database has documents. Documents have fields
-* All documents have an _id field which is generally an auto-generated hash
-* Fields can have simple data (primitive types) or objects, which is nothing but JSON formatted object or array
-* Every time the document is updated (including create), it's another auto-generated field _rev is incremented in format n-id, where n is version number starting with 1
-* Documents are pretty much independent (?), and can have own structure of data
-* To query data like databases in  a server, documents in a database, data in a document - there is simple HTTP API for all
-* To query at field level, one can use JavaScript to query document using map functions
-* Map functions can be saved in the database as views, so that they can be called directly later. Views are collected under design documents, which are kind of collections of views (?)
-* View functions are also available as HTTP APIs. They can take input parameters too
-* Map functions can be combined with Reduce functions to do statistical calculations or to simply complex data
-* CouchDB allows to add binary data (e.g. files) directly into documents as attachments. They gets added as pre-defined field `_attachments: [file1.png, file2.mp3]`
-* Apart from the REST APIs which can be used form any kind of applications, some platforms/languages provide their custom made clients for CouchDB. But, at root, CouchDB works on HTTP.
-
-#### CouchDB for building web applications
-
-* CouchDB let's you server web application directly from the database as set of pages built with HTML and JavaScript.
-* You can create/modify those pages to suit your needs and save them as attachments.
-* Now you can serve those pages over HTTP to build a web application as CouchDB provides APIs to directly browse the attachments. Here, the attachments are simply HTML pages with JavaScript.
-* This way, we have web application that is served completely by CouchDB, from pages to the actual data that runs JavaScript to interact directly with the CouchDB!
-* And obviously, you can build your web application using any technology you want and then connect to CouchDB using the REST APIs or a technology specific client of choice.
-
-#### CouchDB security
-
-* Initially, by default, the whole set of APIs and the databases are open to all
-* The default admin credentials are admin/admin
-* You can login as admin and change the settings to secure part or the whole database so that it allows only valid users
-* You can create users and assign them roles, and provide access accordingly
-
 ## SQL vs NoSQL databases
 
 1. SQL databases (or, more correctly, relational databases) use SQL (Structured Query Language) to query data. NoSQL databases don't. Some of them have their own Query Language, while others depend on application logic to query.
@@ -120,13 +86,17 @@ CouchDB can be [installed](http://couchdb.apache.org/#download) on Windows, macO
 7. SQL does better in terms of security (generally) and encryption. So for things like confidential data, health records etc. relational databases are preferred over NoSQL (they generally store data as-is).
 8. Data is de-normalized in NoSQL databases. Space is not considered one of the issues.
 9. NoSQL provides no and/or very flexible schema. So schema updates are totally hassle-free.
-n. SQL is CA (Consistent & Available). NoSQL are partition-tolerant. Sharding comes naturally.
+10. SQL is CA (Consistent & Available). NoSQL are partition-tolerant. Sharding comes naturally.
 11. Many of the NoSQL databases directly support caching. Since all data are in one place (document, key-value), it naturally works as a cache.
 12. Generally reads are much faster in NoSQL because of the lack of complex queries and joins. Also they support distributed querying naturally, as different pieces of data can be fetched independently of each other in a distributed manner.
 
-# Distributed systems
+# Distributed (database) systems
 
+Why distribute? Means, why use more than one machine?
 
+1. The data storage needs might exceed one machine
+2. Redundancy for reliability, if one machine goes down there are alternatives
+3. To handle heavy load (too many requests), put multiple copies behind a load-balancer
 
 ## Distributed system fallacies
 
@@ -172,10 +142,6 @@ When the data size grows very large, it needs to be broken down in pieces or par
   * Performance or read & write
   * Keeping the DB functional even if a part becomes too busy or unavailable
 * If the database is small, it might be good idea not to partition, as that increases complexity
-* Generally, done by a consistent method, so that it's easy to calculate/find which data resides where (**_All these methods do NOT support dynamic scaling_)
-  * One way can be ranges, like by starting character of a field as A-L, M-Q, R-Z
-  * Another way can be categories, like in a book database they can be partitioned as fiction, biography, science etc.
-  * Or by hashing like in general hash tables : hash a key field, then index_of_node = hash % number_of_nodes
 * Most of the NoSQL databases are built with partitioning built into them
   
 ### Types of partitioning
@@ -186,6 +152,62 @@ SQL and NoSQL databases, can be partitioned mainly in two ways - **vertical & ho
 * **Vertical partitioning** - in SQL databases, different columns or set of columns are stored in different nodes. NoSQL database like wide column stores use this strategy
 
 **Note**: In relational database, one additional issue with sharding is, the schema needs to be maintained on each server nodes.
+
+### Common partitioning strategies
+
+1. **Memory cache:** Part of data (most frequently used) is kept in memory. A common strategy (e.g. Memcached key-value store) is to distribute that in-memory load over a number of machines on a network, So all of them have all the data, and keeps a part of it in-memory cache. When call to a node fails (cache-miss), the whole system rehashes the keys to distribute in-memory load among available nodes. If the node comes back, it is done again. The total set of nodes is tracked with configuration.
+2. **Clustering:** Generally has same data on multiple servers behind load balancers, with active replication/mirroring. Helps in reliability and load-balancing. Generally used when the database itself doesn't support partitioning natively.
+3. **Separating read-write:** One or small set of dedicated servers are used for write. Works in master-slave mode where master handles write, slaves serve read requests. Those data are replicated to all other nodes that can serve any read requests. Replication can be synchronous or asynchronous, while synchronous ones gives safer/faster consistency they add write lags. In case of master failure, common strategy is to elect node with most recent data as master.
+4. **Sharding:** The whole data is chunked into multiple servers who read-write it's own portion of data. Further replication can be added for reliability. There has to be a dedicated component with a mapping-service, that maps incoming request to correct node. Based on implementation, the mapping can be static or dynamic. While some RDBMS supports sharding, sharding doesn't support joins across nodes, which might not work well in RDBMS. In cases like that, data has to be fetched and joined in-memory.
+
+Generally, the data to node mapping is done by a method like **_simple hashing_**, so that it's easy to calculate/find which data resides where (_All these methods do NOT support dynamic scaling_)
+
+* One way can be ranges, like by starting character of a field as A-L, M-Q, R-Z
+* Another way can be categories, like in a book database they can be partitioned as fiction, biography, science etc.
+* Or by _simple hashing_ like in general hash tables : **hash a key field, then index_of_node = hash % number_of_nodes**
+
+**Note:** Simple hashing works for systems like _memory caching_, where implicit re-hashing is possible as all nodes have all data. But it does not work for persistent storage systems, because the whole dataset has to be re-shuffled as a result of re-hashing. They need some dynamic method like _consistent hashing_.
+{: .notice--info}
+
+## Consistent hashing
+
+Consistent hashing is a strategy that is applied to load balancing, distributed caching & other use cases where it can map entities (data, request etc.) to a group of servers, where the group can change dynamically with minimal cost. Also, this need not have dedicated servers for the mapping! It is comparatively a newer concept, first introduced in 1997.
+
+Let's say we have `N` servers. We have some data that we have to distribute among them. The strategy is easier to visualize with a ring, around which the servers are placed. To place them, we use a hashing algorithm and let's say it has hashing range from `R`. The circle represents R points from `0 to R-1`, around it. Now, to place a server, we simply hash it's id (or name or IP or some unique key), and place it at position `hash(id) % R` on the circle.
+
+Now, to place a data, we hash it's key with the same hash function (or a different function, still works) and again place it on `hash_1(key) % R` position on the circle. This way we place all the server and data around the circle.
+
+Now to determine which data would be served by which server: we simply walk around the circle in clockwise direction from the data, and the first server we encounter is our destination.
+
+![Image](/images/posts/misc/consistent-hashing.png)
+
+In the above figure blue ones are data and red ones are nodes. So (left) data 2 is stored in Node-B, 3 in C and 1 & 4 in A.
+
+If the node configuration changes (e.g. Node C left and D was added on the right), they continue in the same manner. Now, data 1 is stored in A, 2 in B, 3 & 4 in D. So, practically, 3 & 4 needs to be copied to new server D. Rest remains the same. _In big enough cluster, the percentage movement is minimal_.
+
+Practically, a request for a data can arrive at any node, and knowing the current set of servers in the cluster (and the requested data key), that node can re-direct the request to the correct server.
+
+### Necessary improvements
+
+Some of the possible problems with this approach include
+
+1. If the hashing function is not that good, the servers/data might get unevenly distributed putting more load on some of the servers
+2. While the configuration changes (servers leaving or joining the cluster), only the neighbouring servers need to shuffle data, which again creates uneven load
+
+The simple answer to this problem is **replicas**. Each new server should come with replicas, where the replica can be a physical server or a **_virtual node_**. What is a _virtual replica_? Simply means, use multiple hashing functions rather than a single one to distribute the nodes. So, each server gets placed X times on the circle, when there are X hashing functions used. Now, the data shuffling load is much more balanced across the cluster. If the correct number of hashing functions are used, the load can get distributed perfectly.
+
+### Node exits
+
+When a node leaves the system, there are few problems
+
+1. The data from the node is lost
+2. If the node leaves abruptly (e.g. a system crash), how do others get to know that
+
+For the first prpblem, the common solution approach is to have data replicas. That means data from each node needs to be replicated on multiple _physical servers_. So, with a _replication factor_ of r = 3 (r &lt; n), each data is stored in next 3 (r) physical nodes. So, if one server goes down, there are still r - 1 copies of data available.
+
+When a node leaves the cluster, it's possible that it did not notify others. So, how does the system get to knoe that? This is generally achieved through the _**"Gossip protocol"**_. In this scheme, all the nodes keep talking to other nodes, at least the few neighbours if not all. So, when ever a neighbor stops responding, they get to know. They now re-distribute the share of that node (it's own data and the replicas it was responsible for).
+
+...arghya
 
 ## CAP Theorem
 
