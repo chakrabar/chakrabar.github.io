@@ -107,6 +107,9 @@ In simple words, it means that the CLR remembers the execution context before su
 **Note:** The standard classes provided by the framework for I/O works, all supports `async` operations. These are well designed, and should be used in place of the synchronous counterparts whenever they make sense. For example, `File.WriteAllBytesAsync()` or `HttpClient().GetStreamAsync()`.
 {: .notice--info}
 
+**Note:** To easily share data throughout an asynchronous workflow, you can declare your variables as **[`AsyncLoacal`](https://docs.microsoft.com/en-us/dotnet/api/system.threading.asynclocal-1?redirectedfrom=MSDN&view=netframework-4.7.2)**. These data will be shared across the async flow irrespective of the threads. Also, take a look at [`ThreadLocal`](https://docs.microsoft.com/en-us/dotnet/api/system.threading.threadlocal-1?redirectedfrom=MSDN&view=netframework-4.7.2), which can be used to attach some data with the current thread.
+{: .notice--info}
+
 This concludes our discussion on _"how does async-await work"_. In the **[Part II](/articles/async-await-2/)** of this post, we'll look at some general usage scenarios and see how to turn a synchronous method to asynchronous step-by-step.
 
 #### All posts in the series - Tasks, Threads, Asynchronous

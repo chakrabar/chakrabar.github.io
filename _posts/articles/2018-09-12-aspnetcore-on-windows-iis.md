@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Hosting an ASP.NET Core web application on IIS"
+title: "Hosting an ASP.NET Core web application on Windows IIS"
 excerpt: "A quick guide to deploying your new ASP.NET Core app on existing IIS web server"
 date: 2018-09-12
 tags: [aspnet, aspnetcore, dotnetcore, web, iis, deployment]
@@ -8,11 +8,12 @@ categories: articles
 comments: true
 share: true
 published: true
+modified: 2018-09-28T19:20:00+05:30
 ---
 
 In this post, we'll see how to host your brand new shiny `ASP.NET Core` web application on a Windows `IIS` server, so that it can be used at production level.
 
-We'll not cover anything about .NET Core development in general, or about IIS as a general purpose web server on `Windows` computers or the application publish/deployment process. If you have already creates some ASP.NET Core application and run them locally, and you have hosted .NET Framework web applications on IIS, this post will show you how to quickly host your ASP.NET Core application on IIS. The purpose of existence of this post is, the process is different from that for full .NET Framework applications. Along the way, we'll cover some basic concepts and explain few things in brief.
+We'll not cover anything about .NET Core development, or about IIS as a general purpose web server on `Windows` computers. If you have already created some ASP.NET Core application and run them locally (e.g. from Visual Studio), and you have some familiarity with IIS, this post will show you how to quickly host your ASP.NET Core application on IIS. The purpose of existence of this post is, the deployment process is different from that of full .NET Framework applications. Along the way, we'll cover some basic concepts and explain few things in brief.
 
 If you are not looking for hosting your application on Windows IIS, head over to this [official documentation](https://docs.microsoft.com/en-us/aspnet/core/host-and-deploy/?view=aspnetcore-2.1&tabs=aspnetcore2x) to learn how to host it on `Linux`, `MacOS`, `Docker` or `Azure`. If you want to learn about .NET Core, check out this series on **[Working with .NET Core 2.0](/articles/dotnet-core-2.0/)**.
 
@@ -47,7 +48,9 @@ Whichever way you prefer among the two above, there are 2 types of deployment
 1. **[FDD](https://docs.microsoft.com/en-us/dotnet/core/deploying/#framework-dependent-deployments-fdd)** or Framework-Dependent Deployment. Here, only your app, NuGet and other related packages & configurations are packed in the published package. It needs the .NET Core runtime to be present on the target machine to run. The published package is platform independent and can run on any supported platform like `Windows`, `Linux` or `MacOS`. Practically, FDD also has options like
     1. **Portable** - totally platform independent (there are some catches though, see later). Total binary size is pretty small, comes with your own DLLs, some .NET Core base types and a few specific to different runtimes
     2. **Runtime specific** - not the ideal framework dependent, and comes with bunch of runtime specific files (that can handle the catch situations of portable option above). Binary size much larger than the portable one
-2. **[SCD](https://docs.microsoft.com/en-us/dotnet/core/deploying/#self-contained-deployments-scd)** or Self-Contained Deployment. Here the whole (the required parts) .NET Core runtime and [Kestrel](https://docs.microsoft.com/en-us/aspnet/core/fundamentals/servers/kestrel?view=aspnetcore-2.1) web server is packed with your application code. So, you can directly deploy the package on a machine and run, it does not need the .NET Core runtime to be pre-installed on the machine. This is a platform specific deployment, so you must choose the target runtime at the time of publish e.g. `win-x64` or `linux-x64`. The binary size much larger compared those FDD options
+2. **[SCD](https://docs.microsoft.com/en-us/dotnet/core/deploying/#self-contained-deployments-scd)** or Self-Contained Deployment. Here the whole (the required parts) .NET Core runtime and [Kestrel](https://docs.microsoft.com/en-us/aspnet/core/fundamentals/servers/kestrel?view=aspnetcore-2.1) web server is packed with your application code. So, you can directly deploy the package on a machine and run, it does not need the .NET Core runtime to be pre-installed on the machine. This is a platform specific deployment, so you must choose the target runtime at the time of publish e.g. `win-x64` or `linux-x64`. The binary size much larger compared those FDD options.
+
+If you are deploying on Windows-IIS, generally you'll have the .NET Core installed, so you can publish your applications as `FDD win-x64`, so that published binaries are not very large and also you avoid some issues with portable deployment.
 
 **Note:** In .NET Core, you specify a target platform with a `runtime ID`. A runtime ID is nothing but a combination of a specific OS and processor architecture e.g. win-x86, linux-x64 or osx-x64.
 {: .notice--info}
@@ -63,9 +66,9 @@ Install the IIS. IIS comes as part of Windows OS, so you basically need to enabl
 
 #### [3] Install .NET Core Runtime & Hosting Bundle
 
-Now we'll need the **`ASP.NET Core Module`** configured for IIS, which comes as part of _.NET Core Hosting Bundle_. This enables IIS to serve ASP.NET Core applications. Remember that ASP.NET Core web applications run as separate process with Kestrel web server. IIS needs this module to handle this setup.
+Now we'll need the **`ASP.NET Core IIS Module`** configured for IIS, which comes as part of _.NET Core Hosting Bundle_. This enables IIS to serve ASP.NET Core applications. Remember that ASP.NET Core web applications run as separate process with Kestrel web server. IIS needs this module to handle this setup.
 
-1. Next we'll get _.NET Core Hosting Bundle_, which needs _Microsoft Visual C++_ to run. It'll be auto downloaded during installation. But, if you are working on a machine that does not have active internet connection, you first need to install it separately. So, if you have active internet on target machine, skip step 2 & 3. Go to the download the latest version (`x64` or `x86`) of [Microsoft Visual C++ latest Redistributable](https://support.microsoft.com/en-in/help/2977003/the-latest-supported-visual-c-downloads).
+1. Next we'll get _.NET Core Hosting Bundle_, which needs _Microsoft Visual C++_ to run. It'll be auto downloaded during installation. But, if you are working on a machine that does not have active internet connection, you first need to install it separately. So, if you have active internet on target machine, skip step 1 & 2. Go to the download the latest version (`x64` or `x86`) of [Microsoft Visual C++ latest Redistributable](https://support.microsoft.com/en-in/help/2977003/the-latest-supported-visual-c-downloads).
 2. Install the Microsoft Visual C++ latest Redistributable package downloaded, double click on installer or run from command prompt.
 3. Now, we'll install the _.NET Core Hosting Bundle_. Go to [.NET Downloads](https://www.microsoft.com/net/download) page. Click _Download .NET Core Runtime_, under `.NET Core` menu. It'll download the required installers.
 4. Install the Microsoft .NET Core Hosting Bundle. To avoid installing the x86 components on a x64 machine, run the installer from command prompt with `OPT_NO_X86` switch e.g.
@@ -98,7 +101,7 @@ Just in case you thought what is this _.NET Core Hosting Bundle_ that you just i
 
 > The .NET Core Runtime & Hosting Bundle contains everything you need to run existing .NET Core apps, including hosting ASP.NET Core apps. The bundle includes the .NET Core runtime, the ASP.NET Core runtime, and if installed on a machine with IIS it will also add the [ASP.NET Core IIS Module](https://docs.microsoft.com/en-us/aspnet/core/fundamentals/servers/aspnet-core-module?view=aspnetcore-2.1).
 
-Now you might be wondering, if you published your application as SCD, why do you need this ASP.NET Core runtime? Shouldn't you package be self-sufficient? The answer is yes, you app can run on its own (with Kestrel on Windows and with Kestrel/other web servers on other OS). But this runtime and module is required by IIS so that it can host your ASP.NET Core application, which was built to host full .NET Framework ASP.NET applications.
+Now you might be wondering, if you published your application as SCD, why do you need this ASP.NET Core runtime? Shouldn't you package be self-sufficient? The answer is yes, you app can run on its own (with Kestrel on Windows and with Kestrel/other web servers on other OS). But this runtime and module is required by IIS so that it can host your ASP.NET Core application, which was originally built to host full .NET Framework ASP.NET applications.
 
 #### [4] Create a new website on IIS
 

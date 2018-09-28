@@ -7,7 +7,7 @@ tags: [tech, dotnet, csharp, aspnet, dotnetcore, aspnetcore]
 categories: articles
 share: true
 comments: true
-modified: 2018-09-16T12:50:00+05:30
+modified: 2018-09-28T19:20:00+05:30
 ---
 
 After developing many tiny to large enterprise scale applications (tools, web apps, services etc.) using the `.NET Framework` for many years, I've been working with `.NET Core` framework for some time now. I've made some small applications from scratch, using the `.NET Core 2.0` framework, and also ported some existing, moderately large `.NET` enterprise applications to the `.NET Core 2.0` framework.
@@ -32,6 +32,6 @@ So, here is the list of articles in this series. All the articles collectively p
 
 ##### 6. [practical configuration & DI in .NET Core 2.0](/articles/practical-configuration-and-di-in-aspnet-core/)
 
-##### 7. [Hosting ASP.NET Core application on IIS](/articles/aspnetcore-on-iis/)
+##### 7. [Hosting ASP.NET Core application on IIS](/articles/aspnetcore-on-windows-iis/)
 
 Like always, the source of knowledge has been MSDN, GitHub, Stack Overflow and various other online forums.
