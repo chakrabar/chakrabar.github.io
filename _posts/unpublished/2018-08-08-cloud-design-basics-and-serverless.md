@@ -82,7 +82,7 @@ Stores files & folders from disk. Also backups up memory by writing them to disk
 
 To do it
 
-* Go tou your resource group and add a new service
+* Go to your resource group and add a new service
 * Select 'Backup & Site Recovery (OMS)' 
 * Give a name and select other options like subscription, location
 * Once deployment completes, the settings will have option for both 'Backup' & 'Site Recovery' 

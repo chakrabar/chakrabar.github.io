@@ -125,7 +125,7 @@ Basic pieces in OAuth
 
 1. The request to access token flow is called `flow` or `grant type`
 2. The permissions are called `scopes`, and they are custom defined by each OAuth provider
-3. Access is granted via encrypted access `tokens`. 
+3. Access is granted via encrypted access `tokens`
 4. There's no specification for payloads, but generally JWT (JSON Web Tokens) are used
 
 #### Some standard AuthN + AuthZ approaches for web 

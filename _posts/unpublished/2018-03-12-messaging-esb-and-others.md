@@ -100,25 +100,23 @@ MSMQ vs RabbitMQ:
 MSMQ with NServiceBus: Windows-only, decentralized & scales automatically. Each clients have own queues, and messages are sent directly to target client
 RabbitMQ with MassTransit: Cross-platform, centralized and scales with clustering. More standardized (well, MassTransit is for .NET, the latest version v5.1.2 is .NET Standard compliant though)
 
-Microservices:
--------------
+# Microservices
 
 A distributed system is built as a collection of many small, independent services. They are autonomous, can be written on any language and platform, have their own copy of data or data source.
 Generally, all maintains their own dataset with only the part of data that it's concerned with. The data consistency is maintained with a message broker and something like event sourcing (event are queued with relevant data).
 
 (*a .NET Core console application can be easily changed to a windows service using [TopShelf](https://github.com/Topshelf/Topshelf))
 
-Event sourcing:
----------------
+## Event sourcing
+
 A pattern used to (generally) communicate between disjoint microservices. On each significant event, the corresponding service sends an event with related data to the message broker. All subscribed services to that event picks up the event with message data from the queue and act on it to update individual states. This brings the whole system to an "eventual consistency".
 
 To remove large data loads, the system might give fully updated states of main entities (e.g. Order, Customer etc.) on a periodic basis, as snapshots. So new systems, or systems coming after a failure, need not replay the whole queue of events. They can take the latest snapshot and the events only after that snapshot timestamp.
 
 Problems: One of the main problems of Event sourcing comes from the fact that event and related messages are immutable. So, it might get difficult to find live issues from the log of continuous events. And if something went wrong, its even more complex to fix the already queued data.
 
-=============
-   RabbitMQ
-=============
+# RabbitMQ
+
 Is a message broker/messaging queue
 Written in Erlang
 Cross-platform
@@ -128,8 +126,8 @@ Has many technology specific clients, and can be used from any platform using st
 Supports clustering for scalability & fail-over
 Needs Erlang runtime to run. Runs as a  service on Windows. Does not have UI, but management plugin can be installed separately for that.
 
-Architecture
-------------
+## Architecture
+
 A service application connects to RabbitMQ with a "Connection". A connection can hold a bunch of "Channels". These channels provide concurrency. Ideally, each thread in service application should use a specific channel, whereas a connection can be shared.
 
 The service application that sends data is called a "producer" or "publisher". 
@@ -152,28 +150,25 @@ To receive messages, it needs to create a channel, specifying a queue & other pr
 Channel has basic QoS (Quality of Service) like if messages are pre-fetched etc.
 channel.BasicConsume() method takes parameters like noAck:bool, queue, consumer:DefaultBasicConsumer
 
-AMQP Exchange Types
--------------------
-- Direct: A message is sent directly to a queue from a exchange. If there are named instances of queues, messages can have that name-key as routing-key. So that the message is only sent to a queue with a matching name as the routing-key. e.g. "order", "customer" etc.
-- Topic: The routing key is multiple words with dots like "customer.order.premium". The routing-key in queues can have wild card pattern to match like "customer.order.*" or "customer.#" where * stands for a single word, # for multiple words. It can also have the full key.
-- Fan-out: The routing-key is ignored and message is sent to all queues.
+### AMQP Exchange Types
 
-RabbitMQ reliability options
-----------------------------
-- Acks: Acknowledgement with specific deliveryID (delivery tag). Until consumer sends back acknowledgement, message is not deleted.
-- Publisher confirms: Producer gets an acknowledgement back when message is queued. If "Nack" or no-acknowledgement, a strategy needs to be put in place for retry. There is no in-bult timeout.
-- Mandatory flag, bool: Unsuccessful messages are sent back ?
-- Reply to sender: send an reply back to producer, when consumer gets message. Needs some RPC type strategy
-- Connection & topology recover: Automatically reopens channels, binding etc on fail-over
+* Direct: A message is sent directly to a queue from a exchange. If there are named instances of queues, messages can have that name-key as routing-key. So that the message is only sent to a queue with a matching name as the routing-key. e.g. "order", "customer" etc.
+* Topic: The routing key is multiple words with dots like "customer.order.premium". The routing-key in queues can have wild card pattern to match like "customer.order.*" or "customer.#" where * stands for a single word, # for multiple words. It can also have the full key.
+* Fan-out: The routing-key is ignored and message is sent to all queues.
+
+### RabbitMQ reliability options
+
+* Acks: Acknowledgement with specific deliveryID (delivery tag). Until consumer sends back acknowledgement, message is not deleted.
+* Publisher confirms: Producer gets an acknowledgement back when message is queued. If "Nack" or no-acknowledgement, a strategy needs to be put in place for retry. There is no in-bult timeout.
+* Mandatory flag, bool: Unsuccessful messages are sent back ?
+* Reply to sender: send an reply back to producer, when consumer gets message. Needs some RPC type strategy
+* Connection & topology recover: Automatically reopens channels, binding etc on fail-over
 
 Virtual hosts: RabbitMQ can be configured to host independent systems on the same by on separate virtual hosts, for separation & security. They are named instances and be configured through connection string.
 
 RabbitMQ security is based on users and their permissions.
 
-
-=============
- SERVICE BUS
-=============
+# SERVICE BUS
 
 MassTransit is a service bus which can run integrated with RabbitMQ (or other type of transports).
 It abstracts out the exchange and mainly works on the queue functionalioty.
@@ -182,27 +177,27 @@ When using MassTransit, detailed knowledge of RabbitMQ is not required, but many
 In MassTransit a receiving end of a message is called an end-point. One service can contain multiple end-point. They are identified with uri like "rabbitmq://hostname/queuename"
 await endPoint.Send<IMessageType>(actualMessage); //anonymous classes also work 
 
-Basic service bus for MassTransit
----------------------------------
+## Basic service bus for MassTransit
 
-- Service Bus gives a higher level abstraction around messaging queue. Senders & receivers can send & receive messages. These end-points are identified with unique URIs. 
-- They can support multiple transports e.g. MassTransit supports RabbitMQ, Azure Service Bus & in-memory for unit testing.
+* Service Bus gives a higher level abstraction around messaging queue. Senders & receivers can send & receive messages. These end-points are identified with unique URIs. 
+* They can support multiple transports e.g. MassTransit supports RabbitMQ, Azure Service Bus & in-memory for unit testing.
 
 VS RabbitMQ or general native transport APIs
-- More feature rich, like with error handling, logging etc.
-- High level abstraction. Doesn't provide all features of transaport, but makes easy to use (e.g. uses specific URI rather than routing-key, with fan-out type exchange)
-- Transport is changable, like RabbitMQ, Azure Service Bus & in-memory for unit testing
-- More strongly typed (MassTransit specific) than string/byte based systems of RabbitMQ
-- Well designed for unit testing
 
-Scheduling
-----------
+* More feature rich, like with error handling, logging etc.
+* High level abstraction. Doesn't provide all features of transaport, but makes easy to use (e.g. uses specific URI rather than routing-key, with fan-out type exchange)
+* Transport is changable, like RabbitMQ, Azure Service Bus & in-memory for unit testing
+* More strongly typed (MassTransit specific) than string/byte based systems of RabbitMQ
+* Well designed for unit testing
+
+### Scheduling
+
 Uses Quartz.Net for scheduling. In-memory can be used for development ot unit testing.
 Uses SQL Server database or in-memory for testing.
   .ScheduleMessage(destination, when, message);
   
-Responding to failures
-----------------------
+### Responding to failures
+
 There are several mechanisms to handle failures:
 Connection management: Re-establish connection and queues on fail-over
 Skipped queue: for messages that could not be routed
@@ -210,8 +205,8 @@ Retries: allows retry policy (immediate with limit number, intervals for wait-n-
 Error queue: for messages that could not be processed
 Fault<TMessage> response when something ends up in error queue - there should be fault end-point to get the faults thrown back
 
-MassTransit middleware
-----------------------
+### MassTransit middleware
+
 MassTransit comes with it's own middleware, which can be used to build a pipeline (with more middlewares) for processing messages.
 
 A middleware in its simplest form is like
@@ -229,15 +224,16 @@ Rate limiter: This middleware limits the messaging rate to a component, e.g. max
 
 Latest: Keep track of latest value from any given context, e.g. some message value.
 
+```cs
 private ILatestFilter<ConsumeContext> latestContext;
 cfg.receiveEndpoint(host, queuename, e =>
 {
 	e.UseLatest(lg => lg.Create = 
 		filter => latestContext = filter)
 });
+```
 
-Saga in MassTransit
--------------------
+### Saga in MassTransit
 
 When there is a distributed system and each component can interact with each-other, it can lead to a chaotic communication process. Sagas help manage that.
 
@@ -246,8 +242,6 @@ When there is a distributed system and each component can interact with each-oth
 3. A central truth in a distributed system
 
 Runs long-running business processes, and is implemented as a state machine. Defines the states and the events to change state. Example: journey of an order like created -> updated -> submitted -> processed -> completed etc.
-
-
 
 # RabbitMQ by Example
 
@@ -261,7 +255,7 @@ Cross-platform - Windows, macOS, Linux, AWS, Azure
 Supports many languages - Erlang, Java, .NET, Ruby, Python, JavaScript, C++, Node etc.
 Based on AMQP protocol v 0.9.1
 
-#### Management portal features:
+#### Management portal features
 
 * Declare, list & delete entities
 * Queue & exchange monitoring
@@ -269,7 +263,7 @@ Based on AMQP protocol v 0.9.1
 * Monitoring the backend process
 * Force close connections & purge queues
 
-#### Components:
+#### Components
 
 (Publisher) --> [ Message broker | (Exchange) -routes-> (Queue) ] --> (Consumer)
 
@@ -278,15 +272,14 @@ Based on AMQP protocol v 0.9.1
 * Bindings - defines how messages are sent from exchanges to queues. Sometimes has a routing-key that is string used to match queues
 * Consumers - applications that read messages from the broker. They subscribe to queues. AMQP provides multiple ways to define when messages are deleted, like when they are received by consumer, or when the consumer sends back acknowledgement etc. A consumer can also reject a message if it is not able to process it. Then the broker can discard or requeue the message.
 
-#### Exchanges:
+#### Exchanges
 
 * Direct - delivers message to one (or more) queue matching the routing key
 * Fanout - delivers message to all queues that are bound to it. Routing key is ignored. Used for broadcasting
 * Topic - sends messages to one or more queues based on pattern matching of the routing key. Commonly used for multicast messaging
 * Headers - messages are routed based on headers values rather than routing key. Headers are key-value pairs. Queues can have one or multiple header key-value pairs to match
 
-
-#### AMQP:
+#### AMQP
 
 * Advanced Message Queueing Protocol. A network protocol that supports clients connecting to compatible messaging queues.
 * (Publisher) --> [ Message broker | (Exchange) -routes-> (Queue) ] --> (Consumer)
@@ -384,12 +377,6 @@ The client (producer) and server (consumer) communictaes through queue. Rather t
 * Buffering (messaging rate need not match between components)
 * Scalability (scale up, and scale out with clustering)
 
-
-
-
-
-
-
 ## To cover
 
 #### Scheduling
@@ -400,8 +387,7 @@ To delay a message in the x-delayed-type exchange type, send messages with a spe
 
 If you want to schedule a message at a specific time, interval or something more complex, use an external scheduler to push the message to the RabbitMQ. Like a default scheduler on Windows or a cron job on Linux.
 
-
-###### Clustering
+##### Clustering
 
 Clusters of RabbitMQ message brokers can be created by having multiple instances of them and connecting them through their address (e.g. hostname & port) in some configuration file. The nodes (message broker instances) must be able to connect to each other in order to form [cluster](https://www.rabbitmq.com/clustering.html).
 
@@ -432,4 +418,4 @@ Once installed, RabbitMQ service will run automatically. RabbitMQ does not enabl
 * Go to RabbitMQ installation directory e.g. C:\Program Files\RabbitMQ Server\rabbitmq_server-3.7.6\sbin
 * Run command &gt;&gt; rabbitmq-plugins enable rabbitmq_management
 * After installation (enabling), restart the RabbitMQ message broker (RabbitMQ service in Windows) to use the management portal
-* Once completed, it can be accesses at `http://localhost:15672`. Default credential is guest/guest 
+* Once completed, it can be accesses at `http://localhost:15672`. Default credential is guest/guest

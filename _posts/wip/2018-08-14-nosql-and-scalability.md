@@ -239,6 +239,9 @@ What is provided by a database system depends on the specific database.
 
 #### Case study: Why is MongoDB generally CP
 
+https://stackoverflow.com/questions/11292215/where-does-mongodb-stand-in-the-cap-theorem
+https://stackoverflow.com/questions/16248656/high-availability-in-mongodb
+
 ### Further reading
 
 * [ACID](https://en.wikipedia.org/wiki/ACID_(computer_science)), [BASE](https://queue.acm.org/detail.cfm?id=1394128), and some comparison [here](https://www.johndcook.com/blog/2009/07/06/brewer-cap-theorem-base/), [here](https://mongodbforabsolutebeginners.blogspot.com/2016/06/acid-and-cap-theroems.html) et al.
@@ -248,3 +251,4 @@ What is provided by a database system depends on the specific database.
 * [CouchDB - Introduction to Replication](http://docs.couchdb.org/en/master/replication/intro.html)
 * [Consistent hashing](http://michaelnielsen.org/blog/consistent-hashing/)
 * [Data versioning to compliment consistency(ETags)](https://developers.google.com/gdata/docs/2.0/reference?csw=1#ResourceVersioning)
+* [NoSQL Databases (almost everything)](http://www.christof-strauch.de/nosqldbs.pdf)
