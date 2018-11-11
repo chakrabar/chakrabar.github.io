@@ -143,6 +143,12 @@ When the data size grows very large, it needs to be broken down in pieces or par
   * Keeping the DB functional even if a part becomes too busy or unavailable
 * If the database is small, it might be good idea not to partition, as that increases complexity
 * Most of the NoSQL databases are built with partitioning built into them
+
+### Ways to scale data
+
+1. Replication: Mirror data to multiple stores, use a load balancer to read from either
+2. Cache: Keep a cached copy in-memory. First try to read from cache, else read from DB
+3. Sharding: Partition the data and keep in parts of it in different machines
   
 ### Types of partitioning
 
@@ -157,7 +163,7 @@ SQL and NoSQL databases, can be partitioned mainly in two ways - **vertical & ho
 
 1. **Memory cache:** Part of data (most frequently used) is kept in memory. A common strategy (e.g. Memcached key-value store) is to distribute that in-memory load over a number of machines on a network, So all of them have all the data, and keeps a part of it in-memory cache. When call to a node fails (cache-miss), the whole system rehashes the keys to distribute in-memory load among available nodes. If the node comes back, it is done again. The total set of nodes is tracked with configuration.
 2. **Clustering:** Generally has same data on multiple servers behind load balancers, with active replication/mirroring. Helps in reliability and load-balancing. Generally used when the database itself doesn't support partitioning natively.
-3. **Separating read-write:** One or small set of dedicated servers are used for write. Works in master-slave mode where master handles write, slaves serve read requests. Those data are replicated to all other nodes that can serve any read requests. Replication can be synchronous or asynchronous, while synchronous ones gives safer/faster consistency they add write lags. In case of master failure, common strategy is to elect node with most recent data as master.
+3. **Separating read-write:** One or small set of dedicated servers are used for write. Works in master-slave mode where master handles write, slaves serve read requests. Those data are replicated to all other nodes that can serve any read requests. Replication can be synchronous or asynchronous, while synchronous ones gives safer/faster consistency, but they add write lags. In case of master failure, common strategy is to elect node with most recent data as master.
 4. **Sharding:** The whole data is chunked into multiple servers who read-write it's own portion of data. Further replication can be added for reliability. There has to be a dedicated component with a mapping-service, that maps incoming request to correct node. Based on implementation, the mapping can be static or dynamic. While some RDBMS supports sharding, sharding doesn't support joins across nodes, which might not work well in RDBMS. In cases like that, data has to be fetched and joined in-memory.
 
 Generally, the data to node mapping is done by a method like **_simple hashing_**, so that it's easy to calculate/find which data resides where (_All these methods do NOT support dynamic scaling_)
