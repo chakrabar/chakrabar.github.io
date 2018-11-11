@@ -306,7 +306,23 @@ int GetNumberOfIncreasingSubArrays(int[] data)
 }
 ```
 
+### SHJ
+
+Code assignment: Wikipedia article analyzer problem.
+
+Given a paragraph from a Wikipedia article, there are few questions & answers. But the answers are jumbled up. WAP to match the answers to the questions...!!!
+
+### CRSTK
+
+1. How do you evaluate a new technology
+2. How did you build custom SPA? How did it help? Why not just Angular?
+3. Explain the SPA. Does it allow caching?
+4. Why RabbitMQ? What features were used?
+5. Why ProtoBuf? Did the APIs interact with ProtoBuf?
+6. Explain current architecture. Does it use Microservices?
+7. What kind of authentication is used? Is it a custom solution? On Identity Server?
+
 ### Others
 
-Do not pay : EY, ST GNRL
-Struggling to pay: IVNT, CNT LNK
+Do not pay : EY, ST GNRL, CNT LNK
+Struggling to pay: IVNT
