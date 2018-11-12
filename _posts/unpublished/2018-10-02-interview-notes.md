@@ -322,6 +322,13 @@ Given a paragraph from a Wikipedia article, there are few questions & answers. B
 6. Explain current architecture. Does it use Microservices?
 7. What kind of authentication is used? Is it a custom solution? On Identity Server?
 
+### MCRCHP
+
+1. Current project, architecture & tech-stack
+2. Roles & responsibilities
+3. Explain a project & technical choices
+4. Why change? Why looking for other options?
+
 ### Others
 
 Do not pay : EY, ST GNRL, CNT LNK
