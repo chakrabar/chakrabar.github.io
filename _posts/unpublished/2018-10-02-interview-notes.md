@@ -24,6 +24,7 @@ Software developer & architect with 10+ years of experience in large enterprise 
 
 [1] In a given 2D array with integers, and a specific cell, find the longest path including that cell, where all the cells have same number. And they are continuous, vertically, horizontally or diagonally.
 
+```
 +--------------+
 | 2| 1| 2| 3| 0|
 +--------------+
@@ -35,9 +36,11 @@ Software developer & architect with 10+ years of experience in large enterprise 
 +--------------+
 | 7| 3| 1| 1| 0|
 +--------------+
+```
 
 [2] In a T9 keypad, when few keys are pressed, find all possible combination of characters
 
+```
 +----+----+----+
 | 1  | 2  | 3  |
 |    | abc| def|
@@ -51,9 +54,11 @@ Software developer & architect with 10+ years of experience in large enterprise 
      | 0  |
      |    |
      +----+
+```
 
 [3] Clone a linked list with a next and an arbit/random pointer
 
+```
 +----+   +----+   +----+   +----+
 |    +--->    +--->    +--->    | Next1
 | A  |   | B  |   | C  |   | D  |
@@ -63,6 +68,7 @@ Software developer & architect with 10+ years of experience in large enterprise 
 |  +---------------+        |  |
 |            |              +--+
 +------------+
+```
 
 [4] Design database for product category - can be hierarchical, API to read all products or by sub-category
 
@@ -244,14 +250,17 @@ You come across an experimental new kind of memory stored on an infinite two-dim
 
 Each square on the grid is allocated in a spiral pattern starting at a location marked 1 and then counting up while spiraling outward. For example, the first few squares are allocated like this:
 
+```
 17  16  15  14  13
 18   5   4   3  12
 19   6   1   2  11
 20   7   8   9  10
 21  22  23---> ...
+```
 
 Given any number, tell how many steps need to be taken from 1 (only left, right, up, down)...
 
+```
 App #1 
 (i*2 + 1) right
 (i*2 + 1) up
@@ -266,9 +275,11 @@ after n iteration
 
 App #2 (hint)
 Diagonal right bottom increases as 1, 9, 25...
+```
 
 [5] Get all strictly increasing sub-arrays from an integer array
 
+```
 e.g. 0, 1, 3, 1, 5, 2, 2, 1, 4, 6
 //0, 1
 //1, 3
@@ -277,6 +288,7 @@ e.g. 0, 1, 3, 1, 5, 2, 2, 1, 4, 6
 //1, 4
 //4, 6
 //1, 4, 6
+```
 
 ```cs
 int GetNumberOfIncreasingSubArrays(int[] data)
