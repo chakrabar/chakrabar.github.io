@@ -3,7 +3,7 @@ layout: post
 title: "Interview questions, answers, notes & further reading"
 excerpt: "For internal purposes only"
 date: 2018-10-02
-tags: [database, couchdb]
+tags: [database, design, system, code, interview]
 categories: articles
 comments: true
 share: true
@@ -207,8 +207,6 @@ A 2-D array of numbers given to indicate seating blocks in an airplane. Seats ca
 
 Write code, unit tests, display final seating arrangement in console! Generate executable, write brief documentation on how to run.
 
-[GitHub link](https://github.com/chakrabar/FlightSeatingManager)
-
 ### AGD
 
 1. WAP to get unique numbers from a array of numbers, without library function
@@ -239,11 +237,8 @@ Tech stack: High scalable, available, redundant. C#, .NET, .NET Core, Scala, Pyt
 ### UIP
 
 [1] Relational vs NoSQL
-
 [2] How do you effectively distribute relational database
-
 [3] Why NoSQL is better for distribution, why writes perform better in NoSQL
-
 [4] https://adventofcode.com/2017/day/3
 You come across an experimental new kind of memory stored on an infinite two-dimensional grid.
 
@@ -328,6 +323,39 @@ Given a paragraph from a Wikipedia article, there are few questions & answers. B
 2. Roles & responsibilities
 3. Explain a project & technical choices
 4. Why change? Why looking for other options?
+
+### IVNT
+
+(Abshk)
+
+1. Explain experience. What kind of people management you do? Explain your architecture.
+2. What type of database? SQL Server vs mongo. When you'll use mongo over SQL server?
+3. Design a simple e-commerce system. The whole architecture including database and front end. Hinted at microservices.
+4. How will you separate the services? And the database. What kind of database(s)?
+5. What about security? How will you design auth layer. How will you maintain session? Secure session on multiple devices? How will you scale a big cluster of auth services/databases? (consistent hashing)
+6. What information will be there in auth token?  Where will you store it? 
+7. How does HTTPS work? How can you secure a message from man-in-middle attack without TLS?
+8. Problems with microservices?
+9. Types of attack? XSRF, XSS, CORS, DOS, DDOS? How to safe guard from XSRF or cookie stealing attack? (anti forgery token)
+10. How does CORS actually work? The workflow.
+11. What front-end frameworks you used? Know about LESS and SASS?
+12. How does Git work internally? What happens when a new branch is created?
+13. WAP to reverse an array with constant space.
+14. WAP to check if two linked lists merge.
+
+(Srn)
+
+1. Explain experience & role
+2. How the requirement flow works? How backlog is created? How they are prioritized?
+3. Who are the stake-holders? Who do you report to? WHo reports to you? Who decides on tech?
+4. How do you convince them when there is a conflict? How you go about convincing people who just rejects idea based on personal preference? What about people who avoids face-to-face interactions?
+5. What you do for estimation? What when work lags behind target? How do you keep track?
+6. How do you know if each team member is doing his/her work properly? How do you give feedback to people who are slow/careless? What if he/she is from another group/management? How frequently and in what way you do regular one-to-one discussion with team?
+7. Who works as scrum master? Do you follow sprint planning, retrospective etc.? How does demo (to client/product team) and feedback loop work? What if they ask for lot of changes after demo?
+8. How do you handle when production issue comes up suddenly? What about the time lost in production issues? And the deviation from estimated timelines?
+9. What is you approach when someone comes up with a functional/technical issue?
+10. Who does the deployment? How much of the process is automated? Who manages CI/CD & Devops? How comfortable are you with deployment scripting? What you do when you get a deployment failure mail?
+
 
 ### Others
 
