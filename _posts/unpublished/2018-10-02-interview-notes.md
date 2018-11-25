@@ -12,7 +12,7 @@ published: false
 
 **BTW: Use Fira Code fonts**
 
-# Interview experience
+# Technical discussion experience
 
 ## Headlines
 
@@ -104,7 +104,7 @@ Tech stack: C#, MVC, .NET Core, Authorize.net, own big network, high scalability
      2. Abstraction is more about generalization, like all animals are mammals. Encapsulation is more about implementation, e.g. it can maintain state, but you don't know how.
 5. WAP to implement pub-sub in JS and some weird shit of problems
 
-### OLS (collected)
+### OLS (other)
 
 There will be a total of 3 Interview rounds. Questions that can be asked in the first round:
 
@@ -238,6 +238,64 @@ static T[] GetUnique2<T>(T[] data) where T : IEqualityComparer<T>
 
 Tech stack: High scalable, available, redundant. C#, .NET, .NET Core, Scala, Python, Automation, CI
 
+Next
+
+[1] Explain experinece. Talk about an interesting recent project  
+[2] Why custom SPA? Why not standard Angular? Why not just single HTML with paging or show-hide sections?  
+[3] How do you make a code testable? How to get instance of dependency without setter injection? How without using IoC in the class? (hint: factory)
+
+```cs
+class DataProvider
+{
+  [Inject]
+  public IDataAPi DataApi { get; set; }
+  [Inject]
+  public IContainer Container { get; set; }
+
+  public Data GetData(int dataId)
+  {
+  	//DataApi api = this.DataApi; //new DataApi(); //this one
+    //assuming the IoC supports this
+    DataApi api = Container.GetInstance<IDataApi>(); //or factory
+    string data = api.GetDataFromNetwork(dataId);
+    Data res = this.ParseData(data);
+    return res;
+  }
+}
+```
+
+[4] How do you actually write a unit test? Test coverage?
+
+```cs
+//basic setup
+void Test()
+{
+  // Flow: When GetDataFromNetwork returns "abcd", GetData will return X
+  Mock<IDataApi>
+  //setup the stubb method to return "abcd"
+  var result = DaraProvider.GetData("someKey");
+  //assert
+}
+```
+
+[5] What kind of tests you do? Who is responsible for which one? Where do they run? When? How frequenctly?  
+[6] WAP. You have array of numbers from 1 .. N (each number once). We have an additional (single) number 1 <= dup <= N in array and it is not sorted. Write a function that return dup in O(1) space.  
+[7] What all test cases you'll write for this function?
+
+```cs
+int FindDup(int [] arr)
+{
+	 var numberOfDistinct = arr.Length - 1;
+   var sumOfNonDups = (numberOfDistinct * (numberOfDistinct  + 1))/2;
+   var actualSum = arr.Sum(); //Linq
+   return actualSum - sumOfNonDups;
+}
+```
+
+Next
+
+Write a complete application with 2 APIs. A POST API that can accept list of URLs to process. It processes them asynchronously with queues, returns a reference id. A GET API that accepts the reference id and provides the status of the queue.
+
 ### UP
 
 Sc
@@ -245,7 +303,7 @@ Sc
 [1] Relational vs NoSQL  
 [2] How do you effectively distribute relational database  
 [3] Why NoSQL is better for distribution, why writes perform better in NoSQL  
-[4] https://adventofcode.com/2017/day/3 You come across an experimental new kind of memory stored on an infinite two-dimensional grid.
+[4] You come across an experimental [new kind of memory](https://adventofcode.com/2017/day/3) stored on an infinite two-dimensional grid.
 
 Each square on the grid is allocated in a spiral pattern starting at a location marked 1 and then counting up while spiraling outward. For example, the first few squares are allocated like this:
 
@@ -334,14 +392,18 @@ Design an efficient (fast & memory efficient) system to show all the logs as per
 
 Notes (on probe):
 
-• Each file will have 60 or less log entries
-• The desktop system is a monolith for single user
+* Each file will have 60 or less log entries
+* The desktop system is a monolith for single user
 
 ### SHJ
 
 Code assignment: Wikipedia article analyzer problem.
 
 Given a paragraph from a Wikipedia article, there are few questions & answers. But the answers are jumbled up. WAP to match the answers to the questions...!!!
+
+Nxt
+
+Make it work for all scenarios. We don't want to cover all scenarios, we just want the sample case to run!
 
 ### CRSTK
 
