@@ -70,10 +70,8 @@ Software developer & architect with 10+ years of experience in large enterprise 
 +------------+
 ```
 
-[4] Design database for product category - can be hierarchical, API to read all products or by sub-category
-
-[5] Explain the automated dynamic price u[pdate process. How version history is mentioned and rollback is enabled
-
+[4] Design database for product category - can be hierarchical, API to read all products or by sub-category  
+[5] Explain the automated dynamic price update process. How version history is mentioned and rollback is enabled  
 [6] How do you handle multiple conflicting critical tasks with fixed time? How you manage overall deliverable timelines?
 
 Tech stack: C#, Python, Angular 4, AWS, PostgreSQL
@@ -102,7 +100,7 @@ Tech stack: C#, MVC, .NET Core, Authorize.net, own big network, high scalability
 2. Post vs Put: Generally post to create new resource, put for update. But actually, PUT is idempotent. You put on a given URI generally with an identifier: http://myservice.com/api/employees/33802
 3. SOA vs Microservices: Microservices are generally smaller, does one small functionality. It's independent. Has own datasource and can be deployed independently.
 4. Encapsulation vs Abstraction: Apparently, no one has one concrete convincing answer. Vaguely, abstraction is about what can be done without knowing the actual implementation, like interface or abstract class.
-     1. Encapsulation is packing information/data & behavior together and providing selective access to do specific things, e.g. a class encapsulates properties & functions. Gives selective access withaccess modifiers.
+     1. Encapsulation is packing information/data & behavior together and providing selective access to do specific things, e.g. a class encapsulates properties & functions. Gives selective access with access modifiers.
      2. Abstraction is more about generalization, like all animals are mammals. Encapsulation is more about implementation, e.g. it can maintain state, but you don't know how.
 5. WAP to implement pub-sub in JS and some weird shit of problems
 
@@ -110,12 +108,12 @@ Tech stack: C#, MVC, .NET Core, Authorize.net, own big network, high scalability
 
 There will be a total of 3 Interview rounds. Questions that can be asked in the first round:
 
-[1] Search in sorted and rotated array
+[1] Search in sorted and rotated array  
 [2] Left , right, bottom view of a tree
 
 You might be asked to code as well. Questions that can be asked in the second round of interviews.
 
-[3] Median of two sorted arrays
+[3] Median of two sorted arrays  
 [4] Deepest node of a tree
 
 ### CPLR
@@ -240,13 +238,14 @@ static T[] GetUnique2<T>(T[] data) where T : IEqualityComparer<T>
 
 Tech stack: High scalable, available, redundant. C#, .NET, .NET Core, Scala, Python, Automation, CI
 
-### UIP
+### UP
 
-[1] Relational vs NoSQL
-[2] How do you effectively distribute relational database
-[3] Why NoSQL is better for distribution, why writes perform better in NoSQL
-[4] https://adventofcode.com/2017/day/3
-You come across an experimental new kind of memory stored on an infinite two-dimensional grid.
+Sc
+
+[1] Relational vs NoSQL  
+[2] How do you effectively distribute relational database  
+[3] Why NoSQL is better for distribution, why writes perform better in NoSQL  
+[4] https://adventofcode.com/2017/day/3 You come across an experimental new kind of memory stored on an infinite two-dimensional grid.
 
 Each square on the grid is allocated in a spiral pattern starting at a location marked 1 and then counting up while spiraling outward. For example, the first few squares are allocated like this:
 
@@ -313,6 +312,31 @@ int GetNumberOfIncreasingSubArrays(int[] data)
 }
 ```
 
+Next Ts
+
+1. Current project structure
+2. What kind of auth? Is it OAuth?
+3. Details on Singleton and code, multithreaded application.
+4. Weather service scenario. Basically observer with some enhancements.
+5. Caching service, code.
+
+Next Ad
+
+Design a system.
+
+There is a file repository of logs. Each directory is for one day. Each file has record for exactly one hour. There might be data in different files in overlapping time.
+
+Each log record is a csv entry, with first column as timestamp.
+
+Now there is a desktop system to view logs. Whenever you log into the system, you select one day to view logs. And the system shows you the logs starting from the current time (e.g. 2:43pm), and moving forward (2:44pm and so on) for that specified date.
+
+Design an efficient (fast & memory efficient) system to show all the logs as per requirements.
+
+Notes (on probe):
+
+• Each file will have 60 or less log entries
+• The desktop system is a monolith for single user
+
 ### SHJ
 
 Code assignment: Wikipedia article analyzer problem.
@@ -329,6 +353,31 @@ Given a paragraph from a Wikipedia article, there are few questions & answers. B
 6. Explain current architecture. Does it use Microservices?
 7. What kind of authentication is used? Is it a custom solution? On Identity Server?
 
+Ktk
+
+1. How does your day look like?
+2. How you go about architecting a new application?
+3. How do you select a database?
+4. How do you distributing a database?
+5. How does request flow works in IIS?
+6. Explain clean architecture. What is use of SOLID & IoC here?
+7. How do you secure your APIs? How do you implement role based authorization in Web API?
+8. How can you pass parameters on-demand to a push API? ...lazy parameters!
+9. How concurrency works in relational database? => locks & isolation levels
+10. How do you make sure data consistency is maintained in a relational database without heavy use of locks? (Hint row number and timestamp)
+11. Repository, Unit of work and CQRS?
+12. How does garbage collector work? How does it know which objects to collect? Why use IDisposable?
+13. Very basic theoretical question on graph
+14. Implementation of simple dictionary with small number of backing buckets
+
+Ajn
+
+1. Experience
+2. Some technical challenge that you faced recently?
+3. How do you use Azure for deployment?
+4. Implementation of CI/CD? Tools used?
+5. Infrastructure as code?
+
 ### MCRCHP
 
 1. Current project, architecture & tech-stack
@@ -338,7 +387,7 @@ Given a paragraph from a Wikipedia article, there are few questions & answers. B
 
 ### IVNT
 
-(Abshk)
+(Absk)
 
 1. Explain experience. What kind of people management you do? Explain your architecture.
 2. What type of database? SQL Server vs mongo. When you'll use mongo over SQL server?
@@ -371,5 +420,4 @@ Given a paragraph from a Wikipedia article, there are few questions & answers. B
 
 ### Others
 
-Do not pay : EY, ST GNRL, CNT LNK
-Struggling to pay: IVNT
+$ problem : EY, ST GNRL, CNT LNK
