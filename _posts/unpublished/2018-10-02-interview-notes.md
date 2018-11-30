@@ -213,6 +213,8 @@ Write code, unit tests, display final seating arrangement in console! Generate e
 
 ### AGD
 
+zbzk
+
 1. WAP to get unique numbers from a array of numbers, without library function
 2. Extend that to any type of object. How do you make sure uniqueness is evaluated correctly
 3. Design a logging system where many clients can post messages at the same time. It should have API to log message, maintain an internal queue and allow subscriptions to read from queue. It should also allow different output types like screen, file system etc.
@@ -238,7 +240,7 @@ static T[] GetUnique2<T>(T[] data) where T : IEqualityComparer<T>
 
 Tech stack: High scalable, available, redundant. C#, .NET, .NET Core, Scala, Python, Automation, CI
 
-Next
+Next MxPnskv
 
 [1] Explain experinece. Talk about an interesting recent project  
 [2] Why custom SPA? Why not standard Angular? Why not just single HTML with paging or show-hide sections?  
@@ -403,7 +405,7 @@ Given a paragraph from a Wikipedia article, there are few questions & answers. B
 
 Nxt
 
-Make it work for all scenarios. We don't want to cover all scenarios, we just want the sample case to run!
+Make it work for all scenarios. We don't want to cover all scenarios, we just want the sample case to run! (Then maybe we want to extend this to something that can generate questions and answers from a given piece of text)
 
 ### CRSTK
 
@@ -415,7 +417,7 @@ Make it work for all scenarios. We don't want to cover all scenarios, we just wa
 6. Explain current architecture. Does it use Microservices?
 7. What kind of authentication is used? Is it a custom solution? On Identity Server?
 
-Ktk
+Krtk
 
 1. How does your day look like?
 2. How you go about architecting a new application?
@@ -432,7 +434,7 @@ Ktk
 13. Very basic theoretical question on graph
 14. Implementation of simple dictionary with small number of backing buckets
 
-Ajn
+Arjn
 
 1. Experience
 2. Some technical challenge that you faced recently?
@@ -449,7 +451,7 @@ Ajn
 
 ### IVNT
 
-(Absk)
+Absk
 
 1. Explain experience. What kind of people management you do? Explain your architecture.
 2. What type of database? SQL Server vs mongo. When you'll use mongo over SQL server?
@@ -466,7 +468,7 @@ Ajn
 13. WAP to reverse an array with constant space.
 14. WAP to check if two linked lists merge.
 
-(Srn)
+Srn
 
 1. Explain experience & role
 2. How the requirement flow works? How backlog is created? How they are prioritized?
@@ -479,6 +481,34 @@ Ajn
 9. What is you approach when someone comes up with a functional/technical issue?
 10. Who does the deployment? How much of the process is automated? Who manages CI/CD & Devops? How comfortable are you with deployment scripting? What you do when you get a deployment failure mail?
 
+VncL, Webex
+
+1. Experience? Tech stack? Current work? Daily work distribution? Percentage distribution of responsibilities?
+2. What is on cloud? What is not?
+3. What you do if you see a service degradation? What measure you take? How do you find the issue?
+4. How do you take decision with insufficient data and less/no time in hand?
+5. How do you measure team performance? What you do if it is not up to expectations?
+6. What have you done very creative? Why you think it was creative?
+7. What have you done that went very wrong? What you could have done to prevent?
+8. How do you dig deep to find problems and fix it?
+9. What would you do if you deploy a new version and realise it's broken? (functionality or performance)
+10. How do you go about debbuging an issue found in production?
+
+### NKA
+
+Ashk, Sram
+
+1. What all tech you have worked on
+2. Why Ajax Controls (ASP.NET WebForm) are not good
+3. Why use MVC instead of ASP.NET Web Forms
+4. What is new in .NET Core
+5. Is .NET Core bound to IIS? How? How does it work with/without IIS?
+6. What was the main intention of .NET Core? How did they design and achieve it?
+7. How did they implement the interfaces? (Somehow they wanted to point to OWIN!)
+8. What design patterns you use when a Web Application becomes slow when there are many users? What patterns you use if you want to use threading? (..!!!)
+9. How does static work?
+10. How can you call a method in derived class from constructor of base class (also exception scenarios)
+11. Lock based threading? Threading for static class? Instance class?
 
 ### Others
 
