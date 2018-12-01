@@ -298,6 +298,8 @@ Next
 
 Write a complete application with 2 APIs. A POST API that can accept list of URLs to process. It processes them asynchronously with queues, returns a reference id. A GET API that accepts the reference id and provides the status of the queue.
 
+Tech stack: Java, C#, Kotlin, Scala, Pyhton, Swift, .NET Core (API), SQL, Cassandra, Hadoop, Kafka, Docker, Kubernetes, ML
+
 ### UP
 
 Sc
@@ -510,6 +512,8 @@ Ashk, Sram
 10. How can you call a method in derived class from constructor of base class (also exception scenarios)
 11. Lock based threading? Threading for static class? Instance class?
 12. How does async-await work? How do you handle exceptions in async code?
+
+Tech stack: VB.NET, WinForm, ASP.NET WebForm, SQL
 
 ### Others
 
