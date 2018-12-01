@@ -501,14 +501,15 @@ Ashk, Sram
 1. What all tech you have worked on
 2. Why Ajax Controls (ASP.NET WebForm) are not good
 3. Why use MVC instead of ASP.NET Web Forms
-4. What is new in .NET Core
-5. Is .NET Core bound to IIS? How? How does it work with/without IIS?
+4. What is new in .NET Core? Is .NET Core bound to IIS? How? How does it work with/without IIS?
+5. String vs StringBuilder?
 6. What was the main intention of .NET Core? How did they design and achieve it?
 7. How did they implement the interfaces? (Somehow they wanted to point to OWIN!)
 8. What design patterns you use when a Web Application becomes slow when there are many users? What patterns you use if you want to use threading? (..!!!)
 9. How does static work?
 10. How can you call a method in derived class from constructor of base class (also exception scenarios)
 11. Lock based threading? Threading for static class? Instance class?
+12. How does async-await work? How do you handle exceptions in async code?
 
 ### Others
 
