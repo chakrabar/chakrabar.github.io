@@ -513,7 +513,7 @@ Ashk, Sram
 11. Lock based threading? Threading for static class? Instance class?
 12. How does async-await work? How do you handle exceptions in async code?
 
-Tech stack: VB.NET, WinForm, ASP.NET WebForm, SQL
+Tech stack: VB.NET, WinForm, ASP.NET WebForm, SQL, Hardware drivers & network protocols
 
 ### Others
 
