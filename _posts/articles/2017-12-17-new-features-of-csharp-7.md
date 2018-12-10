@@ -10,8 +10,6 @@ comments: true
 modified: 2018-01-19T08:11:53-04:00
 ---
 
-
-
 # A quick glance at the new capabilities of C# 7.0 
 
 ***This is a code demo, not elaborate theories.***
