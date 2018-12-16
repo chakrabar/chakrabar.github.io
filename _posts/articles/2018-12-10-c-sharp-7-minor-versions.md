@@ -236,12 +236,79 @@ largeArrayStr = string.Join(" ", largeArray); // 10 20 0 40 50
 
 ### Safe efficient enhancements to value type
 
-SEPARATE POST
+C# 7.2 introduces a bunch of features, which works together towards the same goal - making value types efficient & safe to work with. We discuss those features in the post **[C# 7.2 value type enhancements](/articles/c-sharp-7.2-value-type-enhancements/)**.
+
+## C# 7.3 features
+
+This minor version update on the language does not bring any _"new"_ feature as such. Rather `C# 7.3` goes in the same direction of `C# 7.2` and adds some more features for safe & efficient code. It also adds some enhancement to some existing features. We'll just briefly look at couple of those features, see the [official docs](https://docs.microsoft.com/en-us/dotnet/csharp/whats-new/csharp-7-3) for all the features.
+
+#### Reassignment of `ref local` variables
+
+Before `C# 7.3`, once a `ref local` variable has been declared and initialized, it could not be re-assignd to another ref local. It's now supported.
+
+```cs
+//a simple ref return method
+ref int GetPrevious(int[] arr, int idx)
+{
+    if (arr == null || idx <= 0)
+        throw new ArgumentException();
+    return ref arr[idx - 1];
+}
+//another ref return method
+ref int GetNext(int[] arr, int idx)
+{
+    if (arr == null || idx >= arr.Length - 1)
+        throw new ArgumentException();
+    return ref arr[idx + 1];
+}
+//actual usage
+void TestRefReturn()
+{
+    var arr = new[] { 1, 2, 3, 4, 5 };
+    ref int arrItem = ref GetPrevious(arr, 2);
+    //ONLY works with C# 7.3 and above
+    arrItem = ref GetPrevious(arr, 2);
+}
+```
+
+#### Enhanced generic constraints
+
+Now `System.Enum` & `System.Delegate` can be used as type constraint on generic types. From the [official docs](https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/where-generic-type-constraint), these are now valid generic constraints.
+
+```cs
+public class UsingEnum<T> where T : System.Enum { }
+public class UsingDelegate<T> where T : System.Delegate { }
+public class Multicaster<T> where T : System.MulticastDelegate { }
+```
+
+#### Tuple enhancements
+
+Tuples can now be equated with `==` and `!=`, the comparison will work on each of the tuple members. It can also work if one side is nullable while the other is not. It also does _implicit conversion_ of member types when comparable types are found (see example below). 
+
+But remember that the tuple vaiable names exist only at compile time, not at run time. t run time, the variables are still `Item1`, `Item2` etc. So the variable names really does not matter as long as the sequence of members have same type. If the sequence does not match, tuples will not match even if variable names are same.
+
+```cs
+internal void TestTupleEquality()
+{
+    var t1 = (A: 1, B: "hello");
+    var t2 = (A: 1, B: "hello");
+    //making it nullable
+    (int A, string B)? t3 = t2;
+    //with compatible type
+    (long A, string B) t4 = (1, "hello");
+
+    var test1 = t1 == t2; //true
+    var test2 = t1 == t3; //true
+    var test3 = t1 == t4; //true
+
+    //this DOES NOT WORK equate with above
+    var t5 = (B: "hello", A: 1);
+}
+```
 
 ## References
 
 * [What's new in C# 7.1](https://docs.microsoft.com/en-us/dotnet/csharp/whats-new/csharp-7-1)
 * [What's new in C# 7.2](https://docs.microsoft.com/en-us/dotnet/csharp/whats-new/csharp-7-2)
 * [What's new in C# 7.3](https://docs.microsoft.com/en-us/dotnet/csharp/whats-new/csharp-7-3)
-* [Span&lt;T&gt; Struct](https://docs.microsoft.com/en-us/dotnet/api/system.span-1?view=netcore-2.2)
-* [Memory&lt;T&gt; Struct](https://docs.microsoft.com/en-us/dotnet/api/system.memory-1?view=netcore-2.2)
+* [Write safe and efficient C# code](https://docs.microsoft.com/en-us/dotnet/csharp/write-safe-efficient-code)
