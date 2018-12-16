@@ -296,13 +296,16 @@ internal void TestTupleEquality()
     (int A, string B)? t3 = t2;
     //with compatible type
     (long A, string B) t4 = (1, "hello");
+    //with different names
+    var t5 = (X: 1, Y: "hello");
 
     var test1 = t1 == t2; //true
     var test2 = t1 == t3; //true
     var test3 = t1 == t4; //true
+    var test4 = t1 == t5; //true
 
-    //this DOES NOT WORK equate with above
-    var t5 = (B: "hello", A: 1);
+    //this DOES NOT WORK for type mismatch
+    var t6 = (B: "hello", A: 1);
 }
 ```
 
