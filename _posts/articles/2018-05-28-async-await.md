@@ -126,6 +126,7 @@ This concludes our discussion on _"how does async-await work"_. In the **[Part I
 #### References
 
 * Async-Await documentation - [MSDN](https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/concepts/async/), &nbsp; [Control flow](https://docs.microsoft. com/en-us/dotnet/csharp/programming-guide/concepts/async/control-flow-in-async-programs), &nbsp; [TAP - Task-based Asynchronous Pattern](https://docs.microsoft.com/en-us/dotnet/standard/asynchronous-programming-patterns/task-based-asynchronous-pattern-tap), &nbsp; [FAQs](https://blogs.msdn.microsoft.com/pfxteam/2012/04/12/asyncawait-faq/)
+* [Dissecting the async methods in C#](https://blogs.msdn.microsoft.com/seteplia/2017/11/30/dissecting-the-async-methods-in-c/)
 * How does it work? From StackOverflow QA - [CLR implementation](https://stackoverflow.com/questions/4047427/c-sharp-async-how-does-it-work/4047607#4047607), &nbsp; [int to Task&lt;int&gt;](https://stackoverflow.com/questions/13159080/how-does-taskint-become-a-int), &nbsp; [The wrong implementation](https://stackoverflow.com/questions/14455293/how-and-when-to-use-async-and-await)
 * Async-Await & threads
   * [SO - how applications are responsive if there are no threads](https://stackoverflow.com/questions/37419572/if-async-await-doesnt-create-any-additional-threads-then-how-does-it-make-appl)
