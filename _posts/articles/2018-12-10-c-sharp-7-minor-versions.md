@@ -1,22 +1,22 @@
 ---
 layout: post
 title: "C# 7 features with minor version updates - C# 7.1, C# 7.2, C# 7.3"
-excerpt: "A quick guide to new features intoduced to C# in minor versions 7.1 to 7.3"
+excerpt: "A quick guide to new features introduced to C# in minor versions 7.1 to 7.3"
 date: 2018-12-10
-tags: [csharp, dotnet, code, programming]
+tags: [csharp, dotnet, code, programming, efficient, safe]
 categories: articles
 comments: true
 share: true
-published: false
+published: true
 ---
 
 # A quick look at the new capabilities of C# language with minor updates 7.1 to 7.3 
 
-***This is a minimalistic code demo, not elaborate theories. For details, check reference section at the end.***
+***This is mostly a bunch of code demos, not so much of underlying theories.***
 
-If you are alredy familiar with `C# 6` and `C# 7`, this will help you catch up quickly on the new features of the programming language that were introduced with minor versions 7.1 - 7.3, and get ready for upcoming [C# 8](https://blogs.msdn.microsoft.com/dotnet/2018/12/05/take-c-8-0-for-a-spin/). **If you are not not comfortable with `C# 6` or `C# 7` yet, go and read about** [C# 6](/articles/new-features-of-csharp-6) **and** [C# 7](/articles/new-features-of-csharp-7) **articles first.** Note that the feature list here is not exhaustive, it covers some of the most popular and useful features. For more details, check reference section at the bottom.
+If you are already familiar with `C# 6` and `C# 7`, this will help you catch up quickly on the new features of the programming language that were introduced with minor versions 7.1 - 7.3, and get you ready for upcoming [C# 8](https://blogs.msdn.microsoft.com/dotnet/2018/12/05/take-c-8-0-for-a-spin/). **If you are not comfortable with `C# 6` or `C# 7` yet, go and read the** [C# 6](/articles/new-features-of-csharp-6) **and** [C# 7](/articles/new-features-of-csharp-7) **articles first.** Note that the feature list here is not exhaustive, it covers some of the most popular and useful ones. For more details, check reference section at the bottom.
 
-**Note:** This is the first time C# team introduced minor versions, they are not enabled in Visual Studio by default. So if you try the following code, they will not run. To use minor versions of C#, you need to configure your system as explained [here](https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/configure-language-version). The easiest is to set that in VS for a project. Right-click the project on solution explorer, select properties -> Build -> Advanced. In language version dropdown, select "C# latest minor version (latest)".
+**Note:** This is the first time C# team introduced minor versions, they are not enabled in Visual Studio by default. So if you try the following code, they may not run. To use minor versions of C#, you need to configure your system as explained [here](https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/configure-language-version). The easiest is to set that in Visual Studio, per project. Right-click the project on solution explorer, select properties -> Build -> Advanced. In language version dropdown, select "C# latest minor version (latest)".
 {: .notice--info}
 
 ![Image](/images/posts/misc/csharp-version-in-vs.png)
@@ -60,13 +60,15 @@ Now, if you use variables to construct a tuple, by default the tuple elements ta
 int number = 5;
 bool isEven = false;
 //then you use them to construct a tuple
-var numberTypeTuple = (number, isEven); //automatially named as number, isEven
+var numberTypeTuple = (number, isEven); //automatically named as number, isEven
 var fiveIsEven = numberTypeTuple.isEven; //works just fine
 
 //you can still name them explicitly though
 var numberTypeTuple2 = (Num: number, IsEven: isEven); //explicit names
-var fiveIsEven2 = numberTypeTuple2.IsEven; //variable names are not used
+var number2 = numberTypeTuple2.Num; //variable names are not used
 ```
+
+Just remember that, variable names in `Tuple` are available only in compile time, they do not exist in runtime.
 
 #### Generic pattern matching
 
@@ -90,11 +92,11 @@ public string GetSound<T>(T animal) where T : IAnimal
 
 ## C# 7.2 features
 
-#### Non-trailing named arguements
+#### Non-trailing named arguments
 
 When you are calling a method with named arguments or optional parameters, it was a rule to have all the named arguments at the end of method signature after all the required arguments.
 
-The compiler could infer the arguments when all are positional (in same order as defined in the method), all are named (so bind arguments by name) or there are required positional arguments followed by named arguments. It was NOT allowed to have a non-named argument after a named argument. This is now supported in C# 7.2, given the compiler can map the arguments by position and/or name.
+The compiler could infer the arguments when all are positional (in same order as defined in the method), all are named (so bind arguments by name) or there are required positional arguments followed by named arguments. It was NOT allowed to have a non-named argument after a named argument. This is now supported in C# 7.2, given the compiler can map the arguments by position and/or name. Not a _"new"_ feature as such, but helps write method calls more clearly in some scenarios.
 
 Let's look at some sample to understand what works & what doesn't.
 
@@ -133,7 +135,7 @@ void TestMethod()
 
 With `C# 7.0`, digit separators were introduced for numeric literals. That means, you could use underscore `_` inside numbers to separate digits for better readability. So you could write a million as `1_000_000`.
 
-`C# 7.2` enhances this a bit by allowing digit separator at begining of numeric literals which can be used with `binary` or `hexadecimal` for more clarity. Examples below.
+`C# 7.2` enhances this a bit by allowing digit separator at beginning of numeric literals which can be used with `binary` or `hexadecimal` for more clarity. Examples below.
 
 ```cs
 //allowed in C# 7.0
@@ -149,7 +151,7 @@ var bin2 = 0b_1000_1001;
 
 `C# 7.2` introduces a new composite access modifier `private protected`, with which members will be accessible only in child classes (through inheritance) in **same assembly**.
 
-We already had a composite access modifier `protected internal` which was accessible through EITHER inheritance OR in the same assembly. The new `private protected` restricts to ONLY inheritance in same assembly.
+We already had a composite access modifier `protected internal` which was accessible through EITHER inheritance OR in the same assembly. The new `private protected` restricts to ONLY inheritance AND in same assembly.
 
 Let's look at some code examples for clarity
 
@@ -159,7 +161,7 @@ public class WithProtectedInternal
 {
     protected internal void M() { }
 }
-//in same assembly
+//in same assembly, inheritance not required
 public class Test2
 {
     protected void DoWork()
@@ -167,7 +169,7 @@ public class Test2
         new WithProtectedInternal().M();
     }
 }
-//another assembly
+//another assembly, only through inheritance
 public class Test2 : WithProtectedInternal
 {
     protected void DoWork()
@@ -209,7 +211,7 @@ Using `ref` you can get **reference** of an expression result rather than the va
 var smallArray = new int[] { 1, 2, 3, 4, 5 };
 var largeArray = new int[] { 10, 20, 30, 40, 50 };
 
-//this is how it worked till C# 7.1
+//this is how it already worked till C# 7.1
 int index = 7;
 int value = ((index < 5) ? smallArray[index] : largeArray[index - 5]);
 value = 0; //this just updates the copy of value, not largeArray[2]
@@ -221,7 +223,7 @@ value = 0; //this just updates the copy of value, not largeArray[2]
 var smallArrayStr = string.Join(" ", smallArray); //1 2 3 4 5
 var largeArrayStr = string.Join(" ", largeArray); // 10 20 30 40 50
 
-//NEW in C# 7.2, you can get a reference to original item <<<<
+//>>>> NEW in C# 7.2, you can get a reference to original item <<<<
 ref int refValue = ref ((index < 5) ? ref smallArray[index] : ref largeArray[index - 5]);
 refValue = 0; //here, actually largeArray[2] got updated to 0!
 
@@ -236,11 +238,11 @@ largeArrayStr = string.Join(" ", largeArray); // 10 20 0 40 50
 
 ### Safe efficient enhancements to value type
 
-C# 7.2 introduces a bunch of features, which works together towards the same goal - making value types efficient & safe to work with. We discuss those features in the post **[C# 7.2 value type enhancements](/articles/c-sharp-7.2-value-type-enhancements/)**.
+C# 7.2 introduces a bunch of features which work together towards the same goal - making value types efficient & safe to work with. We discuss those features separately in the post **[C# 7.2 value type enhancements](/articles/c-sharp-7.2-value-type-enhancements/)** (_will be published soon_).
 
 ## C# 7.3 features
 
-This minor version update on the language does not bring any _"new"_ feature as such. Rather `C# 7.3` goes in the same direction of `C# 7.2` and adds some more features for safe & efficient code. It also adds some enhancement to some existing features. We'll just briefly look at couple of those features, see the [official docs](https://docs.microsoft.com/en-us/dotnet/csharp/whats-new/csharp-7-3) for all the features.
+This minor version update on the language does not bring any _"new"_ feature as such. Rather `C# 7.3` goes in the same direction of `C# 7.2` and adds some more features for safe & efficient code. It also adds some enhancement to some existing features. We'll briefly look at only couple of those features, see the [official docs](https://docs.microsoft.com/en-us/dotnet/csharp/whats-new/csharp-7-3) for all the features.
 
 #### Reassignment of `ref local` variables
 
@@ -267,7 +269,7 @@ void TestRefReturn()
     var arr = new[] { 1, 2, 3, 4, 5 };
     ref int arrItem = ref GetPrevious(arr, 2);
     //ONLY works with C# 7.3 and above
-    arrItem = ref GetPrevious(arr, 2);
+    arrItem = ref GetNext(arr, 2);
 }
 ```
 
@@ -283,9 +285,9 @@ public class Multicaster<T> where T : System.MulticastDelegate { }
 
 #### Tuple enhancements
 
-Tuples can now be equated with `==` and `!=`, the comparison will work on each of the tuple members. It can also work if one side is nullable while the other is not. It also does _implicit conversion_ of member types when comparable types are found (see example below). 
+Tuples can now be equated with `==` and `!=`, the comparison will work on each of the tuple members. It can also work if one side is nullable while the other is not. It even does _implicit conversion_ of member types when comparable types are found (see example below). 
 
-But remember that the tuple vaiable names exist only at compile time, not at run time. t run time, the variables are still `Item1`, `Item2` etc. So the variable names really does not matter as long as the sequence of members have same type. If the sequence does not match, tuples will not match even if variable names are same.
+But remember that the tuple variable names exist only at compile time, not at run time. At run time, the variables are still referred as `Item1`, `Item2` etc. So the variable names really does not matter as long as the sequence of members have same type. If the sequence does not match, tuples will not match even if variable names are same.
 
 ```cs
 internal void TestTupleEquality()
@@ -294,9 +296,9 @@ internal void TestTupleEquality()
     var t2 = (A: 1, B: "hello");
     //making it nullable
     (int A, string B)? t3 = t2;
-    //with compatible type
+    //with compatible but not same type
     (long A, string B) t4 = (1, "hello");
-    //with different names
+    //with different tuple variable names
     var t5 = (X: 1, Y: "hello");
 
     var test1 = t1 == t2; //true
@@ -304,7 +306,7 @@ internal void TestTupleEquality()
     var test3 = t1 == t4; //true
     var test4 = t1 == t5; //true
 
-    //this DOES NOT WORK for type mismatch
+    //this DOES NOT WORK for type (sequence) mismatch
     var t6 = (B: "hello", A: 1);
 }
 ```
@@ -315,3 +317,4 @@ internal void TestTupleEquality()
 * [What's new in C# 7.2](https://docs.microsoft.com/en-us/dotnet/csharp/whats-new/csharp-7-2)
 * [What's new in C# 7.3](https://docs.microsoft.com/en-us/dotnet/csharp/whats-new/csharp-7-3)
 * [Write safe and efficient C# code](https://docs.microsoft.com/en-us/dotnet/csharp/write-safe-efficient-code)
+* [C# 7 Series - Mark Zhou's Tech Blog](https://blogs.msdn.microsoft.com/mazhou/2018/03/25/c-7-series-part-10-spant-and-universal-memory-management/)
