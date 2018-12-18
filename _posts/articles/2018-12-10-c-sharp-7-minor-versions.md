@@ -12,9 +12,9 @@ published: true
 
 # A quick look at the new capabilities of C# language with minor updates 7.1 to 7.3 
 
-***This is mostly a bunch of code demos, not so much of underlying theories.***
+***This is mostly a bunch of code demos, not so much into the theories.***
 
-If you are already familiar with `C# 6` and `C# 7`, this will help you catch up quickly on the new features of the programming language that were introduced with minor versions 7.1 - 7.3, and get you ready for upcoming [C# 8](https://blogs.msdn.microsoft.com/dotnet/2018/12/05/take-c-8-0-for-a-spin/). **If you are not comfortable with `C# 6` or `C# 7` yet, go and read the** [C# 6](/articles/new-features-of-csharp-6) **and** [C# 7](/articles/new-features-of-csharp-7) **articles first.** Note that the feature list here is not exhaustive, it covers some of the most popular and useful ones. For more details, check reference section at the bottom.
+If you are already familiar with `C# 6` and `C# 7`, this will help you catch up quickly on the new features of the programming language that were introduced with minor versions 7.1 - 7.3, and get you ready for upcoming [C# 8](https://blogs.msdn.microsoft.com/dotnet/2018/12/05/take-c-8-0-for-a-spin/). **If you are not comfortable with `C# 6` or `C# 7` yet, go and read the [C# 6](/articles/new-features-of-csharp-6) and [C# 7](/articles/new-features-of-csharp-7) articles first.** Note that the feature list here is not exhaustive, it covers some of the most popular and useful ones. For more details, check reference section at the bottom.
 
 **Note:** This is the first time C# team introduced minor versions, they are not enabled in Visual Studio by default. So if you try the following code, they may not run. To use minor versions of C#, you need to configure your system as explained [here](https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/configure-language-version). The easiest is to set that in Visual Studio, per project. Right-click the project on solution explorer, select properties -> Build -> Advanced. In language version dropdown, select "C# latest minor version (latest)".
 {: .notice--info}
@@ -23,7 +23,7 @@ If you are already familiar with `C# 6` and `C# 7`, this will help you catch up 
 
 ## C# 7.1 features
 
-#### Async in Main()
+#### `async` in `Main()`
 
 Now the entry point method `Main()` in your project can also have `async` modifier and so can use `await` in the method body. If you are not comfortable with `async-await`, you can learn about them [here](/articles/async-await).
 
@@ -38,7 +38,7 @@ static async Task<string> Main()
 
 If the Main method does not return anything, you can use `async Task Main()`.
 
-#### Default literal
+#### `default` literal
 
 When setting the default value of any type, you can simply use `default` literal, without specifying the type.
 
@@ -147,7 +147,7 @@ var hex = 0x_89F0A;
 var bin2 = 0b_1000_1001;
 ```
 
-#### Private Protected access modifier
+#### `private protected` access modifier
 
 `C# 7.2` introduces a new composite access modifier `private protected`, with which members will be accessible only in child classes (through inheritance) in **same assembly**.
 
@@ -203,7 +203,7 @@ public class Test : WithPrivateProtected
 }
 ```
 
-#### Conditional ref expression
+#### Conditional `ref` expression
 
 Using `ref` you can get **reference** of an expression result rather than the value. For example, you get reference to one item in an array based on some condition. To elaborate, let's expand on the example from the official [docs](https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/operators/conditional-operator#conditional-ref-expression).
 
