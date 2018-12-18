@@ -7,7 +7,7 @@ tags: [tech, tips, dotnet, csharp, code]
 categories: articles
 share: true
 comments: true
-modified: 2018-01-19T08:11:53-04:00
+modified: 2018-12-18T10:50:30+05:30
 ---
 
 # A quick glance at the new capabilities of C# 7.0 
@@ -484,4 +484,6 @@ namespace CSharpLearning
 ```
 
 
-> Note: Source of knowledge for this article are MSDN, StackOverflow and other forums.
+Note: Source of knowledge for this article are MSDN, StackOverflow and other forums.
+
+Once done, continue to **[features demo  C# 7.1 - 7.3](/articles/2018-12-10-c-sharp-7-minor-versions)**.

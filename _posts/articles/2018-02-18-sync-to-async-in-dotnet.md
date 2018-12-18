@@ -7,7 +7,7 @@ tags: [tech, csharp, dotnet, async, asynchronous, tasks, threading, TPL]
 categories: articles
 comments: true
 share: true
-modified: 2018-02-23T22:11:53-04:00
+modified: 2018-02-23T22:11:53+05:30
 ---
 
 Here, we'll look at how we can make our .NET application more efficient and better responsive to users.

@@ -7,10 +7,8 @@ tags: [tech, tips, dotnet, csharp, code]
 categories: articles
 share: true
 comments: true
-modified: 2017-11-18T22:30:53-04:00
+modified: 2017-11-18T22:30:53+05:30
 ---
-
-
 
 # A brief comparison of available serialization techniques 
 

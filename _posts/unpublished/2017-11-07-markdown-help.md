@@ -4,7 +4,7 @@ title: "Markdown help"
 excerpt: "Some quick Markdown examples"
 date: 2017-11-07
 categories: notes
-modified: 2017-11-07T22:11:53-04:00
+modified: 2017-11-07T22:11:53+05:30
 hidden: true
 published: false
 ---

@@ -2,7 +2,7 @@
 layout: page
 title: Theme Setup
 excerpt: "Instructions on how to install and customize the Jekyll theme So Simple."
-modified: 2016-09-12T08:42:37-04:00
+modified: 2016-09-12T08:42:37+05:30
 image:
   feature: so-simple-sample-image-6.jpg
   credit: WeGraphics

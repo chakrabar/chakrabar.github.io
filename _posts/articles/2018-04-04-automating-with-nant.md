@@ -9,7 +9,7 @@ image:
   feature: posts/misc/nant_script2.png
 comments: true
 share: true
-modified: 2018-04-17T20:30:00-05:30
+modified: 2018-04-17T20:30:00+05:30
 ---
 
 ###### What is NAnt

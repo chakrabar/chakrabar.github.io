@@ -7,7 +7,7 @@ tags: [tech, tips, dotnet, csharp, code]
 categories: articles
 share: true
 comments: true
-modified: 2018-01-19T08:11:53-04:00
+modified: 2018-01-19T08:11:53+05:30
 ---
 
 # A quick glance at the new capabilities of C# 6 

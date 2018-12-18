@@ -7,7 +7,7 @@ tags: [tech, mvc, dotnet, csharp, aspnet, dotnetcore, aspnetcore]
 categories: articles
 share: true
 comments: true
-modified: 2018-02-07T22:11:53-04:00
+modified: 2018-02-07T22:11:53+05:30
 ---
 
 This article is part of the [.NET Core Series](/articles/dotnet-core-2.0/). Go have a look at the other articles of this series, and run through the previous topics if not done already!

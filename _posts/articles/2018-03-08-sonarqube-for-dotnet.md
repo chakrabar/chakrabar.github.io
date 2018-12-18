@@ -11,7 +11,7 @@ image:
   creditlink: https://docs.sonarqube.org/display/SONAR/Architecture+and+Integration
 comments: true
 share: true
-modified: 2018-04-12T18:30:00-05:30
+modified: 2018-04-12T18:30:00+05:30
 ---
 
 This post is a continuation of **[Code quality management - common problems & how to solve them](/articles/code-quality-management/)**, read that first for a general discussion of software code quality management and how SonarQube helps in the process.

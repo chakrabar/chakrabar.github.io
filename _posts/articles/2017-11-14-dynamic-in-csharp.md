@@ -7,10 +7,8 @@ excerpt: "A quick introduction to dynamic in C# and comparison with var and obje
 categories: articles
 share: true
 comments: true
-modified: 2018-01-19T08:11:53-04:00
+modified: 2018-01-19T08:11:53+05:30
 ---
-
-
 
 # A quick glance at the dynamic keyword 
 

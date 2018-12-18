@@ -7,7 +7,7 @@ tags: [tech, csharp, dotnetcore, aspnetcore, configuration, di, aspnetcore20]
 categories: articles
 share: true
 comments: true
-modified: 2018-02-05T22:11:53-04:00
+modified: 2018-02-05T22:11:53+05:30
 ---
 
 This article is an extension to the [.NET Core Series](/articles/dotnet-core-2.0/). Go have a look at the articles of this series, and run through the previous topics if not done already!

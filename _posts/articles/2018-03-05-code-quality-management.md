@@ -11,7 +11,7 @@ image:
   creditlink: https://www.lynda.com/Developer-Programming-Foundations-tutorials/Foundations-Programming-Software-Quality-Assurance/126119-2.html
 comments: true
 share: true
-modified: 2018-03-27T22:10:00-04:30
+modified: 2018-03-27T22:10:00+05:30
 ---
 
 **Quality of software**

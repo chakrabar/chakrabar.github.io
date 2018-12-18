@@ -9,7 +9,7 @@ image:
   feature: posts/misc/nant_script.png
 comments: true
 share: true
-modified: 2018-05-07T22:30:00-05:30
+modified: 2018-05-07T22:30:00+05:30
 ---
 
 This post is a continuation of **[Automating tasks with NAnt](/articles/automating-with-nant/)**, read that first to understand what is NAnt and why to use it.
