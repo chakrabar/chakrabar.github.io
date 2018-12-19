@@ -8,6 +8,7 @@ categories: articles
 comments: true
 share: true
 published: true
+modified: 2018-12-19T11:30:00+05:30
 ---
 
 # A quick look at the new capabilities of C# language with minor updates 7.1 to 7.3 
@@ -238,7 +239,7 @@ largeArrayStr = string.Join(" ", largeArray); // 10 20 0 40 50
 
 ### Safe efficient enhancements to value type
 
-C# 7.2 introduces a bunch of features which work together towards the same goal - making value types efficient & safe to work with. We discuss those features separately in the post **[C# 7.2 value type enhancements](/articles/c-sharp-7.2-value-type-enhancements/)** (_will be published soon_).
+C# 7.2 introduces a bunch of features which work together towards the same goal - making value types efficient & safe to work with. We discuss those features separately in the post **[C# 7.2 value type enhancements](/articles/c-sharp-7.2-value-type-enhancements/)**.
 
 ## C# 7.3 features
 
