@@ -486,4 +486,4 @@ namespace CSharpLearning
 
 Note: Source of knowledge for this article are MSDN, StackOverflow and other forums.
 
-Once done, continue to **[features demo  C# 7.1 - 7.3](/articles/2018-12-10-c-sharp-7-minor-versions)**.
+Once done, continue to **[features demo  C# 7.1 - 7.3](/articles/c-sharp-7-minor-versions)**.
