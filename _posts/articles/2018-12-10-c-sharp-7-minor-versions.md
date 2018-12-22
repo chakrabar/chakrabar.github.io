@@ -8,7 +8,7 @@ categories: articles
 comments: true
 share: true
 published: true
-modified: 2018-12-19T11:30:00+05:30
+modified: 2018-12-22T13:30:00+05:30
 ---
 
 # A quick look at the new capabilities of C# language with minor updates 7.1 to 7.3 
@@ -311,6 +311,8 @@ internal void TestTupleEquality()
     var t6 = (B: "hello", A: 1);
 }
 ```
+
+If you haven't already, read about the **[C# 7.2 value type enhancements](/articles/c-sharp-7.2-value-type-enhancements/)**.
 
 ## References
 
