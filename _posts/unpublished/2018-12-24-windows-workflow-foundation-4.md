@@ -163,8 +163,8 @@ So, what are these options for? Which one to use?
 
 1. `CodeActivity`: The simplest for implementing code login within `Execute()` method
 2. `NativeActivity`: More low level access. Can be used to create _composite_ activities that can control child activities. Can also be usedto manage bookmarks
-3. `AsyncCodeActivity`: Asynchronous pattern with Begin-End pattern
-4. `Activity<T>` types: Syntactic sugar for activities with single return value. Result property is of type `T`, 
+3. `AsyncCodeActivity`: Asynchronous pattern with Begin-End pattern. Override the `BeginExecute()` and `EndExecute()` methods. The begin method needs to return an `IAsyncResult`. In the end method, call `End()` on the `IAsyncResult` and get the required result. Asynchronous activities are specifically useful when they are used inside a `Parallel` type of flows.
+4. `Activity<T>` types: Syntactic sugar for activities with single return value. Result property is of type `T`, which can bereturned from any of the three activity types above.
 
 The **`ActivityContext`** class provides the interface to the runtime. It can be used to manage variables & arguments. In `NativeActivity`, they can also be used to schedule & bookmark. Different `Activity` types have their different derived context like `NativeActivityContext`, `CodeActivityContext`, `AsyncCodeActivityContext`.
 
@@ -174,6 +174,39 @@ The **`ActivityContext`** class provides the interface to the runtime. It can be
 
 To get a value of an argument or variable, you use the context. For example, to get the argument value `totalPrice` which is `InArgument<int>`, you use `totalPrice.Get(context)`. This is because, they variable may not be a direct `int`, but an expression that evaluates to an integer!
 
+###### Code-declarative activities
+
+The activities that you build declaratively, i.e. by composing existing components/activities (e.g. Sequence, While, Decision etc.), but do that by writing code rather than dragging-and-dropping tools on the designer. They derive from `Activity` base class. They can come in handy when building activities that are dynamic in nature, like `SomActivity<T>` where an input is `T`.
+
+#### Validations
+
+Adding metadata to the activity data (mostly arguments), so that the users use them correctly. Like, not missing an argument that is not-optional.
+
+1. Override `CacheMetadata` - add error messages etc.
+2. Use attributes on arguments - `RequiredAttribute`, `OverloadGroup`. RequiredAttribute makes an argument required. OverloadGroup comes in handly when you want to make one or more arguments required, among a set of possible options. In the example below, for the location of the user, either _street address, city & zip_ or _longitude & latitude_ are required. Notice that, individually they all need to be required, if they are required for that group. It's not mandatory to have all members of a group to be required. Also, you get validation error if you provide input argument from different groups!
+
+```cs
+[RequiredArgument]
+[OverloadGroup("Address")]
+public InArgument<string> StreetAddress { get; set; }
+[RequiredArgument]
+[OverloadGroup("Address")]
+public InArgument<string> City { get; set; }
+[RequiredArgument]
+[OverloadGroup("Address")]
+public InArgument<string> PostalCode { get; set; }
+
+[RequiredArgument]
+[OverloadGroup("Location")]
+public InArgument<decimal> Longitude { get; set; }
+[RequiredArgument]
+[OverloadGroup("Location")]
+public InArgument<decimal> Latitude { get; set; }
+```
+
+**Constraints** are powerful constructs (activities) that apply validation logic. They run at validation-time. Either apply them inside the constructor, or use `ActivityValidationServices` and `ValidationSettings` - useful for validating activity form the host(?). They can also be used to validate in-built or third-party activities, or when re-hosting the designer.
+
 #### References
 
 * https://app.pluralsight.com/player?course=wf4-fundamentals&author=matt-milner&name=wf4-introduction&clip=6&mode=live
+* https://app.pluralsight.com/library/courses/wf4-custom-activities/table-of-contents
