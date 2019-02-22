@@ -182,7 +182,7 @@ The activities that you build declaratively, i.e. by composing existing componen
 
 Adding metadata to the activity data (mostly arguments), so that the users use them correctly. Like, not missing an argument that is not-optional.
 
-1. Override `CacheMetadata` - add error messages etc.
+1. Override `CacheMetadata` - add error messages etc. (?)
 2. Use attributes on arguments - `RequiredAttribute`, `OverloadGroup`. RequiredAttribute makes an argument required. OverloadGroup comes in handly when you want to make one or more arguments required, among a set of possible options. In the example below, for the location of the user, either _street address, city & zip_ or _longitude & latitude_ are required. Notice that, individually they all need to be required, if they are required for that group. It's not mandatory to have all members of a group to be required. Also, you get validation error if you provide input argument from different groups!
 
 ```cs
@@ -204,7 +204,68 @@ public InArgument<decimal> Longitude { get; set; }
 public InArgument<decimal> Latitude { get; set; }
 ```
 
-**Constraints** are powerful constructs (activities) that apply validation logic. They run at validation-time. Either apply them inside the constructor, or use `ActivityValidationServices` and `ValidationSettings` - useful for validating activity form the host(?). They can also be used to validate in-built or third-party activities, or when re-hosting the designer.
+**Constraints** are powerful constructs (activities) that apply validation logic. They run at validation-time. Either apply them inside the constructor, or use `ActivityValidationServices` and `ValidationSettings` - useful for validating activity form the host (?). They can also be used to validate in-built or third-party activities, or when re-hosting the designer.
+
+### Native activities
+
+These are like composite activities that can contain hold child activities. They are used to
+
+* Create control-flow activities
+* Managing activity metadata (with child activities ?)
+* Bookmarks - used for pause-resume type of works ?
+
+All it does is schedule th child activities. Different native activities differ mostly on the basis of how they schedule child activities e.g. `Sequence` executes them one-by-one while `Parallel` tries to execute them all at once. `NativeActivityContext` contains all the different methods for scheduling. They can get all the chldren, schedule them, cancel them etc. They can also have callbacks for child activities, so that they get notified and take action based on that.
+
+NativeActivity can have 
+
+1. A single child activity - a specific property of type `Activity` e.g. a `Body` property
+2. A collection of children activities - must declare the activity/collection in `metadata` so that they can be scheduled
+
+```cs
+public sealed class MyParallel : NativeActivity
+{
+    private Collection<Activity> _children = new Collection<Activity>();
+    public Collection<Activity> Branches
+    {
+        get { return _children; }
+    }
+    protected override void Execute(NativeActivityContext context)
+    {
+        foreach (var child in _children)
+        {
+            context.ScheduleActivity(child); //schedule all of them immediately
+        }
+    }
+}
+```
+
+###### Activity metadata
+
+Runtime finds out metadata about activity like arguments, variables, activities etc. By default, it is done by reflection. It's better to override the cache metadata for better control and performance. Constraints can be added to cache metadata to make sure certain activities are inside certain types of activities.
+
+You can also register variables as properties, with metadata to give it a specific scope (like the loop variable in while).
+
+###### Bookmarks
+
+Basically bookmarks allows activties to go idle when waiting for signal or data, get persisted at that point. Once that signal/data is received, it can resume processing from the persisted state.
+
+NativeActivity can create bookmarks. Workflows can be paused and resumed at bookmarks. Bookmark callbacks can handle singanl and/or data. Bookmarks can be `MultipleResume` (do not automatically remove bookmark on resume) or `NonBlocking` (activity will continue ?) or combined. And there is this `canIncludeIdle` property (?). When this is set to true, it allows the process to go idle and let persistance kick in.
+
+#### Advanced Activity
+
+`ActivityAction<TIn>` and `ActivityFunc<TOut>` are Wf equivalents of standard `Action<TIn>` and `Func<TOut>`. They gives kind of the _"template"_ feature where you can say - I have a native Activity, and these are some fixed In/Out arguments. There is a body or handler, put your activities there and use the arguments I've configured.
+
+ActivityAction is like a template with pre-configured input argument. It says, use this input data and do stuffs with it. It has 
+
+* Handler - placeholder for activity(ies)
+* Argument(s) - DelegateInArgument<T>, those will be available to activities in Handler
+* NativeActivityContext.ScheduleAction<T>()
+   * Schedule action
+   * Pass arguments
+
+That means, that activities that are contained (added by user at design time) within the Handler, has access to the (one or more) arguments. Those `DelegateInArgument`s are avaialble as input argument to those child activities. They can use 0 - all the input arguments.
+
+`ActivityFunc` is similar, but has an `DelegateOutArgument<T>` which can be set by `CompletionCallback<T>` set within `context.ScheduleFunc<T>()`. ActivityFunc says, put activities in the body/handler to set the output parameter.
 
 #### References
 

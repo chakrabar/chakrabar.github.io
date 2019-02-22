@@ -170,6 +170,7 @@ git reset --hard HEAD #reset to last commit
 git clean –f #remove any untracked files
 git checkout HEAD <file> #reset file to latest commit
 git reset HEAD <file> #unstage a file
+git checkout . #ignore & remove all uncommitted changes
 ```
 
 ###### Undoing commits
@@ -201,6 +202,8 @@ git branch -d cool-feature #delete merged branch, history preserved
 git branch -D cool-feature #force delete un-merged branch
 # to compare between two branches
 git diff branch1..branch2
+# create a new branch "new-features" from existing branch "existing-features"
+git checkout -b new-features existing-features
 ```
 
 
@@ -272,11 +275,29 @@ General rule: _Never rebase public and/or shared branches_.
 
 ```bash
 git remote add <name> <path-to-remote-repo> #syntax
-#example witha github repo as remote, named as "origin"
+# example witha github repo as remote, named as "origin"
 git remote add origin https://github.com/chakrabar/GitTest.git
 git remote #see all remote repositories
 git remote -v #same, verbose
 git remote rm origin #remove remote named "origin"
+```
+
+Cleanup below
+
+```bash
+PS C:\Codebase\Act> git pull
+There is no tracking information for the current branch.
+Please specify which branch you want to merge with.
+See git-pull(1) for details.
+
+    git pull <remote> <branch>
+
+If you wish to set tracking information for this branch you can do so with:
+
+    git branch --set-upstream-to=origin/<branch> users/chakrabar/temptests
+
+PS C:\Codebase\Act> git branch --set-upstream-to=origin/users/chakrabar/decision-act users/chakrabar/temptests
+Branch 'users/chakrabar/temptests' set up to track remote branch 'users/chakrabar/decision-act' from 'origin'.
 ```
 
 Git `fetch` is safe, it downloads the remote content but does NOT make any change to the local branch.
