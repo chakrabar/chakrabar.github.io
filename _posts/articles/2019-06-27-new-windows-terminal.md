@@ -49,7 +49,9 @@ The settings file mainly have fours sections
 3. Profiles - settings for a new tab including command to run, display settings, color settings etc.
 4. Color schemes - color settings or themes for profiles are set through `schemes`. 
 
-For the different commands / tools (e.g. `PowerShell`, `Bash` etc.) you want to run through the terminal, you should set them up in profiles. You can also set a bunch of other settings in profile like what should be the starting directory, font face, font size, background color or image, opacity, image, cursor style etc.
+For the different commands / tools (e.g. `PowerShell`, `Bash` etc.) you want to run through the terminal, you should set them up in profiles. Each profile can have it's own command to run. You can also set a bunch of other settings in profile like what should be the starting directory, font face, font size, background color or image, opacity, icon, cursor style etc.
+
+Each profile should have it's own `Guid` and they are identified with the Guid. If needed, you can generate your new Guids online. The `defaultProfile` at the root level specifies that profile to run on a new tab by default, specified by that profile Guid.
 
 Then you can use one of those default color schemes, add your own or can update an existing one. All the color schemes are basically palettes for set of ANSI default colors. To create your own style, just update the color values with #hex codes for your favorite colors.
 
@@ -85,7 +87,7 @@ Following is a part of my own settings which might help you undetstand it better
             "backgroundImageStretchMode" : "uniformToFill",
             "closeOnExit" : true,
             "colorScheme" : "ArghyaMatte", // custom color scheme
-            "commandline" : "powershell.exe", // program command to run
+            "commandline" : "powershell.exe", // program or command to run
             "cursorColor" : "#14EA09",
             "cursorHeight" : 25,
             "cursorShape" : "vintage",
