@@ -9,8 +9,6 @@ comments: true
 share: true
 published: true
 modified: 2019-06-30T17:15:00+05:30
-image:
-  feature: posts/misc/terminal.png
 ---
 
 ## The new _Windows Terminal_
@@ -34,7 +32,7 @@ Some of the main features:
 9. And many more
 10. Also it's open source & in full development, so it'll get better
 
-![Image](/images/posts/misc/ac_win10_terminal_2.png)
+![Image](/images/posts/misc/terminal.png)
 
 #### Settings hints to help configure your own terminal
 
