@@ -9,6 +9,8 @@ comments: true
 share: true
 published: true
 modified: 2019-06-30T17:15:00+05:30
+image:
+  feature: posts/misc/terminal.png
 ---
 
 ## The new _Windows Terminal_
