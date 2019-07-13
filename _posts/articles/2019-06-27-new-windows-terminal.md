@@ -1,23 +1,23 @@
 ---
 layout: post
-title: "The great new Windows Terminal"
-excerpt: "The new Windows Terminal is now available for download (preview) in the Microsoft store. It's sooo cool"
+title: "The great new Windows 10 Terminal"
+excerpt: "The new Terminal for Windows 10 is now available for download (preview) in the Microsoft store. It's sooo cool"
 date: 2019-06-27
 tags: [dev, programming, windows, wsl, terminal, commanline, cmd]
 categories: articles
 comments: true
 share: true
 published: true
-modified: 2019-06-30T17:15:00+05:30
+modified: 2019-07-13T11:35:00+05:30
 ---
 
 ## The new _Windows Terminal_
 
-Now the preview version is available to download from Microsoft store. You could always build it from the source code on [GitHub](https://github.com/microsoft/terminal).
+Now the preview version for Windows 10 terminal is available to [download](https://www.microsoft.com/en-us/p/windows-terminal-preview/9n0dx20hk701?activetab=pivot:overviewtab) from Microsoft store. You could also build it from the source code on [GitHub](https://github.com/microsoft/terminal).
 
 So, what's this? And why would you care?
 
-This is like a whole new version of the classic `Command Prompt` commandline terminal on Windows, which is super cool, open source & comes with bunch of really helpful productivity features. If you are a developer, love to/need to use multiple command line applications (e.g. `cmd`, `PowerShell`, `Git`, `Bash` etc.) then this is for you. You can install this new terminal, and configure to suit your taste, and this can host all you command terminals in one place, separated by tabs, their individual settings, themes etc. You can even have background images, including ***animated GIFs !!***
+This is like a whole new version of the classic `Command Prompt` command-line terminal on Windows, which is super cool, open source & comes with bunch of really helpful productivity features. If you are a developer, love/need to use multiple command line applications (e.g. `cmd`, `PowerShell`, `Git`, `Bash` etc.) then this is for you. You can install this new terminal, and configure to suit your taste, and this can <u>host all you command terminals in one place</u>, separated by tabs, their individual settings, themes etc. You can even have background images, including ***animated GIFs !!***
 
 Some of the main features:
 
@@ -25,10 +25,10 @@ Some of the main features:
 2. Accelerated text rendering
 3. Modern text support including `unicode`, `emojis`, `ligature fonts`
 4. Configurable **themes**, colors, background image - including _animated GIF_
-5. Fully **configurable terminals** - use any terminal / commandline app through settings
+5. Fully **configurable terminals** - use any terminal / command-line app
 6. Editable (& sharable) `JSON` based settings file
-7. Configurable commands & key shortcuts (throgh settings)
-8. Copy-paste (I still have trouble using it seamlessly across terminals though)
+7. Configurable commands & key shortcuts (through settings)
+8. Configurable copy-paste (I still have trouble using it seamlessly across terminals though)
 9. And many more
 10. Also it's open source & in full development, so it'll get better
 
@@ -36,27 +36,27 @@ Some of the main features:
 
 #### Settings hints to help configure your own terminal
 
-So when you [download](https://www.microsoft.com/en-us/p/windows-terminal-preview/9n0dx20hk701?activetab=pivot:overviewtab) and install it from the Microsoft Store, it's all ready for use.
+So when you [download](https://www.microsoft.com/en-us/p/windows-terminal-preview/9n0dx20hk701?activetab=pivot:overviewtab) and install it from the Microsoft Store, it's all ready for use. But to use it to it's potential and you taste, you need to make some adjustments.
 
-But to use it to it's potential and you taste, you need to make some adjustments. For that, click on the drodown button on the top-right corner and select `Settings`. It'll open the `profile.json` file that hols all the settings. It's just a `JSON` file, so you edit with any text editor and save it. That's it! It'll immediately update the terminal with the changes.
+I guess in future they'll provide some UI for the settings, but currently it's a bare bone `JSON` file. To make any changes, you'll have to update the JSON file manually. For that, click on the drodown button on the top-right corner and select `Settings`. It'll open the `profile.json` file that hosts all the settings. It's just a text file, so you can edit it with any text editor and save it. That's it! It'll immediately update the terminal with the changes.
 
 **Note:** You need Windows 10 version 18362.0 or higher for the new Windows Terminal to work. If you don't have that, update your Windows 10 OS first.
 {: .notice--info}
 
-The settings file mainly have fours sections
+The settings file mainly have four sections
 
 1. The global **app level settings** - how the terminal window behaves, for example how it shows tabs
-2. The **key bindings** - key shortcut for common taks like open a specific profile on a new tab
+2. The **key bindings** - key shortcut for common tasks like open a specific profile on a new tab
 3. The **profiles** - settings for a new tab including command to run, display settings, color settings etc.
 4. The **color schemes** - color settings or themes for profiles are set through `schemes`. 
 
-For the different commands / tools (e.g. `PowerShell`, `Bash` etc.) you want to run through the terminal, you should set them up in profiles. Each profile can have it's own command to run. You can also set a bunch of other settings in profile like what should be the starting directory, font face, font size, background color or image, opacity, icon, cursor style etc.
+For the different commands / tools (e.g. `PowerShell`, `Bash` etc.) you want to run through the terminal, you need to set them up in **profiles**. Each profile can have it's own command to run. You can also set a bunch of other settings in profile like what should be the starting directory, font face, font size, background color or image, opacity, icon, cursor style etc.
 
-Each profile should have it's own `Guid` and they are identified with the Guid. If needed, you can generate your new Guids online. The `defaultProfile` at the root level specifies that profile to run on a new tab by default, specified by that profile Guid.
+Each profile should have it's own `Guid` that they are identified with. If needed, you can generate your new Guids online. The `defaultProfile` at the root level specifies that profile to run on a new tab by default, specified by that profile Guid.
 
-Then you can use one of those default color schemes, add your own or can update an existing one. All the color schemes are basically palettes for set of ANSI default colors. To create your own style, just update the color values with #hex codes for your favorite colors. Then add the scheme to a profile using the `name` of the scheme.
+Now for the theme, you can use one of those default color schemes, add your own or can update an existing one. All the color schemes are basically palettes for set of ANSI default colors. To create your own style, just update the color values with #hex codes for your favorite colors. Then add the scheme to a profile using the `name` of the scheme.
 
-Following is a part of my own settings which might help you undetstand it better. See the settings documentation [here](https://github.com/microsoft/terminal/blob/master/doc/cascadia/SettingsSchema.md) for more details.
+Following is a part of my own settings which might help you understand it better. See the settings documentation [here](https://github.com/microsoft/terminal/blob/master/doc/cascadia/SettingsSchema.md) for more details.
 
 ```js
 {
@@ -75,7 +75,7 @@ Following is a part of my own settings which might help you undetstand it better
             },
             // defaults...
         ],
-        "requestedTheme" : "light", // theme for title bar etc.
+        "requestedTheme" : "dark", // theme for title bar etc.
         "showTabsInTitlebar" : false,
         "showTerminalTitleInTitlebar" : false
     },
@@ -127,7 +127,7 @@ Following is a part of my own settings which might help you undetstand it better
     ],
     "schemes" : 
     [
-        {
+        { // a custom color scheme
             "background" : "#262C6B", // background color
             "black" : "#0A2D75",
             "blue" : "#0965E5",
@@ -142,7 +142,7 @@ Following is a part of my own settings which might help you undetstand it better
             "cyan" : "#06989A",
             "foreground" : "#ADCFFF", // default font color
             "green" : "#15A531",
-            "name" : "ArghyaMatte", // color scheme name
+            "name" : "ArghyaMatte", // the scheme name
             "purple" : "#75507B",
             "red" : "#F90078",
             "white" : "#21EF4A",
