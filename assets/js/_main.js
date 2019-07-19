@@ -58,14 +58,6 @@ $(document).ready(function() {
   var offset = 400;   
   var duration = 300;
   $('.back-to-top').css({'display': 'none'});
-  //test
-  $.ajax({
-      url: "http://jsonplaceholder.typicode.com/todos/1",
-      cache: false,
-      xhrFields: {withCredentials: true},
-      success: function (data, status, xhr) {alert('sucess')},
-      error: function (jqXhr, textStatus, errorMessage) {alert('shit!')}
-    });
   $(window).scroll(function() {
     if ($(window).scrollTop() > offset) {
       $('.back-to-top').fadeIn(duration);
