@@ -6,7 +6,7 @@ date: 2020-02-29
 tags: [dev, programming, web, webassembly, wa, wasm, wasi, wat]
 categories: articles
 image:
-  feature: posts/webassembly/office.jpg
+  feature: posts/webassembly/office-3.jpg
 comments: true
 share: true
 published: true
