@@ -3,7 +3,7 @@ layout: post
 title: "WebAssembly - What it is & Why is it so exciting"
 excerpt: "The what, why, how & when of WebAssembly for the dummies"
 date: 2020-02-29
-tags: [dev, programming, web, webassembly, wasm, wasi, wat]
+tags: [dev, programming, web, webassembly, wa, wasm, wasi, wat]
 categories: articles
 image:
   feature: posts/webassembly/office.jpg
@@ -82,7 +82,7 @@ Now that we know what is WebAssembly and what problem it solves, let's look at a
 9. There is a [text representation](https://developer.mozilla.org/en-US/docs/WebAssembly/Understanding_the_text_format) of `wasm`, that is human readable and follows `s-expressions` format. Though it's totally possible to write code in `WAT`, the main idea behind this is to help `debug` WebAssembly (it's not ready though) code at run-time
 10. `WebAssembly` enables web browsers to run code written in other languages than `JavaScript`. `C/C++` and `Rust` are supported from begining. `.NET` already supports it through [Blazor](https://dotnet.microsoft.com/apps/aspnet/web-apps/blazor), and support for many others should be available soon.
 11. Some popular compilers for `WebAssembly` are [LLVM & Emscripten](https://v8.dev/blog/emscripten-llvm-wasm). Currently **Emscripten** is most the popular compiler
-12. To get the taste of first-hand `wasm` development, follow this [Hello World](https://webassembly.org/getting-started/developers-guide/) tutorial
+12. To get the taste of first-hand `wasm` development, follow this **[Hello World](https://webassembly.org/getting-started/developers-guide/) tutorial**
 
 ### Why `Wasm` is great
 
@@ -95,7 +95,8 @@ Now that we know what is WebAssembly and what problem it solves, let's look at a
     2. Same `wasm` code can run in front-end as well as in the back-end, like standard server side code. So basically, code sharing between front-end & back-end. **Note** that it's already possible with `JavaScript` & `Nodejs`, but that doesn't provide speed of lower level languages like `C/C++`
 3. Different `wasm` modules, written in different languages, can **interoperate** easily making it very easy to collaborate between developers from different backgrounds and _**interoperate otherwise incompatible modules**_ (this will become possible with [interface types](https://www.youtube.com/watch?time_continue=12&v=Qn_4F3foB3Q&feature=emb_logo))
 4. Works seamlessly with `JavaSCript` i.e. `wasm` & `JavaScript` can exchange data and call each other
-5. Can also _**run outside browser**_, `wasm` provides a [light-weight sandboxing](https://hacks.mozilla.org/2019/03/standardizing-wasi-a-webassembly-system-interface/) by default. More about this later
+5. With `wasm` we can truly relize _**serverless web applications**_, that can actually run without any backing servers (it can do heavy computations, connect to database and what not!)
+6. Can also _**run outside browser**_, `wasm` provides a [light-weight sandboxing](https://hacks.mozilla.org/2019/03/standardizing-wasi-a-webassembly-system-interface/) by default. More about this later
 
 ### What's not-so-great (yet)
 
@@ -115,6 +116,45 @@ Now that we know what is WebAssembly and what problem it solves, let's look at a
 _**NOTE:**_ As `WebAssembly` is just in the early stage, specs proposals & implementations are changing fast, many of the limitations mentioned above might get resolved soon.
 {: .notice--info}
 
-## WASI - run WebAssembly everywhere
+## `WASI` - run `WebAssembly` everywhere
+
+If we think about about the core working principles of `WebAssembly`, it's not difficult to visualize `wasm` executing outside web browsers as well! Provided the `Wasm Virtual Machine` is available, `wasm` code can run in any system on any platform, browser or not!
+
+Developers are already running `wasm` outside browsers for it's amazing benefits it provide - fast, scalable, secure way to run the same code across all machines.
+
+Now the committee is working to provide an easier & standard bunch of interfaces so that - `wasm` applications written in different languages can run acorss platforms, talk to each-other seamlessly, can access necessary system APIs & securely execute inside a sandbox (memory, network, filesystem, access etc). Thasts **`WebAssembly System Interface`** or _**WASI**_. Read [this](https://hacks.mozilla.org/2019/03/standardizing-wasi-a-webassembly-system-interface/) for more details.
+
+Now think of the implications. `WASI`, if works as expected, will open up crazy new ways of writing applications on any language, that runs everywhere, and talk to each other fluently without any wrappers or network calls!
+
+When `WASI` was proposed, **`Docker`** co-founder & CTO [Solomon Hykes](https://twitter.com/solomonstre) tweeted, if `WASI` was already available, `Docker` wouldn't have been necessary! Think about that!
 
 <blockquote class="twitter-tweet"><p lang="en" dir="ltr">If WASM+WASI existed in 2008, we wouldn&#39;t have needed to created Docker. That&#39;s how important it is. Webassembly on the server is the future of computing. A standardized system interface was the missing link. Let&#39;s hope WASI is up to the task! <a href="https://t.co/wnXQg4kwa4">https://t.co/wnXQg4kwa4</a></p>&mdash; Solomon Hykes (@solomonstre) <a href="https://twitter.com/solomonstre/status/1111004913222324225?ref_src=twsrc%5Etfw">March 27, 2019</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+
+_**Disclaimer:**_ I'm just a developer interested in the applications & possibilities of WebAssembly. My sole source of knowledge was my research on `wasm` to see if it can solve a specific problem that I was trying to fix in one application. Though I figured out that `wasm` in it's current state cannot solve the problem, but all the amazing articles and talks (few mentioned in references) got me really excited about `WebAssembly` in general! 😄
+{: .notice--warning}
+
+## A few finals notes
+
+* When can I start using `wasm`? Right now! Though it'll change a lot in future, it's already available to use and it really works!
+* Will it replace `JavaScript`? No. At least not any time soon. Currently `wasm` depends on `JS` for any kind of `DOM` manipulation. Though it'll change in future, `JS` is already huge and has it's own high place in web development. Practically, it's the only language tailored fit for web development, other languages - not at all. All the amazing JS frameworks also make it almost irreplacable. So, probably no existing `JS` based web applications will be re-written in `wasm`. But a time might come when new web applications might be written completely in `wasm` (in a language like `C++`, `Go`, `Kotlin` or something that doesn't even exist today)!
+* What about `Docker`? Will `wasm` replace it? _"No, but imagine a future where Docker runs linux containers, windows containers and wasm containers side by side. Over time wasm might become the most popular container type. Docker will love them all equally, and run it all :)"_ - [Solomon Hykes](https://twitter.com/solomonstre/status/1111113329647325185?s=20)
+* Ok, so what about `JS developers`? Is it like all the JS developers will now have to learn a completely new language (maybe more than one?) just to keep up with web development? Well, learning a new language might be really helpful, mainly to benefit from the performance of lower level languages. But may not be necessary. For instance, there is already a popular language **[AssemblyScript](https://github.com/AssemblyScript/assemblyscript)** that can compile `TypeScript` (a subset actually) into `WebAssembly`.
+
+### References
+
+* [The WebAssembly home page](https://webassembly.org/)
+* [GitHub repos](https://github.com/WebAssembly)
+* [Mozilla WebAssembly docs](https://developer.mozilla.org/en-US/docs/WebAssembly)
+* [A cartoon intro to wasm](https://hacks.mozilla.org/category/code-cartoons/a-cartoon-intro-to-webassembly/)
+* [Wasm Hello World guide](https://webassembly.org/getting-started/developers-guide/)
+* Tools
+    * [WasmExplorer](http://mbebenita.github.io/WasmExplorer/)
+    * [WebAssemblyStudio](https://webassembly.studio/)
+    * [Emscripten](https://emscripten.org/)
+* [Wasm Text Format WAT](https://developer.mozilla.org/en-US/docs/WebAssembly/Understanding_the_text_format)
+* [AssemblyScript](https://github.com/AssemblyScript/assemblyscript)
+* Videos
+    * [WebAssembly Demystified - Jay Phelps](https://www.youtube.com/watch?v=6Y3W94_8scw)
+    * [Bringing WebAssembly outside the web with WASI by Lin Clark](https://www.youtube.com/watch?v=fh9WXPu0hw8)
+    * [Interface Types - Lin Clark](https://www.youtube.com/watch?time_continue=12&v=Qn_4F3foB3Q&feature=emb_logo)
