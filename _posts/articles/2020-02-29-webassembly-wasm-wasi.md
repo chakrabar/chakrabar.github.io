@@ -30,15 +30,15 @@ That's right! So, it's
 
 ### So, how do I write code in `WebAssembly`?
 
-Though there is a [text format](https://developer.mozilla.org/en-US/docs/WebAssembly/Understanding_the_text_format), you as a developer won't generally _"write"_ code in `WebAssembly`! **It's actually an `IR` or `Intermediate Representation`**, just like `ByteCode` in `Java` or `MSIL/CIL` in `.NET`. 
+Though there is a [text format](https://developer.mozilla.org/en-US/docs/WebAssembly/Understanding_the_text_format), you as a developer won't generally _"write"_ code in `WebAssembly`! **It's actually an `IR` or `Intermediate Representation`**, similar to `ByteCode` in `Java` or `MSIL/CIL` in `.NET`. 
 
 It's a set of binary instructions that works across common standard hardware. So rather than writing code in it, you still write code in a language that you already know, like `C/C++` or `Rust`, and a special compiler compiles your code into `WebAssembly`, and that runs inside a special `Virtual Machine` that can turn that `IR` into actual, platform specific `Machine Code` and execute them.
 
 ![Image](/images/posts/webassembly/WebAssembly_compile.png)
 
-Yes, that's like the main idea behind WebAssembly, _**to be able to compile & run other languages on web!**_
+Yes, that's like the main idea behind WebAssembly, to be able to _**run pre-compile code, written in other languages, on web!**_
 
-But, why?
+Okay, but why?
 
 ### Why `WebAssembly`?
 
@@ -48,19 +48,39 @@ Yes, `JavaScript` works, and it works pretty well. And there are really cool `JS
 
 BUT, there are issues with `JavaScript`, mainly with **`performance`**! It works fine for a standard web application where small pieces of processing is done based on user interaction. Generally, the heavy processing is done on servers, and web interacts with them through services. But it does not work well when lot of real-time processing is required, think of - image & video processing, 3D gaming, AR/VR etc.
 
-`JavaScript` is an interpreted language i.e. at the run-time, each line of code is turned into machine code as it is encountered. This happens everytime, even the same line of code is executed multiple times. This is inefficient. And there is no way to look at the code as whole at once & ompimize. Also, the garbage collector cycles take it's time to run and free up memory. Well, this is how `JavaScript` used to run traditionally. But the modern `JavaScript` engines use `JIT compiler` which has some performance improvement over it, but still there's problems, partly because of the `dynamic` nature of `JavaScript`. Read in more details in [this series by Lin Clark](https://hacks.mozilla.org/category/code-cartoons/a-cartoon-intro-to-webassembly/).
+_**NOTE:**_ JavaScript is an interpreted language i.e. at the run-time, each line of code is turned into machine code as it is encountered. This happens everytime, even the same line of code is executed multiple times. This is inefficient. And there is no way to look at the code as whole at once & ompimize. Also, the garbage collector cycles take it's time to run and free up memory. Well, this is how JavaScript used to run traditionally. But the modern JavaScript engines use `JIT compiler` which has some performance improvement over it, but still there's problems, partly because of the `dynamic` nature of JavaScript. Read in more details in [this series by Lin Clark](https://hacks.mozilla.org/category/code-cartoons/a-cartoon-intro-to-webassembly/).
 {: .notice--success}
 
 Web has been an important medium of software user interaction, and with advanced SaaS & cloud applications, users are now enabled to do more & more stuffs on web. Users & developers, both want to the users to be able to do more stuffs on web, and faster. Apart from `JavaScript` being not-so-fast, always going over the network for heavy processing & bringing back results, makes fast processing on web application almost impossible.
 
-`WebAssembly` aims to solve this problem. WebAssembly is a new standard of assembly (Intermediate Code) that
+`WebAssembly` aims to solve this problem. WebAssembly is a new type of assembly language (Intermediate Code) that
 
 1. Any language can target
 2. Can be executed on web
 
 With that, developers can write their code on high-performance languages like `C/C++` or `Rust` and compile them into `WebAssembly`. This `IR` code matches very closely with machine languages across hardwares. Then the browser (with WebAssembly VMs) can directly translate that into machine code & execute. This can make the code run real fast in near native (directly running compiled machine code) speed.
 
-For this to happen, 2 things are required. [1] Different languages need to compile into WebAssembly [2] Browsers need to be ready to run WebAssembly. For _#1_, different languages need to come up with new compilers that target WebAssembly rather than their standard IR. This is already available for `C/C++`, `Rust` and even `C#`. And very soon we'll have compilers for many other langues. And _#2_ is not an issue, as all the modern brosers already support WebAssembly viz. `Firefox`, `Chrome`, `Edge` & `Safari`. In fact, WebAssembly is a joint effort by `W3C`, `Mozilla`, `Google`, `Microsoft` & `Apple` (and of course community members). So, all the major browsers should always be up to date with latest `WebAssembly` standard.
+_**Important:**_ For this to happen, 2 things are required. [1] Different languages need to compile into WebAssembly [2] Browsers need to be ready to run WebAssembly. For _#1_, different languages need to come up with new compilers that target WebAssembly rather than their standard IR. This is already available for `C/C++`, `Rust` and even `C#`. And very soon we'll have compilers for many other langues, some of them might be ready by the time you read this. And _#2_ is not an issue, as all the modern brosers already support WebAssembly viz. `Firefox`, `Chrome`, `Edge` & `Safari`. In fact, WebAssembly is a joint effort by `W3C`, `Mozilla`, `Google`, `Microsoft` & `Apple` (and of course community members). So, all the major browsers should always be up to date with latest `WebAssembly` standard.
 {: .notice--info}
 
 ![Image](/images/posts/webassembly/wasm-browsers.png)
+
+## Points to remember
+
+Now that we know what is WebAssembly and what problem it solves, let's look at a bunch of important points to note.
+
+1. `WebAssembly` is still a **new & evolving** technology. Things are changing very fast, and by the time you read, many things might have changed
+2. It's a **low level binary code**, meant to be **target of compilation** for higher level (ideally fast) languages. Any language that wants to generate `WebAssembly`, needs to come up with a compiler that compiles from the language to `WebAssembly` IR
+3. As a language, it's **strongly typed** (unlike `JavaScript`)
+4. It **runs inside a `VM`** (like `Java` runs indside `JVM` or `C#` runs inside `.NET CLR`). The `WebAssembly Virtual Machine` works like a **Stack Machine** i.e. for each operation, it `push` or `pop` something on the internal memory stack (e.g. a functions pops operands from the stack and at the end, the return value is pushed on top of stack)
+5. `WebAssembly` is frequently abbreviated as `WA` or **`wasm`**. Actual WebAssembly files also have `*.wasm` extension
+6. Generally the binary size is pretty **small** (compared to `JavaScript` even when compressed) & **executes fast** because of it's near native model
+7. On browser, `WebAssembly` runs with same priviledges as `JavaScript` code, so it has the same **safety** levels of current browser code (e.g. it cannot start manipulating files on client system, without explicit user action)
+8. It's **portable & platform agnostic**, i.e. indepndent of underlying `hardware` or `OS`
+9. There is a [text representation](https://developer.mozilla.org/en-US/docs/WebAssembly/Understanding_the_text_format) of `wasm`, that is human readable and follows `s-expressions` format. Though it's totally possible to write code in `WAT`, the main idea behind this is to help `debug` WebAssembly (it's not ready though) code at run-time
+10. `WebAssembly` enables web browsers to run code written in other languages than `JavaScript`. `C/C++` and `Rust` are supported from begining. `.NET` already supports it through [Blazor](https://dotnet.microsoft.com/apps/aspnet/web-apps/blazor), and support for many others should be available soon.
+11. Some popular compilers for `WebAssembly` are [LLVM & Emscripten](https://v8.dev/blog/emscripten-llvm-wasm). Currently **Emscripten** is most the popular compiler
+12. To get the taste of first-hand `wasm` development, follow this [Hello World](https://webassembly.org/getting-started/developers-guide/) tutorial
+
+
+![image-right](/images/posts/webassembly/wasm-js-2.png){: .pull-right}
