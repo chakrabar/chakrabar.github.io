@@ -16,6 +16,20 @@ If you're in the first group, jump right in. Here, we'll try to understand what 
 
 ## What is _WebAssembly_
 
-> WebAssembly is new, low level binary code, for the web!
+> WebAssembly is new, low level binary code,  for the web!
 
-Wait, a what?
+_Wait, a what?_
+
+That's right! So, it's
+![image-right](/images/posts/webassembly/Web_Assembly.png){: .pull-right}
+
+* A `new language`, became the offical _**"fourth language for web"**_ on [5th December 2019](https://www.w3.org/2019/12/pressrelease-wasm-rec.html.en), though it has been in development for few years now
+* It's `binary`, so it is not really human readable
+* It's `low level`, i.e. it's much closer (than `JavaScript` and other higher level languages) to actual machine code
+* And it's `for the web`, that means (modern) web browsers can read and execute them
+
+### So, How do I write code in `WebAssembly`?
+
+Though there is a [text format](https://developer.mozilla.org/en-US/docs/WebAssembly/Understanding_the_text_format), you as a developer won't generally _"write"_ code in `WebAssembly`! **It's actually an `IR` or `Intermediate Representation`**, just like `ByteCode` in `Java` or `MSIL/CIL` in `.NET`. It's a set of binary instructions that works across common standard hardware. So rather than writing code in it, you still write code in a language that you already know, like `C/C++` or `Rust`, and a special compiler cpmpiles your code into `WebAssembly`, and that runs insode a special `Virtual Machine` that can turn that `IR` into actual, platform specific `Machine Code` and execute them.
+
+![Image](/images/posts/webassembly/WebAssembly_compile.png)
