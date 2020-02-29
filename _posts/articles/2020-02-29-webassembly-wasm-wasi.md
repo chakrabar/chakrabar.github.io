@@ -5,6 +5,8 @@ excerpt: "The what, why, how & when of WebAssembly for the dummies"
 date: 2020-02-29
 tags: [dev, programming, web, webassembly, wasm, wasi, wat]
 categories: articles
+image:
+  feature: posts/webassembly/office.jpg
 comments: true
 share: true
 published: true
@@ -82,5 +84,36 @@ Now that we know what is WebAssembly and what problem it solves, let's look at a
 11. Some popular compilers for `WebAssembly` are [LLVM & Emscripten](https://v8.dev/blog/emscripten-llvm-wasm). Currently **Emscripten** is most the popular compiler
 12. To get the taste of first-hand `wasm` development, follow this [Hello World](https://webassembly.org/getting-started/developers-guide/) tutorial
 
+### Why `Wasm` is great
+
+1. Can have much _**higher performance**_ than JavaScript
+    1. Smaller download size, mainly for the binary format
+    2. As code is already in IR (Intermediate Representation) code, it is much closer to machine code. So the whole code can be translated to stable machine code quickly rather than the optimize & re-optimize cycles of JS JIT compiler (also because the types are generally static)
+    3. No Garbage Collection by design, so GC cycles are saved
+2. _**Code sharing**_
+    1. It provides a simple and performant way of sharing `pre-compiled` (`wasm` as IR is close to machine code) code across platforms, written in `different languages`
+    2. Same `wasm` code can run in front-end as well as in the back-end, like standard server side code. So basically, code sharing between front-end & back-end. **Note** that it's already possible with `JavaScript` & `Nodejs`, but that doesn't provide speed of lower level languages like `C/C++`
+3. Different `wasm` modules, written in different languages, can **interoperate** easily making it very easy to collaborate between developers from different backgrounds and _**interoperate otherwise incompatible modules**_ (this will become possible with [interface types](https://www.youtube.com/watch?time_continue=12&v=Qn_4F3foB3Q&feature=emb_logo))
+4. Works seamlessly with `JavaSCript` i.e. `wasm` & `JavaScript` can exchange data and call each other
+5. Can also _**run outside browser**_, `wasm` provides a [light-weight sandboxing](https://hacks.mozilla.org/2019/03/standardizing-wasi-a-webassembly-system-interface/) by default. More about this later
+
+### What's not-so-great (yet)
 
 ![image-right](/images/posts/webassembly/wasm-js-2.png){: .pull-right}
+1. Not complete, or _"ready"_ yet. Many features are still under development or in proposal stage
+2. Compilation and loading process is bit complex, and apparently no official integration into popular build tools like webpack or Angular CLI yet (this may change soon though)
+3. By design, code needs to be compiled before distribution. So, _fix JS directly on CDN_ kind of approach does not work
+4. `Internet Explorer` and older versions of other browsers does not support
+5. Some conventions of `wasm` makes it more complex for developers to write code. So, high level language compilers need to provide some extra layer for developers to code easily. For example
+    1. `Wasm` _**supports only numbers as method parameters**_. To use any other types, one needs to work with memory locations / pointers directly (will be solved with the [interface types](https://hacks.mozilla.org/2019/08/webassembly-interface-types/) implementation)
+    2. No `GC`. Memory has to be managed manually
+6. Because of current not-so-optimized wasm invocation from `JS`, it doesn’t perform well if there are lot of small functions to be invoked (lot of jumping between `JS` and `wasm`)
+7. `WebAssembly`, in the current form, _**cannot directly manipulate DOM**_. No direct access to the Web APIs. For that, it needs to go through JS. Again, can be lot of passing between JS and wasm
+8. Not really debuggable for high-level language source code (should change in future with source-maps)
+9. No fully featured _**multi-threading support**_
+
+_**NOTE:**_ As `WebAssembly` is just in the early stage, specs proposals & implementations are changing fast, many of the limitations mentioned above might get resolved soon.
+{: .notice--info}
+
+## WASI - run WebAssembly everywhere
+
