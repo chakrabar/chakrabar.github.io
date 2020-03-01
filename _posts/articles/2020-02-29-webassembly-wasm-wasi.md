@@ -94,13 +94,13 @@ Now that we know what is WebAssembly and what problem it aims to solve, let's lo
     1. It provides a simple and performant way of sharing `pre-compiled` (`wasm` as IR is close to machine code) code across platforms, written in `different languages`
     2. Same `wasm` code can run in front-end as well as in the back-end, like standard server side code. So basically, code sharing between front-end & back-end. **Note** that it's already possible with `JavaScript` & `Nodejs`, but that doesn't provide speed of lower level languages like `C/C++`
 3. Different `wasm` modules, written in different languages, can interoperate easily, making it very easy to collaborate between developers from different backgrounds and _**interoperate otherwise incompatible modules**_ (this will become possible with implementation of [interface types](https://www.youtube.com/watch?time_continue=12&v=Qn_4F3foB3Q&feature=emb_logo))
+![image-right](/images/posts/webassembly/wasm-js-2.png){: .pull-right}
 4. Works seamlessly with `JavaSCript` i.e. `wasm` & `JavaScript` can exchange data and call each other. In fact, currently `wasm` cannot be run without `JS` becuase [1] It needs `JS` to load the `wasm` module [2] `DOM` manipulation happens through `JS` only
 5. With `wasm` we can truly relize _**serverless web applications**_, that can actually run without any backing servers (it can do heavy computations, connect to database and what not!)
 6. Can also _**run outside browser**_, in a safe & fast manner. `Wasm` provides a [light-weight sandboxing](https://hacks.mozilla.org/2019/03/standardizing-wasi-a-webassembly-system-interface/) by default. More about this later
 
 ### What's not-so-great (yet)
 
-![image-right](/images/posts/webassembly/wasm-js-2.png){: .pull-right}
 1. Not complete, or _"ready"_ yet. Many features are still under development or in proposal stage
 2. Compilation and loading process is bit complex, and apparently no official integration into popular build tools like webpack or Angular CLI (this may change soon though)
 3. By design, code needs to be compiled before distribution. So, _fix JS directly on CDN_ kind of approach does not work
@@ -128,13 +128,10 @@ Now think of the implications. `WASI`, if works as expected, will open up crazy 
 
 When `WASI` was proposed, **`Docker`** co-founder & CTO [Solomon Hykes](https://twitter.com/solomonstre) tweeted, if `WASI` was already available, `Docker` wouldn't have been necessary!
 
-Take a moment or two, and think about that! 🤯
+Take a moment. Or two. And think about that! 🤯
 
 <blockquote class="twitter-tweet tw-align-center"><p lang="en" dir="ltr">If WASM+WASI existed in 2008, we wouldn&#39;t have needed to created Docker. That&#39;s how important it is. Webassembly on the server is the future of computing. A standardized system interface was the missing link. Let&#39;s hope WASI is up to the task! <a href="https://t.co/wnXQg4kwa4">https://t.co/wnXQg4kwa4</a></p>&mdash; Solomon Hykes (@solomonstre) <a href="https://twitter.com/solomonstre/status/1111004913222324225?ref_src=twsrc%5Etfw">March 27, 2019</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 
-
-**Disclaimer:** I'm by no means a WebAssembly expert. I'm just a developer interested in the applications & future roadmaps of WebAssembly. My whole source of knowledge was my research on wasm to see if it could solve a specific problem that I was not able to solve with current web technologies. Though I figured out that wasm, in it's current state, cannot solve the problem, but all the amazing articles and talks (few mentioned in references below) got me really excited about `WebAssembly` and all the new possibilities it opens up! 😄
-{: .notice--warning}
 
 ## A few finals notes
 
@@ -142,6 +139,9 @@ Take a moment or two, and think about that! 🤯
 * Will it replace `JavaScript`? No. At least not any time soon. Currently `wasm` depends on `JS` for loading & any kind of `DOM` manipulation. Though it'll change in future, `JS` is already huge and has it's own high place in web development. Practically, it's the only language tailored fit for web development, other languages - not at all. All the amazing JS frameworks also make it almost irreplacable. So, probably no existing `JS` based web applications will be re-written in `wasm`. But a time might come when new web applications might be written completely in `wasm` (in a language like `C++`, `Go`, `Kotlin` or something that doesn't even exist today)!
 * What about `Docker`? Will `wasm` replace it? _"No, but imagine a future where Docker runs linux containers, windows containers and wasm containers side by side. Over time wasm might become the most popular container type. Docker will love them all equally, and run it all :)"_ - [Solomon Hykes](https://twitter.com/solomonstre/status/1111113329647325185?s=20)
 * Ok, so what about `JS developers`? Is it like all the JS developers will now have to learn a completely new language (maybe more than one?) just to keep up with web development? Well, learning a new language might be really helpful, mainly to benefit from the performance of lower level languages. But it may not be necessary. For instance, there is already a popular language **[AssemblyScript](https://github.com/AssemblyScript/assemblyscript)** that can compile `TypeScript` (a subset actually) into `WebAssembly`.
+
+**Disclaimer:** I'm by no means a WebAssembly expert. I'm just a developer interested in the applications & future roadmaps of WebAssembly. My whole source of knowledge was my research on wasm to see if it could solve a specific problem that I was not able to solve with current web technologies. Though I figured out that wasm, in it's current state, cannot solve the problem, but all the amazing articles and talks (few mentioned in references below) got me really excited about WebAssembly and all the new possibilities it opens up! 😄
+{: .notice--warning}
 
 ### References
 
