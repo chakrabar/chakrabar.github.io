@@ -8,7 +8,7 @@ categories: articles
 comments: true
 share: true
 published: true
-modified: 2018-09-28T19:20:00+05:30
+modified: 2020-04-24T20:30:00+05:30
 ---
 
 In this post, we'll see how to host your brand new shiny `ASP.NET Core` web application on a Windows `IIS` server, so that it can be used at production level.
@@ -46,8 +46,8 @@ Build your application. Once successfully built, publish your ASP.NET Core web a
 Whichever way you prefer among the two above, there are 2 types of deployment
 
 1. **[FDD](https://docs.microsoft.com/en-us/dotnet/core/deploying/#framework-dependent-deployments-fdd)** or Framework-Dependent Deployment. Here, only your app, NuGet and other related packages & configurations are packed in the published package. It needs the .NET Core runtime to be present on the target machine to run. The published package is platform independent and can run on any supported platform like `Windows`, `Linux` or `MacOS`. Practically, FDD also has options like
-    1. **Portable** - totally platform independent (there are some catches though, see later). Total binary size is pretty small, comes with your own DLLs, some .NET Core base types and a few specific to different runtimes
-    2. **Runtime specific** - not the ideal framework dependent, and comes with bunch of runtime specific files (that can handle the catch situations of portable option above). Binary size much larger than the portable one
+    1. **Portable** - totally platform independent (there are some catch though, see later). Total binary size is pretty small, comes with your own DLLs, some .NET Core base types and a few specific to different runtimes
+    2. **Runtime specific** - not the ideal framework dependent, and comes with bunch of runtime specific files (that can avoid the catch situations of portable option above). Binary size much larger than the portable one
 2. **[SCD](https://docs.microsoft.com/en-us/dotnet/core/deploying/#self-contained-deployments-scd)** or Self-Contained Deployment. Here the whole (the required parts) .NET Core runtime and [Kestrel](https://docs.microsoft.com/en-us/aspnet/core/fundamentals/servers/kestrel?view=aspnetcore-2.1) web server is packed with your application code. So, you can directly deploy the package on a machine and run, it does not need the .NET Core runtime to be pre-installed on the machine. This is a platform specific deployment, so you must choose the target runtime at the time of publish e.g. `win-x64` or `linux-x64`. The binary size much larger compared those FDD options.
 
 If you are deploying on Windows-IIS, generally you'll have the .NET Core installed, so you can publish your applications as `FDD win-x64`, so that published binaries are not very large and also you avoid some issues with portable deployment.
@@ -112,8 +112,9 @@ Here, we'll quickly create a new website on IIS for our application and do so mi
 1. Open IIS. Search for IIS or run `inetmgr` from run command (Windows + R). Remember you need to be an admin on the system to access IIS.
 2. Under the server node on the left, right-click on `Sites` and select `Add Website`. Give the site a name (e.g. mycoreweb.com), use the same name for `host` and select the directory where the app is published as `Physical path`.
 3. It'll also create a new `app_pool` with the same name as the website host. You can use the same, select a different one or rename it if you want. It's important you configure your application pool and set _pipeline mode = Integrated_, _**.NET CLR Version = No Managed Code**_. This basically tells the IIS it need not load full .NET Framework CLR, and the application will run on it's own process. This is optional though.
+4. If you just want to host a web app quickly and test on a dev machine, rather than step [2] it _might_ be easier to just `Add Application` on the `Sites > Default Web Site`. If you give it a name like `mysite`, locally you can access this as `http://localhost/mysite` on the browser.
 
-Make sure your app_pool and the website are running, and you can browse your ASP.NET Core application now.
+Make sure your app_pool and the website are running, and you can browse your ASP.NET Core application now. See below for more configuration options.
 
 #### [5] Configure
 
@@ -140,6 +141,10 @@ It's good you enable **logs**. Then it'll create simple text logs for events lik
 
 This is a FDD config, so the `processPath` points to the `dotnet.exe` that'll run the process, and host the main web dll (e.g. Web.Project.dll). On the other hand, for SCD on Windows, it'll create an executable for the main web (e.g. Web.Project.exe) and that'll be the target process.
 
+NOTE: When built with version `ASP.NET Core 3.1.3` (April 2020), other changes are not required, just enable the logging with `stdoutLogEnabled="true"`.
+
+See the last section _"Accessing the website locally and on network"_ if you are having trouble accesing the page from browser.
+
 <hr />
 
 #### Some common problems
@@ -160,15 +165,38 @@ Error:
     aspnetcore-store-2.0.0-linux-x64.xml;aspnetcore-store-2.0.0-osx-x64.xml;aspnetcore-store-2.0.0-win7-x64.xml;aspnetcore-store-2.0.0-win7-x86.xml
 ```
 
-This [Stack Overflow post](https://stackoverflow.com/questions/46491957/asp-net-core-2-missing-applicationinsights) and this [GitHub issue](https://github.com/dotnet/coreclr/issues/13542) talks about the problem. To fix this, you have to either of the following three options
+This [SO post](https://stackoverflow.com/questions/46491957/asp-net-core-2-missing-applicationinsights) and this [GitHub issue](https://github.com/dotnet/coreclr/issues/13542) talks about the problem. To fix this, you have to either of the following three options
 
 1. Install .NET Core full [SDK](https://www.microsoft.com/net/download/archives) (not just the runtime) on the server
-2. If it is a Framework Dependent Deployment, publish your app with specific runtime ID (e.g. win-x64 or linux-x64) rather than _"Portable"_
+2. If it is a Framework Dependent Deployment, publish your app with specific runtime ID (e.g. win-x64 or linux-x64) rather than _"Portable"_ (the _catch_ mentioned above)
 3. Add this flag to your main `web.csproj` and publish
 
 ```xml
-<PublishWithAspNetCoreTargetManifest>false</PublishWithAspNetCoreTargetManifest>
+<PropertyGroup>
+    ...
+    <PublishWithAspNetCoreTargetManifest>false</PublishWithAspNetCoreTargetManifest>
+</PropertyGroup>
 ```
+
+[3] If you get **HTTP Error 500.31 - ANCM Failed to Find Native Dependencies**, that might be because of multiple reasons. And the error text is generally not very helpful (for me, it said _"The specified version of Microsoft.NetCore.App or Microsoft.AspNetCore.App was not found"_).
+
+![Image](/images/posts/misc/iis-error-500-31.png)
+
+In my case, it happened when migrating to `ASP.NET Core Runtime 3.1.3`! It's weird and hard to find the cause. As suggested in this [SO post](https://stackoverflow.com/questions/56630477/http-error-500-31-ancm-failed-to-find-native-dependencies-in-iis) and [GitHub issue](https://github.com/OrchardCMS/OrchardCore/issues/4721), the fix is simple though. In the generated `web.config` file, the handler line might have `modules="AspNetCoreModuleV2"`. Just remove `V2` from it.
+
+```xml
+<handlers>
+    <add name="aspNetCore" path="*" verb="*" modules="AspNetCoreModule" resourceType="Unspecified" />
+</handlers>
+```
+
+[4] Some other common problems with fix suggestions are listed [here](https://docs.microsoft.com/en-us/aspnet/core/test/troubleshoot-azure-iis?view=aspnetcore-3.1)
+
+[5] Also good to know, standard `IIS Logs` are available at following locations
+
+1. `%SystemDrive%\inetpub\logs\LogFiles`
+2. `%SystemDrive%\Windows\System32\LogFiles\HTTPERR`
+3. In the Event Viewer, check this custom view to easily locate IIS event logs: `Event Viewer` > `Custom Views` > `ServerRoles` > `Web Server`
 
 <hr />
 
@@ -181,7 +209,7 @@ The hosts file bit is only required if you're trying to access the website with 
 [1] To run the app locally with a custom domain name (e.g. `mycoolsite.com` in our example), add it to the Windows hosts file so that browsers can find it. For that, open any text editor in admin mode, open the file hosts file, and add the custom domain name with localhost IP address i.e. `127.0.0.1` on a new line, and save
 
 ```yaml
-# in C:\Windows\System32\driver\etc\hosts
+# in C:\Windows\System32\drivers\etc\hosts
 127.0.0.1 mycoolsite.com
 ```
 
