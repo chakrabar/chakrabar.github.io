@@ -180,7 +180,7 @@ This [SO post](https://stackoverflow.com/questions/46491957/asp-net-core-2-missi
 
 [3] If you get **HTTP Error 500.31 - ANCM Failed to Find Native Dependencies**, that might be because of multiple reasons. And the error text is generally not very helpful (for me, it said _"The specified version of Microsoft.NetCore.App or Microsoft.AspNetCore.App was not found"_).
 
-![Image](/images/posts/misc/iis-error-500-31.png)
+![Image](/images/posts/misc/iis-error-500-31-2.png)
 
 In my case, it happened when migrating to `ASP.NET Core Runtime 3.1.3`! It's weird and hard to find the cause. As suggested in this [SO post](https://stackoverflow.com/questions/56630477/http-error-500-31-ancm-failed-to-find-native-dependencies-in-iis) and [GitHub issue](https://github.com/OrchardCMS/OrchardCore/issues/4721), the fix is simple though. In the generated `web.config` file, the handler line might have `modules="AspNetCoreModuleV2"`. Just remove `V2` from it.
 
