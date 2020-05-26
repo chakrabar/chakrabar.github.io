@@ -9,7 +9,7 @@ image:
   feature: posts/services/services_02.png
 comments: true
 share: true
-published: true
+published: false
 ---
 
 ## Foldable services architecture - Rationale
