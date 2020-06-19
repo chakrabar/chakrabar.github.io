@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Modern web development concepts"
-excerpt: "WIP - Modern web development concepts"
+excerpt: "WIP - post on Modern web development concepts"
 date: 2020-06-05
 tags: [dev, programming, web, webdev, webassembly, wa, wasm, wasi, wat]
 categories: articles
