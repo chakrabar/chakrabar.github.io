@@ -175,7 +175,7 @@ As these are native APIs supported by most modern browsers, and `polyfills` bein
 
 ### JavaScript, functional programming etc.
 
-* [What the heck is the event loop anyway? | Philip Roberts](https://www.youtube.com/watch?v=8aGhZQkoFbQ)
+* [What the heck is the event loop anyway - Philip Roberts](https://www.youtube.com/watch?v=8aGhZQkoFbQ)
 * [Franziska Hinkelmann: JavaScript engines - how do they even?](https://www.youtube.com/watch?v=p-iiEDtpy6I)
 * [Anjana Vakil: Immutable data structures for functional JS](https://www.youtube.com/watch?v=Wo0qiGPSV-s)
 * [An introduction to functional programming](https://codewords.recurse.com/issues/one/an-introduction-to-functional-programming)
@@ -193,8 +193,11 @@ As these are native APIs supported by most modern browsers, and `polyfills` bein
 * https://redux.js.org/introduction/prior-art#immutable
 * https://immutable-js.github.io/immutable-js/
 * https://rxjs-dev.firebaseapp.com/guide/overview
+* https://www.youtube.com/watch?v=sF5-V-Szo0c
 * https://dzone.com/articles/building-redux-like-apps-using-rxjs
 * https://martinfowler.com/eaaDev/EventSourcing.html
 * https://cycle.js.org/
+* https://mobx.js.org/README.html
+* https://github.com/rematch/rematch
 * https://github.com/reduxjs/redux-devtools
 * https://github.com/jas-chen/rx-redux
