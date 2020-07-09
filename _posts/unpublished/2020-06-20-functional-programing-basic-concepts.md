@@ -14,7 +14,7 @@ published: false
 
 Here we'll look at some very basics of Functional Programming. We'll not try to go into the theories or mathematics behind them, just the basic ideas which might be used outside pure fnctiona languages as well.
 
-Most of the functional concepts discussed below are generally enforced in functional anguages like `Haskell`, `Clojure`, `Scala` or `F#`. Some features come out-of-the-box in those languages (like `Monads`), which needs to be constructed and enforced by developers, if used in non-functional languages like `JavaScript` or `C#`. Some features might be very difficult to impossible to be built in some non-functional programming languages, but the ideas can still be useful.
+Most of the functional concepts discussed below are generally enforced in functional anguages like `Haskell`, `Clojure`, `JVM` based `Scala` or `.NET` based `F#` (functional & OO). Some features come out-of-the-box in those languages (like `Monads`), which needs to be constructed and enforced by developers, if used in non-functional languages like `JavaScript` or `C#`. Some features might be very difficult to completely impossible to be built in some non-functional programming languages, but the ideas can still be useful.
 
 To apply even some of the concepts of funtional programming in a non-functional langage, at least the language should treat functions as first class citizens and support `higher order functions`.
 
@@ -43,6 +43,7 @@ To apply even some of the concepts of funtional programming in a non-functional 
     1. `Lazy evaluation` - expressions not actually executed/evaluated until really required (e.g. using `yield` in `C#` or `generators` in `JavaScript`)
     2. `Pattern matching` - Match object against patterns to control execution flow (example in [C# 8.0](https://docs.microsoft.com/en-us/archive/msdn-magazine/2019/may/csharp-8-0-pattern-matching-in-csharp-8-0))
     3. `Memoization` - keeping result of previous computation in memory, so that they can be used directly rather than recalculating for the same data again and again. Realize that, this is only possible becuse of the *"Referential Transparency"* property of pure functions
+    4. `No Mocking` - Mocking is generally seen as a red-flag while testing functional code. Because, a pure functions should never need mocking! For pure functions, just pass some parameters and check the result, unit testing is breeze! If it needs mocking, it's most probably not pure, it accesses something that secretively. 
     
 ### Immutable & persistant data structures
 	
