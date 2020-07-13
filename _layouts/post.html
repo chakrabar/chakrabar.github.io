@@ -51,10 +51,8 @@
                     {% endif %}
                     <!-- Adding author profile (web)  -->
                     {% if author.web %}
-                    <span class="author vcard">By
-                        <a href="{{ author.web }}" title="Author profile">
-                            <i class="fa fa-globe"></i> {{ author.name }}</a>
-                        </a>
+                    <span class="author vcard">By 
+                        <a href="{{ author.web }}" title="Author profile"> {{ author.name }}</a>
                     </span>
                     {% else %}
                     <span class="author vcard">By <span class="fn">{{ author.name }}</span></span>
