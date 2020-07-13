@@ -49,21 +49,15 @@
                         <img src="{{ site.url }}/images/{{ author.avatar }}" class="bio-photo"
                             alt="{{ author.name }} bio photo" />
                     {% endif %}
-                    <span class="author vcard">By <span class="fn">{{ author.name }}</span></span>
-                    <!-- Adding author contact -->
+                    <!-- Adding author profile (web)  -->
                     {% if author.web %}
-                    <span class="social-share-facebook">
+                    <span class="author vcard">By
                         <a href="{{ author.web }}" title="Author profile">
-                            <i class="fa fa-globe"></i> Author profile</a>
-                        </a>
-                    </span>                        
-                    {% endif %}
-                    {% if author.email %}
-                    <span class="social-share-facebook">
-                        <a href="mailto:{{ author.email }}" title="Email author">
-                            <i class="fa fa-envelope-o"></i> Email author</a>
+                            <i class="fa fa-globe"></i> {{ author.name }}</a>
                         </a>
                     </span>
+                    {% else %}
+                    <span class="author vcard">By <span class="fn">{{ author.name }}</span></span>
                     {% endif %}
                     <!-- Standard stuffs on left pane -->
                     <span class="entry-date date published"><time datetime="{{ page.date | date_to_xmlschema }}"><i

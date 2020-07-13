@@ -5,6 +5,7 @@
 <!--Created with <a href="https://pages.github.com/" target="_blank" ref="nofollow">GitHub Pages</a>, powered by <a href="http://jekyllrb.com" target="_blank" rel="nofollow">Jekyll</a>, using <a href="https://mademistakes.com/work/so-simple-jekyll-theme/" rel="nofollow" target="_blank">So Simple Theme</a>.</span>-->
 <!-- Arghya removing unexpected links from bottom most footer, credit given in /about page -->
 <!--<span>&copy; 2020 {{ site.owner.name }}. -->
+<!-- NOTE: For posts, The post author is assigned as author, else site.owner -->
 <div class="social-icons">
 	{% if author.twitter %}<a href="https://twitter.com/{{ author.twitter }}" title="{{ author.name}} on Twitter" target="_blank"><i class="fa fa-twitter-square fa-2x"></i></a>{% endif %}
 	{% if author.facebook %}<a href="https://facebook.com/{{ author.facebook }}" title="{{ author.name}} on Facebook" target="_blank"><i class="fa fa-facebook-square fa-2x"></i></a>{% endif %}
@@ -16,6 +17,7 @@
 	{% if author.github %}<a href="https://github.com/{{ author.github }}" title="{{ author.name}} on Github" target="_blank"><i class="fa fa-github-square fa-2x"></i></a>{% endif %}
 	{% if author.tumblr %}<a href="http://{{ author.tumblr }}.tumblr.com" title="{{ author.name}} on Tumblr" target="_blank"><i class="fa fa-tumblr-square fa-2x"></i></a>{% endif %}
     {% if author.pinterest %}<a href="https://www.pinterest.com/{{ author.pinterest }}/" title="{{ author.name}} on Pinterest" target="_blank"><i class="fa fa-pinterest fa-2x"></i></a>{% endif %}
-	{% if author.weibo %}<a href="https://www.weibo.com/u/{{ author.weibo }}/" title="{{ author.name}} on Weibo" target="_blank"><i class="fa fa-weibo fa-2x"></i></a>{% endif %}
+    {% if author.weibo %}<a href="https://www.weibo.com/u/{{ author.weibo }}/" title="{{ author.name}} on Weibo" target="_blank"><i class="fa fa-weibo fa-2x"></i></a>{% endif %}
+    {% if author.email %}<a href="mailto:{{ author.email }}" title="Email {{ author.name}}" target="_blank"><i class="fa fa-envelope-square fa-2x"></i></a>{% endif %}
     <a href="{{ site.url }}/feed.xml" title="Atom/RSS feed"><i class="fa fa-rss-square fa-2x"></i></a>
 </div><!-- /.social-icons -->
