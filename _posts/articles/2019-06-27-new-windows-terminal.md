@@ -63,96 +63,96 @@ Following is a part of my own settings which might help you understand it better
 
 ```js
 {
-    "globals" : 
-    {
-        // defaults...
-        "keybindings" : 
+  "globals" : 
+  {
+    // defaults...
+    "keybindings" : 
+    [
+      // defaults...
+      {
+        "command" : "newTabProfile0",
+        "keys" : 
         [
-            // defaults...
-            {
-                "command" : "newTabProfile0",
-                "keys" : 
-                [
-                    "ctrl+n" // open new default tab & go to tab
-                ]
-            },
-            // defaults...
-        ],
-        "requestedTheme" : "dark", // theme for title bar etc.
-        "showTabsInTitlebar" : false,
-        "showTerminalTitleInTitlebar" : false
-    },
-    "profiles" : 
-    [
-        {
-            "acrylicOpacity" : 0.85,
-            "backgroundImage" : "ms-appdata:///roaming/pubgHD.jpg", // background image
-            "backgroundImageOpacity" : 0.94999998807907104,
-            "backgroundImageStretchMode" : "uniformToFill",
-            "closeOnExit" : true,
-            "colorScheme" : "ArghyaMatte", // custom color scheme
-            "commandline" : "powershell.exe", // program or command to run
-            "cursorColor" : "#14EA09",
-            "cursorHeight" : 25,
-            "cursorShape" : "vintage",
-            "fontFace" : "Fira Code", // custom font (with ligature)
-            "fontSize" : 10,
-            "guid" : "{61c54bbd-c2c6-5271-96e7-009a87ff44bf}",
-            "historySize" : 9001,
-            "icon" : "ms-appx:///ProfileIcons/{61c54bbd-c2c6-5271-96e7-009a87ff44bf}.png",
-            "name" : "Windows PowerShell",
-            "padding" : "10, 5, 10, 0", // cutom padding
-            "snapOnInput" : true,
-            "startingDirectory" : "C:\\Codebase", // directory to open by default
-            "useAcrylic" : false
-        },
-        {
-            "acrylicOpacity" : 0.7,
-            "background" : "#012456", // background color
-            "closeOnExit" : true,
-            "colorScheme" : "One Half Dark", // system color scheme
-            "commandline" : "cmd.exe",
-            "cursorColor" : "#14EA09", // green cursor
-            "cursorHeight" : 25,
-            "cursorShape" : "vintage", // classic cursor
-            "fontFace" : "Consolas",
-            "fontSize" : 9,
-            "guid" : "{0caa0dad-35be-5f56-a8ff-afceeeaa6101}",
-            "historySize" : 9001,
-            "icon" : "ms-appx:///ProfileIcons/{0caa0dad-35be-5f56-a8ff-afceeeaa6101}.png",
-            "name" : "Command Prompt",
-            "padding" : "0, 0, 0, 0",
-            "snapOnInput" : true,
-            "startingDirectory" : "%USERPROFILE%",
-            "useAcrylic" : true
-        },
-        // Other profiles...
+          "ctrl+n" // open new default tab & go to tab
+        ]
+      },
+      // defaults...
     ],
-    "schemes" : 
-    [
-        { // a custom color scheme
-            "background" : "#262C6B", // background color
-            "black" : "#0A2D75",
-            "blue" : "#0965E5",
-            "brightBlack" : "#555753",
-            "brightBlue" : "#116CD6",
-            "brightCyan" : "#34E2E2",
-            "brightGreen" : "#1AF40E",
-            "brightPurple" : "#AD7FA8",
-            "brightRed" : "#DD3E1F",
-            "brightWhite" : "#DBFDFF",
-            "brightYellow" : "#F9F90E",
-            "cyan" : "#06989A",
-            "foreground" : "#ADCFFF", // default font color
-            "green" : "#15A531",
-            "name" : "ArghyaMatte", // the scheme name
-            "purple" : "#75507B",
-            "red" : "#F90078",
-            "white" : "#21EF4A",
-            "yellow" : "#C4A000"
-        },
-        // defaults...
-    ]
+    "requestedTheme" : "dark", // theme for title bar etc.
+    "showTabsInTitlebar" : false,
+    "showTerminalTitleInTitlebar" : false
+  },
+  "profiles" : 
+  [
+    {
+      "acrylicOpacity" : 0.85,
+      "backgroundImage" : "ms-appdata:///roaming/pubgHD.jpg", // background image
+      "backgroundImageOpacity" : 0.94999998807907104,
+      "backgroundImageStretchMode" : "uniformToFill",
+      "closeOnExit" : true,
+      "colorScheme" : "ArghyaMatte", // custom color scheme
+      "commandline" : "powershell.exe", // program or command to run
+      "cursorColor" : "#14EA09",
+      "cursorHeight" : 25,
+      "cursorShape" : "vintage",
+      "fontFace" : "Fira Code", // custom font (with ligature)
+      "fontSize" : 10,
+      "guid" : "{61c54bbd-c2c6-5271-96e7-009a87ff44bf}",
+      "historySize" : 9001,
+      "icon" : "ms-appx:///ProfileIcons/{61c54bbd-c2c6-5271-96e7-009a87ff44bf}.png",
+      "name" : "Windows PowerShell",
+      "padding" : "10, 5, 10, 0", // cutom padding
+      "snapOnInput" : true,
+      "startingDirectory" : "C:\\Codebase", // directory to open by default
+      "useAcrylic" : false
+    },
+    {
+      "acrylicOpacity" : 0.7,
+      "background" : "#012456", // background color
+      "closeOnExit" : true,
+      "colorScheme" : "One Half Dark", // system color scheme
+      "commandline" : "cmd.exe",
+      "cursorColor" : "#14EA09", // green cursor
+      "cursorHeight" : 25,
+      "cursorShape" : "vintage", // classic cursor
+      "fontFace" : "Consolas",
+      "fontSize" : 9,
+      "guid" : "{0caa0dad-35be-5f56-a8ff-afceeeaa6101}",
+      "historySize" : 9001,
+      "icon" : "ms-appx:///ProfileIcons/{0caa0dad-35be-5f56-a8ff-afceeeaa6101}.png",
+      "name" : "Command Prompt",
+      "padding" : "0, 0, 0, 0",
+      "snapOnInput" : true,
+      "startingDirectory" : "%USERPROFILE%",
+      "useAcrylic" : true
+    },
+    // Other profiles...
+  ],
+  "schemes" : 
+  [
+    { // a custom color scheme
+      "background" : "#262C6B", // background color
+      "black" : "#0A2D75",
+      "blue" : "#0965E5",
+      "brightBlack" : "#555753",
+      "brightBlue" : "#116CD6",
+      "brightCyan" : "#34E2E2",
+      "brightGreen" : "#1AF40E",
+      "brightPurple" : "#AD7FA8",
+      "brightRed" : "#DD3E1F",
+      "brightWhite" : "#DBFDFF",
+      "brightYellow" : "#F9F90E",
+      "cyan" : "#06989A",
+      "foreground" : "#ADCFFF", // default font color
+      "green" : "#15A531",
+      "name" : "ArghyaMatte", // the scheme name
+      "purple" : "#75507B",
+      "red" : "#F90078",
+      "white" : "#21EF4A",
+      "yellow" : "#C4A000"
+    },
+    // defaults...
+  ]
 }
 ```
 
@@ -172,113 +172,113 @@ If you want to apply the same settings as above, your new `settings.json` will l
 // To view the default settings, hold "alt" while clicking on the "Settings" button.
 // For documentation on these settings, see: https://aka.ms/terminal-documentation
 {
-	"$schema": "https://aka.ms/terminal-profiles-schema",
-	"defaultProfile": "{61c54bbd-c2c6-5271-96e7-009a87ff44bf}",
-	"copyOnSelect": false,
-	"copyFormatting": false,
+  "$schema": "https://aka.ms/terminal-profiles-schema",
+  "defaultProfile": "{61c54bbd-c2c6-5271-96e7-009a87ff44bf}",
+  "copyOnSelect": false,
+  "copyFormatting": false,
 
-	// Apply custom settings
-	// To learn more about profiles, visit https://aka.ms/terminal-profile-settings
-	"theme" : "dark", // CHANGED from requestedTheme
-	"showTabsInTitlebar" : true,
-	"showTerminalTitleInTitlebar" : true,
-	"wordDelimiters" : " ./\\()\"'-:,.;<>~!@#$%^&*|+=[]{}~?\u2502",
-	"alwaysShowTabs" : false,
-	"initialCols" : 120,
-	"initialRows" : 30,
-	"profiles":
-	{
-		"defaults":
-		{
-			// Put settings here that you want to apply to all profiles.
-		},
-		"list":
-		[
-			{
-				"acrylicOpacity" : 0.85,
-				"backgroundImage" : "ms-appdata:///roaming/pubgHD.jpg", // background image
-				"backgroundImageOpacity" : 0.94999998807907104,
-				"backgroundImageStretchMode" : "uniformToFill",
-				"closeOnExit" : true,
-				"colorScheme" : "ArghyaMatte", // custom color scheme
-				"commandline" : "powershell.exe", // program or command to run
-				"cursorColor" : "#14EA09",
-				"cursorHeight" : 25,
-				"cursorShape" : "vintage",
-				"fontFace" : "Fira Code", // custom font (with ligature)
-				"fontSize" : 10,
-				"guid" : "{61c54bbd-c2c6-5271-96e7-009a87ff44bf}",
-				"historySize" : 9001,
-				"icon" : "ms-appx:///ProfileIcons/{61c54bbd-c2c6-5271-96e7-009a87ff44bf}.png",
-				"name" : "Windows PowerShell",
-				"padding" : "10, 5, 10, 0", // cutom padding
-				"snapOnInput" : true,
-				"startingDirectory" : "C:\\Codebase", // directory to open by default
-				"useAcrylic" : false
-			},
-			{
-				"acrylicOpacity" : 0.7,
-				"background" : "#012456", // background color
-				"closeOnExit" : true,
-				"colorScheme" : "One Half Dark", // system color scheme
-				"commandline" : "cmd.exe",
-				"cursorColor" : "#14EA09", // green cursor
-				"cursorHeight" : 25,
-				"cursorShape" : "vintage", // classic cursor
-				"fontFace" : "Consolas",
-				"fontSize" : 9,
-				"guid" : "{0caa0dad-35be-5f56-a8ff-afceeeaa6101}",
-				"historySize" : 9001,
-				"icon" : "ms-appx:///ProfileIcons/{0caa0dad-35be-5f56-a8ff-afceeeaa6101}.png",
-				"name" : "Command Prompt",
-				"padding" : "0, 0, 0, 0",
-				"snapOnInput" : true,
-				"startingDirectory" : "%USERPROFILE%",
-				"useAcrylic" : true
-			},
-			// Other profiles...
-		]
-	},
-	// Add custom color schemes to this array.
-	// To learn more about color schemes, visit https://aka.ms/terminal-color-schemes
-	"schemes":
-	[
-		{ // a custom color scheme
-			"background" : "#262C6B", // background color
-			"black" : "#0A2D75",
-			"blue" : "#0965E5",
-			"brightBlack" : "#555753",
-			"brightBlue" : "#116CD6",
-			"brightCyan" : "#34E2E2",
-			"brightGreen" : "#1AF40E",
-			"brightPurple" : "#AD7FA8",
-			"brightRed" : "#DD3E1F",
-			"brightWhite" : "#DBFDFF",
-			"brightYellow" : "#F9F90E",
-			"cyan" : "#06989A",
-			"foreground" : "#ADCFFF", // default font color
-			"green" : "#15A531",
-			"name" : "ArghyaMatte", // the scheme name
-			"purple" : "#75507B",
-			"red" : "#F90078",
-			"white" : "#21EF4A",
-			"yellow" : "#C4A000"
-		},
-		// other schemes...
-	],
+  // Apply custom settings
+  // To learn more about profiles, visit https://aka.ms/terminal-profile-settings
+  "theme" : "dark", // CHANGED from requestedTheme
+  "showTabsInTitlebar" : true,
+  "showTerminalTitleInTitlebar" : true,
+  "wordDelimiters" : " ./\\()\"'-:,.;<>~!@#$%^&*|+=[]{}~?\u2502",
+  "alwaysShowTabs" : false,
+  "initialCols" : 120,
+  "initialRows" : 30,
+  "profiles":
+  {
+    "defaults":
+    {
+      // Put settings here that you want to apply to all profiles.
+    },
+    "list":
+    [
+      {
+        "acrylicOpacity" : 0.85,
+        "backgroundImage" : "ms-appdata:///roaming/pubgHD.jpg", // background image
+        "backgroundImageOpacity" : 0.94999998807907104,
+        "backgroundImageStretchMode" : "uniformToFill",
+        "closeOnExit" : true,
+        "colorScheme" : "ArghyaMatte", // custom color scheme
+        "commandline" : "powershell.exe", // program or command to run
+        "cursorColor" : "#14EA09",
+        "cursorHeight" : 25,
+        "cursorShape" : "vintage",
+        "fontFace" : "Fira Code", // custom font (with ligature)
+        "fontSize" : 10,
+        "guid" : "{61c54bbd-c2c6-5271-96e7-009a87ff44bf}",
+        "historySize" : 9001,
+        "icon" : "ms-appx:///ProfileIcons/{61c54bbd-c2c6-5271-96e7-009a87ff44bf}.png",
+        "name" : "Windows PowerShell",
+        "padding" : "10, 5, 10, 0", // cutom padding
+        "snapOnInput" : true,
+        "startingDirectory" : "C:\\Codebase", // directory to open by default
+        "useAcrylic" : false
+      },
+      {
+        "acrylicOpacity" : 0.7,
+        "background" : "#012456", // background color
+        "closeOnExit" : true,
+        "colorScheme" : "One Half Dark", // system color scheme
+        "commandline" : "cmd.exe",
+        "cursorColor" : "#14EA09", // green cursor
+        "cursorHeight" : 25,
+        "cursorShape" : "vintage", // classic cursor
+        "fontFace" : "Consolas",
+        "fontSize" : 9,
+        "guid" : "{0caa0dad-35be-5f56-a8ff-afceeeaa6101}",
+        "historySize" : 9001,
+        "icon" : "ms-appx:///ProfileIcons/{0caa0dad-35be-5f56-a8ff-afceeeaa6101}.png",
+        "name" : "Command Prompt",
+        "padding" : "0, 0, 0, 0",
+        "snapOnInput" : true,
+        "startingDirectory" : "%USERPROFILE%",
+        "useAcrylic" : true
+      },
+      // Other profiles...
+    ]
+  },
+  // Add custom color schemes to this array.
+  // To learn more about color schemes, visit https://aka.ms/terminal-color-schemes
+  "schemes":
+  [
+    { // a custom color scheme
+      "background" : "#262C6B", // background color
+      "black" : "#0A2D75",
+      "blue" : "#0965E5",
+      "brightBlack" : "#555753",
+      "brightBlue" : "#116CD6",
+      "brightCyan" : "#34E2E2",
+      "brightGreen" : "#1AF40E",
+      "brightPurple" : "#AD7FA8",
+      "brightRed" : "#DD3E1F",
+      "brightWhite" : "#DBFDFF",
+      "brightYellow" : "#F9F90E",
+      "cyan" : "#06989A",
+      "foreground" : "#ADCFFF", // default font color
+      "green" : "#15A531",
+      "name" : "ArghyaMatte", // the scheme name
+      "purple" : "#75507B",
+      "red" : "#F90078",
+      "white" : "#21EF4A",
+      "yellow" : "#C4A000"
+    },
+    // other schemes...
+  ],
 
-	// Add custom keybindings to this array.
-	// To learn more about keybindings, visit https://aka.ms/terminal-keybindings
-	"keybindings":
-	[
-		{ "command": {"action": "copy", "singleLine": false }, "keys": "ctrl+c" },
-		{ "command": "paste", "keys": "ctrl+v" },
-		{ "command": "find", "keys": "ctrl+shift+f" },
-		{ "command": { "action": "splitPane", "split": "auto", "splitMode": "duplicate" }, "keys": "alt+shift+d" },
-		// Open a new tab with default profile
-		{ "command": { "action": "newTab", "index": 0 }, "keys": "ctrl+n" }
-		// See default key bindings at https://github.com/microsoft/terminal/issues/3600
-	]
+  // Add custom keybindings to this array.
+  // To learn more about keybindings, visit https://aka.ms/terminal-keybindings
+  "keybindings":
+  [
+    { "command": {"action": "copy", "singleLine": false }, "keys": "ctrl+c" },
+    { "command": "paste", "keys": "ctrl+v" },
+    { "command": "find", "keys": "ctrl+shift+f" },
+    { "command": { "action": "splitPane", "split": "auto", "splitMode": "duplicate" }, "keys": "alt+shift+d" },
+    // Open a new tab with default profile
+    { "command": { "action": "newTab", "index": 0 }, "keys": "ctrl+n" }
+    // See default key bindings at https://github.com/microsoft/terminal/issues/3600
+  ]
 }
 ```
 
@@ -289,5 +289,5 @@ If you want to apply the same settings as above, your new `settings.json` will l
 * [Settings docs](https://github.com/microsoft/terminal/blob/master/doc/cascadia/SettingsSchema.md)
 * [Scott Hanselman's tips](https://www.hanselman.com/blog/YouCanNowDownloadTheNewOpenSourceWindowsTerminal.aspx)
 * [Fluent terminal](https://github.com/felixse/FluentTerminal)
-* [Powerline setup as GIT terminal - docs](https://docs.microsoft.com/en-us/windows/terminal/tutorials/powerline-setup)
+* [Powerline setup, GIT terminal - docs](https://docs.microsoft.com/en-us/windows/terminal/tutorials/powerline-setup)
 * [More customization - Hanselman](https://www.hanselman.com/blog/HowToMakeAPrettyPromptInWindowsTerminalWithPowerlineNerdFontsCascadiaCodeWSLAndOhmyposh.aspx)
