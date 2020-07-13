@@ -7,7 +7,7 @@ tags: [dev, programming, web, webdev, webassembly, wa, wasm, wasi, wat]
 categories: articles
 comments: true
 share: true
-published: true
+published: false
 ---
 
 **NOTICE:** This is a `Work-In-Progress` post, please do not read it yet! 🐌🐌🐌

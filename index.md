@@ -4,9 +4,11 @@ title: "Hello there!"
 excerpt: "Technical & non-technical titbits of everyday life"
 ---
 
-Welcome to the technical & everyday-life notes from AC. Here I talk about some daily tips & trick of programming. Mostly I maintain some random developer notes. Sometimes I also write about non-technical normal everyday stuffs.
+Welcome to the technical & everyday-life notes from AC. Here I talk about some daily tips & trick of programming. Mostly, I maintain some random developer notes. Sometimes I also write about non-technical normal everyday stuffs.
 
 If you want to see my profile or get in touch, go to the [About](/about) section.
+
+NOTE: Some of the posts are written by other people, as mentioned in the individual posts. I do not own or deserve any credit for those posts, they belong to their respective authors 🙂
 
 ----
 
