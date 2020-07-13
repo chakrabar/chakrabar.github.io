@@ -7,7 +7,7 @@ tags: [travel, blog, turkey, europe]
 categories: blog
 share: true
 comments: true
-author: billy_rick
+author: pritha
 image:
   feature: blog/turkey/istanbul/gbazar_min.jpg
 ---
