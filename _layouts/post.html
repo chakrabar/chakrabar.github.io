@@ -52,14 +52,18 @@
                     <span class="author vcard">By <span class="fn">{{ author.name }}</span></span>
                     <!-- Adding author contact -->
                     {% if author.web %}
+                    <span class="social-share-facebook">
                         <a href="{{ author.web }}" title="Author profile">
-                            <i class="fa fa-drivers-license-o"></i> Author profile</a>
+                            <i class="fa fa-globe"></i> Author profile</a>
                         </a>
+                    </span>                        
                     {% endif %}
                     {% if author.email %}
+                    <span class="social-share-facebook">
                         <a href="mailto:{{ author.email }}" title="Email author">
                             <i class="fa fa-envelope-o"></i> Email author</a>
                         </a>
+                    </span>
                     {% endif %}
                     <!-- Standard stuffs on left pane -->
                     <span class="entry-date date published"><time datetime="{{ page.date | date_to_xmlschema }}"><i
