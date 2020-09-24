@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Developer Posters and Stickers - designs"
-excerpt: "Some of my random designs for developer or tech posters and stickers"
+excerpt: "Some of my designs for developer or tech posters and stickers"
 date: 2020-09-23
 tags: [blog, art, drawing, design, sticker, poster, coaster, developer, tech, quotes]
 categories: blog
@@ -11,7 +11,16 @@ image:
   feature: blog/dev-stickers/dev-poster-sticker-banner-2.jpg
 ---
 
-#### Designs for developer / tech posters & stickers
+## A collection of developer / tech related designs (for posters & stickers)
+
+Here I'm sharing some basic poster / sticker designs which I have not published before. These are mostly related to developer community, technology or programming swag. These can be printed as posters, but I think they are more appropriate for (laptop) stickers because of their size (aspect ratio) and character.
+
+**Note:** There are some icons and logos used in some of the designs. They belong to their respective owners or communities. Also there are some quotes used, which are very common among software engineers, so do not belong to any particular person or entity.
+{: .notice--info}
+
+#### Basic coding sticker
+
+A simple sticker design with `VS Code` and `TypeScript` coding language logos.
 
 <figure>
 	<a href="/images/blog/dev-stickers/vs-code-and-typescript-2.png">
@@ -20,7 +29,9 @@ image:
 	<figcaption>VS Code & TypeScript sticker design</figcaption>
 </figure>
 
-Some more
+#### Common developer things
+
+Things said frequently by developers. They are no joke!
 
 <figure class="third">
 	<a href="/images/blog/dev-stickers/testing-code-in-prod.png">
@@ -35,7 +46,7 @@ Some more
 	<figcaption>Some common dev quotes</figcaption>
 </figure>
 
-Most common comment in code 🙄
+#### Most common comment in code 🙄
 
 <figure class="third">
 	<a href="/images/blog/dev-stickers/to-do-3.png">
@@ -52,7 +63,15 @@ Most common comment in code 🙄
 
 ### Others
 
+1. `VS Code`, `Angular`, `RxJS`, `TypeScript`
+2. `UiPath` Robot
+3. Developer qualities
+4. `VS Code`, `Angular`, `RxJS`, `TypeScript` (again) with Yellow background
+
 <figure class="half">
+<a href="/images/blog/dev-stickers/vs-code-angular-rxjs-ts.png">
+        <img src="/images/blog/dev-stickers/vs-code-angular-rxjs-ts.png" alt="angular and related logos" title="Angular and related logos">
+    </a>
 	<a href="/images/blog/dev-stickers/uipath-reboot-work.png">
         <img src="/images/blog/dev-stickers/uipath-reboot-work.png" alt="uipth reboot work" title="UiPath Reboot Work">
     </a>
@@ -61,12 +80,11 @@ Most common comment in code 🙄
     </a>
     <a href="/images/blog/dev-stickers/vs-code-angular-rxjs-ts-yellow.png">
         <img src="/images/blog/dev-stickers/vs-code-angular-rxjs-ts-yellow.png" alt="angular and related logos" title="Angular and related logos in Yellow">
-    </a>
-    <a href="/images/blog/dev-stickers/vs-code-angular-rxjs-ts.png">
-        <img src="/images/blog/dev-stickers/vs-code-angular-rxjs-ts.png" alt="angular and related logos" title="Angular and related logos">
-    </a>
+    </a>    
 	<figcaption>Mixed style stickers</figcaption>
 </figure>
+
+> "I mean, you can have a different opinion on how to solve the problem! If you are sure, well, go ahead and do that."
 
 <figure>
 	<a href="/images/blog/dev-stickers/yes-that-too-4.png">
@@ -74,3 +92,14 @@ Most common comment in code 🙄
     </a>
 	<figcaption>Well, do it if you know already...</figcaption>
 </figure>
+
+### Notes
+
+**Tools:** For all these designs I have used some very simple tools like
+
+1. Adobe Spark Post
+2. Microsoft Paint 😬
+3. Google's Snapseed
+
+**IMPORTANT:** All these poster / sticker designs are my own. If you intend to use them in any context / capacity, please get in touch with me.
+{: .notice--warning}
