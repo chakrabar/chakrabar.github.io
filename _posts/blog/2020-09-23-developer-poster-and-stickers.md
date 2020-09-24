@@ -7,18 +7,15 @@ tags: [blog, art, drawing, design, sticker, poster, coaster, developer, tech, qu
 categories: blog
 share: true
 comments: true
-thumbnail: blog/dev-stickers/vs-code-angular-rxjs-ts.png
 image:
-  feature: blog/dev-stickers/dev-poster-sticker-banner.jpg
+  feature: blog/dev-stickers/dev-poster-sticker-banner-2.jpg
 ---
 
 #### Designs for developer / tech posters & stickers
 
---------------------------------------------------------------------------------------------------
-
 <figure>
 	<a href="/images/blog/dev-stickers/vs-code-and-typescript-2.png">
-        <img src="/images/blog/dev-stickers/vs-code-and-typescript-2.png" alt="vs-code-and-typescript" title="VS Code & TypeScript">
+        <img src="/images/blog/dev-stickers/vs-code-and-typescript-2.png" alt="vs code and typescript" title="VS Code & TypeScript">
     </a>
 	<figcaption>VS Code & TypeScript sticker design</figcaption>
 </figure>
@@ -29,8 +26,8 @@ Some more
 	<a href="/images/blog/dev-stickers/testing-code-in-prod.png">
         <img src="/images/blog/dev-stickers/testing-code-in-prod.png" alt="testing in production" title="Testing in production">
     </a>
-	<a href="/images/blog/dev-stickers/vs-code-and-typescript-2.png">
-        <img src="/images/blog/dev-stickers/vs-code-and-typescript-2.png" alt="no deploy fridays" title="No deploy Fridays">
+	<a href="/images/blog/dev-stickers/no-deploy-fridays.png">
+        <img src="/images/blog/dev-stickers/no-deploy-fridays.png" alt="no deploy fridays" title="No deploy Fridays">
     </a>
     <a href="/images/blog/dev-stickers/testing-code-in-prod-2.png">
         <img src="/images/blog/dev-stickers/testing-code-in-prod-2.png" alt="testing in production 2" title="Testing in production 2">
@@ -38,132 +35,42 @@ Some more
 	<figcaption>Some common dev quotes</figcaption>
 </figure>
 
---------------------------------------------------------------------------------------------------
-
-What is **Inktober?**
-
-> Every October, artists all over the world take on the Inktober drawing challenge by doing one ink drawing a day the entire month. - from [Jake Parker's site](https://www.mrjakeparker.com/inktober-1/).
-
-So, Inktober is an global online art challenge where many artists, from famous ones to first-times (like me) take part from their location, on their own time and will. The event is not organised nor coordinated y anyone as such, but it just works like a massive global event!
-
-Though there are themes for drawing and other stuffs, <u>basic rules are simple</u>
-
-1. Make a drawing in ink (you can do a pencil under-drawing if you want).
-2. Post it online
-3. Hashtag it with #inktober and #inktoberYEAR (e.g. #inktober2017) 
-4. Repeat
-
-----
-
-_Disclaimer: I'm no way an artist or designer or anything of that sort. I just love making simple drawings and cartoons sometimes._
-
-I took the challenge in 2017 and posted my art on [Instagram](https://www.instagram.com/charghya/). I didn't make exactly 31 drawings, but I made a lot and enjoyed the experience a lot. For me, it was more of sharing and learning from artists all over the world, and learning from them. I also tried to do various art styles rather than doing similar stuffs each day.
-
-#### Here are some sample arts
-
-Some of the _#inktober_ entries with framed look, in random order.
+Most common comment in code 🙄
 
 <figure class="third">
-	<a href="/images/blog/inktober/ship.jpg">
-        <img src="/images/blog/inktober/ship.jpg" alt="ship" title="ship">
+	<a href="/images/blog/dev-stickers/to-do-3.png">
+        <img src="/images/blog/dev-stickers/to-do-3.png" alt="to do remove code" title="To do remove code">
     </a>
-	<a href="/images/blog/inktober/toon.jpg">
-        <img src="/images/blog/inktober/toon.jpg" alt="toon" title="toon">
+	<a href="/images/blog/dev-stickers/to-do.png">
+        <img src="/images/blog/dev-stickers/to-do.png" alt="to do remove code 2" title="To do remove code 2">
     </a>
-    <a href="/images/blog/inktober/girl.jpg">
-        <img src="/images/blog/inktober/girl.jpg" alt="girl" title="girl">
+    <a href="/images/blog/dev-stickers/to-do-2.png">
+        <img src="/images/blog/dev-stickers/to-do-2.png" alt="to do remove code 3" title="To do remove code 3">
     </a>
-	<figcaption>In case you were wondering how some of the pics would look on your wall!</figcaption>
+	<figcaption>TODO: Remove code before production</figcaption>
 </figure>
 
-#### More entries from my Inktober 2017, in different categories
-
-Old style potraits and still life. And old sailor, Hindu goddess Kali Maa, a nude lady and classic water flask!
-
-* And old sailor - with doodle beard
-* Hindu goddess _Kali Maa_ - a kick-ass worrior Hindu goddess. Potrait with slight carooting
-* Lady - figure with marker
-* Water flask - old school still life, reminds me of school days drawing class
+### Others
 
 <figure class="half">
-	<a href="/images/blog/inktober/old-man.jpg">
-        <img src="/images/blog/inktober/old-man.jpg" alt="old-man" title="old-man">
+	<a href="/images/blog/dev-stickers/uipath-reboot-work.png">
+        <img src="/images/blog/dev-stickers/uipath-reboot-work.png" alt="uipth reboot work" title="UiPath Reboot Work">
     </a>
-	<a href="/images/blog/inktober/kali-maa.jpg">
-        <img src="/images/blog/inktober/kali-maa.jpg" alt="kali-maa" title="kali-maa">
+    <a href="/images/blog/dev-stickers/coding-design-problem-solving-3.png">
+        <img src="/images/blog/dev-stickers/coding-design-problem-solving-3.png" alt="developer qualities" title="Developer qualities">
     </a>
-    <a href="/images/blog/inktober/nude-2.jpg">
-        <img src="/images/blog/inktober/nude-2.jpg" alt="nude" title="nude">
+    <a href="/images/blog/dev-stickers/vs-code-angular-rxjs-ts-yellow.png">
+        <img src="/images/blog/dev-stickers/vs-code-angular-rxjs-ts-yellow.png" alt="angular and related logos" title="Angular and related logos in Yellow">
     </a>
-    <a href="/images/blog/inktober/flask-2.jpg">
-        <img src="/images/blog/inktober/flask-2.jpg" alt="flask" title="flask">
+    <a href="/images/blog/dev-stickers/vs-code-angular-rxjs-ts.png">
+        <img src="/images/blog/dev-stickers/vs-code-angular-rxjs-ts.png" alt="angular and related logos" title="Angular and related logos">
     </a>
-	<figcaption>Old style potraits and still life</figcaption>
+	<figcaption>Mixed style stickers</figcaption>
 </figure>
-
-#### Some experiment with different art forms
-
-* Beach - line & dots, slightly inpired by Madhubani art styles
-* Diwali night - Markers & white-liners
-* A room - scribble style with ballpoint pen
-
-<figure class="third">
-	<a href="/images/blog/inktober/beach-2.jpg">
-        <img src="/images/blog/inktober/beach-2.jpg" alt="beach" title="beach">
-    </a>
-	<a href="/images/blog/inktober/diwali.jpg">
-        <img src="/images/blog/inktober/diwali.jpg" alt="diwali" title="diwali">
-    </a>
-    <a href="/images/blog/inktober/room-2.jpg">
-        <img src="/images/blog/inktober/room-2.jpg" alt="room" title="room">
-    </a>
-	<figcaption>Different art styles</figcaption>
-</figure>
-
-Well, some animals.
-
-<figure class="half">
-	<a href="/images/blog/inktober/tortoise.jpg">
-        <img src="/images/blog/inktober/tortoise.jpg" alt="tortoise" title="tortoise">
-    </a>
-	<a href="/images/blog/inktober/lizard.jpg">
-        <img src="/images/blog/inktober/lizard.jpg" alt="lizard" title="lizard">
-    </a>
-	<figcaption>Tortoise and a lizard!</figcaption>
-</figure>
-
-#### And more detailed ones
-
-That took more than a day.
-
-* The beautiful small town of Padova, Italy
-* A girl from a fictional world, where good and bad overlaps
-
-<figure class="half">
-	<a href="/images/blog/inktober/padova.jpg">
-        <img src="/images/blog/inktober/padova.jpg" alt="padova" title="padova">
-    </a>
-	<a href="/images/blog/inktober/angel.jpg">
-        <img src="/images/blog/inktober/angel.jpg" alt="angel" title="angel">
-    </a>
-	<figcaption>The city of Padova, the girl!</figcaption>
-</figure>
-
-#### Full color image, inspired by the Madhubani or Mithila art style from Bihar, India
-
-Image of a strange world. Not a real Madhubani painting, but highly inspired I'd say. I hope people find the details interesting :)
 
 <figure>
-	<a href="/images/blog/inktober/strange-world-2.jpg">
-        <img src="/images/blog/inktober/strange-world-2.jpg" alt="strange-world" title="A strange world">
+	<a href="/images/blog/dev-stickers/yes-that-too-4.png">
+        <img src="/images/blog/dev-stickers/yes-that-too-4.png" alt="random developer quote" title="Yes, you can do that too">
     </a>
-	<figcaption>A strange world!</figcaption>
+	<figcaption>Well, do it if you know already...</figcaption>
 </figure>
-
-In case anyone wonders, the basic tools used for all the drawings are
-
-* Pencils - HB, 2B, 8B - from Camlin & Staedtler
-* Sakura micron pens, Mitsubishi pigment pen
-* Shinhan Touch dual markers - Cool gray 1, 3, 5, 7, 9, Black
-* Uni-ball color ink pens
-* Ball pens, color pencils, erasers, ruler etc.
