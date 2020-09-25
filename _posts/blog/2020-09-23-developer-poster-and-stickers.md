@@ -41,8 +41,8 @@ Things said frequently by developers. They are no joke!
 	<a href="/images/blog/dev-stickers/no-deploy-fridays-01.jpeg">
         <img src="/images/blog/dev-stickers/no-deploy-fridays-01.jpeg" alt="no deploy fridays" title="No deploy Fridays">
     </a>
-    <a href="/images/blog/dev-stickers/im-not-free-01.jpeg">
-        <img src="/images/blog/dev-stickers/im-not-free-01.jpeg" alt="no i'm not free" title="I'm not free for 5 min">
+    <a href="/images/blog/dev-stickers/im-not-free-01.jpg">
+        <img src="/images/blog/dev-stickers/im-not-free-01.jpg" alt="no i'm not free" title="I'm not free for 5 min">
     </a>
 	<figcaption>Works on my machine though!</figcaption>
 </figure>
@@ -50,8 +50,8 @@ Things said frequently by developers. They are no joke!
 ### Most common comments in code 🙄
 
 <figure class="third">
-	<a href="/images/blog/dev-stickers/to-do-1-01.jpeg">
-        <img src="/images/blog/dev-stickers/to-do-1-01.jpeg" alt="to do remove code" title="To do remove code">
+	<a href="/images/blog/dev-stickers/to-do-01.jpeg">
+        <img src="/images/blog/dev-stickers/to-do-01.jpeg" alt="to do remove code" title="To do remove code">
     </a>
 	<a href="/images/blog/dev-stickers/to-do-7-01.jpeg">
         <img src="/images/blog/dev-stickers/to-do-7-01.jpeg" alt="to do remove code 2" title="To do remove code 2">
@@ -99,8 +99,8 @@ As developer, or people working with developers, you hear these things like each
     <a href="/images/blog/dev-stickers/coding-design-problem-solving-3-01.jpeg">
         <img src="/images/blog/dev-stickers/coding-design-problem-solving-3-01.jpeg" alt="developer qualities" title="Developer qualities">
     </a>
-    <a href="/images/blog/dev-stickers/vs-code-angular-rxjs-ts-yellow-01.jpeg">
-        <img src="/images/blog/dev-stickers/vs-code-angular-rxjs-ts-yellow-01.jpeg" alt="angular and related logos" title="Angular and related logos in Yellow">
+    <a href="/images/blog/dev-stickers/vs-code-angular-rxjs-ts-yellow-1-01.jpeg">
+        <img src="/images/blog/dev-stickers/vs-code-angular-rxjs-ts-yellow-1-01.jpeg" alt="angular and related logos" title="Angular and related logos in Yellow">
     </a>    
 	<figcaption>Mixed style stickers</figcaption>
 </figure>
@@ -140,5 +140,5 @@ Few for the RPA (`Robotic Process Automation`) & **UiPath** community ❤
 2. Microsoft Paint 😬
 3. Google's Snapseed
 
-**IMPORTANT NOTICE:** All these poster / sticker designs are created by me, and belong to me. If you intend to use them in any context / capacity, please get in touch with me.
+**IMPORTANT NOTICE:** All these poster / sticker designs are created by me, and belong to me. If you intend to use them in any context / capacity, please get in touch with me for watermark free high quality copies.
 {: .notice--warning}
