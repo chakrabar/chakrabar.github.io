@@ -7,7 +7,7 @@ tags: [blog, art, drawing, design, sticker, poster, coaster, developer, tech, qu
 categories: blog
 share: true
 comments: true
-modified: 2020-089-25T11:00:15+05:30
+modified: 2020-089-25T15:20:00+05:30
 image:
   feature: blog/dev-stickers/dev-poster-sticker-banner-2.jpg
 ---
@@ -24,8 +24,8 @@ Here I'm sharing some basic poster / sticker designs which I have not published 
 A sample sticker design with `VS Code` and `TypeScript` coding language logos. As we can see, this is just graphic, so can be printed on any item and material of choice.
 
 <figure>
-	<a href="/images/blog/dev-stickers/vs-code-and-typescript-2.png">
-        <img src="/images/blog/dev-stickers/vs-code-and-typescript-2.png" alt="vs code and typescript" title="VS Code & TypeScript">
+	<a href="/images/blog/dev-stickers/vs-code-and-typescript-2-01.jpeg">
+        <img src="/images/blog/dev-stickers/vs-code-and-typescript-2-01.jpeg" alt="vs code and typescript" title="VS Code & TypeScript">
     </a>
 	<figcaption>VS Code & TypeScript</figcaption>
 </figure>
@@ -35,29 +35,29 @@ A sample sticker design with `VS Code` and `TypeScript` coding language logos. A
 Things said frequently by developers. They are no joke!
 
 <figure class="third">
-	<a href="/images/blog/dev-stickers/testing-code-in-prod.png">
-        <img src="/images/blog/dev-stickers/testing-code-in-prod.png" alt="testing in production" title="Testing in production">
+	<a href="/images/blog/dev-stickers/testing-code-in-prod-01.jpeg">
+        <img src="/images/blog/dev-stickers/testing-code-in-prod-01.jpeg" alt="testing in production" title="Testing in production">
     </a>
-	<a href="/images/blog/dev-stickers/no-deploy-fridays.png">
-        <img src="/images/blog/dev-stickers/no-deploy-fridays.png" alt="no deploy fridays" title="No deploy Fridays">
+	<a href="/images/blog/dev-stickers/no-deploy-fridays-01.jpeg">
+        <img src="/images/blog/dev-stickers/no-deploy-fridays-01.jpeg" alt="no deploy fridays" title="No deploy Fridays">
     </a>
-    <a href="/images/blog/dev-stickers/testing-code-in-prod-2.png">
-        <img src="/images/blog/dev-stickers/testing-code-in-prod-2.png" alt="pro testing in production 2" title="Pro Testing in Production">
+    <a href="/images/blog/dev-stickers/im-not-free-01.jpeg">
+        <img src="/images/blog/dev-stickers/im-not-free-01.jpeg" alt="no i'm not free" title="I'm not free for 5 min">
     </a>
 	<figcaption>Works on my machine though!</figcaption>
 </figure>
 
-### Most common comment in code 🙄
+### Most common comments in code 🙄
 
 <figure class="third">
-	<a href="/images/blog/dev-stickers/to-do-4.png">
-        <img src="/images/blog/dev-stickers/to-do-4.png" alt="to do remove code" title="To do remove code">
+	<a href="/images/blog/dev-stickers/to-do-1-01.jpeg">
+        <img src="/images/blog/dev-stickers/to-do-1-01.jpeg" alt="to do remove code" title="To do remove code">
     </a>
-	<a href="/images/blog/dev-stickers/to-do.png">
-        <img src="/images/blog/dev-stickers/to-do.png" alt="to do remove code 2" title="To do remove code 2">
+	<a href="/images/blog/dev-stickers/to-do-7-01.jpeg">
+        <img src="/images/blog/dev-stickers/to-do-7-01.jpeg" alt="to do remove code 2" title="To do remove code 2">
     </a>
-    <a href="/images/blog/dev-stickers/to-do-2.png">
-        <img src="/images/blog/dev-stickers/to-do-2.png" alt="to do remove code 3" title="To do remove code 3">
+    <a href="/images/blog/dev-stickers/to-do-8-01.jpeg">
+        <img src="/images/blog/dev-stickers/to-do-8-01.jpeg" alt="to do remove code 3" title="To do remove code 3">
     </a>
 	<figcaption>TODO: Remove code before production</figcaption>
 </figure>
@@ -67,17 +67,17 @@ Things said frequently by developers. They are no joke!
 As developer, or people working with developers, you hear these things like each living day!
 
 <figure class="half">
-<a href="/images/blog/dev-stickers/zoom-2.png">
-        <img src="/images/blog/dev-stickers/zoom-2.png" alt="sorry I was on mute" title="Zoom: Sorry, I was on mute!">
+<a href="/images/blog/dev-stickers/zoom-2-01.jpeg">
+        <img src="/images/blog/dev-stickers/zoom-2-01.jpeg" alt="sorry I was on mute" title="Zoom: Sorry, I was on mute!">
     </a>
-	<a href="/images/blog/dev-stickers/slack-1.png">
-        <img src="/images/blog/dev-stickers/slack-1.png" alt="let's grab beer sometime" title="Slack: Let's grab beer sometime">
+	<a href="/images/blog/dev-stickers/slack-1-01.jpeg">
+        <img src="/images/blog/dev-stickers/slack-1-01.jpeg" alt="let's grab beer sometime" title="Slack: Let's grab beer sometime">
     </a>
-    <a href="/images/blog/dev-stickers/zoom-1.png">
-        <img src="/images/blog/dev-stickers/zoom-1.png" alt="can you see my screen" title="Zoom: Can you see my screen?">
+    <a href="/images/blog/dev-stickers/zoom-1-01.jpeg">
+        <img src="/images/blog/dev-stickers/zoom-1-01.jpeg" alt="can you see my screen" title="Zoom: Can you see my screen?">
     </a>
-    <a href="/images/blog/dev-stickers/next-sprint.png">
-        <img src="/images/blog/dev-stickers/next-sprint.png" alt="we'll fix that in next sprint" title="We'll fix that in next sprint">
+    <a href="/images/blog/dev-stickers/next-sprint-01.jpeg">
+        <img src="/images/blog/dev-stickers/next-sprint-01.jpeg" alt="we'll fix that in next sprint" title="We'll fix that in next sprint">
     </a>    
 	<figcaption>How many times do you hear them everyday?</figcaption>
 </figure>
@@ -90,17 +90,17 @@ As developer, or people working with developers, you hear these things like each
 4. `VS Code`, `Angular`, `RxJS`, `TypeScript` (again) with Yellow background
 
 <figure class="half">
-<a href="/images/blog/dev-stickers/vs-code-angular-rxjs-ts.png">
-        <img src="/images/blog/dev-stickers/vs-code-angular-rxjs-ts.png" alt="angular and related logos" title="Angular and related logos">
+<a href="/images/blog/dev-stickers/vs-code-angular-rxjs-ts-01.jpeg">
+        <img src="/images/blog/dev-stickers/vs-code-angular-rxjs-ts-01.jpeg" alt="angular and related logos" title="Angular and related logos">
     </a>
-	<a href="/images/blog/dev-stickers/uipath-reboot-work.png">
-        <img src="/images/blog/dev-stickers/uipath-reboot-work.png" alt="uipth reboot work" title="UiPath Reboot Work">
+	<a href="/images/blog/dev-stickers/uipath-reboot-work-01.jpeg">
+        <img src="/images/blog/dev-stickers/uipath-reboot-work-01.jpeg" alt="uipth reboot work" title="UiPath Reboot Work">
     </a>
-    <a href="/images/blog/dev-stickers/coding-design-problem-solving-3.png">
-        <img src="/images/blog/dev-stickers/coding-design-problem-solving-3.png" alt="developer qualities" title="Developer qualities">
+    <a href="/images/blog/dev-stickers/coding-design-problem-solving-3-01.jpeg">
+        <img src="/images/blog/dev-stickers/coding-design-problem-solving-3-01.jpeg" alt="developer qualities" title="Developer qualities">
     </a>
-    <a href="/images/blog/dev-stickers/vs-code-angular-rxjs-ts-yellow.png">
-        <img src="/images/blog/dev-stickers/vs-code-angular-rxjs-ts-yellow.png" alt="angular and related logos" title="Angular and related logos in Yellow">
+    <a href="/images/blog/dev-stickers/vs-code-angular-rxjs-ts-yellow-01.jpeg">
+        <img src="/images/blog/dev-stickers/vs-code-angular-rxjs-ts-yellow-01.jpeg" alt="angular and related logos" title="Angular and related logos in Yellow">
     </a>    
 	<figcaption>Mixed style stickers</figcaption>
 </figure>
@@ -108,8 +108,8 @@ As developer, or people working with developers, you hear these things like each
 > "I mean, you can have a different opinion on how to solve the problem! If you are sure, well, go ahead and do that."
 
 <figure>
-	<a href="/images/blog/dev-stickers/yes-that-too-4.png">
-        <img src="/images/blog/dev-stickers/yes-that-too-4.png" alt="random developer quote" title="Yes, you can do that too">
+	<a href="/images/blog/dev-stickers/yes-that-too-4-01.jpeg">
+        <img src="/images/blog/dev-stickers/yes-that-too-4-01.jpeg" alt="random developer quote" title="Yes, you can do that too">
     </a>
 	<figcaption>Well, do it if you know already...</figcaption>
 </figure>
@@ -119,15 +119,15 @@ As developer, or people working with developers, you hear these things like each
 Few for the RPA (`Robotic Process Automation`) & **UiPath** community ❤
 
 <figure>
-	<a href="/images/blog/dev-stickers/building-bots.png">
-        <img src="/images/blog/dev-stickers/building-bots.png" alt="rbuilding bots" title="Building bots">
+	<a href="/images/blog/dev-stickers/building-bots-01.jpeg">
+        <img src="/images/blog/dev-stickers/building-bots-01.jpeg" alt="rbuilding bots" title="Building bots">
     </a>
 	<figcaption>Well, that's what RPA devs do for you</figcaption>
 </figure>
 
 <figure>
-	<a href="/images/blog/dev-stickers/uipath-robot-ai.png">
-        <img src="/images/blog/dev-stickers/uipath-robot-ai.png" alt="uipath robots & ai" title="UiPath robots & AI">
+	<a href="/images/blog/dev-stickers/uipath-robot-ai-01.jpeg">
+        <img src="/images/blog/dev-stickers/uipath-robot-ai-01.jpeg" alt="uipath robots & ai" title="UiPath robots & AI">
     </a>
 	<figcaption>UiPath Robots & AI is love</figcaption>
 </figure>
