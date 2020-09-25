@@ -140,5 +140,5 @@ Few for the RPA (`Robotic Process Automation`) & `UiPath` community ❤
 2. Microsoft Paint 😬
 3. Google's Snapseed
 
-**IMPORTANT:** All these poster / sticker designs are created by me, and belong to me. If you intend to use them in any context / capacity, please get in touch with me.
+**IMPORTANT NOTICE:** All these poster / sticker designs are created by me, and belong to me. If you intend to use them in any context / capacity, please get in touch with me.
 {: .notice--warning}
