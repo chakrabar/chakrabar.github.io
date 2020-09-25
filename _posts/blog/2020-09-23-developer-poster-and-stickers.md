@@ -82,7 +82,7 @@ As developer, or people working with developers, you hear these things like each
 	<figcaption>How many times do you hear them everyday?</figcaption>
 </figure>
 
-### Themes - web dev, programming competency & UiPath RPA
+### Everyday programming things ↩
 
 1. `VS Code`, `Angular`, `RxJS`, `TypeScript`
 2. `UiPath` Robot
