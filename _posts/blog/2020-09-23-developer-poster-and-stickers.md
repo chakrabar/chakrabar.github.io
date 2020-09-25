@@ -119,8 +119,8 @@ As developer, or people working with developers, you hear these things like each
 Few for the RPA (`Robotic Process Automation`) & `UiPath` community ❤
 
 <figure>
-	<a href="/images/blog/building-bots.png">
-        <img src="/images/blog/building-bots.png" alt="rbuilding bots" title="Building bots">
+	<a href="/images/blog/dev-stickers/building-bots.png">
+        <img src="/images/blog/dev-stickers/building-bots.png" alt="rbuilding bots" title="Building bots">
     </a>
 	<figcaption>Well, that's what RPA devs do for you</figcaption>
 </figure>
