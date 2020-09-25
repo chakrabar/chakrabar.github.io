@@ -7,7 +7,7 @@ tags: [blog, art, drawing, design, sticker, poster, coaster, developer, tech, qu
 categories: blog
 share: true
 comments: true
-modified: 2020-09-25T21:20:00+05:30
+modified: 2020-09-25T22:10:00+05:30
 image:
   feature: blog/dev-stickers/dev-poster-sticker-banner-2.jpg
 ---
@@ -112,6 +112,15 @@ As developer, or people working with developers, you hear these things like each
         <img src="/images/blog/dev-stickers/yes-that-too-4-01.jpeg" alt="random developer quote" title="Yes, you can do that too">
     </a>
 	<figcaption>Well, do it if you know already...</figcaption>
+</figure>
+
+Full ~~stack~~ 🍔🍟☕ developer
+
+<figure>
+	<a href="/images/blog/dev-stickers/full-snack-developer-01.jpeg">
+        <img src="/images/blog/dev-stickers/full-snack-developer-01.jpeg" alt="full snack developer" title="Full snack developer">
+    </a>
+	<figcaption>Full-stack developer is a myth</figcaption>
 </figure>
 
 ### RPA & Robots 🤖
