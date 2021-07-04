@@ -10,6 +10,9 @@ share: true
 published: false
 ---
 
+# TODO: Clean up, move extra stuffs to unpublished, publish a simple gist post
+# TODO: #2 simple post on flux architecture, usability & simplified implementation, with links to popular libraries
+
 **NOTICE:** This is a `Work-In-Progress` post, please do not read it yet! 🐌🐌🐌
 {: .notice--warning}
 
