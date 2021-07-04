@@ -4,21 +4,21 @@ title: "Hello there!"
 excerpt: "Technical & non-technical titbits of everyday life"
 ---
 
-Welcome to the technical & everyday-life notes from AC. Here I write about all things related to programming, product development & design. Mostly, I maintain some random developer notes. Sometimes I also write about non-technical normal everyday stuffs.
+Welcome to the technical & everyday-life notes from AC. Here I write about all things related to programming, product development & design. Mostly, I maintain some random developer notes. Sometimes I also write about non-technical, normal, everyday stuffs.
 
-If you want to see my profile or get in touch, go to the [About](/about) section.
+If you want to know more anout my profile or get in touch, go to the [About](/about) section.
 
-NOTE: Some of the posts are written by other guests, as mentioned in the individual posts. I do not own or deserve any credit for those posts, they belong to their respective authors 🙂
+NOTE: Some of the posts are written by other guests, as mentioned in the individual posts. I do not own them or deserve any credit for those posts, they belong to their respective authors 🙂
 
 ----
 
-I'm a senior developer, working mostly as Fullstack developer, but I deal with more of the back-end stuffs on a day to day basis. I write `tools`, `web apps`, `REST services` and do lot of `automation`, using `.Net`, `TypeScript`, `C#`, `JavaScript` and other related tools & technologies. I have keen interest in `Software Architecture` and I'm pretty serious about ***good design, great user experience & simple, clutter free, maintainable code***.
+👨🏻‍💻 I'm a software developer, working mostly as full-stack developer (if you believe that is a thing), deal with all things product engineering on a day to day basis. I write `tools`, `web apps`, `REST services` and do lot of `automation`, using `.Net`, `TypeScript`, `C#`, `JavaScript`, `Nodejs` and other related tools & technologies. I have keen interest in `Software Architecture` and I'm pretty serious about ***good design, great user experience & simple, clutter free, maintainable code***.
 
 Check my tech-shots, or technical articles on the [Tech](/articles/) menu.
 
 ----
 
-**Apart from coding**, I take great interest in `travel`, `food`, `art` & `photography`. If you too are interested in them, go check the [Blog](/blog/) menu.
+**Apart from coding**, I take great interest in `travel`, `food`, `art` & `photography`. If you too are interested in some of them, go check the [Blog](/blog/) menu.
 
 ----
 
