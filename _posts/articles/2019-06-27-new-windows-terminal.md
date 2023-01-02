@@ -76,111 +76,111 @@ NOTE: Totally optional, but you can customize and create your own oh-my-posh the
 
 ```js
 {
-  "$schema": "https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/schema.json",
-  "blocks": [
-    {
-      "alignment": "left",
-      "segments": [
+    "$schema": "https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/schema.json",
+    "blocks": [
         {
-          "type": "text",
-          "style": "diamond",
-          "leading_diamond": "\ue0b6",
-          "foreground": "#ffffff",
-          "background": "#cc3802",
-          "template": "{{ if .Env.PNPPSHOST }} \uf8c5 {{ .Env.PNPPSHOST }} {{ end }}"
+            "alignment": "left",
+            "segments": [
+                {
+                    "background": "#cc3802",
+                    "foreground": "#ffffff",
+                    "leading_diamond": "\ue0b6",
+                    "style": "diamond",
+                    "template": "{{ if .Env.PNPPSHOST }} \uf8c5 {{ .Env.PNPPSHOST }} {{ end }}",
+                    "type": "text"
+                },
+                {
+                    "background": "#047e84",
+                    "foreground": "#ffffff",
+                    "powerline_symbol": "\ue0b0",
+                    "style": "powerline",
+                    "template": "{{ if .Env.PNPPSSITE }} \uf672 {{ .Env.PNPPSSITE }}{{ end }}",
+                    "type": "text"
+                },
+                {
+                    "background": "#047e84",
+                    "foreground": "#ffffff",
+                    "style": "diamond",
+                    "template": "{{ if .Env.PNPPSSITE }}\u00a0{{ end }}",
+                    "trailing_diamond": "\ue0b4",
+                    "type": "text"
+                }
+            ],
+            "type": "rprompt"
         },
         {
-          "type": "text",
-          "style": "powerline",
-          "foreground": "#ffffff",
-          "background": "#047e84",
-          "powerline_symbol": "\ue0b0",
-          "template": "{{ if .Env.PNPPSSITE }} \uf672 {{ .Env.PNPPSSITE }}{{ end }}"
+            "alignment": "left",
+            "segments": [
+                {
+                    "background": "#9A348E",
+                    "foreground": "#ffffff",
+                    "leading_diamond": "\ue0b6",
+                    "style": "diamond",
+                    "template": "{{ .UserName }} ",
+                    "type": "session"
+                },
+                {
+                    "background": "#FB936A",
+                    "foreground": "#ffffff",
+                    "powerline_symbol": "\ue0b0",
+                    "style": "powerline",
+                    "template": " \ue718 {{ if .PackageManagerIcon }}{{ .PackageManagerIcon }} {{ end }}{{ .Full }} ",
+                    "type": "node"
+                },
+                {
+                    "background": "#33658A",
+                    "foreground": "#ffffff",
+                    "properties": {
+                        "time_format": "15:04"
+                    },
+                    "style": "diamond",
+                    "template": " \u2665 {{ .CurrentDate | date .Format }} ",
+                    "trailing_diamond": "\ue0b0",
+                    "type": "time"
+                },
+                {
+                    "background": "#DA627D",
+                    "foreground": "#ffffff",
+                    "powerline_symbol": "\ue0b0",
+                    "properties": {
+                        "style": "full"
+                    },
+                    "style": "powerline",
+                    "template": " {{ .Path }} ",
+                    "type": "path"
+                }
+            ],
+            "type": "prompt"
         },
         {
-          "type": "text",
-          "style": "diamond",
-          "trailing_diamond": "\ue0b4",
-          "foreground": "#ffffff",
-          "background": "#047e84",
-          "template": "{{ if .Env.PNPPSSITE }}\u00A0{{ end }}"
+            "alignment": "left",
+            "segments": [
+                {
+                    "background": "#70DB70",
+                    "background_templates": [
+                        "{{ if or (.Working.Changed) (.Staging.Changed) }}#FFFF33{{ end }}",
+                        "{{ if and (gt .Ahead 0) (gt .Behind 0) }}#FFCC80{{ end }}",
+                        "{{ if gt .Ahead 0 }}#B388FF{{ end }}",
+                        "{{ if gt .Behind 0 }}#B388FF{{ end }}"
+                    ],
+                    "foreground": "#000000",
+                    "leading_diamond": "<transparent,background>\ue0b0</>",
+                    "properties": {
+                        "branch_icon": "\ue725 ",
+                        "fetch_stash_count": true,
+                        "fetch_status": true
+                    },
+                    "style": "diamond",
+                    "template": " {{ .HEAD }}{{ if .Staging.Changed }}<#B30000> \uf046 {{ .Staging.String }}</>{{ end }}{{ if and (.Working.Changed) (.Staging.Changed) }} |{{ end }}{{ if .Working.Changed }} \uf044 {{ .Working.String }}{{ end }}{{ if gt .StashCount 0 }} \uf692 {{ .StashCount }}{{ end }} ",
+                    "trailing_diamond": "\ue0b4",
+                    "type": "git"
+                }
+            ],
+            "type": "prompt"
         }
-      ],
-      "type": "rprompt"
-    },
-    {
-      "alignment": "left",
-      "segments": [
-        {
-          "background": "#9A348E",
-          "foreground": "#ffffff",
-          "leading_diamond": "\ue0b6",
-          "style": "diamond",
-          "template": "{{ .UserName }} ",
-          "type": "session"
-        },
-        {
-          "background": "#FB936A",
-          "foreground": "#ffffff",
-          "powerline_symbol": "\ue0b0",
-          "style": "powerline",
-          "template": " \ue718 {{ if .PackageManagerIcon }}{{ .PackageManagerIcon }} {{ end }}{{ .Full }} ",
-          "type": "node"
-        },
-        {
-          "background": "#33658A",
-          "foreground": "#ffffff",
-          "properties": {
-            "time_format": "15:04"
-          },
-          "style": "diamond",
-          "template": " \u2665 {{ .CurrentDate | date .Format }} ",
-          "trailing_diamond": "\ue0b0",
-          "type": "time"
-        },
-		{
-          "background": "#DA627D",
-          "foreground": "#ffffff",
-          "powerline_symbol": "\ue0b0",
-          "properties": {
-            "style": "full"
-          },
-          "style": "powerline",
-          "template": " {{ .Path }} ",
-          "type": "path"
-        }
-      ],
-      "type": "prompt"
-    },
-	{
-      "alignment": "left",
-      "segments": [
-        {
-          "background": "#70DB70",
-          "background_templates": [
-            "{{ if or (.Working.Changed) (.Staging.Changed) }}#FFFF33{{ end }}",
-            "{{ if and (gt .Ahead 0) (gt .Behind 0) }}#FFCC80{{ end }}",
-            "{{ if gt .Ahead 0 }}#B388FF{{ end }}",
-            "{{ if gt .Behind 0 }}#B388FF{{ end }}"
-          ],
-          "foreground": "#000000",
-          "leading_diamond": "<transparent,background>\uE0B0</>",
-          "trailing_diamond": "\ue0b4",
-          "properties": {
-			"branch_icon": "\ue725 ",
-            "fetch_stash_count": true,
-            "fetch_status": true
-          },
-          "style": "diamond",
-          "template": " {{ .HEAD }}{{ if .Staging.Changed }}<#B30000> \uf046 {{ .Staging.String }}</>{{ end }}{{ if and (.Working.Changed) (.Staging.Changed) }} |{{ end }}{{ if .Working.Changed }} \uf044 {{ .Working.String }}{{ end }}{{ if gt .StashCount 0 }} \uf692 {{ .StashCount }}{{ end }} ",
-          "type": "git"
-        }
-      ],
-      "type": "prompt"
-    }
-  ],
-  "final_space": true,
-  "version": 2
+    ],
+    "final_space": true,
+    "version": 2
 }
 ```
 
@@ -309,7 +309,7 @@ Following is a part of my own settings which might help you understand it better
 
 The preview version is not super stable yet, I've faced few crashes myself. But, it's just an early preview, so I'm sure it'll get stable in some time and hopefully the team will add lot more handy features in the future.
 
-# Update for settings, v0.11
+### Update for settings, v0.11
 
 The settings got a bunch of updates including some breaking changes in [version 0.11](https://github.com/microsoft/terminal/issues/5458). Now the `profile.json` settings file is called `settings.json`, usually found in `AppData\Local\Packages\Microsoft.WindowsTerminal_key\LocalState`. Check the following links for more details
 
