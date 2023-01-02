@@ -8,7 +8,7 @@ categories: articles
 comments: true
 share: true
 published: true
-modified: 2020-07-13T17:15:00+05:30
+modified: 2023-01-03T01:00:00+05:30
 ---
 
 ## The new _Windows Terminal_
@@ -34,7 +34,158 @@ Some of the main features:
 
 ![Image](/images/posts/misc/terminal.png)
 
-#### Settings hints to help configure your own terminal
+**NOTE:** The terminal and it's setup has changed a lot since I first wrote this article in 2019. Here is a quick guide to setting up Windows Terminal in 2023. The section after that (2020 edition) is kept for historical reference only!
+{: .notice--info}
+
+## Setting up Windows Terminal in 2023
+
+The latest documentation is unfortunately fragmented and not very well maintained. And getting it all ready might need little bit of trial and errors! The steps 4-6 seems to be outdated, and ideally can just be skipped!!
+
+1. Install the `Windows Terminal` from `Microsoft Store`
+2. Install `App Installer` by Microsoft from `Microsoft Store` (will enable `winget`, restart the terminal after this)
+3. You may let the scripts run uninterruptrd by starting PowerShell in admin mode and running command `Set-ExecutionPolicy Unrestricted`
+---
+4. Now follow the initial instructions from [oh-my-posh installation guide](https://github.com/JanDeDobbeleer/oh-my-posh2#installation)
+5. Follow the whole Installation section, but do NOT worry if a LOT of the commands do not work!
+6. Now (again!) follow the steps in [migration](https://ohmyposh.dev/docs/migrating#migration-steps) to remove unnecessary stuffs added to the system by the conflicting setups
+---
+7. For the actual setup (yes, currently it's confusing and messy!), follow [latest setup steps](https://ohmyposh.dev/docs/installation/windows) or simply run `winget install JanDeDobbeleer.OhMyPosh -s winget`
+8. Update the module (if update available) with `winget upgrade JanDeDobbeleer.OhMyPosh -s winget`
+9. Install one of the Nerd Fonts with ligature support (I prefer `FiraCode`) from [nerdfonts](https://www.nerdfonts.com/font-downloads) and install them
+10. Open the profile file with the following command
+```
+if (!(Test-Path -Path $PROFILE )) { New-Item -Type File -Path $PROFILE -Force }
+notepad $PROFILE
+```
+11. Update the theme by adding this line at the end of the file `oh-my-posh init pwsh --config "$env:POSH_THEMES_PATH\jandedobbeleer.omp.json" | Invoke-Expression`
+    1.  Note that we have updated the profile to use one of the default themes in file `jandedobbeleer.omp.json`
+    2. You can see all the available default theme files with `Get-PoshThemes`
+    3. Find the themes directory with command `$env:POSH_THEMES_PATH`
+    4. Finally my `$PROFILE` file looks like this
+```
+Import-Module posh-git
+
+oh-my-posh init pwsh --config "$env:POSH_THEMES_PATH\jandedobbeleer.omp.json" | Invoke-Expression
+```
+12. Optional, but you can get the newer `cross-platform PowerShell 7.3` or later [from](https://learn.microsoft.com/en-us/powershell/scripting/install/installing-powershell-on-windows?view=powershell-7.3#winget) and use it as the default CLI via Terminal settings. It has a lot of neat features including command auto-completion! Also note that, for PS7, the commands will need to be run again from PS7 terminal & setting up $PROFILE like above. In my PS7 profile file, I just have this one line: `oh-my-posh init pwsh --config "$env:POSH_THEMES_PATH\acomposh.arghya.json" | Invoke-Expression`
+
+NOTE: Totally optional, but you can customize and create your own oh-my-posh theme. You can take any one of the json files from the themes folder as base and update that. For example, I created my `acomposh.arghya.json` based on the default `M365Princess.omp.json` theme. To use this custom theme or any other theme, just update the `$PROFILE` file with the theme file name e.g. `oh-my-posh init pwsh --config "$env:POSH_THEMES_PATH\acomposh.arghya.json" | Invoke-Expression`. I have given my theme file below:
+{: .notice--info}
+
+### acomposh.arghya.json
+
+```js
+{
+  "$schema": "https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/schema.json",
+  "blocks": [
+    {
+      "alignment": "left",
+      "segments": [
+        {
+          "type": "text",
+          "style": "diamond",
+          "leading_diamond": "\ue0b6",
+          "foreground": "#ffffff",
+          "background": "#cc3802",
+          "template": "{{ if .Env.PNPPSHOST }} \uf8c5 {{ .Env.PNPPSHOST }} {{ end }}"
+        },
+        {
+          "type": "text",
+          "style": "powerline",
+          "foreground": "#ffffff",
+          "background": "#047e84",
+          "powerline_symbol": "\ue0b0",
+          "template": "{{ if .Env.PNPPSSITE }} \uf672 {{ .Env.PNPPSSITE }}{{ end }}"
+        },
+        {
+          "type": "text",
+          "style": "diamond",
+          "trailing_diamond": "\ue0b4",
+          "foreground": "#ffffff",
+          "background": "#047e84",
+          "template": "{{ if .Env.PNPPSSITE }}\u00A0{{ end }}"
+        }
+      ],
+      "type": "rprompt"
+    },
+    {
+      "alignment": "left",
+      "segments": [
+        {
+          "background": "#9A348E",
+          "foreground": "#ffffff",
+          "leading_diamond": "\ue0b6",
+          "style": "diamond",
+          "template": "{{ .UserName }} ",
+          "type": "session"
+        },
+        {
+          "background": "#FB936A",
+          "foreground": "#ffffff",
+          "powerline_symbol": "\ue0b0",
+          "style": "powerline",
+          "template": " \ue718 {{ if .PackageManagerIcon }}{{ .PackageManagerIcon }} {{ end }}{{ .Full }} ",
+          "type": "node"
+        },
+        {
+          "background": "#33658A",
+          "foreground": "#ffffff",
+          "properties": {
+            "time_format": "15:04"
+          },
+          "style": "diamond",
+          "template": " \u2665 {{ .CurrentDate | date .Format }} ",
+          "trailing_diamond": "\ue0b0",
+          "type": "time"
+        },
+		{
+          "background": "#DA627D",
+          "foreground": "#ffffff",
+          "powerline_symbol": "\ue0b0",
+          "properties": {
+            "style": "full"
+          },
+          "style": "powerline",
+          "template": " {{ .Path }} ",
+          "type": "path"
+        }
+      ],
+      "type": "prompt"
+    },
+	{
+      "alignment": "left",
+      "segments": [
+        {
+          "background": "#70DB70",
+          "background_templates": [
+            "{{ if or (.Working.Changed) (.Staging.Changed) }}#FFFF33{{ end }}",
+            "{{ if and (gt .Ahead 0) (gt .Behind 0) }}#FFCC80{{ end }}",
+            "{{ if gt .Ahead 0 }}#B388FF{{ end }}",
+            "{{ if gt .Behind 0 }}#B388FF{{ end }}"
+          ],
+          "foreground": "#000000",
+          "leading_diamond": "<transparent,background>\uE0B0</>",
+          "trailing_diamond": "\ue0b4",
+          "properties": {
+			"branch_icon": "\ue725 ",
+            "fetch_stash_count": true,
+            "fetch_status": true
+          },
+          "style": "diamond",
+          "template": " {{ .HEAD }}{{ if .Staging.Changed }}<#B30000> \uf046 {{ .Staging.String }}</>{{ end }}{{ if and (.Working.Changed) (.Staging.Changed) }} |{{ end }}{{ if .Working.Changed }} \uf044 {{ .Working.String }}{{ end }}{{ if gt .StashCount 0 }} \uf692 {{ .StashCount }}{{ end }} ",
+          "type": "git"
+        }
+      ],
+      "type": "prompt"
+    }
+  ],
+  "final_space": true,
+  "version": 2
+}
+```
+
+## Settings hints to help configure your own terminal (2020 edition)
+
 
 **Note:** See update later for the latest settings. The profile settings has been updated since `v0.11`.
 {: .notice--warning}
